@@ -22,12 +22,6 @@ class User
 	protected $code_of_conduct;
 	protected $ABA_course;
 	protected $verified;
-	protected $location = null;
-	
-	public function __construct()
-	{
-		$this->location = new ArrayCollection();
-	}
 	
 	public function getId()
 	{
