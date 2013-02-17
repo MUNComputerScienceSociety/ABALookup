@@ -1,4 +1,37 @@
+## Windows image file caches
+ehthumbs.db
+Thumbs.db
+Destop.ini
 
+## Mac junk file
+.DS_Store
+
+## Swap files
+*.swp
+
+## Visual Studio files
+*.tmp_proj
+*.suo
+*.user
+*.sln.docstates
+
+*.tmp
+*.bak
+
+*.classpath
+*~
+
+## SublimeText
+*.sublime-workspace
+
+## Espresso projects
+*.esproj
+
+
+## IntelliJ
 .idea/
+*.iml
+*.ipr
+*.iws
 
 composer.phar
