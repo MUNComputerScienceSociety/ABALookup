@@ -12,8 +12,7 @@ return array(
         // namespace, the value of that key the specific path to that module's
         // Module class.
         'module_paths' => array(
-            './module',
-            './vendor',
+            './../module'
         ),
 
         // An array of paths from which to glob configuration files after
