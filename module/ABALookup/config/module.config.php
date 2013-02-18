@@ -83,7 +83,14 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController'
+            'ABALookuo\Controller\Admin' => 'ABALookup\Controller\AdminController',
+            'ABALookup\Controller\Home' => 'ABALookup\Controller\HomeController',
+			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController',
+            'ABALookup\Controller\Match' => 'ABALookup\Controller\MatchController',
+            'ABALookup\Controller\ParentProfile' => 'ABALookup\Controller\ParentProfileController',
+            'ABALookup\Controller\Schedule' => 'ABALookup\Controller\ScheduleController',
+            'ABALookup\Controller\TherapistProfile' => 'ABALookup\Controller\TherapistProfileController',
+            'ABALookup\Controller\User' => 'ABALookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(
