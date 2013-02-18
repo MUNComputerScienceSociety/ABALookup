@@ -101,6 +101,14 @@ header a:hover {
 	font-weight: 700;
 }
 
+#content h5 {
+	font-family: 'Open Sans', sans-serif;
+	color: #555;
+	font-size: 20pt;
+	font-weight: 700;
+	margin: 0 0 0 0;
+}
+
 #content .left {
 	width: 750px;
 	float: left;
@@ -350,4 +358,70 @@ header a:hover {
 
 #content .close a:hover {
 	color: #377269;
+}
+
+.match {
+	border-top: 2px solid #e6e5e5;
+	padding: 20px 20px 0px 20px;
+	margin: 20px 0 40px 0;
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+.conduct {
+	background: rgba(205,205,205,0.4);
+	border-radius: 10px;
+	padding: 10px;
+	font-family: 'Open Sans', sans-serif;
+	display: inline-block;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #555;
+	font-size: 12pt;
+	text-shadow: 1px 1px 0px #ffffff;
+}
+
+.match ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.match ul li {
+	display: inline-block;
+	margin-right: 5px;
+	background: #69b4a8;
+	border-radius: 10px;
+	font-size: 9pt;
+	font-family: arial, sans-serif;
+	color: #ffffff;
+	padding: 5px 15px 5px 15px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.match .other {
+	font-family: 'Open Sans', sans-serif;
+	color: #555;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+	
+}
+
+.match .email {
+	margin-bottom: 20px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14pt;
+	font-style: italic;
+}
+
+.match a:link,
+.match a:visited,
+.match a:active {
+	color: #555;
+	text-decoration: none;
+}
+
+.match a:hover {
+	color: #000;
 }
