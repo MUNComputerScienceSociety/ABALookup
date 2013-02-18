@@ -7,9 +7,9 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="parent_therapist_internals")
+ * @ORM\Entity @ORM\Table(name="parent_therapist_score")
  **/
-class ParentTherapistInternals
+class ParentTherapistScore
 {
 	/**
 	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
@@ -20,15 +20,15 @@ class ParentTherapistInternals
 	 **/
 	protected $therapist_id;
 	/**
-	 * @ORM\Column(type="double")
+	 * @ORM\Column(type="float")
 	 **/
 	protected $score;
 	
 	public function __construct($parent_id, $therapist_id, $score)
 	{
-		this->parent_id = $parent_id;
-		this->therapist_id = $therapist_id;
-		this->score = $score;
+		$this->parent_id = $parent_id;
+		$this->therapist_id = $therapist_id;
+		$this->score = $score;
 	}
 	
 	public function getId()

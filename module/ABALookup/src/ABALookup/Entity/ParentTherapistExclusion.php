@@ -15,11 +15,11 @@ class ParentTherapistExclusion
 	/**
 	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
 	 **/
-	protected $parent_id
+	protected $parent_id;
 	/**
 	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
 	 **/
-	protected $therapist_id
+	protected $therapist_id;
 	
 	public function __construct($parent_id, $therapist_id)
 	{
