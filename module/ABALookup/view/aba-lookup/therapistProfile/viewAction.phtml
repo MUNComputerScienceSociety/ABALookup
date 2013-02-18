@@ -3,19 +3,26 @@
 <p><?php echo $this->error?></p>
 
 <div class="left">
-<h3>Username</h3>
-	<span name="username" id="username" value="<?php echo $this->username?>" />
+	<h3>Username</h3>
+	<label for="username">Username</label>
+            <input name="username" value="<?php echo $this->username?>" id="username" type="text" placeholder="Your display name" readonly/>
 	<h3>Email Address</h3>
-	<span id="email" name="email" value="<?php echo $this->email?>"/>
+	<label for="email">Email</label>
+            <input name="email" value="<?php echo $this->email?>" id="email" type="text" placeholder="Your email" readonly/>
 	<h3>Sex</h3>
-	<span id="sex" name="sex" value="<?php echo $this->sex?>" />
+	<label for="sex">Sex</label>
+            <input name="sex" value="<?php echo $this->sex?>" id="sex" type="text" placeholder="Your sex" readonly/>
 	<h3>Code of Conduct Status</h3>
-	<span id="code_of_conduct" name = "code_of_conduct" value="<?php echo $this->code_of_conduct?>" />
+	<label for="code_of_conduct">Code of Conduct</label>
+            <input name="code_of_conduct" value="<?php echo $this->code_of_conduct?>" id="code_of_conduct" type="text" placeholder="Your code of conduct status" readonly/>
 	<h3>ABA Course Status</h3>
-	<span id="aba_course" name="aba_course" value="<?php echo $this->aba_course?>" />
+	<label for="aba_course">ABA Course Status</label>
+            <input name="aba_course" value="<?php echo $this->aba_course?>" id="aba_course" type="text" placeholder="Your ABA course status" readonly/>
 	<h3>Verification Status</h3>
-	<span id="verified" name="verified" value="<?php echo $this->verified?>"/>
-<div class="right">
+	<label for="verified">Verification Status</label>
+            <input name="verified" value="<?php echo $this->verified?>" id="verified" type="text" placeholder="Your verificaton status" readonly/>
+    <h3>Password</h3>
+
     <h3>Details</h3>
     <p>
         Lorem ipsum dolor sit amet.
