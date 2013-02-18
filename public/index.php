@@ -5,11 +5,14 @@
  */
 chdir(dirname(__DIR__));
 
+echo get_include_path();
+
 set_include_path(implode(PATH_SEPARATOR, array(
 	'vendor/zf2/library/',
 	'module/',
 	get_include_path()
 )));
+
 
 // Setup autoloading
 require 'init_autoloader.php';
