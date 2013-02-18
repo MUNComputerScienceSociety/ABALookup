@@ -11,7 +11,8 @@ namespace ABALookup\Controller;
 
 use
 	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController
+	ABALookup\ABALookupController,
+	Zend\Session\Container
 ;
 
 class TherapistProfileController extends ABALookupController {
@@ -19,9 +20,29 @@ class TherapistProfileController extends ABALookupController {
 		return new ViewModel();
 	}
 	public function viewAction() {
-		return new ViewModel();
+	
+		$session = new Container();
+        if ($session->offsetExists('loggedIn'))
+        $id->offsetGet('id');
+        $user->getUserById($id);
+        $email->getEmailById($id);
+        $sex->getSexById($id);
+        $code_of_conduct->getCodeOfConductById($id);
+        $aba_course->getAbaCourseById($id);
+        $verified->getVerifiedById($id);
+		return new ViewModel(array(
+		"email" => $email,
+		"sex" => $sex,
+		"code_of_conduct" => $code_of_conduct,
+		"aba_course" => $aba_course,
+		"verified" => $verified,
+		));
 	}
 	public function contactAction() {
 		return new ViewModel();
 	}
+	
+	private function getUserById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+    }
 }
