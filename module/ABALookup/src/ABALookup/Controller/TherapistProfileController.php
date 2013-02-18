@@ -17,20 +17,22 @@ use
 
 class TherapistProfileController extends ABALookupController {
 	public function editAction() {
+	
+		if (isset(_POST['edit'])) {
+		
 		return new ViewModel();
 	}
 	public function viewAction() {
 	
-		$session = new Container();
-        if ($session->offsetExists('loggedIn'))
-        $id->offsetGet('id');
-        $user->getUserById($id);
+        if (loggedIn())
+        $id->currentUser();
         $email->getEmailById($id);
         $sex->getSexById($id);
         $code_of_conduct->getCodeOfConductById($id);
         $aba_course->getAbaCourseById($id);
         $verified->getVerifiedById($id);
 		return new ViewModel(array(
+		"username" => $id,
 		"email" => $email,
 		"sex" => $sex,
 		"code_of_conduct" => $code_of_conduct,
@@ -42,7 +44,19 @@ class TherapistProfileController extends ABALookupController {
 		return new ViewModel();
 	}
 	
-	private function getUserById($id) {
-        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+	private function getEmailById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $id));
+    }
+    private function getSexById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('sex' => $id));
+    }
+    private function getCodeOfConductById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('code_of_conduct' => $id));
+    }
+    private function getAbaCourseById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('aba_course' => $id));
+    }
+    private function getVerifiedById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('verified' => $id));
     }
 }
