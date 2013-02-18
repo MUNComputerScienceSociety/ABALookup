@@ -7,18 +7,20 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="calendar_intervals")
+ * @ORM\Entity @ORM\Table(name="calendar_interval")
  **/
 class CalendarIntervals
 {
 	/**
-	 * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
 	/**
 	 * @ORM\OneToOne(targetEntity="Calendar")
 	 **/
-	protected $calendar_id;
+	protected $calendar;
 	/**
 	 * @ORM\Column(type="datetime")
 	 **/
@@ -32,9 +34,9 @@ class CalendarIntervals
 	 **/
 	protected $week_day;
 	
-	public function __construct($calendar_id, $start_time, $end_time, $week_day)
+	public function __construct(Calendar $calendar, $start_time, $end_time, $week_day)
 	{
-		$this->calendar_id = $calendar_id;
+		$this->calendar = $calendar;
 		$this->start_time = $start_time;
 		$this->end_time = $end_time;
 		$this->week_day = $week_day;
@@ -45,9 +47,9 @@ class CalendarIntervals
 		return $this->id;
 	}
 	
-	public function getCalendarId()
+	public function getCalendar()
 	{
-		return $this->calendar_id;
+		return $this->calendar;
 	}
 	
 	public function getStartTime()
@@ -63,6 +65,11 @@ class CalendarIntervals
 	public function getWeekDay()
 	{
 		return $this->week_day;
+	}
+	
+	public function setCalendar($calendar)
+	{
+		$this->calendar = $calendar;
 	}
 	
 	public function setStartTime($start_time)

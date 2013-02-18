@@ -7,12 +7,14 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="locations")
+ * @ORM\Entity @ORM\Table(name="location")
  **/
 class Location
 {
 	/**
-	 * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
 	/**

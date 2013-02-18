@@ -14,20 +14,21 @@ class ParentTherapistScore
 	/**
 	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
 	 **/
-	protected $parent_id;
+	protected $parent;
 	/**
 	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
 	 **/
-	protected $therapist_id;
+	protected $therapist;
 	/**
 	 * @ORM\Column(type="float")
 	 **/
 	protected $score;
 	
-	public function __construct($parent_id, $therapist_id, $score)
+	public function __construct($parent, $therapist, $score)
 	{
-		$this->parent_id = $parent_id;
-		$this->therapist_id = $therapist_id;
+		
+		$this->parent = $parent;
+		$this->therapist = $therapist;
 		$this->score = $score;
 	}
 	
@@ -36,14 +37,14 @@ class ParentTherapistScore
 		return $this->id;
 	}
 	
-	public function getParentId()
+	public function getParent()
 	{
-		return $this->parent_id;
+		return $this->parent;
 	}
 	
-	public function getTherapistId()
+	public function getTherapist()
 	{
-		return $this->therapist_id;
+		return $this->therapist;
 	}
 	
 	public function getScore()

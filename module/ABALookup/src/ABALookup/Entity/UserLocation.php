@@ -12,28 +12,30 @@ use
  **/
 class UserLocation{
 	/**
-	 * @ORM\Id 
-    * @ORM\Column(type="integer") 
-    * @ORM\GeneratedValue
-	 **/
-   protected $id;
-   /**
-    * @ORM\OneToOne(targetEntity="User")
-    **/
+	* @ORM\Id 
+	* @ORM\Column(type="integer") 
+	* @ORM\GeneratedValue
+	**/
+	protected $id;
+	
+	/**
+	* @ORM\OneToOne(targetEntity="User")
+	**/
 	protected $user;
+	
 	/**
 	 * @ORM\OneToOne(targetEntity="Location")
 	 **/
 	protected $location;
 	
-	public function __construct($user, $location){
+	public function __construct(User $user, Location $location){
 		$this->user = $user;
 		$this->location = $location;
 	}
 
-   public function getId(){
-      return $this->id;
-   }
+	public function getId(){
+		return $this->id;
+	}
 	
 	public function getUser(){
 		return $this->user;
@@ -43,11 +45,11 @@ class UserLocation{
 		return $this->location;
 	}
 
-   public function setUser($user){
-      $this->user = $user;
-   }
+	public function setUser(User $user){
+		$this->user = $user;
+	}
 	
-	public function setLocation($location){
+	public function setLocation(Location $location){
 		$this->location = $location;
 	}
 }

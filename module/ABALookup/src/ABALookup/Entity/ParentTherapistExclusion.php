@@ -7,24 +7,31 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="parent_therapist_exclusions")
+ * @ORM\Entity @ORM\Table(name="parent_therapist_exclusion")
  **/
 class ParentTherapistExclusion
 {
-
-	/**
-	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
-	 **/
-	protected $parent_id;
-	/**
-	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
-	 **/
-	protected $therapist_id;
 	
-	public function __construct($parent_id, $therapist_id)
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
+	 **/
+	protected $id;
+	
+	/**
+	 * @ORM\OneToOne(targetEntity="User")
+	 **/
+	protected $parent;
+	/**
+	 * @ORM\OneToOne(targetEntity="User")
+	 **/
+	protected $therapist;
+	
+	public function __construct($parent, $therapist)
 	{
-		$this->parent_id = $parent_id;
-		$this->therapist_id = $therapist_id;
+		$this->parent = $parent;
+		$this->therapist = $therapist;
 	}
 	
 	public function getId()
@@ -32,13 +39,13 @@ class ParentTherapistExclusion
 		return $this->id;
 	}
 	
-	public function getParentId()
+	public function getParent()
 	{
-		return $this->parent_id;
+		return $this->parent;
 	}
 	
-	public function getTherapistId()
+	public function getTherapist()
 	{
-		return $this->therapist_id;
+		return $this->therapist;
 	}
 }
