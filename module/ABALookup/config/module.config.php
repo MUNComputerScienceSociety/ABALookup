@@ -118,7 +118,7 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-            'ABALookuo\Controller\Admin' => 'ABALookup\Controller\AdminController',
+            'ABALookup\Controller\Admin' => 'ABALookup\Controller\AdminController',
             'ABALookup\Controller\Home' => 'ABALookup\Controller\HomeController',
 			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController',
             'ABALookup\Controller\Match' => 'ABALookup\Controller\MatchController',
