@@ -7,7 +7,10 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="parent_therapist_score")
+ * @ORM\Entity @ORM\Table(
+ *     name="parent_therapist_score",
+ *     uniqueConstraints={@UniqueConstraint(name="parent_therapist_idx", columns={"therapist_id", "parent_id"})}
+ * )
  **/
 class ParentTherapistScore
 {
