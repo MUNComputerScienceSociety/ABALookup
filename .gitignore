@@ -37,3 +37,4 @@ Destop.ini
 *.iws
 
 vendor/
+database/db.sqlite3

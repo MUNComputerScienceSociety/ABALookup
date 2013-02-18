@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -50,7 +52,8 @@
 				<tbody>
 					<tr>
 						<td>1AM</td>
-						<td><input type="checkbox" /></td>
+						<td><input type="checkbox" id ="test1"/>
+                                                                                                            <label for="test1"></label></td>
 						<td><input type="checkbox" /></td>
 						<td><input type="checkbox" /></td>
 						<td><input type="checkbox" /></td>
@@ -529,10 +532,12 @@
 						<td><input type="checkbox" /></td>
 					</tr>
 				</tbody>
+                                <tfoot></tfoot>
 			</table>
 		</form>
 		</div>
-	</div>
+</div>
+	
 	<!-- END CONTENT -->
 			
 			<!-- START FOOTER -->
@@ -581,6 +586,20 @@
 				</div>
 			</div>
 		</div>
-		<!-- END FOOTER -->
+	
+                        <script type="text/javascript">
+	  WebFontConfig = {
+	    google: { families: [ 'Open+Sans:400,800,700:latin' ] }
+	  };
+	  (function() {
+	    var wf = document.createElement('script');
+	    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+	      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+	    wf.type = 'text/javascript';
+	    wf.async = 'true';
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(wf, s);
+	  })(); </script><!-- END FOOTER -->
 	</body>
+        
 </html>
