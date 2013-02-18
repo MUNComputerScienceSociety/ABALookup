@@ -179,8 +179,49 @@ class UserController extends ABALookupController {
     }
 
     public function updatepasswordAction() {
-        if (isset($_GET['id']) && isset($_GET['verification'])) {
-            return new ViewModel();
+        if (isset($_REQUEST['id']) && isset($_REQUEST['verification'])) {
+            $id = $_REQUEST['id'];
+            $verification = $_REQUEST['verification'];
+            $user = $this->getUserById($id);
+
+            if ($verification && $this->makeVerificationHash($user)) {
+                    if (isset($_POST['newpassword']) && isset($_POST['confirmpassword']) ) {
+                        $newpassword = $_POST['newpassword'];
+                        $confirmpassword = $_POST['confirmpassword'];
+
+                        if (strlen($newpassword) < 6) {
+                            return new ViewModel(array(
+                                'id' => $id,
+                                'verification' => $verification,
+                                'error' => "Your password must be at least 6 characters"
+                            ));
+                        }
+
+                        if ($newpassword == $confirmpassword) {
+                            $bcrypt = new Bcrypt();
+                            $user->setPassword($bcrypt->create($newpassword));
+                            $this->getEntityManager()->persist($user);
+                            $this->getEntityManager()->flush();
+
+                            $session = new Container();
+                            $session->offsetSet("loggedIn", $user->getId());
+
+                            if ($user->getTherapist())
+                                return $this->redirect()->toRoute('therapist-profile');
+                            else
+                                return $this->redirect()->toRoute('parent-profile');
+                        }
+                        return new ViewModel(array(
+                            'id' => $id,
+                            'verification' => $verification,
+                            'error' => "Your passwords did not match"
+                        ));
+                    }
+                    return new ViewModel(array(
+                        'id' => $id,
+                        'verification' => $verification
+                    ));
+                }
         }
         return $this->redirect()->toRoute('user', array('action' => 'updatepassworderror'));
     }
