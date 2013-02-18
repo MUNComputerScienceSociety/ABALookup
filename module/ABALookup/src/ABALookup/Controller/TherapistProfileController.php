@@ -10,11 +10,10 @@
 namespace ABALookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController,
-	Zend\Session\Container,
-	ABALookup\Entity\User
-;
+	Zend\View\Model\ViewModel;
+	ABALookup\ABALookupController;
+	Zend\Session\Container;
+	ABALookup\Entity\User;
 
 class TherapistProfileController extends ABALookupController {
 	public function editAction() {
