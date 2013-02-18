@@ -17,3 +17,8 @@ $conn = array(
 	
 //obtaining the entity manager.
 $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
+
+//Should probably be reconfigured later.
+$isdevMode = ($_SERVER['HTTP_HOST'] == 'localhost');
+$isDevMode = ($_ENV['APPLICATION_ENV'] == 'development');
+
