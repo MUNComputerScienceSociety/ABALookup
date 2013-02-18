@@ -11,17 +11,58 @@
 #verified (bool)
 
 //User.php
+/**
+ * @Entity @Table(name="users")
+ **/
 class User
 {
+	/**
+	 * @Id @Column(type="integer") @GeneratedValue
+	 **/
 	protected $id;
+	/**
+	 * @Column(type="string")
+	 **/
 	protected $email;
+	/**
+	 * @Column(type="string")
+	 **/
 	protected $password;
+	/**
+	 * @Column(type="boolean")
+	 **/
 	protected $therapist;
+	/**
+	 * @Column(type="enum")
+	 **/
 	protected $sex;
+	/**
+	 * @Column(type="string")
+	 **/	
 	protected $phone;
+	/**
+	 * @Column(type="boolean")
+	 **/	
 	protected $code_of_conduct;
+	/**
+	 * @Column(type="boolean")
+	 **/
 	protected $ABA_course;
+	/**
+	 * @Column(type="boolean")
+	 **/
 	protected $verified;
+	
+	public function __construct($email, $password, $therapist, $sex, $phone, $code_of_conduct, $ABA_course)
+	{
+		$this->email = $email;
+		$this->password = $password;
+		$this->therapist = $therapist;
+		$this->sex = $sex;
+		$this->phone = $phone;
+		$this->code_of_content = $code_of_content;
+		$this->ABA_course = $ABA_course;
+	}
 	
 	public function getId()
 	{
