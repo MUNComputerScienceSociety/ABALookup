@@ -12,7 +12,8 @@ namespace ABALookup\Controller;
 use
 	Zend\View\Model\ViewModel,
 	ABALookup\ABALookupController,
-	Zend\Session\Container
+	Zend\Session\Container,
+	ABALookup\Entity\User
 ;
 
 class TherapistProfileController extends ABALookupController {
