@@ -9,13 +9,35 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use
+	Zend\View\Model\ViewModel,
+	Application\ApplicationController,
+	Application\Entity\User
+;
 
-class IndexController extends AbstractActionController
+class IndexController extends ApplicationController
 {
 	public function indexAction()
 	{
+		
+		$em = $this->getEntityManager();
+		
+		$user = new User(
+			"example@example.com",
+			"my_pass",
+			true,
+			"male",
+			"19009342",
+			true,
+			true
+		);
+		
+		$em->persist($user);
+		$em->flush();
+		
+		
+		var_dump($em->getRepository('Application\Entity\User')->findBy(array('email' => 'example@example.com')));
+		
 		$boo = "Hello there";
 	
 		return new ViewModel(array(
