@@ -36,4 +36,4 @@ Destop.ini
 *.ipr
 *.iws
 
-composer.phar
+vendor/
