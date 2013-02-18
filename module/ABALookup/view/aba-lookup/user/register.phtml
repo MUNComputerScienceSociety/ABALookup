@@ -1,31 +1,34 @@
 <h2>Sign up to start using ABA Lookup</h2>
+
+<p><?php echo $this->error?></p>
+
 <div class="left">
-    <form action="therapistsignup.html" method="post">
+    <form action="/user/register" method="post">
         <div class="row">
             <label for="usertype">User Type</label>
-            <select id="usertype">
-                <option value="parent">Parent</option>
-                <option value="therapist">Therapist</option>
+            <select name="usertype" id="usertype">
+                <option <?php if ($usertype == "parent") {echo "selected";}?> value="parent">Parent</option>
+                <option <?php if ($usertype == "therapist") {echo "selected";}?> value="therapist">Therapist</option>
             </select>
         </div>
         <div class="row">
             <label for="username">Username</label>
-            <input id="username" type="text" placeholder="Your display name" />
+            <input name="username" value="<?php echo $this->username?>" id="username" type="text" placeholder="Your display name" />
         </div>
         <div class="row">
             <label for="emailaddress">Email address</label>
-            <input id="emailaddress" type="email" placeholder="Email address" />
+            <input name="emailaddress" value="<?php echo $this->emailaddress?>" id="emailaddress" type="email" placeholder="Email address" />
         </div>
         <div class="row">
             <label for="password">Password</label>
-            <input id="password" type="password" placeholder="Your password" />
+            <input name="password" id="password" type="password" placeholder="Your password" />
         </div>
         <div class="row">
             <label for="confirmpassword">Confirm your password</label>
-            <input id="confirmpassword" type="password" placeholder="Confirm your password" />
+            <input name="confirmpassword" id="confirmpassword" type="password" placeholder="Confirm your password" />
         </div>
         <div class="row">
-            <input id="next-step" type="submit" value="Next Step" />
+            <input name="submit" id="next-step" type="submit" value="Next Step" />
         </div>
     </form>
 </div>
