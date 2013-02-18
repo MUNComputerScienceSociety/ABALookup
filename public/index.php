@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<link href="css/index.css" rel="stylesheet" type="text/css" />
-		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
 		<title>ABA Lookup - Connecting Families with ABA Therapists</title>
 	</head>
 	<body>
@@ -20,7 +20,6 @@
 			</nav>
 		</header>
 		<!-- END TOP NAVIGATION -->
-		
 		<!-- START INTRO TEXT -->
 		<div id="intro">
 			<span style="color: #f6cf1b;">Connecting</span> families<br>
@@ -31,7 +30,6 @@
 			</div>
 		</div>
 		<!-- END INTRO TEXT -->
-		
 		<!-- START MAIN CONTENT -->
 		<div id="content">
 			<div class="container">
