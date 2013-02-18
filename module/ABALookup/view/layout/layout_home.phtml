@@ -10,6 +10,8 @@
         echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
                               ->prependStylesheet($this->basePath() . "/css/general.css")
                               ->prependStylesheet($this->basePath() . "/css/index.css");
+        echo $this->headScript()->prependFile("/js/index.js", $type = "text/javascript")
+                                ->prependFile("/js/jquery.js", $type = "text/javascript");
     ?>
 
 </head>
@@ -24,7 +26,7 @@
     </div>
 </header>
 <div id="intro">
-    <span class="yella">Connecting</span> families in<br />Newfoundland &amp; Labrador<br />with ABA therapists<br />
+	<span class="yella">Connecting</span> families in<br />Newfoundland &amp; Labrador<br />with ABA therapists<br />
     <div class="learn">
         <a class="button" href="/about">Learn More</a>
     </div>
