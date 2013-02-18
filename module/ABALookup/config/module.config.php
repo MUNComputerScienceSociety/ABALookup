@@ -60,29 +60,43 @@ return array(
 					)
 				),
 			),
-			'user' => array(
-				'type'    => 'Segment',
-				'options' => array(
-					'route'    => '/user[/:action]',
-					'constraints' => array(
-						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-					),
-					'defaults' => array(
-						'controller' => 'ABALookup\Controller\User',
-						'action'     => 'login',
-					)
-				),
-			),
-
-            'register-success' => array(
-                'type' => 'Literal',
+            'user' => array(
+                'type'    => 'Segment',
                 'options' => array(
-                    'route' => "/user/registersuccess",
+                    'route'    => '/user[/:action]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'ABALookup\Controller',
-                        'controller'    => 'User',
-                        'action'        => 'registersuccess'
-                     )
+                        'controller' => 'ABALookup\Controller\User',
+                        'action'     => 'login',
+                    )
+                ),
+            ),
+            'parent-profile' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/parentprofile[/:action]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'ABALookup\Controller\ParentProfile',
+                        'action'     => 'index',
+                    )
+                ),
+            ),
+            'therapist-profile' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/therapistprofile[/:action]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'ABALookup\Controller\TherapistProfile',
+                        'action'     => 'index',
+                    )
                 ),
             ),
 		),

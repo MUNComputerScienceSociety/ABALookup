@@ -41,14 +41,14 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            /*if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
                 return new ViewModel(array(
                     "error" => "A valid email address is required",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }*/
+            }
 
             if ($confirmpassword != $password) {
                 return new ViewModel(array(
@@ -68,14 +68,14 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            /*if ($this->getUserByEmail($emailaddress)) {
+            if ($this->getUserByEmail($emailaddress)) {
                 return new ViewModel(array(
                     "error" => "This email is already in use.",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }*/
+            }
 
             $em = $this->getEntityManager();
             $bcrypt = new Bcrypt();
@@ -133,7 +133,11 @@ class UserController extends ABALookupController {
             $session = new Container();
             $session->offsetSet('loggedIn', $user->getId());
 
-            return $this->redirect()->toRoute('home-index');
+
+            if ($user->getTherapist())
+                return $this->redirect()->toRoute('therapist-profile');
+            else
+                return $this->redirect()->toRoute('parent-profile');
         }
 		return new ViewModel();
 	}
@@ -156,9 +160,13 @@ class UserController extends ABALookupController {
             if ($this->makeVerificationHash($user) == $verification) {
                 $user->setVerified(true);
                 $this->getEntityManager()->persist($user);
+                $this->getEntityManager()->flush();
                 $session = new Container();
                 $session->offsetSet("loggedIn", $user->getId());
-                return $this->redirect()->toRoute('home-index');
+                if ($user->getTherapist())
+                    return $this->redirect()->toRoute('therapist-profile');
+                else
+                    return $this->redirect()->toRoute('parent-profile');
             }
         }
 
