@@ -92,7 +92,7 @@ body {
 	font-weight: 400;
 	color: #3e8579;
 	font-size: 16pt;
-	margin-bottom: 40px;
+	margin-bottom: 0px;
 }
 
 #content h3 {
@@ -138,6 +138,19 @@ body {
 }
 
 #content select {
+	background-color: #e1e9e8;
+	border: 1px solid #96b2ae;
+	box-shadow: inset 0px 0px 2px #ffffff;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12pt;
+	padding: 5px 5px 10px 10px;
+	color: #555555;
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+	margin-bottom: 10px;
+}
+
+#content select[multiple] {
+	width: 300px;
 	background-color: #e1e9e8;
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0px 0px 2px #ffffff;
