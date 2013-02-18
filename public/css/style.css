@@ -32,12 +32,6 @@ header h1 {
 	background: url("../images/logo.png") no-repeat;
 }
 
-header div:first-child a {
-	display: block;
-	top: 0;
-	left: 0;
-}
-
 header .right {
 	width: 500px;
 	float: right;
@@ -55,7 +49,7 @@ header nav.right:before {
 	margin: 0px 20px -30px 20px;
 }
 
-header nav.right a:after {
+header .right a:after {
 	content: " ";
 	width: 0px;
 	border-right: 1px solid #548880;
@@ -365,9 +359,9 @@ header a:hover {
 	padding-top: 20px;
 }
 
-#logout a:active,
+#logout a:link,
 #logout a:visited,
-#logout a:link {
+#logout a:active {
 	color: #555;
 	text-decoration: none;
 }

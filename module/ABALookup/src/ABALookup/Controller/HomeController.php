@@ -26,10 +26,12 @@ class HomeController extends ABALookupController {
 	}
 	
 	public function privacypolicyAction() {
+        $this->layout('layout/layout_logged_out');
 		return new ViewModel();
 	}
 	
 	public function termsofuseAction() {
+        $this->layout('layout/layout_logged_out');
 		return new ViewModel();
 	}
 }
