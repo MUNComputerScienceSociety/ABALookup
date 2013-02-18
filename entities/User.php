@@ -5,7 +5,6 @@
 #password (string)
 #therapist (bool)
 #sex (enum)
-#phone (string)
 #code_of_conduct (bool)
 #ABA_course (bool)
 #verified (bool)
@@ -36,10 +35,6 @@ class User
 	 * @Column(type="enum")
 	 **/
 	protected $sex;
-	/**
-	 * @Column(type="string")
-	 **/	
-	protected $phone;
 	/**
 	 * @Column(type="boolean")
 	 **/	
@@ -92,11 +87,6 @@ class User
 		return $this->sex;
 	}
 	
-	public function getPhone()
-	{
-		return $this->phone;
-	}
-	
 	public function getCodeOfConduct()
 	{
 		return $this->code_of_conduct;
@@ -135,11 +125,6 @@ class User
 	public function setSex($sex)
 	{
 		$this->sex = $sex;
-	}
-	
-	public function setPhone($phone)
-	{
-		$this->phone = $phone;
 	}
 	
 	public function setCodeOfConduct($code_of_conduct)
