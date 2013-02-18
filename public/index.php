@@ -11,6 +11,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 	get_include_path()
 )));
 
+
 // Setup autoloading
 require 'init_autoloader.php';
 
