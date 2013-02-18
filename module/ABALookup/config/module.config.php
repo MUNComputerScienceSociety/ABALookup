@@ -34,6 +34,16 @@ return array(
 					),
 				),
 			),
+			'about' => array(
+				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'options' => array(
+					'route'    => '/about',
+					'defaults' => array(
+						'controller' => 'ABALookup\Controller\About',
+						'action'     => 'index',
+					),
+				),
+			),
 			'home-index' => array(
 				'type'    => 'Literal',
 				'options' => array(
@@ -118,6 +128,7 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
+            'ABALookup\Controller\About' => 'ABALookup\Controller\AboutController',
             'ABALookup\Controller\Admin' => 'ABALookup\Controller\AdminController',
             'ABALookup\Controller\Home' => 'ABALookup\Controller\HomeController',
 			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController',
@@ -137,6 +148,7 @@ return array(
 		'template_map' => array(
 			'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'layout/layout_home'    => __DIR__ . '/../view/layout/layout_home.phtml',
+            'layout/layout_about'    => __DIR__ . '/../view/layout/layout_about.phtml',
             'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
 			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/index.phtml',
 			'error/404'               => __DIR__ . '/../view/error/404.phtml',
