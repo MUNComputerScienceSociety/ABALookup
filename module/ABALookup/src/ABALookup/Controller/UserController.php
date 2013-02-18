@@ -14,7 +14,7 @@ use
 	ABALookup\ABALookupController,
 	ABALookup\Entity\User,
     Zend\Crypt\Password\Bcrypt,
-    Zend\View\Helper\BasePath
+    Zend\Session\Container
 ;
 
 class UserController extends ABALookupController {
@@ -73,7 +73,7 @@ class UserController extends ABALookupController {
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect()->toRoute('register-success');
+            return $this->redirect()->toRoute('user', array('action' => 'registersuccess'));
         }
 
         return new ViewModel();
@@ -84,11 +84,34 @@ class UserController extends ABALookupController {
     }
 
 	public function loginAction() {
+        if (isset($_POST['login'])) {
+            $bcrypt = new Bcrypt();
+
+            $emailaddress = $_POST['emailaddress'];
+            $password = $_POST['password'];
+
+            $user = $this->getUserByEmail($emailaddress);
+
+            if ((!$user) || (!$bcrypt->verify($password, $user->getPassword()))) {
+                return new ViewModel(array(
+                    'error' => 'The email you entered was incorrect or the password did not match'
+                ));
+            }
+
+            $session = new Container();
+            $session->offsetSet('loggedIn', $user->getId());
+
+            return $this->redirect()->toRoute('aba-lookup');
+        }
 		return new ViewModel();
 	}
-	public function logoutAction() {
-		return new ViewModel();
+
+    public function logoutAction() {
+        $session = new Container();
+        if ($session->offsetExists('loggedIn')) $session->offsetUnset('loggedIn');
+        return $this->redirect()->toRoute('aba-lookup');
 	}
+
 	public function resetpasswordAction() {
 		return new ViewModel();
 	}
@@ -97,6 +120,10 @@ class UserController extends ABALookupController {
 	}
 
     private function getUserByEmail($email) {
-        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findBy(array('email' => $email));
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
+    }
+
+    private function getUserById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
     }
 }

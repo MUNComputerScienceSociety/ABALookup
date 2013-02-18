@@ -1,0 +1,26 @@
+<h2>Login to your account</h2>
+
+<p><?php echo $this->error; ?></p>
+
+<div class="left">
+    <form action="/user/login" method="post">
+        <div class="row">
+            <label for="emailaddress">Email address</label>
+            <input name="emailaddress" id="emailaddress" type="email" placeholder="Email address" required />
+        </div>
+        <div class="row">
+            <label for="password">Password</label>
+            <input name="password" id="password" type="password" placeholder="Your password" required />
+        </div>
+        <div class="row">
+            <input name="login" id="login" type="submit" value="Login" />
+        </div>
+    </form>
+</div>
+<div class="right">
+    <h3>Details</h3>
+    <p>
+        Lorem ipsum dolor sit amet.
+    </p>
+</div>
+

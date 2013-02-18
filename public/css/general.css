@@ -136,3 +136,7 @@ footer .about h5 {
 	border-bottom: 1px solid #5b5a57;
 	margin-bottom: 10px;
 }
+
+p {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
