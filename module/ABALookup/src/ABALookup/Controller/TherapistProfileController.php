@@ -10,10 +10,10 @@
 namespace ABALookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController,
-	Zend\Session\Container
-;
+	Zend\View\Model\ViewModel;
+	ABALookup\ABALookupController;
+	Zend\Session\Container;
+	ABALookup\Entity\User;
 
 class TherapistProfileController extends ABALookupController {
 	public function editAction() {
@@ -59,4 +59,5 @@ class TherapistProfileController extends ABALookupController {
     private function getVerifiedById($id) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('verified' => $id));
     }
+}
 }

@@ -16,17 +16,9 @@ use
 
 class AdminController extends ABALookupController {
 	public function indexAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');
-			
 		return new ViewModel();	
 	}
 	public function confirmuserAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');	
-	
 		return new ViewModel();
 	}
 	public function deleteuserAction() {
@@ -53,31 +45,15 @@ class AdminController extends ABALookupController {
 		return new ViewModel();
 	}
 	public function resetpasswordAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');
-			
 		return new ViewModel();
 	}
 	public function listusersAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');
-	
 		return new ViewModel();
 	}
 	public function addadminAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');	
-	
 		return new ViewModel();
 	}
 	public function removeadminAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');	
-	
 		return new ViewModel();
 	}
 	

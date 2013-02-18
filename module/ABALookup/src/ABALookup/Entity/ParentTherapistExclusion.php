@@ -9,7 +9,7 @@ use
 /**
  * @ORM\Entity @ORM\Table(
  *     name="parent_therapist_exclusion",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="parent_therapist_idx", columns={"therapist_id", "parent_id"})}
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="parent_therapist_exclude_idx", columns={"therapist_id", "parent_id"})}
  * )
  **/
 class ParentTherapistExclusion
