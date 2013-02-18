@@ -29,7 +29,7 @@ return array(
 				'options' => array(
 					'route'    => '/',
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\Index',
+						'controller' => 'ABALookup\Controller\Home',
 						'action'     => 'index',
 					),
 				),
@@ -44,7 +44,7 @@ return array(
 					'route'    => '/',
 					'defaults' => array(
 						'__NAMESPACE__' => 'ABALookup\Controller',
-						'controller'    => 'Index',
+						'controller'    => 'Home',
 						'action'        => 'index',
 					),
 				),
@@ -83,7 +83,14 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController'
+            'ABALookuo\Controller\Admin' => 'ABALookup\Controller\AdminController',
+            'ABALookup\Controller\Home' => 'ABALookup\Controller\HomeController',
+			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController',
+            'ABALookup\Controller\Match' => 'ABALookup\Controller\MatchController',
+            'ABALookup\Controller\ParentProfile' => 'ABALookup\Controller\ParentProfileController',
+            'ABALookup\Controller\Schedule' => 'ABALookup\Controller\ScheduleController',
+            'ABALookup\Controller\TherapistProfile' => 'ABALookup\Controller\TherapistProfileController',
+            'ABALookup\Controller\User' => 'ABALookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(
@@ -94,6 +101,7 @@ return array(
 		'exception_template'       => 'error/index',
 		'template_map' => array(
 			'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout_home'    => __DIR__ . '/../view/layout/layout_home.phtml',
 			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/index.phtml',
 			'error/404'               => __DIR__ . '/../view/error/404.phtml',
 			'error/index'             => __DIR__ . '/../view/error/index.phtml',
