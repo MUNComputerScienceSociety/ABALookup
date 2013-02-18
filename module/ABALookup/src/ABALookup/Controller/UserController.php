@@ -14,7 +14,8 @@ use
 	ABALookup\ABALookupController,
 	ABALookup\Entity\User,
     Zend\Crypt\Password\Bcrypt,
-    Zend\Session\Container
+    Zend\Session\Container,
+    Zend\Mail
 ;
 
 class UserController extends ABALookupController {
@@ -32,6 +33,15 @@ class UserController extends ABALookupController {
                 empty($password) || empty($confirmpassword)) {
                 return new ViewModel(array(
                     "error" => "All fields are required",
+                    "usertype" => $usertype,
+                    "username" => $username,
+                    "emailaddress" => $emailaddress,
+                ));
+            }
+
+            if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
+                return new ViewModel(array(
+                    "error" => "A valid email address is required",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
@@ -73,6 +83,7 @@ class UserController extends ABALookupController {
             $em->persist($user);
             $em->flush();
 
+
             return $this->redirect()->toRoute('user', array('action' => 'registersuccess'));
         }
 
@@ -98,10 +109,16 @@ class UserController extends ABALookupController {
                 ));
             }
 
+            /*if (!$user->getVerified()) {
+                return new ViewModel(array(
+                    'error' => 'You need to verify your email to login'
+                ));
+            }*/
+
             $session = new Container();
             $session->offsetSet('loggedIn', $user->getId());
 
-            return $this->redirect()->toRoute('aba-lookup');
+            return $this->redirect()->toRoute('home-index');
         }
 		return new ViewModel();
 	}
@@ -109,7 +126,7 @@ class UserController extends ABALookupController {
     public function logoutAction() {
         $session = new Container();
         if ($session->offsetExists('loggedIn')) $session->offsetUnset('loggedIn');
-        return $this->redirect()->toRoute('aba-lookup');
+        return $this->redirect()->toRoute('home-index');
 	}
 
 	public function resetpasswordAction() {
@@ -125,5 +142,9 @@ class UserController extends ABALookupController {
 
     private function getUserById($id) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+    }
+
+    private function makeVeriicationHash($user) {
+        return hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword());
     }
 }
