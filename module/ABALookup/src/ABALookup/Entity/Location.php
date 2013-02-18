@@ -7,12 +7,14 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="locations")
+ * @ORM\Entity @ORM\Table(name="location")
  **/
 class Location
 {
 	/**
-	 * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
 	/**
@@ -22,7 +24,7 @@ class Location
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $enabled.
+	protected $enabled;
 	
 	public function __construct($name)
 	{

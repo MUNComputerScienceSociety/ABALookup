@@ -12,13 +12,15 @@ use
 class Calendar
 {
 	/**
-	 * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
 	 **/
-	protected $user_id;
+	protected $user;
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
@@ -28,9 +30,9 @@ class Calendar
 	 **/
 	protected $name;
 	
-	public function __construct($user_id, $enabled, $name)
+	public function __construct(User $user, $enabled, $name)
 	{
-		$this->user_id = $user_id;
+		$this->user = $user;
 		$this->enabled = $enabled;
 		$this->name = $name;
 	}
@@ -40,9 +42,9 @@ class Calendar
 		return $this->id;
 	}
 	
-	public function getUserId()
+	public function getUser()
 	{
-		return $this->user_id;
+		return $this->user;
 	}
 	
 	public function getEnabled()
@@ -53,6 +55,10 @@ class Calendar
 	public function getName()
 	{
 		return $this->name;
+	}
+	
+	public function setUser($user) {
+		$this->user = $user;
 	}
 	
 	public function setEnabled($enabled)

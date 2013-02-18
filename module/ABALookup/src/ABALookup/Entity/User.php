@@ -8,12 +8,12 @@ use
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="users")
+ * @ORM\Table(name="user")
  **/
 class User{
 	/**
-	 * @ORM\Id 
-    * @ORM\Column(type="integer")
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
@@ -32,7 +32,7 @@ class User{
 	/**
 	 * @ORM\Column(type="string")
 	 **/
-	protected $sex;
+	protected $sex; // :D
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/	
@@ -41,6 +41,10 @@ class User{
 	 * @ORM\Column(type="boolean")
 	 **/
 	protected $ABA_course;
+	/**
+	 * @ORM\Column(type="boolean")
+	 **/
+	protected $moderator;
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
@@ -88,6 +92,10 @@ class User{
 		return $this->verified;
 	}
 	
+	public function getModerator(){
+		return $this->verified;
+	}
+	
 	public function setEmail($email){
 		$this->email = $email;
 	}
@@ -114,5 +122,9 @@ class User{
 	
 	public function setVerified($verified){
 		$this->verified = $verified;
+	}
+	
+	public function setModerator($moderator){
+		$this->moderator = $moderator;
 	}
 }
