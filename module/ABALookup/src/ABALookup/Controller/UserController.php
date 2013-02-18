@@ -94,7 +94,7 @@ class UserController extends ABALookupController {
             $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
             $message->addTo($user->getEmail());
             $message->setBody(str_replace("{URL}", $verificationUrl, $mailConfig->getVerificationMessage()));
-            $message->setSubject("Test Subject");
+            $message->setSubject($mailConfig->getVerificationSubject());
             $mailTransport->send($message);
 
             return $this->redirect()->toRoute('user', array('action' => 'registersuccess'));
@@ -149,8 +149,46 @@ class UserController extends ABALookupController {
 	}
 
 	public function resetpasswordAction() {
+        if (isset($_POST['emailaddress'])) {
+            $email = $_POST['emailaddress'];
+            $user = $this->getUserByEmail($email);
+
+            if (!$user) {
+                return new ViewModel(array('error' => "The email you are using was not found in the database."));
+            }
+
+            $mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
+            $mailTransport = new Mail\Transport\Sendmail();
+            $resetUrl = $mailConfig->getUrl() . "/user/updatepassword?id=" . $user->getId()
+                . "&verification=" . $this->makeResetPasswordHash($user);
+
+            $message = new Mail\Message();
+            $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
+            $message->addTo($user->getEmail());
+            $message->setBody(str_replace("{URL}", $resetUrl, $mailConfig->getResetPasswordMessage()));
+            $message->setSubject($mailConfig->getResetPasswordSubject());
+            $mailTransport->send($message);
+
+            return $this->redirect()->toRoute('user', array('action' => 'resetpasswordsuccess'));
+        }
 		return new ViewModel();
 	}
+
+    public function resetpasswordsuccessAction() {
+        return new ViewModel();
+    }
+
+    public function updatepasswordAction() {
+        if (isset($_GET['id']) && isset($_GET['verification'])) {
+            return new ViewModel();
+        }
+        return $this->redirect()->toRoute('user', array('action' => 'updatepassworderror'));
+    }
+
+    public function updatepassworderrorAction() {
+        return new ViewModel();
+    }
+
 	public function verifyuserAction() {
         $id = $_GET['id'];
         $verification = $_GET['verification'];
@@ -183,5 +221,9 @@ class UserController extends ABALookupController {
 
     private function makeVerificationHash($user) {
         return substr(hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword()), -10);
+    }
+
+    private function makeResetPasswordHash($user) {
+        return substr(hash('sha512', '%&@#^(jwgwetiyQ%Kgw$' . $user->getEmail() . $user->getPassword()), -10);
     }
 }
