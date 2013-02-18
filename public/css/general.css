@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+footer {
+	height: 200px;
+	width: 100%;
+	background: #2d2c28;
+	padding: 30px 0px 30px 0px;
+	font-family: sans-serif;
+	font-size: 9pt;
+	color: #f7f7f7;
+	text-align: left;
+	border-top: 1px solid #000000;
+	box-shadow: 0px 0px 50px rgba(0,0,0,0.2);
+	border-bottom: 2px solid #000000;
+}
+
+footer .left,
+footer .center {
+	width: 30%;
+	margin-right: 48px;
+	float: left;
+}
+
+footer .right {
+	width: 30%;
+	float: right;
+}
+
+footer h4 {
+	margin: 10px 0;
+	padding: 0;
+	text-transform: uppercase;
+	color: #dbdbdb;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 700;
+	font-size: 14pt;
+	text-shadow: 1px 1px 0px #000000;
+}
+
+footer .soc {
+	background: #5b5a57;
+	display: inline-block;
+	font-size: 16pt;
+	width: 30px;
+	height: 15px;
+	text-align: center;
+	padding-left: 4px;
+	padding-top: 4px;
+	padding-bottom: 11px;
+	margin-top: 0px;
+	color: #2d2c28;
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.1);
+}
+
+footer .soc-tri {
+	display: inline-block;
+	height: 0px;
+	width: 0px;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid #5b5a57;
+	margin-left: -3px;
+	margin-top: 0px;
+}
+
+footer .soc-link {
+	background: #46453f;
+	height: 28px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 13pt;
+	margin-top: -33px;
+	padding-left: 70px;
+	padding-top: 2px;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+	margin-bottom: 8px;
+	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+
+footer a {
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	margin-bottom: 5px;
+	background: #46453f;
+	padding: 0px 0px 5px 5px;
+	height: 20px;
+	font-size: 11pt;
+	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+
+footer a:before {
+	content: "";
+	display: inline-block;
+	height: 0px;
+	width: 0px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 11px solid #2d2c28;
+	margin-left: -5px;
+	margin-top: 2px;
+	margin-right: 20px;
+	margin-bottom: -5px;
+}
+
+footer .about {
+	background: #46453f;
+	padding: 10px;
+	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+	height: 128px;
+}
+
+footer .about h5 {
+	width: 192px;
+	height: 0;
+	margin: 0 auto;
+	padding: 71px 0 0 0;
+	overflow: hidden;
+	background: url("../images/footerlogo.png") no-repeat;
+	text-align: center;
+	border-bottom: 1px solid #5b5a57;
+	margin-bottom: 10px;
+}

@@ -1,142 +1,142 @@
 <!DOCTYPE html>
-
-<html>
-<head>
-	<meta charset="utf-8" />
-	<link href="css/style.css" rel="stylesheet" type="text/css">
-	<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
-	<title>ABA Lookup - Sign Up</title>
-</head>
-<body>
-
-	<!-- START TOPNAV -->
-	<header id="topnav">
-		<nav class="container">
-			<div class="left">
-				<img src="images/logo.png" alt="ABA Lookup" />
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>ABA Lookup - Login</title>
+		<meta name="description" content="" />
+		<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+		<link href="css/general.css" rel="stylesheet" type="text/css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<header>
+			<div class="container clearfix">
+				<h1>ABA Lookup</h1>
+				<!--
+				<nav class="right">
+					<div class="icon">
+						<i class="icon-search"></i>
+					</div>
+					<a href="#">Search</a>
+					<div class="icon">
+						<i class="icon-user"></i>
+					</div>
+					<a href="#">My Profile</a>
+				</nav>
+				-->
 			</div>
-			<div class="right">
-				<div class="divider"></div>
-				<div class="icon">
-					<i class="icon-search"></i>
-				</div> 
-				<a href="#">SEARCH</a>
-				<div class="divider"></div>
-				<div class="icon">
-					<i class="icon-user"></i>
-				</div> 
-				<a href="#">MY PROFILE</a>
-				<div class="divider"></div>
-			</div>
-		</nav>
-	</header>
-	<!-- END TOPNAV -->
-	
-	<!-- START CONTENT -->
-	<div id="content">
-		<div class="container">
-			<h1>Sign up to use ABA Lookup</h1>
-			<div class="left">
-				
-				<label for="usertype" class="in">User Type:</label><br />
-				<select id="usertype">
-					<option id="parent">Parent</option>
-					<option id="therapist">Therapist</option>
-				</select>
-			
-				<label for="displayname" class="in">Display name</label><br />
-				<span class="add-on"><i class="icon-user"></i></span>
-				<input type="text" placeholder="display name" id="displayname" />
-				
-				<label for="email" class="in">Email</label><br />
-				<span class="add-on"><i class="icon-envelope"></i></span>
-				<input type="email" placeholder="email" id="email" />
-				
-				<label for="password" class="in">Password</label><br />
-				<span class="add-on"><i class="icon-key"></i></span>
-				<input type="password" placeholder="password" id="password" />
-				
-				<label for="confirmpassword" class="in">Confirm Password</label><br />
-				<span class="add-on"><i class="icon-key"></i></span>
-				<input type="password" placeholder="confirm password" id="password" />
-				
-				
-				<br /><br />
-				
-            <label for="next" class="in">Next</label><br />
-            <button>Next</Button>
-            <br /><br />
-				
-			</div>
-			<div class="right">
-				<h3>Tips</h3>
-            Placeholder text!!!
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-	<!-- END CONTENT -->
-	
-	<!-- START FOOTER -->
-		<div id="footer">
-		<div class="container">
-			<div class="left">
-				<h1>Contact us</h1>
-				<div class="soc">
-					<i class="icon-twitter"></i>
+		</header>
+		<div id="content">
+			<div class="container clearfix">
+				<h2>Sign up to start using ABA Lookup</h2>
+				<div class="left">
+					<form action="therapistsignup.html" method="post">
+						<div class="row">
+							<label for="usertype">User Type</label>
+							<select id="usertype">
+								<option value="parent">Parent</option>
+								<option value="therapist">Therapist</option>
+							</select>
+						</div>
+						<div class="row">
+							<label for="username">Username</label>
+							<input id="username" type="text" placeholder="Your display name" />
+						</div>
+						<div class="row">
+							<label for="emailaddress">Email address</label>
+							<input id="emailaddress" type="email" placeholder="Email address" />
+						</div>
+						<div class="row">
+							<label for="password">Password</label>
+							<input id="password" type="password" placeholder="Your password" />
+						</div>
+						<div class="row">
+							<label for="confirmpassword">Confirm your password</label>
+							<input id="confirmpassword" type="password" placeholder="Confirm your password" />
+						</div>
+						<div class="row">
+							<input id="next-step" type="submit" value="Next Step" />
+						</div>
+					</form>
 				</div>
-				<div class="soc-tri"></div>
-				<div class="soc-link">Twitter</div>
-				<div class="soc">
-					<i class="icon-facebook-sign"></i>
-				</div>
-				<div class="soc-tri"></div>
-				<div class="soc-link">Facebook</div>
-				<div class="soc">
-					<i class="icon-envelope"></i>
-				</div>
-				<div class="soc-tri"></div>
-				<div class="soc-link">Email</div>
-				<div class="soc">
-					<i class="icon-globe"></i>
-				</div>
-				<div class="soc-tri"></div>
-				<div class="soc-link">Webiste</div>
-			</div>
-			<div class="center">
-				<h1>Navigation</h1>
-				<ul>
-					<li>Sponsors</li>
-					<li>Documentation/Help</li>
-					<li>MUN CS Society</li>
-					<li>Autism Society NL</li>
-					<li>Other Resources</li>
-				</ul>
-			</div>
-			<div class="right">
-				<h1>About Us</h1>
-				<div class="about">
-					<div class="center-text">
-						<img src="images/footerlogo.png">
-					</div>This software is copyright MUN Comp Sci Community Initiative and is licensed under MIT Open Source restrictions.  
+				<div class="right">
+					<h3>Details</h3>
+					<p>
+						Lorem ipsum dolor sit amet.
+					</p>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- END FOOTER -->
-	
-	<script type="text/javascript">
-	  WebFontConfig = {
-	    google: { families: [ 'Open+Sans:400,800,700:latin' ] }
-	  };
-	  (function() {
-	    var wf = document.createElement('script');
-	    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-	      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-	    wf.type = 'text/javascript';
-	    wf.async = 'true';
-	    var s = document.getElementsByTagName('script')[0];
-	    s.parentNode.insertBefore(wf, s);
-	  })(); </script>	
-</body>
+		<footer>
+			<div class="container clearfix">
+				<div class="left">
+					<h4>Contact Us</h4>
+					<div class="soc">
+						<i class="icon-twitter"></i>
+					</div>
+					<div class="soc-tri"></div>
+					<div class="soc-link">Twitter</div>
+					<div class="soc">
+						<i class="icon-facebook"></i>
+					</div>
+					<div class="soc-tri"></div>
+					<div class="soc-link">Facebook</div>
+					<div class="soc">
+						<i class="icon-envelope"></i>
+					</div>
+					<div class="soc-tri"></div>
+					<div class="soc-link">Email</div>
+					<div class="soc">
+						<i class="icon-globe"></i>
+					</div>
+					<div class="soc-tri"></div>
+					<div class="soc-link">Website</div>
+					<!--
+						Ideally I'd like this
+						<a class="social" href="#">
+							<i class="icon-twitter"></i>
+							Twitter
+						</a>
+						But I'd at least be happy with this
+						<a class="social" href="#">
+							<i class="icon-facebook"></i>
+							<span class="social-triangle"></span>
+							Facebook
+						</a>
+					-->
+				</div>
+				<div class="center">
+					<h4>Navigation</h4>
+					<a href="#">Sponsors</a>
+					<a href="#">Documentation &amp; Help</a>
+					<a href="#">MUN CompSci Society</a>
+					<a href="#">Autism Society NL</a>
+					<a href="#">Other Resources</a>
+				</div>
+				<div class="right">
+					<h4>About Us</h4>
+					<div class="about">
+						<h5>ABA Lookup</h5>
+						<p>
+							This software is copyright MUN Comp Sci Community Initiative and is licensed under MIT Open Source restrictions.
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript">
+			WebFontConfig = {
+				google: { families: [ 'Open+Sans:400,800,700:latin' ] }
+			};
+			(function() {
+				var wf = document.createElement('script');
+				wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+			})();
+		</script>
+	</body>
 </html>
