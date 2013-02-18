@@ -15,10 +15,24 @@ use
 ;
 
 class ParentProfileController extends ABALookupController {
+	public function viewAction() {
+	
+		if (loggedIn())
+        $id->currentUser();
+        $email->getEmailById($id);
+		return new ViewModel(array(
+		"username" => $id,
+		"email" => $email,
+		));
+	}
 	public function editAction() {
 		return new ViewModel();
 	}
 	public function deleteAction() {
 		return new ViewModel();
 	}
+	
+	private function getEmailById($id) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $id));
+    }
 }
