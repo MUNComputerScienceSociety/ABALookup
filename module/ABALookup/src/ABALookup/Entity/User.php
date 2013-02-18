@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Entity;
+namespace ABALookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
