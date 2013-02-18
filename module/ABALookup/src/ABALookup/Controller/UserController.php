@@ -15,7 +15,8 @@ use
 	ABALookup\Entity\User,
     Zend\Crypt\Password\Bcrypt,
     Zend\Session\Container,
-    Zend\Mail
+    Zend\Mail,
+    ABALookup\Configuration\Mail as MailConfig
 ;
 
 class UserController extends ABALookupController {
@@ -77,12 +78,20 @@ class UserController extends ABALookupController {
 
             $em = $this->getEntityManager();
             $bcrypt = new Bcrypt();
+            $mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
+            $mailTransport = new Mail\Transport\Sendmail();
 
             $user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"),
                 "", "", false, false);
             $em->persist($user);
             $em->flush();
 
+            $message = new Mail\Message();
+            $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
+            $message->addTo($user->getEmail());
+            $message->setBody("Test Mail");
+            $message->setSubject("Test Subject");
+            $mailTransport->send($message);
 
             return $this->redirect()->toRoute('user', array('action' => 'registersuccess'));
         }
