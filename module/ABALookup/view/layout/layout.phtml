@@ -1,49 +1,111 @@
-<?php echo $this->doctype(); ?>
-
+<?php
+    echo $this->doctype();
+?>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <?php echo $this->headTitle("ABA Lookup")->setSeparator(':'); ?>
+    <meta name="description" content="" />
 
-        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <?php echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
+                                ->prependStylesheet($this->basePath() . "/css/general.css")
+                                ->prependStylesheet($this->basePath() . "/css/style.css");
+    ?>
 
-        <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
-
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
+</head>
+<body>
+<header>
+    <div class="container clearfix">
+        <h1>ABA Lookup</h1>
+        <!--
+        <nav class="right">
+            <div class="icon">
+                <i class="icon-search"></i>
+            </div>
+            <a href="#">Search</a>
+            <div class="icon">
+                <i class="icon-user"></i>
+            </div>
+            <a href="#">My Profile</a>
+        </nav>
+        -->
+    </div>
+</header>
+<div id="content">
+    <div class="container clearfix">
+        <?php echo $this->content; ?>
+    </div>
+</div>
+<footer>
+    <div class="container clearfix">
+        <div class="left">
+            <h4>Contact Us</h4>
+            <div class="soc">
+                <i class="icon-twitter"></i>
+            </div>
+            <div class="soc-tri"></div>
+            <div class="soc-link">Twitter</div>
+            <div class="soc">
+                <i class="icon-facebook"></i>
+            </div>
+            <div class="soc-tri"></div>
+            <div class="soc-link">Facebook</div>
+            <div class="soc">
+                <i class="icon-envelope"></i>
+            </div>
+            <div class="soc-tri"></div>
+            <div class="soc-link">Email</div>
+            <div class="soc">
+                <i class="icon-globe"></i>
+            </div>
+            <div class="soc-tri"></div>
+            <div class="soc-link">Website</div>
+            <!--
+                Ideally I'd like this
+                <a class="social" href="#">
+                    <i class="icon-twitter"></i>
+                    Twitter
+                </a>
+                But I'd at least be happy with this
+                <a class="social" href="#">
+                    <i class="icon-facebook"></i>
+                    <span class="social-triangle"></span>
+                    Facebook
+                </a>
+            -->
+        </div>
+        <div class="center">
+            <h4>Navigation</h4>
+            <a href="#">Sponsors</a>
+            <a href="#">Documentation &amp; Help</a>
+            <a href="#">MUN CompSci Society</a>
+            <a href="#">Autism Society NL</a>
+            <a href="#">Other Resources</a>
+        </div>
+        <div class="right">
+            <h4>About Us</h4>
+            <div class="about">
+                <h5>ABA Lookup</h5>
+                <p>
+                    This software is copyright MUN Comp Sci Community Initiative and is licensed under MIT Open Source restrictions.
+                </p>
             </div>
         </div>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - 2012 by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
+    </div>
+</footer>
+<script type="text/javascript">
+    WebFontConfig = {
+        google: { families: [ 'Open+Sans:400,800,700:latin' ] }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+</body>
 </html>
