@@ -44,7 +44,7 @@ class User{
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $moderator;
+	protected $moderator = false;
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/

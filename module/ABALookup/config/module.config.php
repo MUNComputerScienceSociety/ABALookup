@@ -64,6 +64,18 @@ return array(
 					),
 				),
 			),
+
+            'register-success' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => "/user/registersuccess",
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'ABALookup\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'registersuccess'
+                     )
+                ),
+            ),
 		),
 	),
 	'service_manager' => array(

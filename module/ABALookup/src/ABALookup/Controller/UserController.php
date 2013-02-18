@@ -12,7 +12,9 @@ namespace ABALookup\Controller;
 use
 	Zend\View\Model\ViewModel,
 	ABALookup\ABALookupController,
-	ABALookup\Entity\User
+	ABALookup\Entity\User,
+    Zend\Crypt\Password\Bcrypt,
+    Zend\View\Helper\BasePath
 ;
 
 class UserController extends ABALookupController {
@@ -53,10 +55,33 @@ class UserController extends ABALookupController {
                     "emailaddress" => $emailaddress,
                 ));
             }
+
+            if ($this->getUserByEmail($emailaddress)) {
+                return new ViewModel(array(
+                    "error" => "This email is already in use.",
+                    "usertype" => $usertype,
+                    "username" => $username,
+                    "emailaddress" => $emailaddress,
+                ));
+            }
+
+            $em = $this->getEntityManager();
+            $bcrypt = new Bcrypt();
+
+            $user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"),
+                "", "", false, false);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirect()->toRoute('register-success');
         }
 
         return new ViewModel();
 	}
+
+    public function registersuccessAction() {
+        return new ViewModel();
+    }
 
 	public function loginAction() {
 		return new ViewModel();
@@ -70,4 +95,8 @@ class UserController extends ABALookupController {
 	public function verifyuserAction() {
 		return new ViewModel();
 	}
+
+    private function getUserByEmail($email) {
+        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findBy(array('email' => $email));
+    }
 }
