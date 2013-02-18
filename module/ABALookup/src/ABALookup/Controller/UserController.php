@@ -22,6 +22,7 @@ use
 class UserController extends ABALookupController {
 
     public function registerAction() {
+        $this->layout('layout/layout_logged_out');
 
         if (isset ($_POST['submit'])) {
             $usertype = $_POST['usertype'];
@@ -40,14 +41,14 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
+            /*if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
                 return new ViewModel(array(
                     "error" => "A valid email address is required",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }
+            }*/
 
             if ($confirmpassword != $password) {
                 return new ViewModel(array(
@@ -67,14 +68,14 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            if ($this->getUserByEmail($emailaddress)) {
+            /*if ($this->getUserByEmail($emailaddress)) {
                 return new ViewModel(array(
                     "error" => "This email is already in use.",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }
+            }*/
 
             $em = $this->getEntityManager();
             $bcrypt = new Bcrypt();
@@ -86,10 +87,13 @@ class UserController extends ABALookupController {
             $em->persist($user);
             $em->flush();
 
+            $verificationUrl = $mailConfig->getUrl() . "/user/verifyuser?id=" . $user->getId()
+                . "&verification=" . $this->makeVerificationHash($user);
+
             $message = new Mail\Message();
             $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
             $message->addTo($user->getEmail());
-            $message->setBody("Test Mail");
+            $message->setBody(str_replace("{URL}", $verificationUrl, $mailConfig->getVerificationMessage()));
             $message->setSubject("Test Subject");
             $mailTransport->send($message);
 
@@ -100,10 +104,12 @@ class UserController extends ABALookupController {
 	}
 
     public function registersuccessAction() {
+        $this->layout('layout/layout_logged_out');
         return new ViewModel();
     }
 
 	public function loginAction() {
+        $this->layout('layout/layout_logged_out');
         if (isset($_POST['login'])) {
             $bcrypt = new Bcrypt();
 
@@ -118,11 +124,11 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            /*if (!$user->getVerified()) {
+            if (!$user->getVerified()) {
                 return new ViewModel(array(
                     'error' => 'You need to verify your email to login'
                 ));
-            }*/
+            }
 
             $session = new Container();
             $session->offsetSet('loggedIn', $user->getId());
@@ -142,6 +148,20 @@ class UserController extends ABALookupController {
 		return new ViewModel();
 	}
 	public function verifyuserAction() {
+        $id = $_GET['id'];
+        $verification = $_GET['verification'];
+
+        $user = $this->getUserById($id);
+        if ($user) {
+            if ($this->makeVerificationHash($user) == $verification) {
+                $user->setVerified(true);
+                $this->getEntityManager()->persist($user);
+                $session = new Container();
+                $session->offsetSet("loggedIn", $user->getId());
+                return $this->redirect()->toRoute('home-index');
+            }
+        }
+
 		return new ViewModel();
 	}
 
@@ -153,7 +173,7 @@ class UserController extends ABALookupController {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
     }
 
-    private function makeVeriicationHash($user) {
-        return hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword());
+    private function makeVerificationHash($user) {
+        return substr(hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword()), -10);
     }
 }
