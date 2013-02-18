@@ -93,7 +93,7 @@ class User{
 	}
 	
 	public function getModerator(){
-		return $this->verified;
+		return $this->moderator;
 	}
 	
 	public function setEmail($email){
