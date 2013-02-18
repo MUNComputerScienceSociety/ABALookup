@@ -15,9 +15,12 @@ use
 ;
 
 class HomeController extends ABALookupController {
+
 	public function indexAction() {
+        $this->layout('layout/layout_home');
 		return new ViewModel();
 	}
+
 	public function aboutusAction() {
 		return new ViewModel();
 	}
