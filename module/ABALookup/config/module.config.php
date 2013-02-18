@@ -73,13 +73,15 @@ return array(
             'user' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/user[/:action]',
+                    'route'    => '/user[/:action[/:id[/:verification]]]',
                     'constraints' => array(
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'ABALookup\Controller\User',
                         'action'     => 'login',
+                        'id'         => '',
+                        'verification' => ''
                     )
                 ),
             ),
