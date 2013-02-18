@@ -21,7 +21,7 @@ class User
 	 **/
 	protected $id;
 	/**
-	 * @Column(type="string")
+	 * @Id @Column(type="string")
 	 **/
 	protected $email;
 	/**
@@ -52,16 +52,19 @@ class User
 	 * @Column(type="boolean")
 	 **/
 	protected $verified;
+	/**
+	 * @Id @Column(type="string")
+	 **/
+	protected $display_name;
 	
-	public function __construct($email, $password, $therapist, $sex, $phone, $code_of_conduct, $ABA_course)
+	public function __construct($email, $display_name, $password, $therapist)
 	{
 		$this->email = $email;
+		$this->display_name = $display_name;
 		$this->password = $password;
 		$this->therapist = $therapist;
-		$this->sex = $sex;
-		$this->phone = $phone;
-		$this->code_of_content = $code_of_content;
-		$this->ABA_course = $ABA_course;
+		$this->code_of_content = false;
+		$this->ABA_course = false;
 	}
 	
 	public function getId()
@@ -109,6 +112,11 @@ class User
 		return $this->verified;
 	}
 	
+	public function getDisplayName()
+	{
+		return $this->display_name;
+	}
+	
 	public function setEmail($email)
 	{
 		$this->email = $email;
@@ -147,5 +155,10 @@ class User
 	public function setVerified($verified)
 	{
 		$this->verified = $verified;
+	}
+	
+	public function setDisplayName($display_name)
+	{
+		$this->display_name = $display_name;
 	}
 }

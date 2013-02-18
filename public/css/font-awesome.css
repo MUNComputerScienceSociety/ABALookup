@@ -21,34 +21,34 @@
  *  Work: Lead Product Designer @ http://kyruus.com
  */
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('../font/fontawesome-webfont.eot?v=3.0.1');
-  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
-    url('../font/fontawesome-webfont.woff?v=3.0.1') format('woff'),
-    url('../font/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'FontAwesome';
+	src: url('font/fontawesome-webfont.eot?v=3.0.1');
+	src: url('font/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
+	     url('font/fontawesome-webfont.woff?v=3.0.1') format('woff'),
+	     url('font/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 /*  Font Awesome styles
     ------------------------------------------------------- */
 [class^="icon-"],
 [class*=" icon-"] {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased;
-
-  /* sprites.less reset */
-  display: inline;
-  width: auto;
-  height: auto;
-  line-height: normal;
-  vertical-align: baseline;
-  background-image: none;
-  background-position: 0% 0%;
-  background-repeat: repeat;
-  margin-top: 0;
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: inherit;
+	-webkit-font-smoothing: antialiased;
+	
+	/* sprites.less reset */
+	display: inline;
+	width: auto;
+	height: auto;
+	line-height: normal;
+	vertical-align: baseline;
+	background-image: none;
+	background-position: 0% 0%;
+	background-repeat: repeat;
+	margin-top: 0;
 }
 /* more sprites.less reset */
 .icon-white,
@@ -64,50 +64,49 @@
 .dropdown-menu > .active > a > [class*=" icon-"],
 .dropdown-submenu:hover > a > [class^="icon-"],
 .dropdown-submenu:hover > a > [class*=" icon-"] {
-  background-image: none;
+	background-image: none;
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-  text-decoration: inherit;
-  display: inline-block;
-  speak: none;
+	text-decoration: inherit;
+	display: inline-block;
+	speak: none;
 }
 /* makes sure icons active on rollover in links */
 a [class^="icon-"],
 a [class*=" icon-"] {
-  display: inline-block;
+	display: inline-block;
 }
 /* makes the font 33% larger relative to the icon container */
 .icon-large:before {
-  vertical-align: -10%;
-  font-size: 1.3333333333333333em;
+	vertical-align: -10%;
+	font-size: 1.3333333333333333em;
 }
 .btn [class^="icon-"],
 .nav [class^="icon-"],
 .btn [class*=" icon-"],
 .nav [class*=" icon-"] {
-  display: inline;
-  /* keeps button heights with and without icons the same */
+	display: inline;
+	/* keeps button heights with and without icons the same */
 
 }
 .btn [class^="icon-"].icon-large,
 .nav [class^="icon-"].icon-large,
 .btn [class*=" icon-"].icon-large,
 .nav [class*=" icon-"].icon-large {
-  line-height: .9em;
+	line-height: .9em;
 }
 .btn [class^="icon-"].icon-spin,
 .nav [class^="icon-"].icon-spin,
 .btn [class*=" icon-"].icon-spin,
 .nav [class*=" icon-"].icon-spin {
-  display: inline-block;
+	display: inline-block;
 }
 .nav-tabs [class^="icon-"],
 .nav-pills [class^="icon-"],
 .nav-tabs [class*=" icon-"],
 .nav-pills [class*=" icon-"] {
   /* keeps button heights with and without icons the same */
-
 }
 .nav-tabs [class^="icon-"],
 .nav-pills [class^="icon-"],
@@ -117,50 +116,50 @@ a [class*=" icon-"] {
 .nav-pills [class^="icon-"].icon-large,
 .nav-tabs [class*=" icon-"].icon-large,
 .nav-pills [class*=" icon-"].icon-large {
-  line-height: .9em;
+	line-height: .9em;
 }
 li [class^="icon-"],
 .nav li [class^="icon-"],
 li [class*=" icon-"],
 .nav li [class*=" icon-"] {
-  display: inline-block;
-  width: 1.25em;
-  text-align: center;
+	display: inline-block;
+	width: 1.25em;
+	text-align: center;
 }
 li [class^="icon-"].icon-large,
 .nav li [class^="icon-"].icon-large,
 li [class*=" icon-"].icon-large,
 .nav li [class*=" icon-"].icon-large {
-  /* increased font size for icon-large */
-
-  width: 1.5625em;
+	/* increased font size for icon-large */
+	
+	width: 1.5625em;
 }
 ul.icons {
-  list-style-type: none;
-  text-indent: -0.75em;
+	list-style-type: none;
+	text-indent: -0.75em;
 }
 ul.icons li [class^="icon-"],
 ul.icons li [class*=" icon-"] {
-  width: .75em;
+	width: .75em;
 }
 .icon-muted {
-  color: #eeeeee;
+	color: #eeeeee;
 }
 .icon-border {
-  border: solid 1px #eeeeee;
-  padding: .2em .25em .15em;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+	border: solid 1px #eeeeee;
+	padding: .2em .25em .15em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 .icon-2x {
-  font-size: 2em;
+	font-size: 2em;
 }
 .icon-2x.icon-border {
-  border-width: 2px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+	border-width: 2px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .icon-3x {
   font-size: 3em;

@@ -35,13 +35,27 @@
 	<!-- START CONTENT -->
 	<div id="content">
 		<div class="container">
-			<h1>Sign up to use ABA Lookup</h1>
+			<h1>Complete your profile to find matches</h1>
 			<div class="left">
 				
-				<label for="usertype" class="in">User Type:</label><br />
-				<select id="usertype">
-					<option id="parent">Parent</option>
-					<option id="therapist">Therapist</option>
+				<h2>Gender Preference:</h2>
+				<label for="gender" class="in">Gender Preference:</label><br />
+				<input type="radio" id="male" name="gender"/>
+				<label for="male">Male</label>
+				<input type="radio" id="female" name="gender" />
+				<label for="female">Female</label>
+				<input type="radio" id="none" name="gender" checked="checked"/>
+				<label for="none">No Preference</label>
+				<br /><br />
+				
+				<h2>Location:</h2>
+				<select multiple>
+					<option value="location">Location</option>
+					<option value="location">Location</option>
+					<option value="location">Location</option>
+					<option value="location">Location</option>
+					<option value="location">Location</option>
+					<option value="location">Location</option>
 				</select>
 			
 				<label for="displayname" class="in">Display name</label><br />
@@ -59,13 +73,7 @@
 				
 				<br /><br />
 				
-				<input type="radio" id="test2" name="group1"/>
-				<label for="test2">Radio Test</label>
-				<input type="radio" id="test3" name="group1" />
-				<label for="test3">Radio Test</label>
-				<input type="radio" id="test4" name="group1" />
-				<label for="test4">Radio Test</label>
-				<br /><br />
+				
 				
 				<input type="checkbox" id="test5" name="group2"/>
 				<label for="test5">Check Test</label><br />
@@ -73,6 +81,7 @@
 				<label for="test6">Check Test</label><br />
 				<input type="checkbox" id="test7" name="group2" />
 				<label for="test7">Check Test</label>
+				
 				
 			</div>
 			<div class="right">
