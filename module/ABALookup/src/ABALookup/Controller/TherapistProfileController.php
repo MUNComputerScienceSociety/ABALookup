@@ -17,6 +17,9 @@ use
 
 class TherapistProfileController extends ABALookupController {
 	public function editAction() {
+	
+		if (isset(_POST['edit'])) {
+		
 		return new ViewModel();
 	}
 	public function viewAction() {
