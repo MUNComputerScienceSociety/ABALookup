@@ -123,6 +123,7 @@ return array(
 		'template_map' => array(
 			'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'layout/layout_home'    => __DIR__ . '/../view/layout/layout_home.phtml',
+            'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
 			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/index.phtml',
 			'error/404'               => __DIR__ . '/../view/error/404.phtml',
 			'error/index'             => __DIR__ . '/../view/error/index.phtml',

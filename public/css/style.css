@@ -68,11 +68,12 @@ header a:hover {
 }
 
 #content {
+                  min-height: 600px;
 	background: url("../images/bg.png");
 	width: 100%;
 	border-top: 1px solid #5f6866;
 	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.4);
-	padding-bottom: 250px;
+	padding-bottom: 50px;
 }
 
 #content h2 {

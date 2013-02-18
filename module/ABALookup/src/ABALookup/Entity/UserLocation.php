@@ -7,10 +7,9 @@ use
 ;
 
 /**
- * @ORM\Entity
- * @ORM\Table(
- *     name="user_location"
- *     uniqueConstraints={@UniqueConstraint(name="user_idx", columns={"user_id", "location_id"})}
+ * @ORM\Entity @ORM\Table(
+ *     name="user_location",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="user_idx", columns={"user_id", "location_id"})}
  * )
  **/
 class UserLocation{

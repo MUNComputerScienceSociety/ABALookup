@@ -13,10 +13,14 @@ class Mail
 {
     protected $mailFrom;
     protected $mailFromName;
+    protected $verificationMessage;
+    protected $url;
 
-    function __construct($mailFrom, $mailFromName) {
+    function __construct($mailFrom, $mailFromName, $url, $verificationMessage) {
         $this->mailFrom = $mailFrom;
         $this->mailFromName = $mailFromName;
+        $this->url = $url;
+        $this->verificationMessage = $verificationMessage;
     }
 
     public function getMailFrom() {
@@ -25,5 +29,13 @@ class Mail
 
     public function getMailFromName() {
         return $this->mailFromName;
+    }
+
+    public function getUrl() {
+        return $this->url;
+    }
+
+    public function getVerificationMessage() {
+        return $this->verificationMessage;
     }
 }
