@@ -8,6 +8,10 @@ body {
 	background-size: cover;
 }
 
+.yella {
+	color: #f6cf1b;
+}
+
 .container {
 	width: 996px;
 	margin: 0 auto;
@@ -85,7 +89,7 @@ header a.button {
 	text-shadow: 1px 1px 1px #000000;
 }
 
-#intro .learn button {
+#intro .learn a {
 	background: #6ab9ac;
 	box-shadow: inset 0px 0px 2px #ffffff;
 	border: 1px solid #2f776b;
@@ -97,6 +101,7 @@ header a.button {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 700;
 	font-size: 14pt;
+	text-decoration: none;
 }
 
 #intro .learn:before {
@@ -104,10 +109,7 @@ header a.button {
 	position: relative;
 	top: 17px;
 	left: 15px;
-	
 }
-
-/** CONTENT **/
 
 #content {
 	width: 100%;
@@ -120,7 +122,7 @@ header a.button {
 	padding-bottom: 100px;
 }
 
-#content h1 {
+#content h2 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
 	color: #2c2b27;
@@ -128,7 +130,7 @@ header a.button {
 	line-height: 20px;
 }
 
-#content h2 {
+#content h3 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
 	color: #3e8579;
@@ -162,7 +164,9 @@ footer .right {
 	float: right;
 }
 
-footer h1 {
+footer h4 {
+	margin: 10px 0;
+	padding: 0;
 	text-transform: uppercase;
 	color: #dbdbdb;
 	font-family: 'Open Sans', sans-serif;
@@ -212,13 +216,10 @@ footer .soc-link {
 	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 }
 
-footer ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-footer li {
+footer a {
+	display: block;
+	color: #fff;
+	text-decoration: none;
 	margin-bottom: 5px;
 	background: #46453f;
 	padding: 0px 0px 5px 5px;
@@ -227,7 +228,7 @@ footer li {
 	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 }
 
-footer li:before {
+footer a:before {
 	content: "";
 	display: inline-block;
 	height: 0px;
@@ -248,9 +249,14 @@ footer .about {
 	height: 128px;
 }
 
-.center-text {
+footer .about h5 {
+	width: 192px;
+	height: 0;
+	margin: 0 auto;
+	padding: 71px 0 0 0;
+	overflow: hidden;
+	background: url("../images/footerlogo.png") no-repeat;
 	text-align: center;
-	width: 100%;
 	border-bottom: 1px solid #5b5a57;
 	margin-bottom: 10px;
 }
