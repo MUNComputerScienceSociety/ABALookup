@@ -18,7 +18,7 @@ class User{
 	 **/
 	protected $id;
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", unique=true)
 	 **/
 	protected $email;
 	/**
@@ -28,27 +28,27 @@ class User{
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $therapist;
+	protected $therapist = false;
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=false)
 	 **/
 	protected $sex; // :D
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", nullable=false)
 	 **/	
 	protected $code_of_conduct;
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", nullable=false)
 	 **/
 	protected $ABA_course;
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $moderator;
+	protected $moderator = false;
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $verified;
+	protected $verified = false;
 	
 	public function __construct($email, $password, $therapist, $sex, $phone, $code_of_conduct, $ABA_course){
 		$this->email = $email;
@@ -93,7 +93,7 @@ class User{
 	}
 	
 	public function getModerator(){
-		return $this->verified;
+		return $this->moderator;
 	}
 	
 	public function setEmail($email){

@@ -7,8 +7,8 @@
         <div class="row">
             <label for="usertype">User Type</label>
             <select name="usertype" id="usertype">
-                <option <?php if ($usertype == "parent") {echo "selected";}?> value="parent">Parent</option>
-                <option <?php if ($usertype == "therapist") {echo "selected";}?> value="therapist">Therapist</option>
+                <option <?php if ($this->usertype == "parent") {echo "selected";}?> value="parent">Parent</option>
+                <option <?php if ($this->usertype == "therapist") {echo "selected";}?> value="therapist">Therapist</option>
             </select>
         </div>
         <div class="row">

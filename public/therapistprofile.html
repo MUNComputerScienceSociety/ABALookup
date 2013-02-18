@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>ABA Lookup - Signup</title>
+		<title>ABA Lookup - Therapist Profile</title>
 		<meta name="description" content="" />
 		<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
 		<link href="css/general.css" rel="stylesheet" type="text/css" />
@@ -29,36 +29,22 @@
 		</header>
 		<div id="content">
 			<div class="container clearfix">
-				<h2>Sign up to start using ABA Lookup</h2>
+				<h2>Your Profile Information</h2>
 				<div class="left">
-					<form action="therapistsignup.html" method="post">
-						<div class="row">
-							<label for="usertype">User Type</label>
-							<select id="usertype">
-								<option value="parent">Parent</option>
-								<option value="therapist">Therapist</option>
-							</select>
-						</div>
-						<div class="row">
-							<label for="username">Username</label>
-							<input id="username" type="text" placeholder="Your display name" />
-						</div>
-						<div class="row">
-							<label for="emailaddress">Email address</label>
-							<input id="emailaddress" type="email" placeholder="Email address" />
-						</div>
-						<div class="row">
-							<label for="password">Password</label>
-							<input id="password" type="password" placeholder="Your password" />
-						</div>
-						<div class="row">
-							<label for="confirmpassword">Confirm your password</label>
-							<input id="confirmpassword" type="password" placeholder="Confirm your password" />
-						</div>
-						<div class="row">
-							<input id="next-step" type="submit" value="Next Step" />
-						</div>
-					</form>
+						<h3>Username</h3>
+						<span id="username">username goes here</span>
+						<h3>Email Address</h3>
+						<span id="email">email goes here</span>
+						<h3>Sex</h3>
+						<span id="sex">sex goes here</span>
+						<h3>Code of Conduct Status</h3>
+						<span id="code_of_conduct">code_of_conduct goes here</span>
+						<h3>ABA Course Status</h3>
+						<span id="aba_course">aba_course goes here</span>
+						<h3>Verification Status</h3>
+						<span id="verified">verified goes here</span>
+					<input id="edit" type="submit" value="Edit" />
+					<input id="editpassword" type="submit" value="Edit Password" />
 				</div>
 				<div class="right">
 					<h3>Details</h3>

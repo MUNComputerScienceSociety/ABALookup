@@ -7,7 +7,10 @@ use
 ;
 
 /**
- * @ORM\Entity @ORM\Table(name="parent_therapist_exclusion")
+ * @ORM\Entity @ORM\Table(
+ *     name="parent_therapist_exclusion",
+ *     uniqueConstraints={@UniqueConstraint(name="parent_therapist_idx", columns={"therapist_id", "parent_id"})}
+ * )
  **/
 class ParentTherapistExclusion
 {
@@ -23,6 +26,7 @@ class ParentTherapistExclusion
 	 * @ORM\OneToOne(targetEntity="User")
 	 **/
 	protected $parent;
+	
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
 	 **/

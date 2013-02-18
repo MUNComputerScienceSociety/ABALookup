@@ -24,7 +24,7 @@ class Location
 	/**
 	 * @ORM\Column(type="boolean")
 	 **/
-	protected $enabled;
+	protected $enabled = true;
 	
 	public function __construct($name)
 	{
