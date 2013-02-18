@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace ABALookup;
 
 use
 	Zend\Mvc\Controller\AbstractActionController,
@@ -15,7 +15,7 @@ use
 	Doctrine\ORM\EntityManager
 ;
 
-abstract class ApplicationController extends AbstractActionController {
+abstract class ABALookupController extends AbstractActionController {
 	
 	/**
 	Ê* @var Doctrine\ORM\EntityManager
