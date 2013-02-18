@@ -1,8 +1,6 @@
+/** MAIN BODY **/
+
 body {
-<<<<<<< HEAD
-    padding-top: 60px;
-    padding-bottom: 40px;
-=======
 	margin: 0;
 	padding: 0;
 }
@@ -161,50 +159,38 @@ body {
 	color: #555555;
 	margin-right: -7px;
 	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
->>>>>>> login + style (AGAIN!!)
 }
 
-.zf-green {
-    color: #68b604;
+#content input[type="checkbox"] {
+    display:none;
 }
 
-.btn-success {
-  background-color: #57a900;
-  background-image: -moz-linear-gradient(top, #70d900, #57a900);
-  background-image: -ms-linear-gradient(top, #70d900, #57a900);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
-  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
-  background-image: -o-linear-gradient(top, #70d900, #57a900);
-  background-image: linear-gradient(top, #70d900, #57a900);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+#content input[type="checkbox"] + label:before {
+	content: "";
+    display:inline-block;
+    width:0px;
+    height:25px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url("../images/sprites.png") left top no-repeat;
+    cursor:pointer;
+    padding-left: 26px;
 }
 
-.btn-success:hover,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  background-color: #57a900;
+#content input[type="checkbox"]:checked + label:before {
+	content: "";
+    background:url("../images/sprites.png") -29px top no-repeat;
 }
 
-<<<<<<< HEAD
-.btn-success:active, .btn-success.active {
-  background-color: #57a900;
-=======
 #content input[type="checkbox"] + label {
 	font-family: 'Open Sans', sans-serif;
     font-size: 14pt;
     margin-right: 20px;
->>>>>>> login + style (AGAIN!!)
 }
 
-div.container a.brand {
-    background: url("../images/zf2-logo.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 40px;
+#content input[type="radio"] {
+    display:none;
 }
-<<<<<<< HEAD
-=======
 
 #content input[type="radio"] + label:before {
 	content: "";
@@ -352,4 +338,3 @@ div.container a.brand {
 	border-bottom: 1px solid #5b5a57;
 	margin-bottom: 10px;
 }
->>>>>>> login + style (AGAIN!!)
