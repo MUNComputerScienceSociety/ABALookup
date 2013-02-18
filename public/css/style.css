@@ -112,7 +112,7 @@ header a:hover {
 	font-size: 9pt;
 }
 
-#content label.in {
+#content form label {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 700;
 	text-transform: uppercase;
