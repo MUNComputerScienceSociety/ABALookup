@@ -1,0 +1,14 @@
+The ABA Lookup program is designed to make the process of matching ABA Therapists and parents of children with Autism easier.  This website helps matches ABA therapists with parents looking for therapy for their children.
+You can sign up as either a parent or an ABA therapist.  Each user can make a schedule to show when they are available for therapy.  Parents can then search for therapists that match their needs.  Parents can choose to contact a therapist, and they will respond from their email.
+----
+The problem finding a therapist or family is often three fold:
+
+* Finding a therapist or family is a challenge in itself.
+* Successfully finding a therapist or family only to realize that the schedules don’t match, resulting in repeating the entire process.
+* Finding out if the therapist and the child requiring therapy are a good match.
+
+ABALookup eliminates the first two problems.  By providing one central location for both therapists and parents to find each other, it saves time and energy resulting in a child with ASD receiving the therapy they need as soon as possible.   
+After entering their schedule and any other criteria (IE: Location, whether the child prefers Male or Female therapists, etc), the search finds a match based on your personal needs.  The first result in the list is designated as the best match for you according to the input you provided.  In doing this we eliminate both the first and second problems, namely locating a therapist and matching the schedule of both the therapist and the parents.
+With two thirds of the problem taken care of, all that is left is to introduce both the therapist and the child.  At this point we hope that you have successfully found your therapist.  If not, it is only a matter of contacting the second result on your list, thus saving you from having to start from square one.
+---
+When it comes to finding an Applied Behaviour Analysis (ABA) therapist in guiding the development of your child, parents/guardians often encounter great difficulty in finding and/or acquiring a therapist within a reasonable amount of time. That time can be further lengthened by the possibility of incompatibility between the child and therapist, and scheduling times with the therapist.
