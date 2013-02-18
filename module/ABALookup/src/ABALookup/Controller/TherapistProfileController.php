@@ -60,3 +60,4 @@ class TherapistProfileController extends ABALookupController {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('verified' => $id));
     }
 }
+}
