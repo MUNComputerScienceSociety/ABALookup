@@ -10,14 +10,14 @@
 return array(
 	'doctrine' => array(
 		'driver' => array(
-			'application_annotation_driver' => array(
+			'aba-lookup_annotation_driver' => array(
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
 				'paths' => array(realpath(__DIR__ . '/../src/ABALookup/Entity/'))
 			),
 			'orm_default' => array(
 				'drivers' => array(
-					'ABALookup\Entity' => 'application_annotation_driver'
+					'ABALookup\Entity' => 'aba-lookup_annotation_driver'
 				)
 			)
 		)
@@ -38,10 +38,10 @@ return array(
 			// new controllers and actions without needing to create a new
 			// module. Simply drop new controllers in, and you can access them
 			// using the path /application/:controller/:action
-			'application' => array(
+			'aba-lookup' => array(
 				'type'    => 'Literal',
 				'options' => array(
-					'route'    => '/application',
+					'route'    => '/',
 					'defaults' => array(
 						'__NAMESPACE__' => 'ABALookup\Controller',
 						'controller'    => 'Index',
@@ -53,7 +53,7 @@ return array(
 					'default' => array(
 						'type'    => 'Segment',
 						'options' => array(
-							'route'    => '/[:controller[/:action]]',
+							'route'    => '[:controller[/:action]]',
 							'constraints' => array(
 								'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
 								'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
