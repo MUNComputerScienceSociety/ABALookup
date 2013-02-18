@@ -13,7 +13,7 @@ body {
 /** TOP NAVIGATION **/
 
 #topnav {
-	background: url(images/top_bg.png);
+	background: url("../images/top_bg.png");
 	width: 100%;
 	height: 100px;
 	font-family: 'Open Sans', sans-serif;
@@ -67,7 +67,7 @@ body {
 /** CONTENT **/
 
 #content {
-	background: url(images/bg.png);
+	background: url("../images/bg.png");
 	width: 100%;
 	border-top: 1px solid #5f6866;
 	box-shadow: 0px 0px 40px rgba(0,0,0,0.4);
@@ -136,14 +136,14 @@ body {
     height:25px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
-    background:url(images/sprites.png) left top no-repeat;
+    background:url("../images/sprites.png") left top no-repeat;
     cursor:pointer;
     padding-left: 26px;
 }
 
 #content input[type="checkbox"]:checked + label:before {
 	content: "";
-    background:url(images/sprites.png) -29px top no-repeat;
+    background:url("../images/sprites.png") -29px top no-repeat;
 }
 
 #content input[type="checkbox"] + label {
@@ -162,14 +162,14 @@ body {
     height:25px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
-    background:url(images/sprites.png) -60px top no-repeat;
+    background:url("../images/sprites.png") -60px top no-repeat;
     cursor:pointer;
     padding-left: 26px;
 }
 
 #content input[type="radio"]:checked + label:before {
 	content: "";
-    background:url(images/sprites.png) -87px top no-repeat;
+    background:url("../images/sprites.png") -87px top no-repeat;
 }
 
 #content input[type="radio"] + label {

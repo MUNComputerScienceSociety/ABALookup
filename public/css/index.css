@@ -3,7 +3,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	background: url(images/pic_bg.jpg) no-repeat center center fixed; 
+	background: url("../images/pic_bg.jpg") no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -25,7 +25,7 @@ body {
 	text-transform: uppercase;
 	color: #555555;
 	text-shadow: 1px 1px 0px #ffffff;
-	background: url(images/bg.png);
+	background: url("../images/bg.png");
 	font-size: 14pt;
 	border-bottom: 1px solid #000000;
 	box-shadow: 0px 0px 50px #000000;
@@ -99,7 +99,7 @@ body {
 }
 
 #intro .learn:before {
-	content: url('images/btn_ribbon.png');
+	content: url("../images/btn_ribbon.png");
 	position: relative;
 	top: 17px;
 	left: 15px;
@@ -110,7 +110,7 @@ body {
 
 #content {
 	width: 100%;
-	background: url(images/bg.png);
+	background: url("../images/bg.png");
 	box-shadow: -1px 0px 50px #000000;
 	border-top: 1px solid #000000;
 	padding-top: 50px;
