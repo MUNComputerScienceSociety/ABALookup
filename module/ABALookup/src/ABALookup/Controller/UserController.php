@@ -83,7 +83,7 @@ class UserController extends ABALookupController {
             $mailTransport = new Mail\Transport\Sendmail();
 
             $user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"),
-                "", "", false, false);
+                "", "", false, false, $username);
             $em->persist($user);
             $em->flush();
 

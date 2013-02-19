@@ -15,53 +15,52 @@ use
 ;
 
 class AdminController extends ABALookupController {
+
 	public function indexAction() {
-		return new ViewModel();	
+        if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+        $list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
+        if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
+        else $list = $list->findBy(array());
+
+        return new ViewModel(array('model' => $list));
 	}
-	public function confirmuserAction() {
-		return new ViewModel();
-	}
-	public function deleteuserAction() {
-		#A check to see that the user is both logged in and has moderator status.
-		if (!$this->loggedIn() || !$this->currentUser()->getModerator()) 
-			return $this->redirect()->toRoute('home-index');
-			
-		if (isset ($_POST['submit'])) {
-			$user_to_delete_id = $_POST['user_id'];
-			
-			$user_to_delete = $this_.getUserById($user_to_delete_id);
-			if (!$user_to_delete) {
-				return new ViewModel(array(
-					'error' => 'The selected user does not exist.'
-				));
-			}	
-			else {
-				$this->getEntityManager()->remove($user_to_delete);
-				
-				###Confirmation???###
-			}
-		}
-			
-		return new ViewModel();
-	}
-	public function resetpasswordAction() {
-		return new ViewModel();
-	}
-	public function listusersAction() {
-		return new ViewModel();
-	}
-	public function addadminAction() {
-		return new ViewModel();
-	}
-	public function removeadminAction() {
-		return new ViewModel();
-	}
-	
+
+	public function deleteAction() {
+        return new ViewModel();
+    }
+
+    public function changepasswordAction() {
+        return new ViewModel();
+    }
+
+    public function confirmAction() {
+        return new ViewModel();
+    }
+
+    public function moderatorAction() {
+        return new ViewModel();
+    }
+
+    public function unmoderatorAction() {
+        return new ViewModel();
+    }
+
+
+
+
 	private function getUserByEmail($email) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
     }
 
     private function getUserById($id) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+    }
+
+    private function requiresAdmin() {
+        if ($this->loggedIn())
+            if ($this->currentUser()->getModerator())
+                return true;
+        return false;
     }
 }

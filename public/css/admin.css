@@ -1,13 +1,13 @@
 @charset "utf-8";
 
-table {
+.admin_table {
 	width: 100%;
 	font-family: sans-serif;
 	border-spacing: 0;
 	border: 1px solid #cecece;
 }
 
-thead {
+.admin_table thead {
 	background: #cecece;
 	font-family: 'Open Sans', sans-serif;
 	color: #fff;
@@ -17,20 +17,20 @@ thead {
 	text-align: left;
 }
 
-tbody tr>:first-child,
-thead tr>:first-child {
+.admin_table tbody tr>:first-child,
+.admin_table thead tr>:first-child {
 	width: 15px;
 }
 
-thead tr {
+.admin_table thead tr {
 	height: 50px;
 }
 
-tbody>:nth-child(even) {
+.admin_table tbody>:nth-child(even) {
 	background: #e7e8e8;
 }
 
-td {
+.admin_table td {
 	padding: 10px;
 	border: 1px solid #cecece;
 }

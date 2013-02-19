@@ -49,8 +49,13 @@ class User{
 	 * @ORM\Column(type="boolean")
 	 **/
 	protected $verified = false;
-	
-	public function __construct($email, $password, $therapist, $sex, $phone, $code_of_conduct, $ABA_course){
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $displayname;
+
+	public function __construct($email, $password, $therapist, $sex, $phone, $code_of_conduct, $ABA_course, $displayname){
 		$this->email = $email;
 		$this->password = $password;
 		$this->therapist = $therapist;
@@ -58,6 +63,7 @@ class User{
 		$this->code_of_conduct = $code_of_conduct;
 		$this->ABA_course = $ABA_course;
 		$this->verified = false;
+        $this->displayname = $displayname;
 	}
 	
 	public function getId(){
@@ -95,7 +101,11 @@ class User{
 	public function getModerator(){
 		return $this->moderator;
 	}
-	
+
+    public function getDisplayName(){
+        return $this->displayname;
+    }
+
 	public function setEmail($email){
 		$this->email = $email;
 	}
@@ -127,4 +137,8 @@ class User{
 	public function setModerator($moderator){
 		$this->moderator = $moderator;
 	}
+
+    public function setDisplayName($displayname) {
+        $this->displayname = $displayname;
+    }
 }
