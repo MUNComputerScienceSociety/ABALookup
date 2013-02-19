@@ -233,7 +233,7 @@ class UserController extends ABALookupController {
         $id = $_REQUEST['id'];
         $verification = $_REQUEST['verification'];
         $user = $this->getUserById($id);
-
+        die($id . " " . $verification);
         if ($user) {
             if ($this->makeVerificationHash($user) == $verification) {
                 $user->setVerified(true);
