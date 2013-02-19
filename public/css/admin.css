@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+table {
+	width: 100%;
+	font-family: sans-serif;
+	border-spacing: 0;
+	border: 1px solid #cecece;
+}
+
+thead {
+	background: #cecece;
+	font-family: 'Open Sans', sans-serif;
+	color: #fff;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.4);
+	font-size: 14pt;
+	text-align: left;
+}
+
+tbody tr>:first-child,
+thead tr>:first-child {
+	width: 15px;
+}
+
+thead tr {
+	height: 50px;
+}
+
+tbody>:nth-child(even) {
+	background: #e7e8e8;
+}
+
+td {
+	padding: 10px;
+	border: 1px solid #cecece;
+}
