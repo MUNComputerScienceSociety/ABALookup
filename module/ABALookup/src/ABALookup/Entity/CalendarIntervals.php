@@ -18,15 +18,15 @@ class CalendarIntervals
 	 **/
 	protected $id;
 	/**
-	 * @ORM\OneToOne(targetEntity="Calendar")
+	 * @ORM\OneToMany(mappedBy="id", targetEntity="Calendar")
 	 **/
 	protected $calendar;
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="integer")
 	 **/
 	protected $start_time;
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="integer")
 	 **/
 	protected $end_time;
 	/**
