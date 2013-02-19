@@ -21,6 +21,7 @@ $(function () {
 	el.on("click", function (e) {
 		e.preventDefault();
 		loadAbout();
+		$(this).remove();
 	});
 
 });
