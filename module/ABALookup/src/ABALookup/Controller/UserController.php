@@ -252,6 +252,30 @@ class UserController extends ABALookupController {
 		return new ViewModel();
 	}
 
+    public function changepasswordAction() {
+        if (isset($_POST["submit"])) {
+
+            $password = $_POST["password"];
+            $newpassword = $_POST["newpassword"];
+            $confirmpassword = $_POST["confirmpassword"];
+
+            if ($newpassword != $confirmpassword)
+                return new ViewModel(array('error' => 'Your new passwords do not match.'));
+
+            $bcrypt = new Bcrypt();
+            $user = $this->currentUser();
+
+            if (!$bcrypt->verify($password, $user->getPassword()))
+                return new ViewModel(array('error' => 'Your current password does not match.'));
+
+            $user->setPassword($bcrypt->create($newpassword));
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
+            return new ViewModel(array('error' => 'Your password has been updated'));
+        }
+        return new ViewModel();
+    }
+
     private function getUserByEmail($email) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
     }
