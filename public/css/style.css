@@ -363,6 +363,7 @@ header a:hover {
 #logout a:visited,
 #logout a:active {
 	color: #555;
+	text-decoration: none;
 }
 
 #logout a:hover {
