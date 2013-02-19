@@ -358,3 +358,13 @@ header a:hover {
 	padding-right: 20px;
 	padding-top: 20px;
 }
+
+#logout a:link,
+#logout a:visited,
+#logout a:active {
+	color: #555;
+}
+
+#logout a:hover {
+	color: #000;
+}
