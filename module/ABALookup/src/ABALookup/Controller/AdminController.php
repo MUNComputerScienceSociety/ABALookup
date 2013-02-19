@@ -48,6 +48,17 @@ class AdminController extends ABALookupController {
     }
 
     public function confirmAction() {
+		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+		if (isset($_POST['submit'])) {
+			$user_to_confrim = $this->getUserById($_POST['user_id']);
+			if (!$user_to_confirm) {
+				return new ViewModel(array(
+					'error' => 'The user selected does not exist.'
+				));
+			}
+			$user_to_confirm->setVerified($verified);
+		}
         return new ViewModel();
     }
 
