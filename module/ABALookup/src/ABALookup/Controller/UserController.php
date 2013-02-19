@@ -87,7 +87,8 @@ class UserController extends ABALookupController {
             $em->persist($user);
             $em->flush();
 
-            $verificationUrl = $mailConfig->getUrl() . "/user/verifyuser?id=" . $user->getId() . "&verification=" . $this->makeVerificationHash($user);
+            $verificationUrl = $mailConfig->getUrl() . "/user/verifyuser/" . $user->getId()
+                . "/" . $this->makeVerificationHash($user);
 
             $message = new Mail\Message();
             $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
@@ -158,8 +159,8 @@ class UserController extends ABALookupController {
 
             $mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
             $mailTransport = new Mail\Transport\Sendmail();
-            $resetUrl = $mailConfig->getUrl() . "/user/updatepassword?id=" . $user->getId()
-                . "&verification=" . $this->makeResetPasswordHash($user);
+            $resetUrl = $mailConfig->getUrl() . "/user/updatepassword/" . $user->getId()
+                . "/" . $this->makeResetPasswordHash($user);
 
             $message = new Mail\Message();
             $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
@@ -178,49 +179,47 @@ class UserController extends ABALookupController {
     }
 
     public function updatepasswordAction() {
-        if (isset($_REQUEST['id']) && isset($_REQUEST['verification'])) {
-            $id = $_REQUEST['id'];
-            $verification = $_REQUEST['verification'];
-            $user = $this->getUserById($id);
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $verification = $this->getEvent()->getRouteMatch()->getParam('verification');
+        $user = $this->getUserById($id);
 
-            if ($verification && $this->makeVerificationHash($user)) {
-                    if (isset($_POST['newpassword']) && isset($_POST['confirmpassword']) ) {
-                        $newpassword = $_POST['newpassword'];
-                        $confirmpassword = $_POST['confirmpassword'];
+        if ($verification && $this->makeVerificationHash($user)) {
+            if (isset($_POST['newpassword']) && isset($_POST['confirmpassword']) ) {
+                $newpassword = $_POST['newpassword'];
+                $confirmpassword = $_POST['confirmpassword'];
 
-                        if (strlen($newpassword) < 6) {
-                            return new ViewModel(array(
-                                'id' => $id,
-                                'verification' => $verification,
-                                'error' => "Your password must be at least 6 characters"
-                            ));
-                        }
-
-                        if ($newpassword == $confirmpassword) {
-                            $bcrypt = new Bcrypt();
-                            $user->setPassword($bcrypt->create($newpassword));
-                            $this->getEntityManager()->persist($user);
-                            $this->getEntityManager()->flush();
-
-                            $session = new Container();
-                            $session->offsetSet("loggedIn", $user->getId());
-
-                            if ($user->getTherapist())
-                                return $this->redirect()->toRoute('therapist-profile');
-                            else
-                                return $this->redirect()->toRoute('parent-profile');
-                        }
-                        return new ViewModel(array(
-                            'id' => $id,
-                            'verification' => $verification,
-                            'error' => "Your passwords did not match"
-                        ));
-                    }
+                if (strlen($newpassword) < 6) {
                     return new ViewModel(array(
                         'id' => $id,
-                        'verification' => $verification
+                        'verification' => $verification,
+                        'error' => "Your password must be at least 6 characters"
                     ));
                 }
+
+                if ($newpassword == $confirmpassword) {
+                    $bcrypt = new Bcrypt();
+                    $user->setPassword($bcrypt->create($newpassword));
+                    $this->getEntityManager()->persist($user);
+                    $this->getEntityManager()->flush();
+
+                    $session = new Container();
+                    $session->offsetSet("loggedIn", $user->getId());
+
+                    if ($user->getTherapist())
+                        return $this->redirect()->toRoute('therapist-profile');
+                    else
+                        return $this->redirect()->toRoute('parent-profile');
+                }
+                return new ViewModel(array(
+                    'id' => $id,
+                    'verification' => $verification,
+                    'error' => "Your passwords did not match"
+                ));
+            }
+            return new ViewModel(array(
+                'id' => $id,
+                'verification' => $verification
+            ));
         }
         return $this->redirect()->toRoute('user', array('action' => 'updatepassworderror'));
     }
@@ -230,10 +229,9 @@ class UserController extends ABALookupController {
     }
 
 	public function verifyuserAction() {
-        $id = $_REQUEST['id'];
-        $verification = $_REQUEST['verification'];
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $verification = $this->getEvent()->getRouteMatch()->getParam('verification');
         $user = $this->getUserById($id);
-        die($id . " " . $verification);
 
         if ($user) {
             if ($this->makeVerificationHash($user) == $verification) {
