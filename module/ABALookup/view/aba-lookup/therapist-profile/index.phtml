@@ -1,0 +1,45 @@
+<h2>Your Profile Information</h2>
+
+<p><?php echo $this->confirm;?></p>
+
+<div class="left">
+    <form action="/therapistprofile" method="post">
+        <h3>Display Name</h3>
+        <input type="text" id="displayname" name="displayname" value="<?php echo $this->profile->getDisplayName(); ?>">
+
+        <h3>Email Address</h3>
+        <p><?php echo $this->profile->getEmail(); ?></p>
+
+        <h3>Gender</h3>
+        <input <?php if ($this->profile->getSex() == "") {echo "checked";} ?> value="" type="radio" id="none" name="gender" />
+        <label for="none">Undisclosed</label>
+        <input <?php if ($this->profile->getSex() == "male") {echo "checked";} ?> value="male" type="radio" id="male" name="gender" />
+        <label for="male">Male</label>
+        <input <?php if ($this->profile->getSex() == "female") {echo "checked";} ?> value="female" type="radio" id="female" name="gender" />
+        <label for="female">Female</label>
+        <input <?php if ($this->profile->getSex() == "other") {echo "checked";} ?> value="other" type="radio" id="other" name="gender" />
+        <label for="other">Other</label>
+
+        <h3>Code of Conduct Status</h3>
+        <input <?php if ($this->profile->getCodeOfConduct()) {echo "checked";} ?> type="checkbox" id="code_of_conduct" name="code_of_conduct">
+        <label for="code_of_conduct">Current within the last 6 months</label>
+
+        <h3>ABA Course Status</h3>
+        <input <?php if ($this->profile->getABACourse()) {echo "checked";} ?> type="checkbox" id="aba_course" name="aba_course">
+        <label for="aba_course">I have completed the ABA Therapy Course</label>
+
+        <br/>
+        <input id="submit" name="submit" type="submit" value="Edit" />
+    </form>
+</div>
+<div class="right">
+    <h3>Details</h3>
+    <p>
+        This page contains the information associated with your account and may be publically visible. The Edit button will allow you to edit your information.
+    </p>
+
+    <h3>Change Password</h3>
+    <p>
+        <a href="/user/changepassword">Click Here</a> to change your password.
+    </p>
+</div>

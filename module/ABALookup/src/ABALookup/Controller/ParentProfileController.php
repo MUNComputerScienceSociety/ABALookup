@@ -24,6 +24,8 @@ class ParentProfileController extends ABALookupController {
             $profile->setDisplayName($_POST["username"]);
             $this->getEntityManager()->persist($profile);
             $this->getEntityManager()->flush();
+
+            return new ViewModel(array('profile' => $profile, 'confirm' => 'Your profile has been updated.'));
         }
 
         return new ViewModel(array('profile' => $profile));
