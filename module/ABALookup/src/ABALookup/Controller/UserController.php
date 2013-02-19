@@ -230,10 +230,9 @@ class UserController extends ABALookupController {
     }
 
 	public function verifyuserAction() {
-        $id = $_REQUEST['id'];
-        $verification = $_REQUEST['verification'];
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $verification = $this->getEvent()->getRouteMatch()->getParam('verification');
         $user = $this->getUserById($id);
-        die($id . " " . $verification);
 
         if ($user) {
             if ($this->makeVerificationHash($user) == $verification) {
