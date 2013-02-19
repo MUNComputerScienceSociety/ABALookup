@@ -17,7 +17,7 @@ use
 class AdminController extends ABALookupController {
 
 	public function indexAction() {
-        if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+    //    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
         $list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
         if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
@@ -48,6 +48,17 @@ class AdminController extends ABALookupController {
     }
 
     public function confirmAction() {
+		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+		if (isset($_POST['submit'])) {
+			$user_to_confirm = $this->getUserById($_POST['user_id']);
+			if (!$user_to_confirm) {
+				return new ViewModel(array(
+					'error' => 'The user selected does not exist.'
+				));
+			}
+			$user_to_confirm->setVerified($verified);
+		}
         return new ViewModel();
     }
 
