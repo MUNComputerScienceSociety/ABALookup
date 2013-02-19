@@ -27,6 +27,19 @@ class AdminController extends ABALookupController {
 	}
 
 	public function deleteAction() {
+        if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+		if (isset($_POST['submit'])) {
+			$user_to_delete = $this->getUserById($_Post['user_id']);
+			if (!$user_to_delete) {
+				return new ViewModel(array(
+					'error' => 'The user selected does not exist.'
+				));
+			}
+			$this->getEntityManager()->remove($user_to_delete);
+			
+		}
+		
         return new ViewModel();
     }
 
@@ -39,15 +52,34 @@ class AdminController extends ABALookupController {
     }
 
     public function moderatorAction() {
+		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+		if (isset($_Post['submit'])) {
+			$user_to_moderator = $this->getUserById($_Post['user_id']);
+			if (!$user_to_moderator) {
+				return new ViewModel(array(
+					'error' => 'The user selected does not exist.'
+				));
+			}
+			$user_to_moderator->setModerator(true);
+		}
+	
         return new ViewModel();
     }
 
     public function unmoderatorAction() {
+		$user_to_unmoderator = $this->getUserById($_Post['user_id']);
+		if (isset($_Post['submit'])) {
+			if (!$user_to_moderator) {
+				return new ViewModel(array(
+					'error' => 'The user selected does not exist.'
+				));
+			}
+		}
+		$user_to_unmoderator->setModerator(false);
+	
         return new ViewModel();
     }
-
-
-
 
 	private function getUserByEmail($email) {
         return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));

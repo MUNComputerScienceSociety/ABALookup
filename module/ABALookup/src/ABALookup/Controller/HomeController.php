@@ -24,4 +24,12 @@ class HomeController extends ABALookupController {
 	public function aboutusAction() {
 		return new ViewModel();
 	}
+	
+	public function privacypolicyAction() {
+		return new ViewModel();
+	}
+	
+	public function termsofuseAction() {
+		return new ViewModel();
+	}
 }
