@@ -39,6 +39,16 @@ header .right {
 	padding: 10px 0 0 0;
 }
 
+header nav.right:before {
+	content: " ";
+	width: 0px;
+	border-right: 1px solid #548880;
+	height: 80px;
+	box-shadow: 1px 0px 0px rgba(255, 255, 255, 0.4);
+	display: inline-block;
+	margin: 0px 20px -30px 20px;
+}
+
 header a:after {
 	content: " ";
 	width: 0px;
@@ -336,5 +346,26 @@ header a:hover {
 }
 
 .match a:hover {
+	color: #000;
+}
+
+#logout {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 700;
+	color: #555;
+	text-transform: uppercase;
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 20px;
+}
+
+#logout a:active,
+#logout a:visited,
+#logout a:link {
+	color: #555;
+	text-decoration: none;
+}
+
+#logout a:hover {
 	color: #000;
 }
