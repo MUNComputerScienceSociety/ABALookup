@@ -32,12 +32,6 @@ header h1 {
 	background: url("../images/logo.png") no-repeat;
 }
 
-header div:first-child a {
-	display: block;
-	top: 0;
-	left: 0;
-}
-
 header .right {
 	width: 500px;
 	float: right;
@@ -55,7 +49,7 @@ header nav.right:before {
 	margin: 0px 20px -30px 20px;
 }
 
-header nav.right a:after {
+header .right a:after {
 	content: " ";
 	width: 0px;
 	border-right: 1px solid #548880;
@@ -363,15 +357,4 @@ header a:hover {
 	text-align: right;
 	padding-right: 20px;
 	padding-top: 20px;
-}
-
-#logout a:active,
-#logout a:visited,
-#logout a:link {
-	color: #555;
-	text-decoration: none;
-}
-
-#logout a:hover {
-	color: #000;
 }
