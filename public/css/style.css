@@ -32,6 +32,12 @@ header h1 {
 	background: url("../images/logo.png") no-repeat;
 }
 
+header div:first-child a {
+	display: block;
+	top: 0;
+	left: 0;
+}
+
 header .right {
 	width: 500px;
 	float: right;
@@ -49,7 +55,7 @@ header nav.right:before {
 	margin: 0px 20px -30px 20px;
 }
 
-header a:after {
+header nav.right a:after {
 	content: " ";
 	width: 0px;
 	border-right: 1px solid #548880;

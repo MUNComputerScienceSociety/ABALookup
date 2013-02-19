@@ -31,8 +31,7 @@ class UserController extends ABALookupController {
             $password = $_POST['password'];
             $confirmpassword = $_POST['confirmpassword'];
 
-            if (empty($usertype) || empty($username) || empty($emailaddress) ||
-                empty($password) || empty($confirmpassword)) {
+            if (empty($usertype) || empty($username) || empty($emailaddress) || empty($password) || empty($confirmpassword)) {
                 return new ViewModel(array(
                     "error" => "All fields are required",
                     "usertype" => $usertype,
@@ -41,14 +40,16 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            /*if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
+            /*
+            if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
                 return new ViewModel(array(
                     "error" => "A valid email address is required",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }*/
+            }
+            */
 
             if ($confirmpassword != $password) {
                 return new ViewModel(array(
@@ -82,13 +83,11 @@ class UserController extends ABALookupController {
             $mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
             $mailTransport = new Mail\Transport\Sendmail();
 
-            $user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"),
-                "", "", false, false, $username);
+            $user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"), "", "", false, false, $username);
             $em->persist($user);
             $em->flush();
 
-            $verificationUrl = $mailConfig->getUrl() . "/user/verifyuser?id=" . $user->getId()
-                . "&verification=" . $this->makeVerificationHash($user);
+            $verificationUrl = $mailConfig->getUrl() . "/user/verifyuser?id=" . $user->getId() . "&verification=" . $this->makeVerificationHash($user);
 
             $message = new Mail\Message();
             $message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
@@ -233,6 +232,7 @@ class UserController extends ABALookupController {
 	public function verifyuserAction() {
         $id = $_GET['id'];
         $verification = $_GET['verification'];
+        var_dump($_GET);
 
         $user = $this->getUserById($id);
         if ($user) {
@@ -242,10 +242,12 @@ class UserController extends ABALookupController {
                 $this->getEntityManager()->flush();
                 $session = new Container();
                 $session->offsetSet("loggedIn", $user->getId());
-                if ($user->getTherapist())
+                if ($user->getTherapist()) {
                     return $this->redirect()->toRoute('therapist-profile');
-                else
+                }
+                else {
                     return $this->redirect()->toRoute('parent-profile');
+                }
             }
         }
 
