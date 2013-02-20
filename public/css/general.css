@@ -92,7 +92,19 @@ footer .soc-link {
 	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 }
 
-footer a {
+.soc-link a:link,
+.soc-link a:active,
+.soc-link a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.soc-link a:hover {
+	color: #e7e8e8;
+	text-decoration: none;
+}
+
+footer .center a {
 	display: block;
 	color: #fff;
 	text-decoration: none;
@@ -104,7 +116,7 @@ footer a {
 	box-shadow: 1px 1px 0px rgba(0,0,0,0.5);
 }
 
-footer a:before {
+footer .center a:before {
 	content: "";
 	display: inline-block;
 	height: 0px;
