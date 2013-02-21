@@ -51,7 +51,7 @@ class AdminController extends ABALookupController {
 		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
 		if (isset($_POST['submit'])) {
-			$user_to_confrim = $this->getUserById($_POST['user_id']);
+			$user_to_confirm = $this->getUserById($_POST['user_id']);
 			if (!$user_to_confirm) {
 				return new ViewModel(array(
 					'error' => 'The user selected does not exist.'
