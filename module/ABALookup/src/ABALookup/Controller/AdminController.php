@@ -17,7 +17,7 @@ use
 class AdminController extends ABALookupController {
 
 	public function indexAction() {
-        if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+    //    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
         $list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
         if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
