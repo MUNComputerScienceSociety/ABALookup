@@ -83,6 +83,20 @@ return array(
                     )
                 ),
             ),
+            'schedule' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/schedule[/:action[/:id]]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'ABALookup\Controller\Schedule',
+                        'action'     => 'index',
+                        'id'         => ''
+                    )
+                ),
+            ),
             'parent-profile' => array(
                 'type'    => 'Segment',
                 'options' => array(
@@ -150,9 +164,9 @@ return array(
             'layout/layout_home'    => __DIR__ . '/../view/layout/layout_home.phtml',
             'layout/layout_about'    => __DIR__ . '/../view/layout/layout_about.phtml',
             'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
-			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/index.phtml',
+			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/edit.phtml',
 			'error/404'               => __DIR__ . '/../view/error/404.phtml',
-			'error/index'             => __DIR__ . '/../view/error/index.phtml',
+			'error/index'             => __DIR__ . '/../view/error/edit.phtml',
 		),
 		'template_path_stack' => array(
 			__DIR__ . '/../view',

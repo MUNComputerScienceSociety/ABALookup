@@ -41,14 +41,14 @@ class UserController extends ABALookupController {
                 ));
             }
 
-            if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
+            /*if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
                 return new ViewModel(array(
                     "error" => "A valid email address is required",
                     "usertype" => $usertype,
                     "username" => $username,
                     "emailaddress" => $emailaddress,
                 ));
-            }
+            }*/
 
             if ($confirmpassword != $password) {
                 return new ViewModel(array(
