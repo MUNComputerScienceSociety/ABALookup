@@ -13,14 +13,14 @@ use
 	Zend\Mvc\Controller\AbstractActionController,
 	Zend\View\Model\ViewModel,
 	Doctrine\ORM\EntityManager,
-    Zend\Session\Container
+	Zend\Session\Container
 ;
 
 abstract class ABALookupController extends AbstractActionController {
-	
+
 	/**
-	�* @var Doctrine\ORM\EntityManager
-	�*/
+	 * @var Doctrine\ORM\EntityManager
+	 */
 	private $em;
 
 	public function getEntityManager() {
@@ -30,15 +30,15 @@ abstract class ABALookupController extends AbstractActionController {
 		return $this->em;
 	}
 
-    public function loggedIn() {
-        $session = new Container();
-        return $session->offsetExists("loggedIn");
-    }
+	public function loggedIn() {
+		$session = new Container();
+		return $session->offsetExists("loggedIn");
+	}
 
-    public function currentUser() {
-        $session = new Container();
-        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->
-            findOneBy(array('id' => $session->offsetGet("loggedIn")));
-    }
-	
+	public function currentUser() {
+		$session = new Container();
+		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->
+			findOneBy(array('id' => $session->offsetGet("loggedIn")));
+	}
+
 }

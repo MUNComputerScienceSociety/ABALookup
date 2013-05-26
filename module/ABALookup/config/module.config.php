@@ -70,61 +70,61 @@ return array(
 					)
 				),
 			),
-            'user' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/user[/:action[/:id[/:verification]]]',
-                    'constraints' => array(
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'ABALookup\Controller\User',
-                        'action'     => 'login',
-                        'id'         => '',
-                        'verification' => ''
-                    )
-                ),
-            ),
-            'schedule' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/schedule[/:action[/:id]]',
-                    'constraints' => array(
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'ABALookup\Controller\Schedule',
-                        'action'     => 'index',
-                        'id'         => ''
-                    )
-                ),
-            ),
-            'parent-profile' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/parentprofile[/:action]',
-                    'constraints' => array(
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'ABALookup\Controller\ParentProfile',
-                        'action'     => 'index',
-                    )
-                ),
-            ),
-            'therapist-profile' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/therapistprofile[/:action]',
-                    'constraints' => array(
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'ABALookup\Controller\TherapistProfile',
-                        'action'     => 'index',
-                    )
-                ),
-            ),
+			'user' => array(
+				'type'    => 'Segment',
+				'options' => array(
+					'route'    => '/user[/:action[/:id[/:verification]]]',
+					'constraints' => array(
+						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+					),
+					'defaults' => array(
+						'controller' => 'ABALookup\Controller\User',
+						'action'     => 'login',
+						'id'         => '',
+						'verification' => ''
+					)
+				),
+			),
+			'schedule' => array(
+				'type'    => 'Segment',
+				'options' => array(
+					'route'    => '/schedule[/:action[/:id]]',
+					'constraints' => array(
+						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+					),
+					'defaults' => array(
+						'controller' => 'ABALookup\Controller\Schedule',
+						'action'     => 'index',
+						'id'         => ''
+					)
+				),
+			),
+			'parent-profile' => array(
+				'type'    => 'Segment',
+				'options' => array(
+					'route'    => '/parentprofile[/:action]',
+					'constraints' => array(
+						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+					),
+					'defaults' => array(
+						'controller' => 'ABALookup\Controller\ParentProfile',
+						'action'     => 'index',
+					)
+				),
+			),
+			'therapist-profile' => array(
+				'type'    => 'Segment',
+				'options' => array(
+					'route'    => '/therapistprofile[/:action]',
+					'constraints' => array(
+						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+					),
+					'defaults' => array(
+						'controller' => 'ABALookup\Controller\TherapistProfile',
+						'action'     => 'index',
+					)
+				),
+			),
 		),
 	),
 	'service_manager' => array(
@@ -144,15 +144,15 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-            'ABALookup\Controller\About' => 'ABALookup\Controller\AboutController',
-            'ABALookup\Controller\Admin' => 'ABALookup\Controller\AdminController',
-            'ABALookup\Controller\Home' => 'ABALookup\Controller\HomeController',
-			'ABALookup\Controller\Index' => 'ABALookup\Controller\IndexController',
-            'ABALookup\Controller\Match' => 'ABALookup\Controller\MatchController',
-            'ABALookup\Controller\ParentProfile' => 'ABALookup\Controller\ParentProfileController',
-            'ABALookup\Controller\Schedule' => 'ABALookup\Controller\ScheduleController',
-            'ABALookup\Controller\TherapistProfile' => 'ABALookup\Controller\TherapistProfileController',
-            'ABALookup\Controller\User' => 'ABALookup\Controller\UserController',
+			'ABALookup\Controller\About'            => 'ABALookup\Controller\AboutController',
+			'ABALookup\Controller\Admin'            => 'ABALookup\Controller\AdminController',
+			'ABALookup\Controller\Home'             => 'ABALookup\Controller\HomeController',
+			'ABALookup\Controller\Index'            => 'ABALookup\Controller\IndexController',
+			'ABALookup\Controller\Match'            => 'ABALookup\Controller\MatchController',
+			'ABALookup\Controller\ParentProfile'    => 'ABALookup\Controller\ParentProfileController',
+			'ABALookup\Controller\Schedule'         => 'ABALookup\Controller\ScheduleController',
+			'ABALookup\Controller\TherapistProfile' => 'ABALookup\Controller\TherapistProfileController',
+			'ABALookup\Controller\User'             => 'ABALookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(
@@ -162,13 +162,13 @@ return array(
 		'not_found_template'       => 'error/404',
 		'exception_template'       => 'error/index',
 		'template_map' => array(
-			'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'layout/layout_home'    => __DIR__ . '/../view/layout/layout_home.phtml',
-            'layout/layout_about'    => __DIR__ . '/../view/layout/layout_about.phtml',
-            'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
-			'abalookup/index/index' => __DIR__ . '/../view/abalaunch/index/edit.phtml',
-			'error/404'               => __DIR__ . '/../view/error/404.phtml',
-			'error/index'             => __DIR__ . '/../view/error/edit.phtml',
+			'layout/layout'            => __DIR__ . '/../view/layout/layout.phtml',
+			'layout/layout_home'       => __DIR__ . '/../view/layout/layout_home.phtml',
+			'layout/layout_about'      => __DIR__ . '/../view/layout/layout_about.phtml',
+			'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
+			'abalookup/index/index'    => __DIR__ . '/../view/abalaunch/index/edit.phtml',
+			'error/404'                => __DIR__ . '/../view/error/404.phtml',
+			'error/index'              => __DIR__ . '/../view/error/edit.phtml',
 		),
 		'template_path_stack' => array(
 			__DIR__ . '/../view',
