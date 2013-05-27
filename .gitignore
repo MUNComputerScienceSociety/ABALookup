@@ -9,6 +9,9 @@ Destop.ini
 # Swap files
 *.swp
 
+# Local ideas
+*.idea.md
+
 # Visual Studio files
 *.tmp_proj
 *.suo

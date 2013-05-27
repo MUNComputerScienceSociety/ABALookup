@@ -11,6 +11,7 @@ Fork the project on GitHub, make some changes, and open a pull request. You can 
 Requirements
 ------------
 
+- Composer
 - Apache HTTP Server
 - PHP 5.3+
 - SQLite 3+
@@ -23,9 +24,8 @@ To contribute back to the project, you will need to have the above requirements 
     cd <where you keep your projects>
     git clone <your fork>
     cd <clone location>
-    php composer.phar self-update
-    php composer.phar update
-    php composer.phar install
+    composer update
+    composer install
 
 If not, see *Preparing a development environment* in the Wiki.
 
@@ -36,9 +36,7 @@ Copyright (C) 2013
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This program is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose. See the GNU General Public License for more details.
 
   [forking]:https://help.github.com/articles/fork-a-repo
   [pull requests]:https://help.github.com/articles/using-pull-requests
