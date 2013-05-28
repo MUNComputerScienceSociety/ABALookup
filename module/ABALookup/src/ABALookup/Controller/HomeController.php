@@ -17,21 +17,21 @@ use
 class HomeController extends ABALookupController {
 
 	public function indexAction() {
-        $this->layout('layout/layout_home');
+		$this->layout('layout/layout_home');
 		return new ViewModel();
 	}
 
 	public function aboutusAction() {
 		return new ViewModel();
 	}
-	
+
 	public function privacypolicyAction() {
-        $this->layout('layout/layout_logged_out');
+		$this->layout('layout/layout_logged_out');
 		return new ViewModel();
 	}
-	
+
 	public function termsofuseAction() {
-        $this->layout('layout/layout_logged_out');
+		$this->layout('layout/layout_logged_out');
 		return new ViewModel();
 	}
 }

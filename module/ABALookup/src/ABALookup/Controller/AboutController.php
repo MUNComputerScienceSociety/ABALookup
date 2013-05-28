@@ -17,7 +17,7 @@ use
 class AboutController extends ABALookupController {
 
 	public function indexAction() {
-        $this->layout('layout/layout_about');
+		$this->layout('layout/layout_about');
 		return new ViewModel();
 	}
 

@@ -17,17 +17,17 @@ use
 class AdminController extends ABALookupController {
 
 	public function indexAction() {
-    //    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+	//    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
-        $list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
-        if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
-        else $list = $list->findBy(array());
+		$list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
+		if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
+		else $list = $list->findBy(array());
 
-        return new ViewModel(array('model' => $list));
+		return new ViewModel(array('model' => $list));
 	}
 
 	public function deleteAction() {
-        if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
 		if (isset($_POST['submit'])) {
 			$user_to_delete = $this->getUserById($_Post['user_id']);
@@ -37,17 +37,17 @@ class AdminController extends ABALookupController {
 				));
 			}
 			$this->getEntityManager()->remove($user_to_delete);
-			
+
 		}
-		
-        return new ViewModel();
-    }
 
-    public function changepasswordAction() {
-        return new ViewModel();
-    }
+		return new ViewModel();
+	}
 
-    public function confirmAction() {
+	public function changepasswordAction() {
+		return new ViewModel();
+	}
+
+	public function confirmAction() {
 		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
 		if (isset($_POST['submit'])) {
@@ -59,10 +59,10 @@ class AdminController extends ABALookupController {
 			}
 			$user_to_confirm->setVerified($verified);
 		}
-        return new ViewModel();
-    }
+		return new ViewModel();
+	}
 
-    public function moderatorAction() {
+	public function moderatorAction() {
 		if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
 		if (isset($_Post['submit'])) {
@@ -74,11 +74,11 @@ class AdminController extends ABALookupController {
 			}
 			$user_to_moderator->setModerator(true);
 		}
-	
-        return new ViewModel();
-    }
 
-    public function unmoderatorAction() {
+		return new ViewModel();
+	}
+
+	public function unmoderatorAction() {
 		$user_to_unmoderator = $this->getUserById($_Post['user_id']);
 		if (isset($_Post['submit'])) {
 			if (!$user_to_moderator) {
@@ -88,22 +88,22 @@ class AdminController extends ABALookupController {
 			}
 		}
 		$user_to_unmoderator->setModerator(false);
-	
-        return new ViewModel();
-    }
+
+		return new ViewModel();
+	}
 
 	private function getUserByEmail($email) {
-        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
-    }
+		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
+	}
 
-    private function getUserById($id) {
-        return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
-    }
+	private function getUserById($id) {
+		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+	}
 
-    private function requiresAdmin() {
-        if ($this->loggedIn())
-            if ($this->currentUser()->getModerator())
-                return true;
-        return false;
-    }
+	private function requiresAdmin() {
+		if ($this->loggedIn())
+			if ($this->currentUser()->getModerator())
+				return true;
+		return false;
+	}
 }

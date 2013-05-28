@@ -11,50 +11,50 @@ namespace ABALookup\Configuration;
 
 class Mail
 {
-    protected $mailFrom;
-    protected $mailFromName;
-    protected $verificationMessage;
-    protected $verificationSubject;
-    protected $url;
-    protected $resetPasswordMessage;
-    protected $resetPasswordSubject;
+	protected $mailFrom;
+	protected $mailFromName;
+	protected $verificationMessage;
+	protected $verificationSubject;
+	protected $url;
+	protected $resetPasswordMessage;
+	protected $resetPasswordSubject;
 
-    function __construct($mailFrom, $mailFromName, $url, $verificationMessage, $verificationSubject,
-                         $resetPasswordMessage, $resetPasswordSubject) {
-        $this->mailFrom = $mailFrom;
-        $this->mailFromName = $mailFromName;
-        $this->url = $url;
-        $this->verificationMessage = $verificationMessage;
-        $this->verificationSubject = $verificationSubject;
-        $this->resetPasswordMessage = $resetPasswordMessage;
-        $this->resetPasswordSubject = $resetPasswordSubject;
-    }
+	function __construct($mailFrom, $mailFromName, $url, $verificationMessage, $verificationSubject,
+						 $resetPasswordMessage, $resetPasswordSubject) {
+		$this->mailFrom = $mailFrom;
+		$this->mailFromName = $mailFromName;
+		$this->url = $url;
+		$this->verificationMessage = $verificationMessage;
+		$this->verificationSubject = $verificationSubject;
+		$this->resetPasswordMessage = $resetPasswordMessage;
+		$this->resetPasswordSubject = $resetPasswordSubject;
+	}
 
-    public function getMailFrom() {
-        return $this->mailFrom;
-    }
+	public function getMailFrom() {
+		return $this->mailFrom;
+	}
 
-    public function getMailFromName() {
-        return $this->mailFromName;
-    }
+	public function getMailFromName() {
+		return $this->mailFromName;
+	}
 
-    public function getUrl() {
-        return $this->url;
-    }
+	public function getUrl() {
+		return $this->url;
+	}
 
-    public function getVerificationMessage() {
-        return $this->verificationMessage;
-    }
+	public function getVerificationMessage() {
+		return $this->verificationMessage;
+	}
 
-    public function getVerificationSubject() {
-        return $this->verificationSubject;
-    }
+	public function getVerificationSubject() {
+		return $this->verificationSubject;
+	}
 
-    public function getResetPasswordMessage() {
-        return $this->resetPasswordMessage;
-    }
+	public function getResetPasswordMessage() {
+		return $this->resetPasswordMessage;
+	}
 
-    public function getResetPasswordSubject() {
-        return $this->resetPasswordSubject;
-    }
+	public function getResetPasswordSubject() {
+		return $this->resetPasswordSubject;
+	}
 }

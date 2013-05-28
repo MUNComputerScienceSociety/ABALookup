@@ -16,19 +16,19 @@ use
 
 class ParentProfileController extends ABALookupController {
 
-    public function indexAction() {
-        if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+	public function indexAction() {
+		if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
-        $profile = $this->currentUser();
-        if (isset($_POST["edit"])) {
-            $profile->setDisplayName($_POST["username"]);
-            $this->getEntityManager()->persist($profile);
-            $this->getEntityManager()->flush();
+		$profile = $this->currentUser();
+		if (isset($_POST["edit"])) {
+			$profile->setDisplayName($_POST["username"]);
+			$this->getEntityManager()->persist($profile);
+			$this->getEntityManager()->flush();
 
-            return new ViewModel(array('profile' => $profile, 'confirm' => 'Your profile has been updated.'));
-        }
+			return new ViewModel(array('profile' => $profile, 'confirm' => 'Your profile has been updated.'));
+		}
 
-        return new ViewModel(array('profile' => $profile));
-    }
+		return new ViewModel(array('profile' => $profile));
+	}
 
 }
