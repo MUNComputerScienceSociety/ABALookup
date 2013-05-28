@@ -14,40 +14,40 @@ use
  **/
 class ParentTherapistExclusion
 {
-	
+
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
 	 **/
 	protected $id;
-	
+
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
 	 **/
 	protected $parent;
-	
+
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
 	 **/
 	protected $therapist;
-	
+
 	public function __construct($parent, $therapist)
 	{
 		$this->parent = $parent;
 		$this->therapist = $therapist;
 	}
-	
+
 	public function getId()
 	{
 		return $this->id;
 	}
-	
+
 	public function getParent()
 	{
 		return $this->parent;
 	}
-	
+
 	public function getTherapist()
 	{
 		return $this->therapist;
