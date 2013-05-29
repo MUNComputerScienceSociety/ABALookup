@@ -26,6 +26,7 @@ To contribute back to the project, you will need to have the above requirements 
     cd <clone location>
     composer update
     composer install
+    mv database/db.sqlite3.dist database/db.sqlite3
 
 If not, see *Preparing a development environment* in the Wiki.
 
