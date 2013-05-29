@@ -147,8 +147,8 @@ return array(
 		'template_map' => array(
 			// layouts
 			'layout/layout'            => __DIR__ . '/../view/layout/layout.phtml',
-			'layout/layout-home'       => __DIR__ . '/../view/layout/home.phtml',
-			'layout/layout-logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
+			'layout/home'       => __DIR__ . '/../view/layout/home.phtml',
+			'layout/logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
 			// error pages
 			'error/404'   => __DIR__ . '/../view/error/404.phtml',
 			'error/index' => __DIR__ . '/../view/error/index.phtml',
