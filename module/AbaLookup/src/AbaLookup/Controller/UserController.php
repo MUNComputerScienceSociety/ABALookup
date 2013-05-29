@@ -14,9 +14,9 @@ use
 	AbaLookup\Configuration\Mail as MailConfig,
 	AbaLookup\Entity\User,
 	Zend\Crypt\Password\Bcrypt,
-	Zend\Mail
+	Zend\Mail,
 	Zend\Session\Container,
-	Zend\View\Model\ViewModel,
+	Zend\View\Model\ViewModel
 ;
 
 class UserController extends AbaLookupController {
