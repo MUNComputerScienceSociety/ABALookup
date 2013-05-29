@@ -65,77 +65,64 @@ return array(
 					'route'    => '/terms',
 					'defaults' => array(
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'   => 'termsOfUse',
+						'action'     => 'termsOfUse',
 					),
 				),
 			),
 			'user' => array(
 				'type'    => 'Segment',
 				'options' => array(
-					'route'    => '/user[/:action[/:id[/:verification]]]',
+					'route'    => '/user[/:action]',
 					'constraints' => array(
-						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
 						'controller' => 'AbaLookup\Controller\User',
 						'action'     => 'login',
 						'id'         => '',
-						'verification' => ''
-					)
+					),
 				),
 			),
-			'schedule' => array(
+			'parent' => array(
 				'type'    => 'Segment',
 				'options' => array(
-					'route'    => '/schedule[/:action[/:id]]',
+					'route'    => '/parent/:id[/:action]',
 					'constraints' => array(
-						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id'     => '[a-zA-Z0-9][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\Schedule',
+						'controller' => 'AbaLookup\Controller\Parent',
 						'action'     => 'index',
-						'id'         => ''
-					)
+					),
 				),
 			),
-			'parent-profile' => array(
+			'therapist' => array(
 				'type'    => 'Segment',
 				'options' => array(
-					'route'    => '/parentprofile[/:action]',
+					'route'    => '/therapist/:id[/:action]',
 					'constraints' => array(
-						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id'     => '[a-zA-Z0-9][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\ParentProfile',
+						'controller' => 'AbaLookup\Controller\Therapist',
 						'action'     => 'index',
-					)
-				),
-			),
-			'therapist-profile' => array(
-				'type'    => 'Segment',
-				'options' => array(
-					'route'    => '/therapistprofile[/:action]',
-					'constraints' => array(
-						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
-					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\TherapistProfile',
-						'action'     => 'index',
-					)
 				),
 			),
 		),
 	),
 	'controllers' => array(
 		'invokables' => array(
-			'AbaLookup\Controller\Admin'            => 'AbaLookup\Controller\AdminController',
-			'AbaLookup\Controller\Home'             => 'AbaLookup\Controller\HomeController',
-			'AbaLookup\Controller\Index'            => 'AbaLookup\Controller\IndexController',
-			'AbaLookup\Controller\Match'            => 'AbaLookup\Controller\MatchController',
-			'AbaLookup\Controller\ParentProfile'    => 'AbaLookup\Controller\ParentProfileController',
-			'AbaLookup\Controller\Schedule'         => 'AbaLookup\Controller\ScheduleController',
-			'AbaLookup\Controller\TherapistProfile' => 'AbaLookup\Controller\TherapistProfileController',
-			'AbaLookup\Controller\User'             => 'AbaLookup\Controller\UserController',
+			'AbaLookup\Controller\Admin'     => 'AbaLookup\Controller\AdminController',
+			'AbaLookup\Controller\Home'      => 'AbaLookup\Controller\HomeController',
+			'AbaLookup\Controller\Index'     => 'AbaLookup\Controller\IndexController',
+			'AbaLookup\Controller\Match'     => 'AbaLookup\Controller\MatchController',
+			'AbaLookup\Controller\Parent'    => 'AbaLookup\Controller\ParentController',
+			'AbaLookup\Controller\Schedule'  => 'AbaLookup\Controller\ScheduleController',
+			'AbaLookup\Controller\Therapist' => 'AbaLookup\Controller\TherapistController',
+			'AbaLookup\Controller\User'      => 'AbaLookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(

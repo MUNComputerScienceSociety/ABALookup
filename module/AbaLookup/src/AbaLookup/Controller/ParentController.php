@@ -14,24 +14,21 @@ use
 	Zend\View\Model\ViewModel
 ;
 
-class TherapistProfileController extends AbaLookupController {
-
+class ParentController extends AbaLookupController {
 	public function indexAction() {
-		if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
+		if (!$this->loggedIn()) {
+			return $this->redirect()->toRoute('user', array('action' => 'login'));
+		}
 		$profile = $this->currentUser();
-
-		if (isset($_POST["submit"])) {
-			$profile->setDisplayName($_POST["displayname"]);
-			$profile->setSex($_POST["gender"]);
-			$profile->setCodeOfConduct(isset($_POST["code_of_conduct"]));
-			$profile->setABACourse(isset($_POST["aba_course"]));
+		if (isset($_POST["edit"])) {
+			$profile->setDisplayName($_POST["username"]);
 			$this->getEntityManager()->persist($profile);
 			$this->getEntityManager()->flush();
-
-			return new ViewModel(array('profile' => $profile, 'confirm' => 'Your profile has been updated.'));
+			return new ViewModel(array(
+				'profile' => $profile,
+				'confirm' => 'Your profile has been updated.'
+			));
 		}
-
 		return new ViewModel(array('profile' => $profile));
 	}
-
 }
