@@ -7,6 +7,11 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use
+	Zend\Mvc\Router\Http\Literal,
+	Zend\Mvc\Router\Http\Segment
+;
+
 return array(
 	'doctrine' => array(
 		'driver' => array(
@@ -25,7 +30,7 @@ return array(
 	'router' => array(
 		'routes' => array(
 			'home' => array(
-				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'type' => 'Literal',
 				'options' => array(
 					'route'    => '/',
 					'defaults' => array(
@@ -35,38 +40,33 @@ return array(
 				),
 			),
 			'about' => array(
-				'type' => 'Zend\Mvc\Router\Http\Literal',
+				'type' => 'Literal',
 				'options' => array(
-					'route'    => '/about',
+					'route'    => '/about-us',
 					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\About',
-						'action'     => 'index',
+						'controller' => 'AbaLookup\Controller\Home',
+						'action'     => 'aboutUs',
 					),
 				),
 			),
-			'home-index' => array(
+			'privacy' => array(
 				'type'    => 'Literal',
 				'options' => array(
-					'route'    => '/',
+					'route' => '/privacy',
 					'defaults' => array(
-						'controller'    => 'AbaLookup\Controller\Home',
-						'action'        => 'index',
+						'controller' => 'AbaLookup\Controller\Home',
+						'action'     => 'privacyPolicy'
 					),
 				),
-				'may_terminate' => true,
-				'child_routes' => array(
-					'default' => array(
-						'type'    => 'Segment',
-						'options' => array(
-							'route'    => '[:controller[/:action]]',
-							'constraints' => array(
-								'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-								'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-							),
-							'defaults' => array(
-							),
-						),
-					)
+			),
+			'terms' => array(
+				'type'    => 'Literal',
+				'options' => array(
+					'route'    => '/terms',
+					'defaults' => array(
+						'controller' => 'AbaLookup\Controller\Home',
+						'action'   => 'termsOfUse',
+					),
 				),
 			),
 			'user' => array(
@@ -126,24 +126,8 @@ return array(
 			),
 		),
 	),
-	'service_manager' => array(
-		'factories' => array(
-			'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
-		),
-	),
-	'translator' => array(
-		'locale' => 'en_US',
-		'translation_file_patterns' => array(
-			array(
-				'type'     => 'gettext',
-				'base_dir' => __DIR__ . '/../language',
-				'pattern'  => '%s.mo',
-			),
-		),
-	),
 	'controllers' => array(
 		'invokables' => array(
-			'AbaLookup\Controller\About'            => 'AbaLookup\Controller\AboutController',
 			'AbaLookup\Controller\Admin'            => 'AbaLookup\Controller\AdminController',
 			'AbaLookup\Controller\Home'             => 'AbaLookup\Controller\HomeController',
 			'AbaLookup\Controller\Index'            => 'AbaLookup\Controller\IndexController',
@@ -161,13 +145,13 @@ return array(
 		'not_found_template'       => 'error/404',
 		'exception_template'       => 'error/index',
 		'template_map' => array(
+			// layouts
 			'layout/layout'            => __DIR__ . '/../view/layout/layout.phtml',
-			'layout/layout_home'       => __DIR__ . '/../view/layout/layout_home.phtml',
-			'layout/layout_about'      => __DIR__ . '/../view/layout/layout_about.phtml',
-			'layout/layout_logged_out' => __DIR__ . '/../view/layout/layout_logged_out.phtml',
-			'abalookup/index/index'    => __DIR__ . '/../view/abalaunch/index/edit.phtml',
-			'error/404'                => __DIR__ . '/../view/error/404.phtml',
-			'error/index'              => __DIR__ . '/../view/error/edit.phtml',
+			'layout/layout-home'       => __DIR__ . '/../view/layout/home.phtml',
+			'layout/layout-logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
+			// error pages
+			'error/404'   => __DIR__ . '/../view/error/404.phtml',
+			'error/index' => __DIR__ . '/../view/error/index.phtml',
 		),
 		'template_path_stack' => array(
 			__DIR__ . '/../view',

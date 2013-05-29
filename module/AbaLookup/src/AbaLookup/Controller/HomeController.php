@@ -15,23 +15,20 @@ use
 ;
 
 class HomeController extends AbaLookupController {
-
 	public function indexAction() {
-		$this->layout('layout/layout_home');
+		$this->layout('layout/home');
 		return new ViewModel();
 	}
-
-	public function aboutusAction() {
+	public function aboutUsAction() {
+		$this->layout('layout/home');
 		return new ViewModel();
 	}
-
-	public function privacypolicyAction() {
-		$this->layout('layout/layout_logged_out');
+	public function privacyPolicyAction() {
+		$this->layout('layout/home');
 		return new ViewModel();
 	}
-
-	public function termsofuseAction() {
-		$this->layout('layout/layout_logged_out');
+	public function termsOfUseAction() {
+		$this->layout('layout/home');
 		return new ViewModel();
 	}
 }
