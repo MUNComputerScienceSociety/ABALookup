@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -9,45 +9,45 @@ use
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
- **/
+ */
 class User{
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
-	 **/
+	 */
 	protected $id;
 	/**
 	 * @ORM\Column(type="string", unique=true)
-	 **/
+	 */
 	protected $email;
 	/**
 	 * @ORM\Column(type="string")
-	 **/
+	 */
 	protected $password;
 	/**
 	 * @ORM\Column(type="boolean")
-	 **/
+	 */
 	protected $therapist = false;
 	/**
 	 * @ORM\Column(type="string", nullable=false)
-	 **/
+	 */
 	protected $sex; // :D
 	/**
 	 * @ORM\Column(type="boolean", nullable=false)
-	 **/
+	 */
 	protected $code_of_conduct;
 	/**
 	 * @ORM\Column(type="boolean", nullable=false)
-	 **/
+	 */
 	protected $ABA_course;
 	/**
 	 * @ORM\Column(type="boolean")
-	 **/
+	 */
 	protected $moderator = false;
 	/**
 	 * @ORM\Column(type="boolean")
-	 **/
+	 */
 	protected $verified = false;
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -8,30 +8,30 @@ use
 
 /**
  * @ORM\Entity @ORM\Table(name="calendar_interval")
- **/
+ */
 class CalendarIntervals
 {
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
-	 **/
+	 */
 	protected $id;
 	/**
 	 * @ORM\OneToMany(mappedBy="id", targetEntity="Calendar")
-	 **/
+	 */
 	protected $calendar;
 	/**
 	 * @ORM\Column(type="integer")
-	 **/
+	 */
 	protected $start_time;
 	/**
 	 * @ORM\Column(type="integer")
-	 **/
+	 */
 	protected $end_time;
 	/**
 	 * @ORM\Column(type="integer")
-	 **/
+	 */
 	protected $week_day;
 
 	public function __construct(Calendar $calendar, $start_time, $end_time, $week_day)

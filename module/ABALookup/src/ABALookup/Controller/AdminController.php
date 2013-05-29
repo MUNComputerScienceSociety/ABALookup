@@ -7,19 +7,19 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup\Controller;
+namespace AbaLookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController
+	AbaLookup\AbaLookupController,
+	Zend\View\Model\ViewModel
 ;
 
-class AdminController extends ABALookupController {
+class AdminController extends AbaLookupController {
 
 	public function indexAction() {
 	//    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
-		$list = $this->getEntityManager()->getRepository('ABALookup\Entity\User');
+		$list = $this->getEntityManager()->getRepository('AbaLookup\Entity\User');
 		if (isset($_REQUEST['email'])) $list = $list->findBy(array('email' => $_REQUEST['email']));
 		else $list = $list->findBy(array());
 
@@ -93,11 +93,11 @@ class AdminController extends ABALookupController {
 	}
 
 	private function getUserByEmail($email) {
-		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('email' => $email));
 	}
 
 	private function getUserById($id) {
-		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('id' => $id));
 	}
 
 	private function requiresAdmin() {

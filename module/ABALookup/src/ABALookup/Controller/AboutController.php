@@ -7,14 +7,14 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup\Controller;
+namespace AbaLookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController
+	AbaLookup\AbaLookupController,
+	Zend\View\Model\ViewModel
 ;
 
-class AboutController extends ABALookupController {
+class AboutController extends AbaLookupController {
 
 	public function indexAction() {
 		$this->layout('layout/layout_about');

@@ -7,19 +7,19 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup\Controller;
+namespace AbaLookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController,
-	ABALookup\Entity\User,
+	AbaLookup\AbaLookupController,
+	AbaLookup\Configuration\Mail as MailConfig,
+	AbaLookup\Entity\User,
 	Zend\Crypt\Password\Bcrypt,
+	Zend\Mail
 	Zend\Session\Container,
-	Zend\Mail,
-	ABALookup\Configuration\Mail as MailConfig
+	Zend\View\Model\ViewModel,
 ;
 
-class UserController extends ABALookupController {
+class UserController extends AbaLookupController {
 
 	public function registerAction() {
 		$this->layout('layout/layout_logged_out');
@@ -80,7 +80,7 @@ class UserController extends ABALookupController {
 
 			$em = $this->getEntityManager();
 			$bcrypt = new Bcrypt();
-			$mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
+			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
 			$mailTransport = new Mail\Transport\Sendmail();
 
 			$user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"), "", "", false, false, $username);
@@ -157,7 +157,7 @@ class UserController extends ABALookupController {
 				return new ViewModel(array('error' => "The email you are using was not found in the database."));
 			}
 
-			$mailConfig = $this->serviceLocator->get("ABALookup\Configuration\Mail");
+			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
 			$mailTransport = new Mail\Transport\Sendmail();
 			$resetUrl = $mailConfig->getUrl() . "/user/updatepassword/" . $user->getId()
 				. "/" . $this->makeResetPasswordHash($user);
@@ -277,11 +277,11 @@ class UserController extends ABALookupController {
 	}
 
 	private function getUserByEmail($email) {
-		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('email' => $email));
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('email' => $email));
 	}
 
 	private function getUserById($id) {
-		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->findOneBy(array('id' => $id));
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('id' => $id));
 	}
 
 	private function makeVerificationHash($user) {

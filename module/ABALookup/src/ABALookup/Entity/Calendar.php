@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -8,26 +8,26 @@ use
 
 /**
  * @ORM\Entity @ORM\Table(name="calendar")
- **/
+ */
 class Calendar
 {
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
-	 **/
+	 */
 	protected $id;
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
-	 **/
+	 */
 	protected $user;
 	/**
 	 * @ORM\Column(type="boolean")
-	 **/
+	 */
 	protected $enabled;
 	/**
 	 * @ORM\Column(type="string")
-	 **/
+	 */
 	protected $name;
 
 	public function __construct(User $user, $enabled, $name)
@@ -70,4 +70,5 @@ class Calendar
 	{
 		$this->name = $name;
 	}
+
 }

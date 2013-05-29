@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gerryhall
- * Date: 13-02-18
- * Time: 3:27 PM
- * To change this template use File | Settings | File Templates.
- */
 
-namespace ABALookup\Configuration;
+namespace AbaLookup\Configuration;
 
 class Mail
 {
@@ -20,7 +13,7 @@ class Mail
 	protected $resetPasswordSubject;
 
 	function __construct($mailFrom, $mailFromName, $url, $verificationMessage, $verificationSubject,
-						 $resetPasswordMessage, $resetPasswordSubject) {
+	                     $resetPasswordMessage, $resetPasswordSubject) {
 		$this->mailFrom = $mailFrom;
 		$this->mailFromName = $mailFromName;
 		$this->url = $url;

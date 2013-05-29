@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -12,23 +12,23 @@ use
  *     name="user_location",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="user_idx", columns={"user_id", "location_id"})}
  * )
- **/
+ */
 class UserLocation{
 	/**
-	* @ORM\Id
-	* @ORM\Column(type="integer")
-	* @ORM\GeneratedValue
-	**/
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
+	 */
 	protected $id;
 
 	/**
-	* @ORM\OneToOne(targetEntity="User")
-	**/
+	 * @ORM\OneToOne(targetEntity="User")
+	 */
 	protected $user;
 
 	/**
 	 * @ORM\OneToOne(targetEntity="Location")
-	 **/
+	 */
 	protected $location;
 
 	public function __construct(User $user, Location $location){

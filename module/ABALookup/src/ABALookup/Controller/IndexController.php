@@ -7,21 +7,21 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup\Controller;
+namespace AbaLookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController,
-	ABALookup\Entity\User
+	AbaLookup\AbaLookupController,
+	AbaLookup\Entity\User,
+	Zend\View\Model\ViewModel
 ;
 
-class IndexController extends ABALookupController
+class IndexController extends AbaLookupController
 {
 	public function indexAction()
 	{
-		
+
 		$em = $this->getEntityManager();
-		
+
 		$user = new User(
 			"example@example.com",
 			"my_pass",
@@ -31,15 +31,15 @@ class IndexController extends ABALookupController
 			true,
 			true
 		);
-		
+
 		$em->persist($user);
 		$em->flush();
-		
-		
-		var_dump($em->getRepository('ABALookup\Entity\User')->findBy(array('email' => 'example@example.com')));
-		
+
+
+		var_dump($em->getRepository('AbaLookup\Entity\User')->findBy(array('email' => 'example@example.com')));
+
 		$boo = "Hello there";
-	
+
 		return new ViewModel(array(
 			"boo" => $boo
 		));

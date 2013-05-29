@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -8,22 +8,22 @@ use
 
 /**
  * @ORM\Entity @ORM\Table(name="location")
- **/
+ */
 class Location
 {
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
-	 **/
+	 */
 	protected $id;
 	/**
 	 * @ORM\Column(type="string")
-	 **/
+	 */
 	protected $name;
 	/**
 	 * @ORM\Column(type="boolean")
-	 **/
+	 */
 	protected $enabled = true;
 
 	public function __construct($name)

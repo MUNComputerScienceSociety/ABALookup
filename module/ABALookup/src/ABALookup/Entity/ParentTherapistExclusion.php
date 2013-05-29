@@ -1,6 +1,6 @@
 <?php
 
-namespace ABALookup\Entity;
+namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping as ORM
@@ -11,7 +11,7 @@ use
  *     name="parent_therapist_exclusion",
  *     uniqueConstraints={@ORM\UniqueConstraint(name="parent_therapist_exclude_idx", columns={"therapist_id", "parent_id"})}
  * )
- **/
+ */
 class ParentTherapistExclusion
 {
 
@@ -19,17 +19,17 @@ class ParentTherapistExclusion
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue
-	 **/
+	 */
 	protected $id;
 
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
-	 **/
+	 */
 	protected $parent;
 
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
-	 **/
+	 */
 	protected $therapist;
 
 	public function __construct($parent, $therapist)

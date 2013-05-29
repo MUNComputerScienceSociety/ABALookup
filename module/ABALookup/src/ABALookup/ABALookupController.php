@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup;
+namespace AbaLookup;
 
 use
 	Zend\Mvc\Controller\AbstractActionController,
@@ -16,7 +16,7 @@ use
 	Zend\Session\Container
 ;
 
-abstract class ABALookupController extends AbstractActionController {
+abstract class AbaLookupController extends AbstractActionController {
 
 	/**
 	 * @var Doctrine\ORM\EntityManager
@@ -37,8 +37,11 @@ abstract class ABALookupController extends AbstractActionController {
 
 	public function currentUser() {
 		$session = new Container();
-		return $this->getEntityManager()->getRepository('ABALookup\Entity\User')->
-			findOneBy(array('id' => $session->offsetGet("loggedIn")));
+		return $this->getEntityManager()
+		            ->getRepository('AbaLookup\Entity\User')
+		            ->findOneBy(array(
+		            	'id' => $session->offsetGet("loggedIn")
+		            ));
 	}
 
 }

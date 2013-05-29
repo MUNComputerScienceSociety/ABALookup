@@ -7,15 +7,16 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ABALookup\Controller;
+namespace AbaLookup\Controller;
 
 use
-	Zend\View\Model\ViewModel,
-	ABALookup\ABALookupController,
-	ABALookup\Entity\Calendar,
-	ABALookup\Entity\CalendarIntervals as Interval
+	AbaLookup\AbaLookupController,
+	AbaLookup\Entity\Calendar,
+	AbaLookup\Entity\CalendarIntervals as Interval,
+	Zend\View\Model\ViewModel
 ;
-class ScheduleController extends ABALookupController {
+
+class ScheduleController extends AbaLookupController {
 	public function indexAction() {
 		if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 
@@ -93,7 +94,7 @@ class ScheduleController extends ABALookupController {
 
 	private function getDefaultCalendar($user) {
 		$calendar = $this->getEntityManager()
-						 ->getRepository('ABALookup\Entity\Calendar')
+						 ->getRepository('AbaLookup\Entity\Calendar')
 						 ->findOneBy(array('user' => $user->getId()));
 		if (!$calendar) {
 			$calendar = new Calendar($user, true, "Default");
@@ -105,13 +106,13 @@ class ScheduleController extends ABALookupController {
 
 	private function getCalendarById($id) {
 		return $this->getEntityManager()
-					->getRepository('ABALookup\Entity\Calendar')
+					->getRepository('AbaLookup\Entity\Calendar')
 					->findOneBy(array('id' => $id));
 	}
 
 	private function getCalendarIntervals($calendar) {
 		return $this->getEntityManager()
-					->getRepository('ABALookup\Entity\CalendarIntervals')
+					->getRepository('AbaLookup\Entity\CalendarIntervals')
 					->findBy(
 						array('calendar' => $calendar->getId()),
 						array('week_day' => 'ASC', 'start_time' => 'ASC')

@@ -13,11 +13,11 @@ return array(
 			'aba-lookup_annotation_driver' => array(
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
-				'paths' => array(realpath(__DIR__ . '/../src/ABALookup/Entity/'))
+				'paths' => array(realpath(__DIR__ . '/../src/AbaLookup/Entity/'))
 			),
 			'orm_default' => array(
 				'drivers' => array(
-					'ABALookup\Entity' => 'aba-lookup_annotation_driver'
+					'AbaLookup\Entity' => 'aba-lookup_annotation_driver'
 				)
 			)
 		)
@@ -29,7 +29,7 @@ return array(
 				'options' => array(
 					'route'    => '/',
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\Home',
+						'controller' => 'AbaLookup\Controller\Home',
 						'action'     => 'index',
 					),
 				),
@@ -39,7 +39,7 @@ return array(
 				'options' => array(
 					'route'    => '/about',
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\About',
+						'controller' => 'AbaLookup\Controller\About',
 						'action'     => 'index',
 					),
 				),
@@ -49,8 +49,7 @@ return array(
 				'options' => array(
 					'route'    => '/',
 					'defaults' => array(
-						'__NAMESPACE__' => 'ABALookup\Controller',
-						'controller'    => 'Home',
+						'controller'    => 'AbaLookup\Controller\Home',
 						'action'        => 'index',
 					),
 				),
@@ -78,7 +77,7 @@ return array(
 						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\User',
+						'controller' => 'AbaLookup\Controller\User',
 						'action'     => 'login',
 						'id'         => '',
 						'verification' => ''
@@ -93,7 +92,7 @@ return array(
 						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\Schedule',
+						'controller' => 'AbaLookup\Controller\Schedule',
 						'action'     => 'index',
 						'id'         => ''
 					)
@@ -107,7 +106,7 @@ return array(
 						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\ParentProfile',
+						'controller' => 'AbaLookup\Controller\ParentProfile',
 						'action'     => 'index',
 					)
 				),
@@ -120,7 +119,7 @@ return array(
 						'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'ABALookup\Controller\TherapistProfile',
+						'controller' => 'AbaLookup\Controller\TherapistProfile',
 						'action'     => 'index',
 					)
 				),
@@ -144,15 +143,15 @@ return array(
 	),
 	'controllers' => array(
 		'invokables' => array(
-			'ABALookup\Controller\About'            => 'ABALookup\Controller\AboutController',
-			'ABALookup\Controller\Admin'            => 'ABALookup\Controller\AdminController',
-			'ABALookup\Controller\Home'             => 'ABALookup\Controller\HomeController',
-			'ABALookup\Controller\Index'            => 'ABALookup\Controller\IndexController',
-			'ABALookup\Controller\Match'            => 'ABALookup\Controller\MatchController',
-			'ABALookup\Controller\ParentProfile'    => 'ABALookup\Controller\ParentProfileController',
-			'ABALookup\Controller\Schedule'         => 'ABALookup\Controller\ScheduleController',
-			'ABALookup\Controller\TherapistProfile' => 'ABALookup\Controller\TherapistProfileController',
-			'ABALookup\Controller\User'             => 'ABALookup\Controller\UserController',
+			'AbaLookup\Controller\About'            => 'AbaLookup\Controller\AboutController',
+			'AbaLookup\Controller\Admin'            => 'AbaLookup\Controller\AdminController',
+			'AbaLookup\Controller\Home'             => 'AbaLookup\Controller\HomeController',
+			'AbaLookup\Controller\Index'            => 'AbaLookup\Controller\IndexController',
+			'AbaLookup\Controller\Match'            => 'AbaLookup\Controller\MatchController',
+			'AbaLookup\Controller\ParentProfile'    => 'AbaLookup\Controller\ParentProfileController',
+			'AbaLookup\Controller\Schedule'         => 'AbaLookup\Controller\ScheduleController',
+			'AbaLookup\Controller\TherapistProfile' => 'AbaLookup\Controller\TherapistProfileController',
+			'AbaLookup\Controller\User'             => 'AbaLookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(
