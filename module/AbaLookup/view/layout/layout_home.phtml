@@ -9,8 +9,6 @@
 		echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
 							  ->prependStylesheet($this->basePath() . "/css/general.css")
 							  ->prependStylesheet($this->basePath() . "/css/index.css");
-		echo $this->headScript()->prependFile("/js/index.js", $type = "text/javascript")
-								->prependFile("/js/jquery.js", $type = "text/javascript");
 	?>
 </head>
 <body>
