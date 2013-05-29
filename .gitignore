@@ -1,3 +1,6 @@
+database/*.sqlite3
+vendor/
+
 # Windows image file caches
 ehthumbs.db
 Thumbs.db
@@ -35,5 +38,3 @@ Destop.ini
 *.iml
 *.ipr
 *.iws
-
-vendor/

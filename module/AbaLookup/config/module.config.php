@@ -146,7 +146,7 @@ return array(
 		'exception_template'       => 'error/index',
 		'template_map' => array(
 			// layouts
-			'layout/layout'            => __DIR__ . '/../view/layout/layout.phtml',
+			'layout/layout'     => __DIR__ . '/../view/layout/layout.phtml',
 			'layout/home'       => __DIR__ . '/../view/layout/home.phtml',
 			'layout/logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
 			// error pages

@@ -20,18 +20,20 @@ use
 ;
 
 class UserController extends AbaLookupController {
-
 	public function registerAction() {
-		$this->layout('layout/layout_logged_out');
-
+		$this->layout('layout/logged-out');
 		if (isset ($_POST['submit'])) {
 			$usertype = $_POST['usertype'];
 			$username = $_POST['username'];
 			$emailaddress = $_POST['emailaddress'];
 			$password = $_POST['password'];
 			$confirmpassword = $_POST['confirmpassword'];
-
-			if (empty($usertype) || empty($username) || empty($emailaddress) || empty($password) || empty($confirmpassword)) {
+			if (empty($usertype)
+			    || empty($username)
+			    || empty($emailaddress)
+			    || empty($password)
+			    || empty($confirmpassword)
+			) {
 				return new ViewModel(array(
 					"error" => "All fields are required",
 					"usertype" => $usertype,
@@ -39,7 +41,6 @@ class UserController extends AbaLookupController {
 					"emailaddress" => $emailaddress,
 				));
 			}
-
 			/*
 			if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {
 				return new ViewModel(array(
@@ -50,7 +51,6 @@ class UserController extends AbaLookupController {
 				));
 			}
 			*/
-
 			if ($confirmpassword != $password) {
 				return new ViewModel(array(
 					"error" => "Your passwords do not match",
@@ -59,7 +59,6 @@ class UserController extends AbaLookupController {
 					"emailaddress" => $emailaddress,
 				));
 			}
-
 			if (strlen($password) < 6) {
 				return new ViewModel(array(
 					"error" => "Your password must be at least 6 characters in length",
@@ -68,7 +67,6 @@ class UserController extends AbaLookupController {
 					"emailaddress" => $emailaddress,
 				));
 			}
-
 			if ($this->getUserByEmail($emailaddress)) {
 				return new ViewModel(array(
 					"error" => "This email is already in use.",
@@ -77,117 +75,103 @@ class UserController extends AbaLookupController {
 					"emailaddress" => $emailaddress,
 				));
 			}
-
 			$em = $this->getEntityManager();
 			$bcrypt = new Bcrypt();
+			/*
 			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
 			$mailTransport = new Mail\Transport\Sendmail();
-
-			$user = new User($emailaddress, $bcrypt->create($password), ($usertype == "therapist"), "", "", false, false, $username);
+			*/
+			$user = new User($emailaddress, $bcrypt->create($password), ($usertype === "therapist"), "", "", false, false, $username);
+			$user->setVerified(true);
 			$em->persist($user);
 			$em->flush();
-
-			$verificationUrl = $mailConfig->getUrl() . "/user/verifyuser/" . $user->getId()
-				. "/" . $this->makeVerificationHash($user);
-
+			/*
+			$verificationUrl = $mailConfig->getUrl() . "/user/verifyuser/" . $user->getId() . "/" . $this->makeVerificationHash($user);
 			$message = new Mail\Message();
 			$message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
 			$message->addTo($user->getEmail());
 			$message->setBody(str_replace("{URL}", $verificationUrl, $mailConfig->getVerificationMessage()));
 			$message->setSubject($mailConfig->getVerificationSubject());
 			$mailTransport->send($message);
-
-			return $this->redirect()->toRoute('user', array('action' => 'registersuccess'));
+			*/
+			return $this->redirect()->toRoute('user', array('action' => 'registerSuccess'));
 		}
-
 		return new ViewModel();
 	}
-
-	public function registersuccessAction() {
-		$this->layout('layout/layout_logged_out');
+	public function registerSuccessAction() {
+		$this->layout('layout/logged-out');
 		return new ViewModel();
 	}
-
 	public function loginAction() {
-		$this->layout('layout/layout_logged_out');
+		$this->layout('layout/logged-out');
 		if (isset($_POST['login'])) {
 			$bcrypt = new Bcrypt();
-
 			$emailaddress = $_POST['emailaddress'];
 			$password = $_POST['password'];
-
 			$user = $this->getUserByEmail($emailaddress);
-
 			if ((!$user) || (!$bcrypt->verify($password, $user->getPassword()))) {
 				return new ViewModel(array(
 					'error' => 'The email you entered was incorrect or the password did not match'
 				));
 			}
-
 			if (!$user->getVerified()) {
 				return new ViewModel(array(
 					'error' => 'You need to verify your email to login'
 				));
 			}
-
 			$session = new Container();
 			$session->offsetSet('loggedIn', $user->getId());
-
-
-			if ($user->getTherapist())
+			if ($user->getTherapist()) {
 				return $this->redirect()->toRoute('therapist-profile');
-			else
+			}
+			else {
 				return $this->redirect()->toRoute('parent-profile');
+			}
 		}
 		return new ViewModel();
 	}
-
 	public function logoutAction() {
 		$session = new Container();
-		if ($session->offsetExists('loggedIn')) $session->offsetUnset('loggedIn');
-		return $this->redirect()->toRoute('home-index');
+		if ($session->offsetExists('loggedIn')) {
+			$session->offsetUnset('loggedIn');
+		}
+		return $this->redirect()->toRoute('home');
 	}
-
-	public function resetpasswordAction() {
+	public function resetPasswordAction() {
 		if (isset($_POST['emailaddress'])) {
 			$email = $_POST['emailaddress'];
 			$user = $this->getUserByEmail($email);
-
 			if (!$user) {
-				return new ViewModel(array('error' => "The email you are using was not found in the database."));
+				return new ViewModel(array(
+					'error' => "The email you are using was not found in the database."
+				));
 			}
-
+			/*
 			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
 			$mailTransport = new Mail\Transport\Sendmail();
-			$resetUrl = $mailConfig->getUrl() . "/user/updatepassword/" . $user->getId()
-				. "/" . $this->makeResetPasswordHash($user);
-
+			$resetUrl = $mailConfig->getUrl() . "/user/updatepassword/" . $user->getId() . "/" . $this->makeResetPasswordHash($user);
 			$message = new Mail\Message();
 			$message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
 			$message->addTo($user->getEmail());
 			$message->setBody(str_replace("{URL}", $resetUrl, $mailConfig->getResetPasswordMessage()));
 			$message->setSubject($mailConfig->getResetPasswordSubject());
 			$mailTransport->send($message);
-
-			return $this->redirect()->toRoute('user', array('action' => 'resetpasswordsuccess'));
+			*/
+			return $this->redirect()->toRoute('user', array('action' => 'resetPasswordSuccess'));
 		}
 		return new ViewModel();
 	}
-
-	public function resetpasswordsuccessAction() {
+	public function resetPasswordSuccessAction() {
 		return new ViewModel();
 	}
-
-	public function updatepasswordAction() {
+	public function updatePasswordAction() {
 		$id = $this->getEvent()->getRouteMatch()->getParam('id');
 		$verification = $this->getEvent()->getRouteMatch()->getParam('verification');
 		$user = $this->getUserById($id);
-
 		if ($verification && $this->makeVerificationHash($user)) {
 			if (isset($_POST['newpassword']) && isset($_POST['confirmpassword']) ) {
 				$newpassword = $_POST['newpassword'];
 				$confirmpassword = $_POST['confirmpassword'];
-
 				if (strlen($newpassword) < 6) {
 					return new ViewModel(array(
 						'id' => $id,
@@ -195,20 +179,19 @@ class UserController extends AbaLookupController {
 						'error' => "Your password must be at least 6 characters"
 					));
 				}
-
 				if ($newpassword == $confirmpassword) {
 					$bcrypt = new Bcrypt();
 					$user->setPassword($bcrypt->create($newpassword));
 					$this->getEntityManager()->persist($user);
 					$this->getEntityManager()->flush();
-
 					$session = new Container();
 					$session->offsetSet("loggedIn", $user->getId());
-
-					if ($user->getTherapist())
+					if ($user->getTherapist()) {
 						return $this->redirect()->toRoute('therapist-profile');
-					else
+					}
+					else {
 						return $this->redirect()->toRoute('parent-profile');
+					}
 				}
 				return new ViewModel(array(
 					'id' => $id,
@@ -221,18 +204,15 @@ class UserController extends AbaLookupController {
 				'verification' => $verification
 			));
 		}
-		return $this->redirect()->toRoute('user', array('action' => 'updatepassworderror'));
+		return $this->redirect()->toRoute('user', array('action' => 'updatePasswordError'));
 	}
-
-	public function updatepassworderrorAction() {
+	public function updatePasswordErrorAction() {
 		return new ViewModel();
 	}
-
-	public function verifyuserAction() {
+	public function verifyUserAction() {
 		$id = $this->getEvent()->getRouteMatch()->getParam('id');
 		$verification = $this->getEvent()->getRouteMatch()->getParam('verification');
 		$user = $this->getUserById($id);
-
 		if ($user) {
 			if ($this->makeVerificationHash($user) == $verification) {
 				$user->setVerified(true);
@@ -248,26 +228,21 @@ class UserController extends AbaLookupController {
 				}
 			}
 		}
-
 		return new ViewModel();
 	}
-
-	public function changepasswordAction() {
+	public function changePasswordAction() {
 		if (isset($_POST["submit"])) {
-
 			$password = $_POST["password"];
 			$newpassword = $_POST["newpassword"];
 			$confirmpassword = $_POST["confirmpassword"];
-
-			if ($newpassword != $confirmpassword)
+			if ($newpassword != $confirmpassword) {
 				return new ViewModel(array('error' => 'Your new passwords do not match.'));
-
+			}
 			$bcrypt = new Bcrypt();
 			$user = $this->currentUser();
-
-			if (!$bcrypt->verify($password, $user->getPassword()))
+			if (!$bcrypt->verify($password, $user->getPassword())) {
 				return new ViewModel(array('error' => 'Your current password does not match.'));
-
+			}
 			$user->setPassword($bcrypt->create($newpassword));
 			$this->getEntityManager()->persist($user);
 			$this->getEntityManager()->flush();
@@ -275,19 +250,15 @@ class UserController extends AbaLookupController {
 		}
 		return new ViewModel();
 	}
-
 	private function getUserByEmail($email) {
 		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('email' => $email));
 	}
-
 	private function getUserById($id) {
 		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('id' => $id));
 	}
-
 	private function makeVerificationHash($user) {
 		return substr(hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword()), -10);
 	}
-
 	private function makeResetPasswordHash($user) {
 		return substr(hash('sha512', '%&@#^(jwgwetiyQ%Kgw$' . $user->getEmail() . $user->getPassword()), -10);
 	}
