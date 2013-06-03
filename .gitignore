@@ -1,15 +1,21 @@
-## Windows image file caches
+database/
+vendor/
+
+# Windows image file caches
 ehthumbs.db
 Thumbs.db
 Destop.ini
 
-## Mac junk file
+# Mac junk file
 .DS_Store
 
-## Swap files
+# Swap files
 *.swp
 
-## Visual Studio files
+# Local ideas
+*.idea.md
+
+# Visual Studio files
 *.tmp_proj
 *.suo
 *.user
@@ -20,21 +26,15 @@ Destop.ini
 
 *.project
 *.settings/
-*.classpath
-*~
 
-## SublimeText
+# SublimeText
 *.sublime-workspace
 
-## Espresso projects
+# Espresso projects
 *.esproj
 
-
-## IntelliJ
+# IntelliJ
 .idea/
 *.iml
 *.ipr
 *.iws
-
-vendor/
-database/db.sqlite3

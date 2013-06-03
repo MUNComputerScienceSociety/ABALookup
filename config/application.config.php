@@ -2,11 +2,10 @@
 return array(
 	// This should be an array of module namespaces used in the application.
 	'modules' => array(
-		'ABALookup',
+		'AbaLookup',
 		'DoctrineModule',
 		'DoctrineORMModule',
 	),
-
 	// These are various options for the listeners attached to the ModuleManager
 	'module_listener_options' => array(
 		// This should be an array of paths in which modules reside.
@@ -17,14 +16,12 @@ return array(
 			'./module',
 			'./vendor',
 		),
-
 		// An array of paths from which to glob configuration files after
 		// modules are loaded. These effectively overide configuration
 		// provided by modules themselves. Paths may use GLOB_BRACE notation.
 		'config_glob_paths' => array(
 			'config/autoload/{,*.}{global,local}.php',
 		),
-
 		// Whether or not to enable a configuration cache.
 		// If enabled, the merged configuration will be cached and used in
 		// subsequent requests.
@@ -49,7 +46,6 @@ return array(
 		// that weren't loaded.
 		// 'check_dependencies' => true,
 	),
-
 	// Used to create an own service manager. May contain one or more child arrays.
 	//'service_listener_options' => array(
 	//     array(
@@ -60,7 +56,7 @@ return array(
 	//     ),
 	// )
 
-   // Initial configuration with which to seed the ServiceManager.
-   // Should be compatible with Zend\ServiceManager\Config.
-   // 'service_manager' => array(),
+	// Initial configuration with which to seed the ServiceManager.
+	// Should be compatible with Zend\ServiceManager\Config.
+	// 'service_manager' => array(),
 );

@@ -1,0 +1,26 @@
+<h2>Your Profile Information</h2>
+
+<p><?php echo $this->confirm;?></p>
+
+<div class="left">
+	<form action="/parentprofile" method="POST">
+		<h3>Display Name</h3>
+		<input type="text" value="<?php echo $this->profile->getDisplayName(); ?>" name="username" id="username">
+		<h3>Email Address</h3>
+		<p><?php echo $this->profile->getEmail(); ?></p>
+		<br/>
+		<input name="edit" id="edit" type="submit" value="Edit" />
+	</form>
+
+</div>
+<div class="right">
+	<h3>Details</h3>
+	<p>
+		This page contains the information associated with your account and may be publically visible. The Edit button will allow you to edit your information.
+	</p>
+
+	<h3>Change Password</h3>
+	<p>
+		<a href="/user/changepassword">Click Here</a> to change your password.
+	</p>
+</div>
