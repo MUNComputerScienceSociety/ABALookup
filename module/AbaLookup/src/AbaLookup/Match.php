@@ -7,15 +7,8 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace AbaLookup\Controller;
+namespace AbaLookup;
 
-use
-	AbaLookup\AbaLookupController,
-	Zend\View\Model\ViewModel
-;
+class Match {
 
-class MatchController extends AbaLookupController {
-	public function indexAction() {
-		return new ViewModel();
-	}
 }
