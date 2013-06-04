@@ -44,6 +44,8 @@ To help fill out the Wiki with information on setting up development environment
     git push
     # open an issue requesting the changes be pulled in
 
+See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow.
+
 License
 -------
 
