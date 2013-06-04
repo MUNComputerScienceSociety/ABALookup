@@ -13,7 +13,7 @@ Requirements
 
 - Composer
 - Apache HTTP Server
-- PHP 5.3+
+- PHP 5.4+ (for the `[]` array syntax and traits)
 - SQLite 3+
 
 Downloading the project
