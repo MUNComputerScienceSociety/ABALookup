@@ -19,7 +19,7 @@ use
 	Zend\View\Model\ViewModel
 ;
 
-class UserController extends AbaLookupController {
+class UsersController extends AbaLookupController {
 	public function registerAction() {
 		$this->layout('layout/logged-out');
 		if (isset ($_POST['submit'])) {
@@ -94,13 +94,9 @@ class UserController extends AbaLookupController {
 			*/
 			$session = new Container();
 			$session->offsetSet("loggedIn", $user->getId());
-			if ($user->getTherapist()) {
-				return $this->redirect()->toRoute('therapist', array(
-					'id' => $user->getId()
-				));
-			}
-			return $this->redirect()->toRoute('parent', array(
-				'id' => $user->getId()
+			return $this->redirect()->toRoute('users', array(
+				'id'     => $user->getId(),
+				'action' => 'profile',
 			));
 		}
 		return new ViewModel();
@@ -132,16 +128,10 @@ class UserController extends AbaLookupController {
 			*/
 			$session = new Container();
 			$session->offsetSet('loggedIn', $user->getId());
-			if ($user->getTherapist()) {
-				return $this->redirect()->toRoute('therapist', array(
-					'id' => $user->getId()
-				));
-			}
-			else {
-				return $this->redirect()->toRoute('parent', array(
-					'id' => $user->getId()
-				));
-			}
+			return $this->redirect()->toRoute('users', array(
+				'id'     => $user->getId(),
+				'action' => 'profile',
+			));
 		}
 		return new ViewModel();
 	}
@@ -266,6 +256,18 @@ class UserController extends AbaLookupController {
 			return new ViewModel(array('error' => 'Your password has been updated'));
 		}
 		return new ViewModel();
+	}
+	public function profileAction() {
+		if (!$this->loggedIn()) {
+			return $this->redirect()->toRoute('auth', array('action' => 'login'));
+		}
+		$profile = $this->currentUser();
+		$userId = $profile->getId();
+		$layout = $this->layout();
+		$layout->profileUrl = "/users/{$userId}";
+		return new ViewModel(array(
+			'profile' => $profile
+		));
 	}
 	private function getUserByEmail($email) {
 		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('email' => $email));

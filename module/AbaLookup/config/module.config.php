@@ -7,30 +7,31 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-use
-	Zend\Mvc\Router\Http\Literal,
-	Zend\Mvc\Router\Http\Segment
-;
-
 return array(
 	'doctrine' => array(
 		'driver' => array(
-			'aba-lookup_annotation_driver' => array(
+			'aba_lookup_annotation_driver' => array(
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
 				'paths' => array(realpath(__DIR__ . '/../src/AbaLookup/Entity/'))
 			),
 			'orm_default' => array(
 				'drivers' => array(
-					'AbaLookup\Entity' => 'aba-lookup_annotation_driver'
+					'AbaLookup\Entity' => 'aba_lookup_annotation_driver'
 				)
 			)
 		)
 	),
+	'controllers' => array(
+		'invokables' => array(
+			'AbaLookup\Controller\Home'  => 'AbaLookup\Controller\HomeController',
+			'AbaLookup\Controller\Users' => 'AbaLookup\Controller\UsersController',
+		),
+	),
 	'router' => array(
 		'routes' => array(
 			'home' => array(
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => array(
 					'route'    => '/',
 					'defaults' => array(
@@ -40,22 +41,22 @@ return array(
 				),
 			),
 			'about' => array(
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => array(
-					'route'    => '/about-us',
+					'route'    => '/about',
 					'defaults' => array(
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'aboutUs',
+						'action'     => 'about',
 					),
 				),
 			),
 			'privacy' => array(
 				'type'    => 'Literal',
 				'options' => array(
-					'route' => '/privacy',
+					'route'    => '/privacy',
 					'defaults' => array(
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'privacyPolicy'
+						'action'     => 'privacy'
 					),
 				),
 			),
@@ -65,64 +66,37 @@ return array(
 					'route'    => '/terms',
 					'defaults' => array(
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'termsOfUse',
+						'action'     => 'terms',
 					),
 				),
 			),
-			'user' => array(
+			'users' => array(
 				'type'    => 'Segment',
 				'options' => array(
-					'route'    => '/user[/:action]',
+					'route'       => '/users/:id/:action',
 					'constraints' => array(
+						'id'     => '[0-9]*',
 						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 					),
 					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\User',
+						'controller' => 'AbaLookup\Controller\Users',
+						'action'     => 'profile',
+					),
+				),
+			),
+			'auth' => array(
+				'type'    => 'Segment',
+				'options' => array(
+					'route'       => '/users/:action',
+					'constraints' => array(
+						'action' => '(login)|(logout)|(register)',
+					),
+					'defaults' => array(
+						'controller' => 'AbaLookup\Controller\Users',
 						'action'     => 'login',
-						'id'         => '',
 					),
 				),
 			),
-			'parent' => array(
-				'type'    => 'Segment',
-				'options' => array(
-					'route'    => '/parent/:id[/:action]',
-					'constraints' => array(
-						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-						'id'     => '[a-zA-Z0-9][a-zA-Z0-9_-]*',
-					),
-					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\Parent',
-						'action'     => 'index',
-					),
-				),
-			),
-			'therapist' => array(
-				'type'    => 'Segment',
-				'options' => array(
-					'route'    => '/therapist/:id[/:action]',
-					'constraints' => array(
-						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-						'id'     => '[a-zA-Z0-9][a-zA-Z0-9_-]*',
-					),
-					'defaults' => array(
-						'controller' => 'AbaLookup\Controller\Therapist',
-						'action'     => 'index',
-					),
-				),
-			),
-		),
-	),
-	'controllers' => array(
-		'invokables' => array(
-			'AbaLookup\Controller\Admin'     => 'AbaLookup\Controller\AdminController',
-			'AbaLookup\Controller\Home'      => 'AbaLookup\Controller\HomeController',
-			'AbaLookup\Controller\Index'     => 'AbaLookup\Controller\IndexController',
-			'AbaLookup\Controller\Match'     => 'AbaLookup\Controller\MatchController',
-			'AbaLookup\Controller\Parent'    => 'AbaLookup\Controller\ParentController',
-			'AbaLookup\Controller\Schedule'  => 'AbaLookup\Controller\ScheduleController',
-			'AbaLookup\Controller\Therapist' => 'AbaLookup\Controller\TherapistController',
-			'AbaLookup\Controller\User'      => 'AbaLookup\Controller\UserController',
 		),
 	),
 	'view_manager' => array(

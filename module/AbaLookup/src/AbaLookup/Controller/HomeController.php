@@ -19,15 +19,15 @@ class HomeController extends AbaLookupController {
 		$this->layout('layout/home');
 		return new ViewModel();
 	}
-	public function aboutUsAction() {
+	public function aboutAction() {
 		$this->layout('layout/home');
 		return new ViewModel();
 	}
-	public function privacyPolicyAction() {
+	public function privacyAction() {
 		$this->layout('layout/home');
 		return new ViewModel();
 	}
-	public function termsOfUseAction() {
+	public function termsAction() {
 		$this->layout('layout/home');
 		return new ViewModel();
 	}
