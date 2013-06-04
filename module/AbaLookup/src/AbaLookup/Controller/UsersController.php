@@ -263,8 +263,35 @@ class UsersController extends AbaLookupController {
 		}
 		$profile = $this->currentUser();
 		$userId = $profile->getId();
+		$profile->url = "/users/{$userId}";
 		$layout = $this->layout();
-		$layout->profileUrl = "/users/{$userId}";
+		$layout->profile = $profile;
+		return new ViewModel(array(
+			'profile' => $profile
+		));
+	}
+	public function scheduleAction() {
+		if (!$this->loggedIn()) {
+			return $this->redirect()->toRoute('auth', array('action' => 'login'));
+		}
+		$profile = $this->currentUser();
+		$userId = $profile->getId();
+		$profile->url = "/users/{$userId}";
+		$layout = $this->layout();
+		$layout->profile = $profile;
+		return new ViewModel(array(
+			'profile' => $profile
+		));
+	}
+	public function matchesAction() {
+		if (!$this->loggedIn()) {
+			return $this->redirect()->toRoute('auth', array('action' => 'login'));
+		}
+		$profile = $this->currentUser();
+		$userId = $profile->getId();
+		$profile->url = "/users/{$userId}";
+		$layout = $this->layout();
+		$layout->profile = $profile;
 		return new ViewModel(array(
 			'profile' => $profile
 		));
