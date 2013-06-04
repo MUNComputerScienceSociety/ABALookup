@@ -16,7 +16,17 @@ use
 
 class HomeController extends AbaLookupController {
 	public function indexAction() {
-		$this->layout('layout/home');
+		if ($this->loggedIn()) {
+			$profile = $this->currentUser();
+			$userId = $profile->getId();
+			$profile->url = "/users/{$userId}/profile";
+			$this->layout('layout/home');
+			$layout = $this->layout();
+			$layout->profile = $profile;
+		}
+		else {
+			$this->layout('layout/home');
+		}
 		return new ViewModel();
 	}
 	public function aboutAction() {
