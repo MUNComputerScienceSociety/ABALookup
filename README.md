@@ -32,6 +32,18 @@ To contribute back to the project, you will need to have the above requirements 
 
 If not, see *Preparing a development environment* in the Wiki.
 
+Contributing to the Wiki
+------------------------
+
+To help fill out the Wiki with information on setting up development environments, installing, the application, the matching algorithm, or anything else you think will be useful to have documented throughly:
+
+    cd <where you keep your projects>
+    git clone git@github.com:<your username>/<your fork name>.wiki.git
+    cd <clone location>
+    # edit Markdown files
+    git push
+    # open an issue requesting the changes be pulled in
+
 License
 -------
 
