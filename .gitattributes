@@ -1,2 +1,5 @@
 # Normalize line endings
 * eol=lf
+
+# Supress the composer.lock diff
+*.lock -diff
