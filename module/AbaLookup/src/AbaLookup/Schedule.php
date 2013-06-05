@@ -14,7 +14,8 @@ use
 	AbaLookup\Entity\CalendarIntervals as Interval,
 ;
 
-class Schedule {
+class Schedule
+{
 	public function indexAction() {
 		if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 

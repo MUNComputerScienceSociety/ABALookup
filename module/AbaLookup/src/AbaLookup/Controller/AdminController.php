@@ -14,7 +14,8 @@ use
 	Zend\View\Model\ViewModel
 ;
 
-class AdminController extends AbaLookupController {
+class AdminController extends AbaLookupController
+{
 
 	public function indexAction() {
 	//    if (!$this->requiresAdmin()) return $this->redirect()->toRoute('user', array('action' => 'login'));

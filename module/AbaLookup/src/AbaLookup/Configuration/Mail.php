@@ -13,7 +13,8 @@ class Mail
 	protected $resetPasswordSubject;
 
 	function __construct($mailFrom, $mailFromName, $url, $verificationMessage, $verificationSubject,
-	                     $resetPasswordMessage, $resetPasswordSubject) {
+	                     $resetPasswordMessage, $resetPasswordSubject)
+	{
 		$this->mailFrom = $mailFrom;
 		$this->mailFromName = $mailFromName;
 		$this->url = $url;
@@ -22,32 +23,32 @@ class Mail
 		$this->resetPasswordMessage = $resetPasswordMessage;
 		$this->resetPasswordSubject = $resetPasswordSubject;
 	}
-
-	public function getMailFrom() {
+	public function getMailFrom()
+	{
 		return $this->mailFrom;
 	}
-
-	public function getMailFromName() {
+	public function getMailFromName()
+	{
 		return $this->mailFromName;
 	}
-
-	public function getUrl() {
+	public function getUrl()
+	{
 		return $this->url;
 	}
-
-	public function getVerificationMessage() {
+	public function getVerificationMessage()
+	{
 		return $this->verificationMessage;
 	}
-
-	public function getVerificationSubject() {
+	public function getVerificationSubject()
+	{
 		return $this->verificationSubject;
 	}
-
-	public function getResetPasswordMessage() {
+	public function getResetPasswordMessage()
+	{
 		return $this->resetPasswordMessage;
 	}
-
-	public function getResetPasswordSubject() {
+	public function getResetPasswordSubject()
+	{
 		return $this->resetPasswordSubject;
 	}
 }

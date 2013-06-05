@@ -19,7 +19,8 @@ use
 	Zend\View\Model\ViewModel
 ;
 
-class UsersController extends AbaLookupController {
+class UsersController extends AbaLookupController
+{
 	public function registerAction() {
 		$this->layout('layout/logged-out');
 		if (isset ($_POST['submit'])) {
