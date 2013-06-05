@@ -1,5 +1,9 @@
 # Normalize line endings
-* eol=lf
+*.php  eol=lf
+*.txt  eol=lf
+*.css  eol=lf
+*.js   eol=lf
+*.html eol=lf
 
 # Supress the composer.lock diff
 *.lock -diff
