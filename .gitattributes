@@ -2,8 +2,9 @@
 *.php  eol=lf
 *.txt  eol=lf
 *.css  eol=lf
+*.md   eol=lf
 *.js   eol=lf
 *.html eol=lf
 
 # Supress the composer.lock diff
-*.lock -diff
+*.lock binary
