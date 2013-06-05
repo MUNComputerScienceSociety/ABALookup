@@ -7,16 +7,14 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace AbaLookup\Controller;
+namespace AbaLookup;
 
 use
-	AbaLookup\AbaLookupController,
 	AbaLookup\Entity\Calendar,
 	AbaLookup\Entity\CalendarIntervals as Interval,
-	Zend\View\Model\ViewModel
 ;
 
-class ScheduleController extends AbaLookupController {
+class Schedule {
 	public function indexAction() {
 		if (!$this->loggedIn()) return $this->redirect()->toRoute('user', array('action' => 'login'));
 

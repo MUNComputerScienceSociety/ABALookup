@@ -22,21 +22,16 @@
 		</a>
 
 		<nav class="right">
-			<div class="icon">
-				<i class="icon-search"></i>
-			</div>
-			<a href="#">Search</a>
-			<div class="icon">
-				<i class="icon-user"></i>
-			</div>
-			<a href="#">My Profile</a>
+			<a href="<?php echo $this->profile->url . '/profile'; ?>">Profile</a>
+			<a href="<?php echo $this->profile->url . '/schedule'; ?>">Schedule</a>
+			<a href="<?php echo $this->profile->url . '/matches'; ?>">Matches</a>
+			<a href="/users/logout">Logout</a>
 		</nav>
 
 	</div>
 </header>
 <div id="content">
 	<div class="container clearfix">
-		<div id="logout"><a href="/user/logout">User Logout</a></div>
 		<?php echo $this->content; ?>
 	</div>
 </div>
