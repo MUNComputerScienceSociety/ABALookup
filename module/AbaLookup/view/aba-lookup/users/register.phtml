@@ -1,0 +1,44 @@
+<h2>Sign up to start using ABA Lookup</h2>
+<?php
+	if (isset($this->error)) {
+		echo "<p>" . $this->error . "</p>";
+	}
+?>
+<div class="left">
+	<form action="/users/register" method="post">
+		<div class="row">
+			<label for="user-type">User Type</label>
+			<select name="user-type" id="user-type">
+				<option <?php if ($this->usertype == "parent") { echo "selected"; } ?> value="parent">Parent</option>
+				<option <?php if ($this->usertype == "therapist") { echo "selected"; } ?> value="therapist">Therapist</option>
+			</select>
+		</div>
+		<div class="row">
+			<label for="username">Username</label>
+			<input name="username" value="<?php echo $this->username; ?>" id="username" type="text" placeholder="Your display name" />
+		</div>
+		<div class="row">
+			<label for="email-address">Email address</label>
+			<input name="email-address" value="<?php echo $this->emailaddress; ?>" id="email-address" type="email" placeholder="Your email address" />
+		</div>
+		<div class="row">
+			<label for="password">Password</label>
+			<input name="password" id="password" type="password" placeholder="Your password" />
+		</div>
+		<div class="row">
+			<label for="confirm-password">Confirm your password</label>
+			<input name="confirm-password" id="confirm-password" type="password" placeholder="Confirm your password" />
+		</div>
+		<div class="row">
+			<input name="submit" id="next-step" type="submit" value="Next Step" />
+		</div>
+	</form>
+</div>
+<div class="right">
+	<h3>Details</h3>
+	<p>
+		Please specify whether you are a parent seeking
+		treatment for a child or a therapist seeking a
+		client. You will sign in with your username and password. All fields are required.
+	</p>
+</div>

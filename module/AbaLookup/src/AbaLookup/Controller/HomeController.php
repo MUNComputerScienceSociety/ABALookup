@@ -10,25 +10,34 @@
 namespace AbaLookup\Controller;
 
 use
-	AbaLookup\AbaLookupController,
-	Zend\View\Model\ViewModel
+	AbaLookup\AbaLookupController
 ;
 
 class HomeController extends AbaLookupController {
+	private function returnArray() {
+		$profile;
+		$this->layout('layout/home');
+		$layout = $this->layout();
+		if ($this->loggedIn()) {
+			$profile = $this->currentUser();
+			$userId = $profile->getId();
+			$profile->url = "/users/{$userId}/profile";
+			$layout->profile = $profile;
+		}
+		return array(
+			'profile' => $profile
+		);
+	}
 	public function indexAction() {
-		$this->layout('layout/home');
-		return new ViewModel();
+		return $this->returnArray();
 	}
-	public function aboutUsAction() {
-		$this->layout('layout/home');
-		return new ViewModel();
+	public function aboutAction() {
+		return $this->returnArray();
 	}
-	public function privacyPolicyAction() {
-		$this->layout('layout/home');
-		return new ViewModel();
+	public function privacyAction() {
+		return $this->returnArray();
 	}
-	public function termsOfUseAction() {
-		$this->layout('layout/home');
-		return new ViewModel();
+	public function termsAction() {
+		return $this->returnArray();
 	}
 }

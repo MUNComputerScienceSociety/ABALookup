@@ -11,9 +11,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 	get_include_path()
 )));
 
-
-// Setup autoloading
-require 'init_autoloader.php';
+require 'autoloader.php';
 
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();

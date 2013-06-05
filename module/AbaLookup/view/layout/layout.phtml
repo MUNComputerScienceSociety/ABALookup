@@ -3,13 +3,16 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<?php echo $this->headTitle('ABA Lookup - Connecting Families with ABA Therapists'); ?>
+	<?php echo $this->headTitle("ABA Lookup")->setSeparator(':'); ?>
 	<meta name="description" content="" />
-	<?php
-		echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
-							  ->prependStylesheet($this->basePath() . "/css/general.css")
-							  ->prependStylesheet($this->basePath() . "/css/index.css");
+
+	<?php echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
+								->prependStylesheet($this->basePath() . "/css/general.css")
+								->prependStylesheet($this->basePath() . "/css/style.css")
+								->prependStylesheet($this->basePath() . "/css/admin.css")
+								->prependStylesheet($this->basePath() . "/css/schedule.css");
 	?>
+
 </head>
 <body>
 <header>
@@ -17,29 +20,18 @@
 		<a href="/">
 			<h1>ABA Lookup</h1>
 		</a>
+
 		<nav class="right">
-			<?php
-				if (isset($this->profile)):
-					echo '<a href="' . $this->profile->url . '" class="button">' . $this->profile->getDisplayName() . '</a>';
-					echo '<a href="/users/logout">Logout</a>';
-				else:
-			?>
-			<a href="/users/login" class="button">Login</a>
-			<a href="/users/register">Signup</a>
-			<?php
-				endif;
-			?>
+			<a href="<?php echo $this->profile->url . '/profile'; ?>">Profile</a>
+			<a href="<?php echo $this->profile->url . '/schedule'; ?>">Schedule</a>
+			<a href="<?php echo $this->profile->url . '/matches'; ?>">Matches</a>
+			<a href="/users/logout">Logout</a>
 		</nav>
+
 	</div>
 </header>
-<div id="intro">
-	<span class="yella">Connecting</span> families in<br>Newfoundland &amp; Labrador<br>with ABA therapists<br>
-	<div class="learn">
-		<a class="button" href="/about">Learn More</a>
-	</div>
-</div>
 <div id="content">
-	<div class="container">
+	<div class="container clearfix">
 		<?php echo $this->content; ?>
 	</div>
 </div>
@@ -69,12 +61,12 @@
 			<div class="soc-link"><a href="http://muncompsci.ca/wiki/Main_Page">Website</a></div>
 			<!--
 				Ideally I'd like this
-				<a class="social">
+				<a class="social" href="#">
 					<i class="icon-twitter"></i>
 					Twitter
 				</a>
 				But I'd at least be happy with this
-				<a class="social">
+				<a class="social" href="#">
 					<i class="icon-facebook"></i>
 					<span class="social-triangle"></span>
 					Facebook
@@ -84,23 +76,23 @@
 		<div class="center">
 			<h4>Navigation</h4>
 			<a href="http://community.muncompsci.ca/">Sponsors</a>
-			<a href="/privacy">Privacy Policy</a>
-			<a>Documentation &amp; Help</a>
-			<a href="/terms">Terms of Use</a>
-			<a href="http://www.autism.nf.net/">Autism Society of NL</a>
+			<a href="/home/privacypolicy">Privacy Policy</a>
+			<a href="#">Documentation &amp; Help</a>
+			<a href="http://www.muncompsci.ca/">MUN CompSci Society</a>
+			<a href="http://www.autism.nf.net/">Autism Society NL</a>
 		</div>
 		<div class="right">
 			<h4>About Us</h4>
 			<div class="about">
 				<h5>ABA Lookup</h5>
 				<p>
-					This software is copyright &copy; MUN Computer Science Society and is licensed under the GNU GPL.
+					This software is copyright MUN Comp Sci Community Initiative and is licensed under MIT Open Source restrictions.
 				</p>
 			</div>
 		</div>
 	</div>
 </footer>
-<script>
+<script type="text/javascript">
 	WebFontConfig = {
 		google: { families: [ 'Open+Sans:400,800,700:latin' ] }
 	};
