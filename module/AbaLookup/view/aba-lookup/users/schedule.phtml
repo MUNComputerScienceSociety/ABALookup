@@ -1,0 +1,96 @@
+<?php
+	$days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	$intervals = ["00", "30"];
+	$am = []; // AM times
+	$pm = []; // PM times
+	for ($i = 0; $i < 24; $i++) {
+		foreach ($intervals as $interval) {
+			$oClock = $i % 12;
+			$oClock = ($oClock == 0) ? 12 : $oClock;
+			if ($i < 12) {
+				$am[] = ["{$i}", "{$oClock}", "{$interval}", "AM"];
+			}
+			else {
+				$pm[] = ["{$i}", "{$oClock}", "{$interval}", "PM"];
+			}
+		}
+	}
+	$times = array_merge($am, $pm);
+?>
+<h2>Complete your schedule</h2>
+<div class="avail">
+	<h3>Add availability:</h3>
+	<form action="<?php echo $this->profile->url . '/schedule'; ?>">
+		<div class="row">
+			<label for="day">Day</label>
+			<select id="day">
+				<?php
+					foreach ($days as $day) {
+						$value = strtolower($day);
+						echo "<option value=\"{$value}\">{$day}</option>\n";
+					}
+				?>
+			</select>
+			<label for="start-time">Start time</label>
+			<select id="start-time">
+				<?php
+					foreach ($times as $time) {
+						echo "<option value=\"{$time[0]}{$time[2]}\">{$time[1]}:{$time[2]} {$time[3]}</option>\n";
+					}
+				?>
+			</select>
+			to
+			<label for="end-time">End time</label>
+			<select id="end-time">
+				<?php
+					foreach ($times as $time) {
+						echo "<option value=\"{$time[0]}{$time[2]}\">{$time[1]}:{$time[2]} {$time[3]}</option>\n";
+					}
+				?>
+			</select>
+			<input id="add" type="submit" value="Add" />
+		</div>
+	</form>
+</div>
+<form action="<?php echo $profile->url . '/schedule'; ?>" method="post">
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<?php
+					foreach ($days as $day) {
+						$day = substr($day, 0, 3);
+						echo "<th>{$day}</th>\n";
+					}
+				?>
+			</tr>
+			<tr>
+				<?php
+					$len = count($days) + 1;
+					for ($i = 0; $i < $len; $i++) {
+						echo "<th></th>\n";
+					}
+				?>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+				foreach ($times as $time) {
+			?>
+				<tr>
+					<td><?php echo "{$time[1]}:{$time[2]} {$time[3]}"; ?></td>
+					<?php
+						$len = count($days);
+						for ($i = 0; $i < $len; $i++) {
+					?>
+						<td></td>
+					<?php
+						}
+					?>
+				</tr>
+			<?php
+				}
+			?>
+		</tbody>
+	</table>
+</form>
