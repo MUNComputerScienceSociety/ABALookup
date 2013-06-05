@@ -265,6 +265,9 @@ class UsersController extends AbaLookupController {
 		$userId = $profile->getId();
 		$profile->url = "/users/{$userId}";
 		$layout = $this->layout();
+		$footer = new ViewModel();
+		$footer->setTemplate('widget/footer');
+		$layout->addChild($footer, 'footer');
 		$layout->profile = $profile;
 		return new ViewModel(array(
 			'profile' => $profile
@@ -278,6 +281,9 @@ class UsersController extends AbaLookupController {
 		$userId = $profile->getId();
 		$profile->url = "/users/{$userId}";
 		$layout = $this->layout();
+		$footer = new ViewModel();
+		$footer->setTemplate('widget/footer');
+		$layout->addChild($footer, 'footer');
 		$layout->profile = $profile;
 		return new ViewModel(array(
 			'profile' => $profile
@@ -291,6 +297,9 @@ class UsersController extends AbaLookupController {
 		$userId = $profile->getId();
 		$profile->url = "/users/{$userId}";
 		$layout = $this->layout();
+		$footer = new ViewModel();
+		$footer->setTemplate('widget/footer');
+		$layout->addChild($footer, 'footer');
 		$layout->profile = $profile;
 		return new ViewModel(array(
 			'profile' => $profile

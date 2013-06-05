@@ -110,6 +110,8 @@ return array(
 			'layout/layout'     => __DIR__ . '/../view/layout/layout.phtml',
 			'layout/home'       => __DIR__ . '/../view/layout/home.phtml',
 			'layout/logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
+			// various widgets
+			'widget/footer' => __DIR__ . '/../view/aba-lookup/widget/footer.phtml',
 			// error pages
 			'error/404'   => __DIR__ . '/../view/error/404.phtml',
 			'error/index' => __DIR__ . '/../view/error/index.phtml',
