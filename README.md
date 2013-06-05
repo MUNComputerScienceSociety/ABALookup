@@ -13,7 +13,7 @@ Requirements
 
 - Composer
 - Apache HTTP Server
-- PHP 5.3+
+- PHP 5.4+ (for the `[]` array syntax and traits)
 - SQLite 3+
 
 Downloading the project
@@ -31,6 +31,20 @@ To contribute back to the project, you will need to have the above requirements 
     vendor/bin/doctrine-module orm:schema-tool:create
 
 If not, see *Preparing a development environment* in the Wiki.
+
+Contributing to the Wiki
+------------------------
+
+To help fill out the Wiki with information on setting up development environments, installing the app, the app in general, usage, the matching algorithm, or anything else you think will be useful to have documented throughly:
+
+    cd <where you keep your projects>
+    git clone git@github.com:<your username>/<your fork name>.wiki.git
+    cd <clone location>
+    # edit Markdown files
+    git push
+    # open an issue requesting the changes be pulled in
+
+See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow.
 
 License
 -------
