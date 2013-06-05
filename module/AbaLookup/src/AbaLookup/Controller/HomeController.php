@@ -14,7 +14,8 @@ use
 	Zend\View\Model\ViewModel
 ;
 
-class HomeController extends AbaLookupController {
+class HomeController extends AbaLookupController
+{
 	private function action() {
 		// the profile of the use currently in session
 		$profile;

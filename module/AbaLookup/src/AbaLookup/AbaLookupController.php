@@ -16,7 +16,8 @@ use
 	Zend\Session\Container
 ;
 
-abstract class AbaLookupController extends AbstractActionController {
+abstract class AbaLookupController extends AbstractActionController
+{
 
 	/**
 	 * @var Doctrine\ORM\EntityManager

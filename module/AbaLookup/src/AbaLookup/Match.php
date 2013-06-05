@@ -9,6 +9,7 @@
 
 namespace AbaLookup;
 
-class Match {
+class Match
+{
 
 }
