@@ -30,7 +30,7 @@ To contribute back to the project, you will need to have the above requirements 
     mkdir database
     vendor/bin/doctrine-module orm:schema-tool:create
 
-If not, see *Preparing a development environment* in the Wiki.
+If not, see [Preparing a development environment] in the Wiki.
 
 Contributing to the Wiki
 ------------------------
@@ -59,3 +59,4 @@ This program is distributed in the hope that it will be useful, but without any 
   [pull requests]:https://help.github.com/articles/using-pull-requests
   [issues]:https://help.github.com/articles/be-social#issues
   [Autism Society of NL]:http://www.autism.nf.net/
+  [Preparing a development environment]:https://github.com/MUNComputerScienceSociety/ABALookup/wiki/Preparing-a-development-environment
