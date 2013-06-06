@@ -1,48 +1,73 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace AbaLookup;
 
 use
-	Zend\Mvc\Controller\AbstractActionController,
-	Zend\View\Model\ViewModel,
 	Doctrine\ORM\EntityManager,
-	Zend\Session\Container
+	Zend\Mvc\Controller\AbstractActionController,
+	Zend\Session\Container,
+	Zend\View\Model\ViewModel
 ;
 
 abstract class AbaLookupController extends AbstractActionController
 {
-
 	/**
 	 * @var Doctrine\ORM\EntityManager
 	 */
-	private $em;
+	private $entityManager;
 
-	public function getEntityManager() {
-		if (null === $this->em) {
-			$this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+	/**
+	 * Return the Entity Manager
+	 */
+	protected function getEntityManager()
+	{
+		if ($this->entityManager === NULL) {
+			$this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 		}
-		return $this->em;
+		return $this->entityManager;
 	}
 
-	public function loggedIn() {
+	/**
+	 * Return whether a user is currently in session
+	 */
+	protected function userLoggedIn()
+	{
 		$session = new Container();
-		return $session->offsetExists("loggedIn");
+		return $session->offsetExists("user");
 	}
 
-	public function currentUser() {
+	/**
+	 * Return the current user in session
+	 */
+	protected function currentUser()
+	{
+		if (!$this->userLoggedIn()) {
+			return NULL;
+		}
 		$session = new Container();
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(array(
-		                'id' => $session->offsetGet("loggedIn")
-		            ));
+		            ->findOneBy(['id' => $session->offsetGet("user")]);
 	}
 
+	/**
+	 * Prepare the given layout to be displayed for the given user
+	 *
+	 * Nests the footer widget into the layout and adds the current
+	 * user's base URL to the layout.
+	 */
+	protected function prepareLayout(&$layout, &$user)
+	{
+		// add the footer
+		$footer = new ViewModel();
+		$footer->setTemplate('widget/footer');
+		$layout->addChild($footer, 'footer');
+		// add the user's URL
+		if (!isset($user)) {
+			return;
+		}
+		$userId = $user->getId();
+		$user->setUrlBase("/users/{$userId}/");
+		$layout->setVariable('user', $user);
+	}
 }

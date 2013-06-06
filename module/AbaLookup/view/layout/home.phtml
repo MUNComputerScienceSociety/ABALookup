@@ -18,17 +18,13 @@
 			<h1>ABA Lookup</h1>
 		</a>
 		<nav class="right">
-			<?php
-				if (isset($this->profile)):
-					echo '<a href="' . $this->profile->url . '" class="button">' . $this->profile->getDisplayName() . '</a>';
-					echo '<a href="/users/logout">Logout</a>';
-				else:
-			?>
+			<?php if (isset($this->user)): ?>
+			<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>" class="button"><?php echo $this->user->getDisplayName(); ?></a>
+			<a href="/users/logout">Logout</a>
+			<?php else: ?>
 			<a href="/users/login" class="button">Login</a>
 			<a href="/users/register">Signup</a>
-			<?php
-				endif;
-			?>
+			<?php endif; ?>
 		</nav>
 	</div>
 </header>
