@@ -41,7 +41,9 @@ Coding standards
 > Coding standards help ensure that the code is high
 > quality, has fewer bugs, and can be easily maintained.
 
-This project tries to adhere to the [Zend Framework Coding Standard for PHP].
+This project tries to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
+
+- Indentation should consist of tab characters. Spaces are to be used for formatting.
 
 Contributing to the Wiki
 ------------------------
