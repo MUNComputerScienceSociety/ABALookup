@@ -72,5 +72,5 @@ This program is distributed in the hope that it will be useful, but without any 
   [pull requests]:https://help.github.com/articles/using-pull-requests
   [issues]:https://help.github.com/articles/be-social#issues
   [Autism Society of NL]:http://www.autism.nf.net/
-  [Preparing a development environment]:https://github.com/MUNComputerScienceSociety/ABALookup/wiki/Preparing-a-development-environment
-  [Zend Framework Coding Standard for PHP]:framework.zend.com/manual/1.12/en/coding-standard.html
+  [Preparing a development environment]:http://git.io/jAivwA
+  [Zend Framework Coding Standard for PHP]:http://framework.zend.com/wiki/display/ZFDEV2/Coding+Standards
