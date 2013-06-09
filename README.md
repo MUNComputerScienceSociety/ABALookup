@@ -12,6 +12,7 @@ Requirements
 ------------
 
 - Composer
+- PHPUnit
 - Apache HTTP Server
 - PHP 5.4+ (for the `[]` array syntax and traits)
 - SQLite 3+
@@ -40,6 +41,14 @@ This project **tries** to adhere to the [Zend Framework Coding Standard for PHP]
 - Indentation should consist of tab characters. Spaces are to be used for formatting
 - All files should end with a trailing newline (LF)
 - PHP constants should be uppercased (including `TRUE`, `FALSE`, and `NULL`)
+
+Unit tests
+----------
+
+Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` folder and can be run with the following command:
+
+    # in top level dir of project
+    scripts/test
 
 Contributing to the Wiki
 ------------------------
