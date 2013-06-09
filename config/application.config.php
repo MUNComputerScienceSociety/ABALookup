@@ -11,8 +11,8 @@ return [
 	'module_listener_options' => [
 		// the paths in which modules reside
 		'module_paths' => [
-			'./module',
-			'./vendor',
+			'module',
+			'vendor',
 		],
 		// paths from which to glob configuration files after modules are loaded
 		// these effectively overide configuration provided by modules themselves
