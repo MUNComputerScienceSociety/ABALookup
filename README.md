@@ -35,13 +35,7 @@ If not, see [Preparing a development environment] in the Wiki.
 Coding standards
 ----------------
 
-> Coding standards are important in any development project,
-> but they are particularly important when many developers
-> are working on the same project.
-> Coding standards help ensure that the code is high
-> quality, has fewer bugs, and can be easily maintained.
-
-This project tries to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
+This project **tries** to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
 
 - Indentation should consist of tab characters. Spaces are to be used for formatting.
 
