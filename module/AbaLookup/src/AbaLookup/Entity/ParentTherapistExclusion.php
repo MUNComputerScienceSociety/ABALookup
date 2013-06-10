@@ -44,11 +44,14 @@ class ParentTherapistExclusion
 	/**
 	 * Constructor
 	 */
-	public function __construct($parent, $therapist)
+	public function __construct(User $parent, User $therapist, $active = TRUE)
 	{
+		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+			throw new \InvalidArgumentException();
+		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;
-		$this->active = TRUE;
+		$this->active = $active;
 	}
 
 	public function setActive($active)
