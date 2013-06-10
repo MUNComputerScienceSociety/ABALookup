@@ -144,7 +144,7 @@ class ScheduleDay
 	 */
 	public function setAbbrev($abbreviation)
 	{
-		$this->abbreviation = $aabbreviation;
+		$this->abbreviation = $abbreviation;
 		return $this;
 	}
 
@@ -173,18 +173,18 @@ class ScheduleDay
 	}
 
 	/**
-	 * @return ArrayCollection The intervals for the day
-	 */
-	public function getIntervals()
-	{
-		return $this->intervals;
-	}
-
-	/**
 	 * @return integer The number of minutes in an interval for the day
 	 */
 	public function getIntervalMinutes()
 	{
 		return $this->intervalMinutes;
+	}
+
+	/**
+	 * @return ArrayCollection The intervals for the day
+	 */
+	public function getIntervals()
+	{
+		return $this->intervals;
 	}
 }
