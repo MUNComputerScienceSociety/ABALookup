@@ -62,7 +62,6 @@ class UsersController extends AbaLookupController
 	 */
 	public function registerAction()
 	{
-		$this->layout('layout/logged-out');
 		$request = $this->request;
 		// the user has not attempted to register
 		if (!$request->isPost()) {
@@ -146,16 +145,16 @@ class UsersController extends AbaLookupController
 	 */
 	public function loginAction()
 	{
-		$this->layout('layout/logged-out');
+		$request = $this->request;
 		// the user has not attempted to login
-		if (!isset($_POST['login'])) {
+		if (!$request->isPost()) {
 			// show the login form
 			return [];
 		}
 		// the user has attempted to login
 		// retrieve the form values
-		$email    = $_POST['email-address'];
-		$password = $_POST['password'];
+		$email    = $request->getPost('email-address');
+		$password = $request->getPost('password');
 		$user = $this->getUserByEmail($email);
 		if (!$user || !$user->verifyPassword($password)) {
 			return ['error' => 'The entered credentials are not valid.'];
@@ -187,6 +186,11 @@ class UsersController extends AbaLookupController
 
 	/**
 	 * Display the user's profile
+	 *
+	 * Editing capabilites for the user profile
+	 * have a this same route with a parameter
+	 * of 'mode' => 'edit' which should show a
+	 * form for editing the user's profile information.
 	 */
 	public function profileAction()
 	{
@@ -194,8 +198,10 @@ class UsersController extends AbaLookupController
 		if (($user = $this->currentUser()) == NULL) {
 			return $this->redirectToLoginPage();
 		}
+		// prepare the view layout
 		$layout = $this->layout();
 		$this->prepareLayout($layout, $user);
+		// check for user editing profile
 		if ($this->params('mode', NULL) != 'edit') {
 			// show the user's profile
 			return ['user' => $user];
@@ -250,6 +256,9 @@ class UsersController extends AbaLookupController
 
 	/**
 	 * Display the user's schedule
+	 *
+	 * Edits to the schedule arrive via POST with
+	 * a parameter of 'mode' => 'add'.
 	 */
 	public function scheduleAction()
 	{
@@ -257,10 +266,17 @@ class UsersController extends AbaLookupController
 		if (($user = $this->currentUser()) == NULL) {
 			return $this->redirectToLoginPage();
 		}
+		// prepare the view layout
 		$layout = $this->layout();
 		$this->prepareLayout($layout, $user);
 		// the user's schedule
 		$schedule = $this->getUserSchedule($user);
+		// check for schedule availabilities
+		$request = $this->request;
+		if ($request->isPost() && $this->params('mode', NULL) == 'add') {
+			// TODO add the availability to the user's schedule
+		}
+		// show ther user's schedule
 		return [
 			'user'      => $user,
 			'schedule'  => $schedule,
@@ -275,8 +291,10 @@ class UsersController extends AbaLookupController
 		if (($user = $this->currentUser()) == NULL) {
 			return $this->redirectToLoginPage();
 		}
+		// prepare the view layout
 		$layout = $this->layout();
 		$this->prepareLayout($layout, $user);
+		// show the user's matches
 		return ['user' => $user];
 	}
 }

@@ -52,6 +52,16 @@ class User
 	protected $password;
 
 	/**
+	 * The user's phone number
+	 *
+	 * The user can optionally provide their phone number, the
+	 * field is NULL by default.
+	 *
+	 * @Column(type = "string", nullable = TRUE)
+	 */
+	protected $phone;
+
+	/**
 	 * @Column(type = "boolean")
 	 */
 	protected $therapist;
@@ -116,6 +126,7 @@ class User
 		$this->displayName = $displayName;
 		$this->email = $email;
 		$this->password = self::$bcrypt->create($password);
+		$this->phone = NULL;
 		$this->therapist = $therapist;
 		$this->sex = $sex;
 		$this->abaCourse = $abaCourse;
@@ -139,6 +150,12 @@ class User
 	public function setPassword($password)
 	{
 		$this->password = self::$bcrypt->create($password);
+		return $this;
+	}
+
+	public function setPhone($number)
+	{
+		$this->phone = $phone;
 		return $this;
 	}
 
@@ -202,6 +219,11 @@ class User
 	public function verifyPassword($password)
 	{
 		return self::$bcrypt->verify($password, $this->password);
+	}
+
+	public function getPhone()
+	{
+		return $this->phone;
 	}
 
 	public function getTherapist()
