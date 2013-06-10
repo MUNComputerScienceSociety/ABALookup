@@ -18,23 +18,42 @@ class UserTest extends PHPUnit_Framework_TestCase
 	protected $user;
 
 	/**
+	 * User fields
+	 */
+	protected $displayName;
+	protected $email;
+	protected $password;
+	protected $therapist;
+	protected $sex;
+	protected $abaCourse;
+	protected $codeOfConduct;
+
+	/**
 	 * Reset the user
 	 */
 	public function setUp()
 	{
-		$displayName = "Jane";
-		$email = "jane@email.com";
-		$password = "password";
-		$therapist = TRUE;
-		$sex = "F";
-		$abaCourse = TRUE;
-		$codeOfConduct = TRUE;
-		$this->user = new User($displayName, $email, $password, $therapist, $sex, $abaCourse, $codeOfConduct);
+		$this->displayName = "Jane";
+		$this->email = "jane@email.com";
+		$this->password = "password";
+		$this->therapist = TRUE;
+		$this->sex = "F";
+		$this->abaCourse = TRUE;
+		$this->codeOfConduct = TRUE;
+		$this->user = new User(
+			$this->displayName,
+			$this->email,
+			$this->password,
+			$this->therapist,
+			$this->sex,
+			$this->abaCourse,
+			$this->codeOfConduct
+		);
 	}
 
 	public function testGetDisplayName()
 	{
-		$this->assertEquals("Jane", $this->user->getDisplayName());
+		$this->assertEquals($this->displayName, $this->user->getDisplayName());
 	}
 
 	/**
@@ -49,7 +68,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 	public function testGetEmail()
 	{
-		$this->assertEquals("jane@email.com", $this->user->getEmail());
+		$this->assertEquals($this->email, $this->user->getEmail());
 	}
 
 	/**
@@ -64,7 +83,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 	public function testVerifyPassword()
 	{
-		$this->assertTrue($this->user->verifyPassword("password"));
+		$this->assertTrue($this->user->verifyPassword($this->password));
 	}
 
 	public function testGetTherapist()
@@ -83,7 +102,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 	public function testGetSex()
 	{
-		$this->assertEquals("F", $this->user->getSex());
+		$this->assertEquals($this->sex, $this->user->getSex());
 	}
 
 	/**
