@@ -44,8 +44,14 @@ class ParentTherapistScore
 	/**
 	 * Constructor
 	 */
-	public function __construct($parent, $therapist, $score)
+	public function __construct(User $parent, User $therapist, $score)
 	{
+		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+			throw new \InvalidArgumentException();
+		}
+		if (!is_numeric($score)) {
+			throw new \InvalidArgumentException();
+		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;
 		$this->score = $score;
@@ -53,6 +59,9 @@ class ParentTherapistScore
 
 	public function setScore($score)
 	{
+		if (!is_numeric($score)) {
+			throw new \InvalidArgumentException();
+		}
 		$this->score = $score;
 		return $this;
 	}
