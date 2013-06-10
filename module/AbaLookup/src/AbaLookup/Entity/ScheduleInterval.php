@@ -53,6 +53,9 @@ class ScheduleInterval
 	 */
 	public function __construct($startTime, $endTime, $available = FALSE)
 	{
+		if ($endTime <= $startTime) {
+			throw new \InvalidArgumentException();
+		}
 		$this->startTime = $startTime;
 		$this->endTime = $endTime;
 		$this->available = $available;
