@@ -40,6 +40,11 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 		$this->schedule = new Schedule($this->user);
 	}
 
+	public function testGetWeek()
+	{
+		$this->assertInternalType('array', $this->schedule->getWeek());
+	}
+
 	public function testGetNumberOfDays()
 	{
 		$this->assertEquals(7, $this->schedule->getNumberOfDays());
@@ -70,6 +75,11 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 
 	public function testGetDays()
 	{
-		$this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $this->schedule->getDays());
+		$days = $this->schedule->getDays();
+		$this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $days);
+		$this->assertCount(7, $days);
+		foreach ($days as $day) {
+			$this->assertInstanceOf('AbaLookup\Entity\ScheduleDay', $day);
+		}
 	}
 }
