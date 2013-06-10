@@ -8,7 +8,7 @@ use
 ;
 
 /**
- * Test methods for the ScheduleDay entity
+ * Test methods for the ScheduleInterval entity
  */
 class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 {
