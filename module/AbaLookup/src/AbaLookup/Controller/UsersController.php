@@ -6,6 +6,7 @@ use
 	AbaLookup\AbaLookupController,
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
+	AbaLookup\Form\RegisterForm,
 	Zend\Session\Container,
 	Zend\View\Model\ViewModel
 ;
@@ -62,66 +63,24 @@ class UsersController extends AbaLookupController
 	 */
 	public function registerAction()
 	{
+		$form = new RegisterForm();
 		$request = $this->request;
 		// the user has not attempted to register
 		if (!$request->isPost()) {
 			// show the registration form
-			return [];
+			return ['form' => $form];
 		}
 		// the user has attempted to register
-		$userType        = $request->getPost('user-type');
-		$displayName     = $request->getPost('display-name');
-		$email           = $request->getPost('email-address');
-		$password        = $request->getPost('password');
-		$confirmPassword = $request->getPost('confirm-password');
-		// validate the user input
-		if (empty($userType)
-		    || empty($displayName)
-		    || empty($email)
-		    || empty($password)
-		    || empty($confirmPassword)
-		) {
-			// the user did not complete the form
+		$form->setData($request->getPost());
+		if (!$form->isValid()) {
+			$messages = $form->getMessages();
 			return [
-				"error"       => "All fields are required.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			// the user entered an invalid email address
-			return [
-				"error"       => "A valid email address is required.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif ($confirmPassword != $password) {
-			// the user did not confirm their password choice
-			return [
-				"error"       => "Your passwords do not match.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif (strlen($password) < User::MINIMUM_PASSWORD_LENGTH) {
-			// the entered password length is poor
-			return [
-				"error"       => "Your password must be at least 6 characters in length.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif ($this->getUserByEmail($email)) {
-			// the given email address is already in use
-			return [
-				"error"       => "This email address is already in use.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
+				'form' => $form,
+				'errors' => $messages,
 			];
 		}
-		// the information entered is okay
+		// form is valid
+		$validData = $form->getData();
 		// create the user
 		$user = new User($displayName, $email, $password, ($userType === "therapist"), NULL, FALSE, FALSE);
 		$user->setVerified(TRUE);
