@@ -38,6 +38,7 @@ Coding standards
 This project **tries** to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
 
 - Indentation should consist of tab characters. Spaces are to be used for formatting
+- All files should end with a trailing newline (LF)
 - PHP constants should be uppercased (including `TRUE`, `FALSE`, and `NULL`)
 
 Contributing to the Wiki
