@@ -2,6 +2,8 @@
 
 namespace AbaLookupTest\Controller;
 
+use AbaLookup\Entity\Schedule;
+
 /**
  * Test the UsersController
  */
@@ -35,10 +37,10 @@ class UsersControllerTest extends BaseControllerTestCase
 	 *
 	 * @dataProvider authActions
 	 */
-	public function testActionsCanBeAccessed($url, $route)
+	public function testAuthenticationActionsCanBeAccessed($url, $route)
 	{
 		$this->dispatch($url);
-		$this->assertResponseStatusCode(self::HTTP_OK);
+		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
@@ -60,29 +62,52 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure that a user can register
+	 * Ensure that a user can login and access all actions
+	 *
+	 * @dataProvider usersActions
 	 */
-	public function testRegister()
+	public function testLoginAndAccessUsersActions($url, $route)
 	{
-		// TODO
-		$this->markTestIncomplete();
-	}
+		// the ID of the user attempting to login
+		$id = 42;
+		// the user about to login
+		$user = $this->getMockUser($id);
+		$schedule = new Schedule($user);
 
-	/**
-	 * Ensure that a user can login
-	 */
-	public function testLogin()
-	{
-		// TODO
-		$this->markTestIncomplete();
-	}
+		// mock the EntityManager
+		$serviceManager = $this->getApplicationServiceLocator();
+		$serviceManager->setAllowOverride(true);
+		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
+		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
 
-	/**
-	 * Edit user profiles
-	 */
-	public function testEditProfile()
-	{
-		// TODO
-		$this->markTestIncomplete();
+		// POST data
+		$data = [
+			'email-address' => $user->getEmail(),
+			'password' => 'password',
+		];
+
+		// can users login?
+		$this->dispatch('/users/login', 'POST', $data);
+		$this->assertModuleName('AbaLookup');
+		$this->assertControllerName('AbaLookup\Controller\Users');
+		$this->assertControllerClass('UsersController');
+		$this->assertRedirectTo("/users/{$id}/profile");
+
+		// reset
+		$this->resetRequest();
+
+		// re-mock the EntityManager post reset
+		$serviceManager = $this->getApplicationServiceLocator();
+		$serviceManager->setAllowOverride(true);
+		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
+		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
+
+		// can users access pages?
+		$this->dispatch($url);
+		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
+		$this->assertModuleName('AbaLookup');
+		$this->assertControllerName('AbaLookup\Controller\Users');
+		$this->assertControllerClass('UsersController');
+		$this->assertMatchedRouteName($route);
 	}
 }
