@@ -1,43 +1,6 @@
 <?php
-	$dayOptions = "";
-	$timeOptions = "";
-	$tableRows = [];
-	$tableHeaders = "";
-	$tableSpacers = "";
-
-	$days = $this->schedule->getDays()->toArray();
-	$i = 0;
-
-	foreach ($days as $day) {
-		$value = $day->getDay();
-		$name = $day->getName();
-		$abbrev = $day->getAbbrev();
-		$dayOptions .= "<option value=\"{$value}\">{$name}</option>" . PHP_EOL;
-
-		$tableHeaders .= "<th>{$abbrev}</th>" . PHP_EOL;
-		$tableSpacers .= "<th></th>" . PHP_EOL;
-
-		$intervals = $day->getIntervals()->toArray();
-		$intervalsCount = count($intervals);
-		$j = 0;
-		foreach ($intervals as $interval) {
-			$startTime = $interval->getStartTime();
-			$endTime = $interval->getEndTime();
-			$amPm = ($startTime > 1159) ? "PM" : "AM";
-			if ($i == 0) {
-				$timeOptions .= "<option value=\"$startTime\">{$startTime} {$amPm}</option>" . PHP_EOL;
-				$tableRows[$j] = "<td>{$startTime} {$amPm}</td>" . PHP_EOL;
-			}
-			$tableRows[$j % $intervalsCount] .= "<td></td>" . PHP_EOL;
-			$j++;
-		}
-
-		$i++;
-	}
-
-	$tableRows = array_reduce($tableRows, function ($html, $row) {
-		return $html . "<tr>{$row}</tr>" . PHP_EOL;
-	});
+	// reference to the HTML view helper
+	$htmlSchedule = $this->htmlSchedule();
 ?>
 <h2>Complete your schedule</h2>
 <div class="avail">
@@ -46,35 +9,22 @@
 		<div class="row">
 			<label for="day">Day</label>
 			<select id="day">
-				<?php echo $dayOptions . PHP_EOL; ?>
+				<?php echo $htmlSchedule->getDayOptions(); ?>
 			</select>
+			from
 			<label for="start-time">Start time</label>
 			<select id="start-time">
-				<?php echo $timeOptions . PHP_EOL; ?>
+				<?php echo $htmlSchedule->getTimeOptions(); ?>
 			</select>
 			to
 			<label for="end-time">End time</label>
 			<select id="end-time">
-				<?php echo $timeOptions . PHP_EOL; ?>
+				<?php echo $htmlSchedule->getTimeOptions(); ?>
 			</select>
 			<input type="submit" value="Add availability">
 		</div>
 	</form>
 </div>
 <form method="post" action="<?php echo $this->user->getUrlBase() . 'schedule'; ?>">
-	<table>
-		<thead>
-			<tr>
-				<td></td>
-				<?php echo $tableHeaders . PHP_EOL; ?>
-			</tr>
-			<tr>
-				<td></td>
-				<?php echo $tableSpacers . PHP_EOL; ?>
-			</tr>
-		</thead>
-		<tbody>
-			<?php echo $tableRows; ?>
-		</tbody>
-	</table>
+	<?php echo $htmlSchedule->getScheduleHtml(); ?>
 </form>
