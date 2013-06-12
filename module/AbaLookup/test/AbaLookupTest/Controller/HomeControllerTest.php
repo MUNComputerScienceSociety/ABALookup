@@ -27,7 +27,7 @@ class HomeControllerTest extends BaseControllerTestCase
 	public function testActionsCanBeAccessed($url, $route)
 	{
 		$this->dispatch($url);
-		$this->assertResponseStatusCode(self::HTTP_OK);
+		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('AbaLookup\Controller\Home');
 		$this->assertControllerClass('HomeController');
