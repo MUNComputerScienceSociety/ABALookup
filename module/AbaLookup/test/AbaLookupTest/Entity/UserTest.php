@@ -23,6 +23,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	protected $displayName;
 	protected $email;
 	protected $password;
+	protected $phone;
 	protected $therapist;
 	protected $sex;
 	protected $abaCourse;
@@ -36,6 +37,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->displayName = "Jane";
 		$this->email = "jane@email.com";
 		$this->password = "password";
+		$this->phone = 7095551234;
 		$this->therapist = TRUE;
 		$this->sex = "F";
 		$this->abaCourse = TRUE;
@@ -49,6 +51,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 			$this->abaCourse,
 			$this->codeOfConduct
 		);
+		$this->user->setPhone($this->phone);
 	}
 
 	public function testGetDisplayName()
@@ -84,6 +87,21 @@ class UserTest extends PHPUnit_Framework_TestCase
 	public function testVerifyPassword()
 	{
 		$this->assertTrue($this->user->verifyPassword($this->password));
+	}
+
+	public function testGetPhone()
+	{
+		$this->assertEquals($this->phone, $this->user->getPhone());
+	}
+
+	/**
+	 * @depends testGetPhone
+	 */
+	public function testSetPhone()
+	{
+		$phone = 709555000;
+		$this->user->setPhone($phone);
+		$this->assertEquals($phone, $this->user->getPhone());
 	}
 
 	public function testGetTherapist()

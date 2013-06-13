@@ -1,6 +1,6 @@
 <?php
 	// reference to the HTML view helper
-	$htmlSchedule = $this->htmlSchedule();
+	$schedule = $this->schedule();
 ?>
 <h2>Complete your schedule</h2>
 <div class="avail">
@@ -9,22 +9,20 @@
 		<div class="row">
 			<label for="day">Day</label>
 			<select id="day">
-				<?php echo $htmlSchedule->getDayOptions(); ?>
+				<?php echo $schedule->getDayOptions(); ?>
 			</select>
 			from
 			<label for="start-time">Start time</label>
 			<select id="start-time">
-				<?php echo $htmlSchedule->getTimeOptions(); ?>
+				<?php echo $schedule->getTimeOptions(); ?>
 			</select>
 			to
 			<label for="end-time">End time</label>
 			<select id="end-time">
-				<?php echo $htmlSchedule->getTimeOptions(); ?>
+				<?php echo $schedule->getTimeOptions(); ?>
 			</select>
 			<input type="submit" value="Add availability">
 		</div>
 	</form>
 </div>
-<form method="post" action="<?php echo $this->user->getUrlBase() . 'schedule'; ?>">
-	<?php echo $htmlSchedule->getScheduleHtml(); ?>
-</form>
+<?php echo $schedule->html(); ?>
