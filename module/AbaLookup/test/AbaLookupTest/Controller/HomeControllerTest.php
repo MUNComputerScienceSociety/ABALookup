@@ -10,7 +10,7 @@ class HomeControllerTest extends BaseControllerTestCase
 	/**
 	 * Return an array of actions to be tested
 	 */
-	public function actions()
+	public function homeActions()
 	{
 		return [
 			['/', 'home'],
@@ -22,9 +22,10 @@ class HomeControllerTest extends BaseControllerTestCase
 	/**
 	 * Ensure the actions for the HomeController can be accessed
 	 *
-	 * @dataProvider actions
+	 * @requires extension curl
+	 * @dataProvider homeActions
 	 */
-	public function testActionsCanBeAccessed($url, $route)
+	public function testActionsCanBeAccessedAndAreValid($url, $route)
 	{
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
@@ -32,5 +33,8 @@ class HomeControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('AbaLookup\Controller\Home');
 		$this->assertControllerClass('HomeController');
 		$this->assertMatchedRouteName($route);
+		// is the output valid?
+		$html = $this->getResponse()->getContent();
+		$this->assertValidHtml($html);
 	}
 }

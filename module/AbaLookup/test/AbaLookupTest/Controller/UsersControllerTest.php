@@ -35,9 +35,10 @@ class UsersControllerTest extends BaseControllerTestCase
 	/**
 	 * Ensure the authentication actions for the UsersController can be accessed
 	 *
+	 * @requires extension curl
 	 * @dataProvider authActions
 	 */
-	public function testAuthenticationActionsCanBeAccessed($url, $route)
+	public function testAuthenticationActionsCanBeAccessedAndAreValid($url, $route)
 	{
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
@@ -45,6 +46,9 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
+		// is the output valid?
+		$html = $this->getResponse()->getContent();
+		$this->assertValidHtml($html);
 	}
 
 	/**
@@ -64,9 +68,10 @@ class UsersControllerTest extends BaseControllerTestCase
 	/**
 	 * Ensure that a user can login and access all actions
 	 *
+	 * @requires extension curl
 	 * @dataProvider usersActions
 	 */
-	public function testLoginAndAccessUsersActions($url, $route)
+	public function testCanLoginAndCanAccessUsersActionsAndAreValid($url, $route)
 	{
 		// the ID of the user attempting to login
 		$id = 42;
@@ -109,5 +114,9 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
+
+		// is the output valid?
+		$html = $this->getResponse()->getContent();
+		$this->assertValidHtml($html);
 	}
 }
