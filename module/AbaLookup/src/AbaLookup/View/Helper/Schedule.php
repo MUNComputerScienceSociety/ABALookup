@@ -77,7 +77,8 @@ class Schedule extends AbstractViewHelper
 				}
 				// add a cell to the appropriate row in the table, and wrap
 				// around once all the days (columns) have a cell in this row
-				$tableRows[$j % $intervalsCount] .= "<td></td>" . PHP_EOL;
+				$availability = $interval->getAvailability() ? ' data-available' : "";
+				$tableRows[$j % $intervalsCount] .= "<td{$availability}></td>" . PHP_EOL;
 				$j++;
 			}
 

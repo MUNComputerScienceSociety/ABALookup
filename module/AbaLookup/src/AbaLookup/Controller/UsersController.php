@@ -232,7 +232,15 @@ class UsersController extends AbaLookupController
 		// check for schedule availabilities
 		$request = $this->request;
 		if ($request->isPost() && $this->params('mode', NULL) == 'add') {
-			// TODO add the availability to the user's schedule
+			// add the availability to the user's schedule
+			$schedule->setAvailability($request->getPost());
+			$entityManager = $this->getEntityManager();
+			$entityManager->persist($schedule);
+			$entityManager->flush();
+			return $this->redirect()->toRoute('users', [
+				'id' => $user->getId(),
+				'action' => 'schedule',
+			]);
 		}
 		// show ther user's schedule
 		return [
