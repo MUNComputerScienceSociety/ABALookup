@@ -1,37 +1,28 @@
 <h2>Register to start using ABA Lookup</h2>
 <?php
 	if (isset($this->error)) {
-		echo "<p>" . $this->error . "</p>";
+		echo "<p>{$this->error}</p>";
 	}
+	$this->form->setAttribute('class', 'left');
+	$this->form->setAttribute('action', '/users/register');
+	$this->form->setAttribute('method', 'post');
+	echo $this->form()->openTag($this->form);
+
+	foreach ($this->form as $element) {
 ?>
-<form action="/users/register" method="post" class="left">
 	<div class="row">
-		<label for="user-type">User type</label>
-		<select name="user-type" id="user-type">
-			<option <?php if ($this->userType == "parent") { echo "selected"; } ?> value="parent">Parent</option>
-			<option <?php if ($this->userType == "therapist") { echo "selected"; } ?> value="therapist">Therapist</option>
-		</select>
+		<?php
+			if ($element->hasAttribute('label')) {
+				echo $this->formLabel($element);
+			}
+			echo $this->formElement($element);
+		?>
 	</div>
-	<div class="row">
-		<label for="display-name">Display name</label>
-		<input name="display-name" value="<?php echo $this->displayName; ?>" id="display-name" type="text" placeholder="Your display name" />
-	</div>
-	<div class="row">
-		<label for="email-address">Email address</label>
-		<input name="email-address" value="<?php echo $this->email; ?>" id="email-address" type="email" placeholder="Your email address" />
-	</div>
-	<div class="row">
-		<label for="password">Password</label>
-		<input name="password" id="password" type="password" placeholder="Your password" />
-	</div>
-	<div class="row">
-		<label for="confirm-password">Confirm your password</label>
-		<input name="confirm-password" id="confirm-password" type="password" placeholder="Confirm your password" />
-	</div>
-	<div class="row">
-		<input type="submit" value="Next Step" />
-	</div>
-</form>
+<?php
+	}
+
+	echo $this->form()->closeTag();
+?>
 <div class="right">
 	<h3>Details</h3>
 	<p>

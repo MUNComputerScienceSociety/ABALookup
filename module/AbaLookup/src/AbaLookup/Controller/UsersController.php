@@ -6,6 +6,9 @@ use
 	AbaLookup\AbaLookupController,
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
+	AbaLookup\Form\LoginForm,
+	AbaLookup\Form\ProfileEditForm,
+	AbaLookup\Form\RegisterForm,
 	Zend\Session\Container,
 	Zend\View\Model\ViewModel
 ;
@@ -58,72 +61,34 @@ class UsersController extends AbaLookupController
 	 * Register the user
 	 *
 	 * Validates the user's information, saves them into the database
-	 * and proceeds to log the user in.
+	 * and proceeds to log the user in (and show their profile).
 	 */
 	public function registerAction()
 	{
+		$form = new RegisterForm();
 		$request = $this->request;
-		// the user has not attempted to register
 		if (!$request->isPost()) {
-			// show the registration form
-			return [];
+			// the user has not submitted
+			// the registration form
+			return ['form' => $form];
 		}
 		// the user has attempted to register
-		$userType        = $request->getPost('user-type');
-		$displayName     = $request->getPost('display-name');
-		$email           = $request->getPost('email-address');
-		$password        = $request->getPost('password');
-		$confirmPassword = $request->getPost('confirm-password');
-		// validate the user input
-		if (empty($userType)
-		    || empty($displayName)
-		    || empty($email)
-		    || empty($password)
-		    || empty($confirmPassword)
-		) {
-			// the user did not complete the form
+		$form->setData($request->getPost());
+		if (!$form->isValid()) {
 			return [
-				"error"       => "All fields are required.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			// the user entered an invalid email address
-			return [
-				"error"       => "A valid email address is required.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif ($confirmPassword != $password) {
-			// the user did not confirm their password choice
-			return [
-				"error"       => "Your passwords do not match.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif (strlen($password) < User::MINIMUM_PASSWORD_LENGTH) {
-			// the entered password length is poor
-			return [
-				"error"       => "Your password must be at least 6 characters in length.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
-			];
-		} elseif ($this->getUserByEmail($email)) {
-			// the given email address is already in use
-			return [
-				"error"       => "This email address is already in use.",
-				"userType"    => $userType,
-				"displayName" => $displayName,
-				"email"       => $email,
+				'form' => $form,
+				'error' => $form->getMessage(),
 			];
 		}
-		// the information entered is okay
-		// create the user
-		$user = new User($displayName, $email, $password, ($userType === "therapist"), NULL, FALSE, FALSE);
+		// form is valid
+		$user = $form->getUser();
+		if ($this->getUserByEmail($user->getEmail())) {
+			// the given email address is already in use
+			return [
+				'form' => $form,
+				'error' => 'The email address is already in use.'
+			];
+		}
 		$user->setVerified(TRUE);
 		// enter the user into the database
 		$entityManager = $this->getEntityManager();
@@ -131,7 +96,7 @@ class UsersController extends AbaLookupController
 		$entityManager->flush();
 		// log the user in
 		$session = new Container();
-		$session->offsetSet("user", $user->getId());
+		$session->offsetSet(self::SESSION_KEY, $user->getId());
 		return $this->redirect()->toRoute('users', [
 			'id'     => $user->getId(),
 			'action' => 'profile',
@@ -145,25 +110,38 @@ class UsersController extends AbaLookupController
 	 */
 	public function loginAction()
 	{
+		$form = new LoginForm();
 		$request = $this->request;
 		// the user has not attempted to login
 		if (!$request->isPost()) {
 			// show the login form
-			return [];
+			return ['form' => $form];
 		}
 		// the user has attempted to login
 		// retrieve the form values
-		$email    = $request->getPost('email-address');
-		$password = $request->getPost('password');
-		$user = $this->getUserByEmail($email);
+		$form->setData($request->getPost());
+		if (!$form->isValid()) {
+			return [
+				'form' => $form,
+				'error' => $form->getMessage(),
+			];
+		}
+		// retrieve the validated values
+		$emailAddress = $form->getEmailAddress();
+		$password = $form->getPassword();
+		// get user by email
+		$user = $this->getUserByEmail($emailAddress);
 		if (!$user || !$user->verifyPassword($password)) {
-			return ['error' => 'The entered credentials are not valid.'];
+			return [
+				'form' => $form,
+				'error' => 'The entered credentials are not valid.'
+			];
 		}
 		// login the user
 		$session = new Container();
-		$session->offsetSet('user', $user->getId());
+		$session->offsetSet(self::SESSION_KEY, $user->getId());
 		return $this->redirect()->toRoute('users', [
-			'id'     => $user->getId(),
+			'id' => $user->getId(),
 			'action' => 'profile',
 		]);
 	}
@@ -178,8 +156,8 @@ class UsersController extends AbaLookupController
 	public function logoutAction()
 	{
 		$session = new Container();
-		if ($session->offsetExists('user')) {
-			$session->offsetUnset('user');
+		if ($session->offsetExists(self::SESSION_KEY)) {
+			$session->offsetUnset(self::SESSION_KEY);
 		}
 		return $this->redirect()->toRoute('home');
 	}
@@ -194,60 +172,40 @@ class UsersController extends AbaLookupController
 	 */
 	public function profileAction()
 	{
-		// no user is in session
 		if (($user = $this->currentUser()) == NULL) {
+			// no user is in session
 			return $this->redirectToLoginPage();
 		}
 		// prepare the view layout
 		$layout = $this->layout();
 		$this->prepareLayout($layout, $user);
-		// check for user editing profile
+		// if mode != edit, then user is viewing
 		if ($this->params('mode', NULL) != 'edit') {
 			// show the user's profile
 			return ['user' => $user];
 		}
-		// check for profile edits
+		// the user is editing their profile
+		$form = new ProfileEditForm($user);
+		$edit = new ViewModel([
+			'user' => $user,
+			'form' => $form,
+		]);
+		$edit->setTemplate('users/profile-edit');
 		$request = $this->request;
 		if (!$request->isPost()) {
 			// show the profile edit form
-			$edit = new ViewModel(['user' => $user]);
-			$edit->setTemplate('users/profile-edit');
+			return $edit;
+		}
+		$form->setData($request->getPost());
+		if (!$form->isValid() || !$form->updateUser($user)) {
+			$edit->setVariable('error', $form->getMessage());
 			return $edit;
 		}
 		// update the user's information
-		$displayName = $request->getPost('display-name', NULL);
-		$email = $request->getPost('email-address', $user->getEmail());
-		$sex = $request->getPost('sex', NULL);
-		$user->setDisplayName($displayName);
-		$user->setEmail($email);
-		$user->setSex($sex == "Undisclosed" ? NULL : $sex);
-		// change the user's password
-		$oldPassword = $request->getPost('old-password', NULL);
-		$newPassword = $request->getPost('new-password', NULL);
-		$newConfirmPassword = $request->getPost('new-confirm-password', NULL);
-		if ($oldPassword
-		    && $user->verifyPassword($oldPassword)
-		    && $newPassword
-		    && (strlen($newPassword) >= User::MINIMUM_PASSWORD_LENGTH)
-		    && $newConfirmPassword
-		    && ($newPassword == $newConfirmPassword)) {
-			// change the user's password
-			$user->setPassword($newPassword);
-		} else {
-			// the user did not change their password
-			// TODO allow the user to skip changing their password
-			$edit = new ViewModel([
-				'user'  => $user,
-				'error' => 'Error',
-			]);
-			$edit->setTemplate('users/profile-edit');
-			return $edit;
-		}
-		// persist the changes
 		$entityManager = $this->getEntityManager();
 		$entityManager->persist($user);
 		$entityManager->flush();
-		// show the user's profile
+		// show the user's profile again
 		return $this->redirect()->toRoute('users', [
 			'id'     => $user->getId(),
 			'action' => 'profile',
@@ -274,7 +232,15 @@ class UsersController extends AbaLookupController
 		// check for schedule availabilities
 		$request = $this->request;
 		if ($request->isPost() && $this->params('mode', NULL) == 'add') {
-			// TODO add the availability to the user's schedule
+			// add the availability to the user's schedule
+			$schedule->setAvailability($request->getPost());
+			$entityManager = $this->getEntityManager();
+			$entityManager->persist($schedule);
+			$entityManager->flush();
+			return $this->redirect()->toRoute('users', [
+				'id' => $user->getId(),
+				'action' => 'schedule',
+			]);
 		}
 		// show ther user's schedule
 		return [

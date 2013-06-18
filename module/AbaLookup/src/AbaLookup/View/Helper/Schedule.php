@@ -3,12 +3,12 @@
 namespace AbaLookup\View\Helper;
 
 use
-	AbaLookup\Entity\Schedule,
+	AbaLookup\Entity\Schedule as ScheduleEntity,
 	DateTime,
 	Zend\View\Helper\AbstractHelper as AbstractViewHelper
 ;
 
-class HtmlSchedule extends AbstractViewHelper
+class Schedule extends AbstractViewHelper
 {
 	/**
 	 * HTML form option elements for each day in the schedule
@@ -21,34 +21,21 @@ class HtmlSchedule extends AbstractViewHelper
 	protected $timeOptions;
 
 	/**
-	 * The rendered schedule HTML (cached)
+	 * The rendered schedule HTML
 	 */
 	protected $html = NULL;
 
 	/**
-	 * Render the given schedule
+	 * Generate the HTML for the schedule and "cache" it
 	 *
-	 * Render the schedule passed, or if invoked without passing
-	 * a schedule, try to use the schedule attached to the view.
+	 * This will/should be called before {@code render()}
+	 * and thus the HTML will be generated here, and
+	 * returned by {@code render()}. This method will be
+	 * called via {@code __invoke()} which passes along a schedule.
 	 *
-	 * @param Schedule the schedule to render
-	 * @throws InvalidArgumentException
+	 * @param AbaLookup\Entity\Schedule $schedule
 	 */
-	public function __invoke(Schedule $schedule = NULL)
-	{
-		if (isset($schedule)) {
-			$this->renderSchedule($schedule);
-			return $this;
-		}
-		$view = $this->getView();
-		if (isset($view->schedule) && $view->schedule instanceof Schedule) {
-			$this->renderSchedule($view->schedule);
-			return $this;
-		}
-		throw new InvalidArgumentException();
-	}
-
-	public function renderSchedule(Schedule $schedule)
+	protected function render(ScheduleEntity $schedule)
 	{
 		// has the schedule already been rendered
 		// if so, return the cached HTML
@@ -90,7 +77,8 @@ class HtmlSchedule extends AbstractViewHelper
 				}
 				// add a cell to the appropriate row in the table, and wrap
 				// around once all the days (columns) have a cell in this row
-				$tableRows[$j % $intervalsCount] .= "<td></td>" . PHP_EOL;
+				$availability = $interval->getAvailability() ? ' data-available' : "";
+				$tableRows[$j % $intervalsCount] .= "<td{$availability}></td>" . PHP_EOL;
 				$j++;
 			}
 
@@ -111,21 +99,50 @@ class HtmlSchedule extends AbstractViewHelper
 		$this->html = "<table>{$thead}{$tbody}</table>";
 	}
 
-	public function getDayOptions()
+	/**
+	 * Render the given schedule
+	 *
+	 * Render the schedule passed, or if invoked without passing
+	 * a schedule, try to use the schedule attached to the view.
+	 *
+	 * @param AbaLookup\Entity\Schedule $schedule The schedule to render.
+	 * @throws InvalidArgumentException
+	 */
+	public function __invoke(ScheduleEntity $schedule = NULL)
 	{
-		return $this->dayOptions;
+		if (isset($schedule)) {
+			$this->render($schedule);
+			return $this;
+		}
+		$view = $this->getView();
+		if (isset($view->schedule) && $view->schedule instanceof ScheduleEntity) {
+			$this->render($view->schedule);
+			return $this;
+		}
+		throw new InvalidArgumentException();
 	}
 
+	/**
+	 * Return the full HTML for the schedule
+	 */
+	public function html()
+	{
+		return $this->html;
+	}
+
+	/**
+	 * Return the option elements for the times in the schedule
+	 */
 	public function getTimeOptions()
 	{
 		return $this->timeOptions;
 	}
 
 	/**
-	 * Return the HTML for the schedule
+	 * Return the option elements for the days in the schedule
 	 */
-	public function getScheduleHtml()
+	public function getDayOptions()
 	{
-		return $this->html;
+		return $this->dayOptions;
 	}
 }

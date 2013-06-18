@@ -12,7 +12,9 @@ use
 	Doctrine\ORM\Mapping\JoinTable,
 	Doctrine\ORM\Mapping\ManyToMany,
 	Doctrine\ORM\Mapping\OneToOne,
-	Doctrine\ORM\Mapping\Table
+	Doctrine\ORM\Mapping\Table,
+	Traversable,
+	Zend\Stdlib\ArrayUtils
 ;
 
 /**
@@ -87,8 +89,45 @@ class Schedule
 		// add the days to the schedule
 		foreach (self::$week as $day => $name) {
 			$scheduleDay = new ScheduleDay($day, $name);
-			$this->days->add($scheduleDay);
+			$this->days->set($day, $scheduleDay);
 		}
+	}
+
+	/**
+	 * Set the availability of an interval in the schedule
+	 *
+	 * {@code $data} must be an array or be Traversable and have 3 keys
+	 * (day, start-time, end-time). The day is used to pass
+	 * along the call to the appropriate {@code ScheduleDay}
+	 * in the collection.
+	 *
+	 * @param array|Traversable $data The array containing the interval information
+	 */
+	public function setAvailability($data, $available = TRUE)
+	{
+		if ($data instanceof Traversable) {
+			$data = ArrayUtils::iteratorToArray($data);
+		}
+		if (!is_array($data)) {
+			throw new InvalidArgumentException(sprintf(
+				'%s expects an array or Traversable argument; received "%s"',
+				__METHOD__,
+				(is_object($data) ? get_class($data) : gettype($data))
+			));
+		}
+
+		// aliases
+		$day = $data['day'];
+		$startTime = $data['start-time'];
+		$endTime = $data['end-time'];
+
+		if ($startTime >= $endTime) {
+			throw new InvalidArgumentException(sprintf(
+				"The start time cannot be be greater than the end time"
+			));
+		}
+		$scheduleDay = $this->days->get($day);
+		$scheduleDay->setAvailability($startTime, $endTime, $available);
 	}
 
 	/**
