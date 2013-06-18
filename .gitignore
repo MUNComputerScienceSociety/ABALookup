@@ -29,7 +29,7 @@ Destop.ini
 *.project
 *.settings/
 
-# SublimeText
+# Sublime Text
 *.sublime-workspace
 
 # Espresso projects
