@@ -150,11 +150,6 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 			$this->markTestIncomplete(
 				'Issues checking HTML validity.'
 			);
-			/*
-			throw new PHPUnit_Framework_Exception(
-				sprintf('Can\'t check validity. cURL returned error %s.', trigger_error(curl_error($curl)))
-			);
-			*/
 		}
 		curl_close($curl);
 
