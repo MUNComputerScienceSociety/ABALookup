@@ -3,6 +3,7 @@
 namespace AbaLookupTest;
 
 use
+	RuntimeException,
 	Zend\Loader\AutoloaderFactory,
 	Zend\Mvc\Service\ServiceManagerConfig,
 	Zend\ServiceManager\ServiceManager
