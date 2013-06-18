@@ -1,30 +1,45 @@
-<h2>Your Profile Information</h2>
+<h2>Your profile information</h2>
 <?php
-	if ($this->confirm) {
+	if (isset($this->confirm)) {
 		echo "<p>{$this->confirm}</p>";
 	}
 ?>
-<div class="left">
-	<h3>Username</h3>
-	<p>Your username</p>
-	<h3>Email Address</h3>
-	<p>Your email@address.com</p>
-	<h3>Verification Status</h3>
-	<p>Is your email verified boolean?</p>
-	<h3>Password</h3>
-	<p>Some circles of your password</p>
-	<h2>Therapist only</h2>
+<form method="post" action="<?php echo $this->user->getUrlBase() . "profile"; ?>" class="left">
+
+	<h3>Display name</h3>
+	<p><?php echo $this->user->getDisplayName(); ?></p>
+	<h3>Email address</h3>
+	<p><?php echo $this->user->getEmail(); ?></p>
+	<h3>Verification status</h3>
+	<p><?php echo ($this->user->getVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
+
+	<?php if ($this->user->getTherapist()): ?>
+
 	<h3>Sex</h3>
-	<p>Your gender</p>
-	<h3>Code of Conduct Status</h3>
-	<p>Status of your Code of Conduct</p>
-	<h3>ABA Course Status</h3>
-	<p>Status of your ABA Course</p>
-	<button id="edit">Edit your profile</button>
-</div>
+	<p>
+		<?php
+			$sex = $this->user->getSex();
+			if (!isset($sex)) {
+				echo "Undisclosed";
+			} else {
+				echo ($sex == "F") ? "Female" : "Male";
+			}
+		?>
+	</p>
+	<h3>Code of conduct</h3>
+	<p><?php echo ($this->user->getCodeOfConduct()) ? "Accepted" : "You need to accept the code of conduct"; ?></p>
+	<h3>ABA therapy course</h3>
+	<p><?php echo ($this->user->getAbaCourse()) ? "Completed" : "Not yet completed"; ?></p>
+
+	<?php endif; ?>
+
+	<a href="<?php echo $this->user->getUrlBase() . 'profile/edit' ?>" class="button">Edit</a>
+</form>
 <div class="right">
 	<h3>Details</h3>
 	<p>
-		This page contains the information associated with your account and may be publically visible. The Edit button will allow you to edit your information.
+		This page contains the information associated with your account
+		and may be publically visible.
+		The edit button will allow you to edit your information.
 	</p>
 </div>

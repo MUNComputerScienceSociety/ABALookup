@@ -3,36 +3,67 @@
 namespace AbaLookup\Entity;
 
 use
-	Doctrine\ORM\Mapping as ORM
+	Doctrine\ORM\Mapping\Column,
+	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\GeneratedValue,
+	Doctrine\ORM\Mapping\Id,
+	Doctrine\ORM\Mapping\OneToOne,
+	Doctrine\ORM\Mapping\Table,
+	Doctrine\ORM\Mapping\UniqueConstraint
 ;
 
 /**
- * @ORM\Entity @ORM\Table(
- *     name="parent_therapist_score",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="parent_therapist_score_idx", columns={"therapist_id", "parent_id"})}
- * )
+ * @DoctrineEntity
+ * @Table(name = "parent_therapist_scores", uniqueConstraints = {
+ *     @UniqueConstraint(name = "parent_therapist_scores_idx", columns = {"therapist_id", "parent_id"})
+ * })
+ *
+ * A parent and therapist matching score
  */
 class ParentTherapistScore
 {
 	/**
-	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
+	 * @Id
+	 * @Column(type = "integer")
+	 * @GeneratedValue
+	 */
+	protected $id;
+	/**
+	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $parent;
 	/**
-	 * @ORM\Id @ORM\OneToOne(targetEntity="User")
+	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $therapist;
 	/**
-	 * @ORM\Column(type="float")
+	 * @Column(type = "float", precision = 3)
 	 */
 	protected $score;
 
-	public function __construct($parent, $therapist, $score)
+	/**
+	 * Constructor
+	 */
+	public function __construct(User $parent, User $therapist, $score)
 	{
-
+		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+			throw new \InvalidArgumentException();
+		}
+		if (!is_numeric($score)) {
+			throw new \InvalidArgumentException();
+		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;
 		$this->score = $score;
+	}
+
+	public function setScore($score)
+	{
+		if (!is_numeric($score)) {
+			throw new \InvalidArgumentException();
+		}
+		$this->score = $score;
+		return $this;
 	}
 
 	public function getId()
@@ -53,10 +84,5 @@ class ParentTherapistScore
 	public function getScore()
 	{
 		return $this->score;
-	}
-
-	public function setScore($score)
-	{
-		$this->score = $score;
 	}
 }

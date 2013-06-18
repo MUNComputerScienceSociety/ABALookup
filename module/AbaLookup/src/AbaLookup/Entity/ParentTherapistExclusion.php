@@ -3,39 +3,61 @@
 namespace AbaLookup\Entity;
 
 use
-	Doctrine\ORM\Mapping as ORM
+	Doctrine\ORM\Mapping\Column,
+	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\GeneratedValue,
+	Doctrine\ORM\Mapping\Id,
+	Doctrine\ORM\Mapping\OneToOne,
+	Doctrine\ORM\Mapping\Table,
+	Doctrine\ORM\Mapping\UniqueConstraint
 ;
 
 /**
- * @ORM\Entity @ORM\Table(
- *     name="parent_therapist_exclusion",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="parent_therapist_exclude_idx", columns={"therapist_id", "parent_id"})}
- * )
+ * @DoctrineEntity
+ * @Table(name = "parent_therapist_exclusions", uniqueConstraints = {
+ *     @UniqueConstraint(name = "parent_therapist_exclusions_idx", columns = {"therapist_id", "parent_id"})
+ * })
+ *
+ * A parent and therapist paring that has been flagged not to work
  */
 class ParentTherapistExclusion
 {
-
 	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue
+	 * @Id
+	 * @Column(type = "integer")
+	 * @GeneratedValue
 	 */
 	protected $id;
-
 	/**
-	 * @ORM\OneToOne(targetEntity="User")
+	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $parent;
-
 	/**
-	 * @ORM\OneToOne(targetEntity="User")
+	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $therapist;
+	/**
+	 * @Column(type = "boolean")
+	 */
+	protected $active;
 
-	public function __construct($parent, $therapist)
+	/**
+	 * Constructor
+	 */
+	public function __construct(User $parent, User $therapist, $active = TRUE)
 	{
+		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+			throw new \InvalidArgumentException();
+		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;
+		$this->active = $active;
+	}
+
+	public function setActive($active)
+	{
+		$this->active = $active;
+		return $this;
 	}
 
 	public function getId()
@@ -51,5 +73,10 @@ class ParentTherapistExclusion
 	public function getTherapist()
 	{
 		return $this->therapist;
+	}
+
+	public function getActive()
+	{
+		return $this->active;
 	}
 }

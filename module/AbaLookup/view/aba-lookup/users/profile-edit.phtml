@@ -1,0 +1,63 @@
+<h2>Edit your profile information</h2>
+<?php
+	if (isset($this->error)) {
+		echo "<p>{$this->error}</p>";
+	}
+?>
+<form method="post" action="<?php echo $this->user->getUrlBase() . "profile/edit"; ?>" class="left">
+
+	<div class="row">
+		<label for="display-name">Display name</label>
+		<input id="display-name" name="display-name" type="text" value="<?php echo $this->user->getDisplayName(); ?>">
+	</div>
+	<div class="row">
+		<label for="email-address">Email address</label>
+		<input id="email-address" name="email-address" type="text" value="<?php echo $this->user->getEmail(); ?>">
+	</div>
+
+	<h3>Change your password</h3>
+	<div class="row">
+		<label for="old-password">Your old password</label>
+		<input id="old-password" name="old-password" type="password">
+	</div>
+	<div class="row">
+		<label for="new-password">Email address</label>
+		<input id="new-password" name="new-password" type="password">
+	</div>
+	<div class="row">
+		<label for="new-confirm-password">Email address</label>
+		<input id="new-confirm-password" name="new-confirm-password" type="password">
+	</div>
+
+	<?php if ($this->user->getTherapist()): ?>
+
+	<div class="row">
+		<label for="sex">Sex</label>
+		<select id="sex" name="sex">
+			<?php
+				$sex = $this->user->getSex();
+			?>
+			<option <?php echo ($sex == "F") ? "selected" : ""; ?> value="F">Female</option>
+			<option <?php echo ($sex == "M") ? "selected" : ""; ?> value="M">Male</option>
+			<option <?php echo (!isset($sex)) ? "selected" : ""; ?>>Undisclosed</option>
+		</select>
+	</div>
+	<div class="row">
+		<label for="code-of-conduct">Code of conduct</label>
+		<input id="code-of-conduct" name="code-of-conduct" type="checkbox">
+	</div>
+	<div class="row">
+		<label for="aba-course">ABA therapy course</label>
+		<input id="aba-course" name="aba-course" type="checkbox">
+	</div>
+
+	<?php endif; ?>
+
+	<input type="submit" value="Save changes">
+</form>
+<div class="right">
+	<h3>Details</h3>
+	<p>
+		Edit yout information.
+	</p>
+</div>

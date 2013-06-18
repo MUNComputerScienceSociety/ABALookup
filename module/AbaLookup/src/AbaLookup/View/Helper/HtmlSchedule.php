@@ -1,0 +1,131 @@
+<?php
+
+namespace AbaLookup\View\Helper;
+
+use
+	AbaLookup\Entity\Schedule,
+	DateTime,
+	Zend\View\Helper\AbstractHelper as AbstractViewHelper
+;
+
+class HtmlSchedule extends AbstractViewHelper
+{
+	/**
+	 * HTML form option elements for each day in the schedule
+	 */
+	protected $dayOptions;
+
+	/**
+	 * HTML form option elements for each time interval in the schedule
+	 */
+	protected $timeOptions;
+
+	/**
+	 * The rendered schedule HTML (cached)
+	 */
+	protected $html = NULL;
+
+	/**
+	 * Render the given schedule
+	 *
+	 * Render the schedule passed, or if invoked without passing
+	 * a schedule, try to use the schedule attached to the view.
+	 *
+	 * @param Schedule the schedule to render
+	 * @throws InvalidArgumentException
+	 */
+	public function __invoke(Schedule $schedule = NULL)
+	{
+		if (isset($schedule)) {
+			$this->renderSchedule($schedule);
+			return $this;
+		}
+		$view = $this->getView();
+		if (isset($view->schedule) && $view->schedule instanceof Schedule) {
+			$this->renderSchedule($view->schedule);
+			return $this;
+		}
+		throw new InvalidArgumentException();
+	}
+
+	public function renderSchedule(Schedule $schedule)
+	{
+		// has the schedule already been rendered
+		// if so, return the cached HTML
+		if (isset($this->html)) {
+			return $this->html;
+		}
+		// the days in the schedule
+		$days = $schedule->getDays()->toArray();
+		$i = 0;
+		// start with the headers for the leftmost
+		// column which holds the time intervals
+		$tableHeaders = "<th></th>";
+		// array of the table rows for each interval
+		$tableRows = [];
+
+		foreach ($days as $day) {
+
+			// the form option for the day
+			$value = $day->getDay();
+			$name = $day->getName();
+			$abbrev = $day->getAbbrev();
+			$this->dayOptions .= '<option value="' . $value . '">' . $name . '</option>' . PHP_EOL;
+			// the header for the day
+			$tableHeaders .= "<th>{$abbrev}</th>" . PHP_EOL;
+			// all the intervals
+			$intervals = $day->getIntervals()->toArray();
+			$intervalsCount = count($intervals);
+			$j = 0;
+
+			foreach ($intervals as $interval) {
+				$military = $interval->getStartTime();
+				// only generate time options once
+				// also only populate the leftmost column once
+				if ($i == 0) {
+					// pad the military time with zeros on the left and format the time for humans
+					$time = (new DateTime(str_pad($military, 4, '0', STR_PAD_LEFT)))->format('h:i A');
+					$this->timeOptions .= "<option value=\"{$military}\">{$time}</option>" . PHP_EOL;
+					$tableRows[$j] = "<td>{$time}</td>" . PHP_EOL;
+				}
+				// add a cell to the appropriate row in the table, and wrap
+				// around once all the days (columns) have a cell in this row
+				$tableRows[$j % $intervalsCount] .= "<td></td>" . PHP_EOL;
+				$j++;
+			}
+
+			// increase the count to signify that
+			// the first column has been generated
+			// and only add cells when ($i > 0)
+			$i++;
+		}
+
+		// wrap each row in the table with HTML
+		$renderRow = function ($html, $row) {
+			return $html . "<tr>{$row}</tr>" . PHP_EOL;
+		};
+		$tableRows = array_reduce($tableRows, $renderRow);
+		// generate the HTML
+		$thead = "<thead><tr>{$tableHeaders}</tr></thead>";
+		$tbody = "<tbody>{$tableRows}</tbody>";
+		$this->html = "<table>{$thead}{$tbody}</table>";
+	}
+
+	public function getDayOptions()
+	{
+		return $this->dayOptions;
+	}
+
+	public function getTimeOptions()
+	{
+		return $this->timeOptions;
+	}
+
+	/**
+	 * Return the HTML for the schedule
+	 */
+	public function getScheduleHtml()
+	{
+		return $this->html;
+	}
+}

@@ -1,321 +1,300 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace AbaLookup\Controller;
 
 use
 	AbaLookup\AbaLookupController,
-	AbaLookup\Configuration\Mail as MailConfig,
+	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
-	Zend\Crypt\Password\Bcrypt,
-	Zend\Mail,
 	Zend\Session\Container,
 	Zend\View\Model\ViewModel
 ;
 
+/**
+ * Handles all actions involving users
+ */
 class UsersController extends AbaLookupController
 {
-	public function registerAction() {
-		$this->layout('layout/logged-out');
-		if (isset ($_POST['submit'])) {
-			$userType        = $_POST['user-type'];
-			$username        = $_POST['username'];
-			$emailAddress    = $_POST['email-address'];
-			$password        = $_POST['password'];
-			$confirmPassword = $_POST['confirm-password'];
-			if (empty($userType)
-			    || empty($username)
-			    || empty($emailAddress)
-			    || empty($password)
-			    || empty($confirmPassword)
-			) {
-				return new ViewModel(array(
-					"error" => "All fields are required.",
-					"usertype" => $userType,
-					"username" => $username,
-					"emailAddress" => $emailAddress,
-				));
-			}
-			if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
-				return new ViewModel(array(
-					"error" => "A valid email address is required.",
-					"usertype" => $userType,
-					"username" => $username,
-					"emailAddress" => $emailAddress,
-				));
-			}
-			if ($confirmPassword != $password) {
-				return new ViewModel(array(
-					"error" => "Your passwords do not match.",
-					"usertype" => $userType,
-					"username" => $username,
-					"emailaddress" => $emailAddress,
-				));
-			}
-			if (strlen($password) < 6) {
-				return new ViewModel(array(
-					"error" => "Your password must be at least 6 characters in length.",
-					"usertype" => $userType,
-					"username" => $username,
-					"emailaddress" => $emailAddress,
-				));
-			}
-			if ($this->getUserByEmail($emailAddress)) {
-				return new ViewModel(array(
-					"error" => "This email address is already in use.",
-					"usertype" => $userType,
-					"username" => $username,
-					"emailaddress" => $emailAddress,
-				));
-			}
-			$em = $this->getEntityManager();
-			$bcrypt = new Bcrypt();
-			/*
-			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
-			$mailTransport = new Mail\Transport\Sendmail();
-			*/
-			$user = new User($emailAddress, $bcrypt->create($password), ($userType === "therapist"), "", "", false, false, $username);
-			$user->setVerified(true);
-			$em->persist($user);
-			$em->flush();
-			/*
-			$verificationUrl = $mailConfig->getUrl() . "/user/verifyuser/" . $user->getId() . "/" . $this->makeVerificationHash($user);
-			$message = new Mail\Message();
-			$message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
-			$message->addTo($user->getEmail());
-			$message->setBody(str_replace("{URL}", $verificationUrl, $mailConfig->getVerificationMessage()));
-			$message->setSubject($mailConfig->getVerificationSubject());
-			$mailTransport->send($message);
-			*/
-			$session = new Container();
-			$session->offsetSet("loggedIn", $user->getId());
-			return $this->redirect()->toRoute('users', array(
-				'id'     => $user->getId(),
-				'action' => 'profile',
-			));
+	/**
+	 * Return the user associated with the given email address
+	 */
+	private function getUserByEmail($email)
+	{
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(['email' => $email]);
+	}
+
+	/**
+	 * Return the user associated with the given ID
+	 */
+	private function getUserById($id)
+	{
+		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(['id' => $id]);
+	}
+
+	/**
+	 * Return a redirect to the login page
+	 */
+	private function redirectToLoginPage() {
+		return $this->redirect()->toRoute('auth', ['action' => 'login']);
+	}
+
+	/**
+	 * Return the given user's schedule
+	 */
+	private function getUserSchedule($user)
+	{
+		$entityManager = $this->getEntityManager();
+		$schedule = $entityManager->getRepository('AbaLookup\Entity\Schedule')
+		                          ->findOneBy(['user' => $user->getId()]);
+		if (!$schedule) {
+			$schedule = new Schedule($user);
+			$entityManager->persist($schedule);
+			$entityManager->flush();
 		}
-		return new ViewModel();
+		return $schedule;
 	}
-	/*
-	public function registerSuccessAction() {
-		$this->layout('layout/logged-out');
-		return new ViewModel();
-	}
-	*/
-	public function loginAction() {
-		$this->layout('layout/logged-out');
-		if (isset($_POST['login'])) {
-			$bcrypt = new Bcrypt();
-			$emailAddress = $_POST['email-address'];
-			$password = $_POST['password'];
-			$user = $this->getUserByEmail($emailAddress);
-			if ((!$user) || (!$bcrypt->verify($password, $user->getPassword()))) {
-				return new ViewModel(array(
-					'error' => 'The email you entered was incorrect or the password did not match.'
-				));
-			}
-			/*
-			if (!$user->getVerified()) {
-				return new ViewModel(array(
-					'error' => 'You need to verify your email to login.'
-				));
-			}
-			*/
-			$session = new Container();
-			$session->offsetSet('loggedIn', $user->getId());
-			return $this->redirect()->toRoute('users', array(
-				'id'     => $user->getId(),
-				'action' => 'profile',
-			));
+
+	/**
+	 * Register the user
+	 *
+	 * Validates the user's information, saves them into the database
+	 * and proceeds to log the user in.
+	 */
+	public function registerAction()
+	{
+		$request = $this->request;
+		// the user has not attempted to register
+		if (!$request->isPost()) {
+			// show the registration form
+			return [];
 		}
-		return new ViewModel();
-	}
-	public function logoutAction() {
+		// the user has attempted to register
+		$userType        = $request->getPost('user-type');
+		$displayName     = $request->getPost('display-name');
+		$email           = $request->getPost('email-address');
+		$password        = $request->getPost('password');
+		$confirmPassword = $request->getPost('confirm-password');
+		// validate the user input
+		if (empty($userType)
+		    || empty($displayName)
+		    || empty($email)
+		    || empty($password)
+		    || empty($confirmPassword)
+		) {
+			// the user did not complete the form
+			return [
+				"error"       => "All fields are required.",
+				"userType"    => $userType,
+				"displayName" => $displayName,
+				"email"       => $email,
+			];
+		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			// the user entered an invalid email address
+			return [
+				"error"       => "A valid email address is required.",
+				"userType"    => $userType,
+				"displayName" => $displayName,
+				"email"       => $email,
+			];
+		} elseif ($confirmPassword != $password) {
+			// the user did not confirm their password choice
+			return [
+				"error"       => "Your passwords do not match.",
+				"userType"    => $userType,
+				"displayName" => $displayName,
+				"email"       => $email,
+			];
+		} elseif (strlen($password) < User::MINIMUM_PASSWORD_LENGTH) {
+			// the entered password length is poor
+			return [
+				"error"       => "Your password must be at least 6 characters in length.",
+				"userType"    => $userType,
+				"displayName" => $displayName,
+				"email"       => $email,
+			];
+		} elseif ($this->getUserByEmail($email)) {
+			// the given email address is already in use
+			return [
+				"error"       => "This email address is already in use.",
+				"userType"    => $userType,
+				"displayName" => $displayName,
+				"email"       => $email,
+			];
+		}
+		// the information entered is okay
+		// create the user
+		$user = new User($displayName, $email, $password, ($userType === "therapist"), NULL, FALSE, FALSE);
+		$user->setVerified(TRUE);
+		// enter the user into the database
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist($user);
+		$entityManager->flush();
+		// log the user in
 		$session = new Container();
-		if ($session->offsetExists('loggedIn')) {
-			$session->offsetUnset('loggedIn');
+		$session->offsetSet("user", $user->getId());
+		return $this->redirect()->toRoute('users', [
+			'id'     => $user->getId(),
+			'action' => 'profile',
+		]);
+	}
+
+	/**
+	 * Login the user
+	 *
+	 * Verify the user credentials and if valid login user in.
+	 */
+	public function loginAction()
+	{
+		$request = $this->request;
+		// the user has not attempted to login
+		if (!$request->isPost()) {
+			// show the login form
+			return [];
+		}
+		// the user has attempted to login
+		// retrieve the form values
+		$email    = $request->getPost('email-address');
+		$password = $request->getPost('password');
+		$user = $this->getUserByEmail($email);
+		if (!$user || !$user->verifyPassword($password)) {
+			return ['error' => 'The entered credentials are not valid.'];
+		}
+		// login the user
+		$session = new Container();
+		$session->offsetSet('user', $user->getId());
+		return $this->redirect()->toRoute('users', [
+			'id'     => $user->getId(),
+			'action' => 'profile',
+		]);
+	}
+
+	/**
+	 * Logout the user
+	 *
+	 * If a user is logged in, log them out.
+	 * Invalidates the session.
+	 * Reroutes the user to the home page.
+	 */
+	public function logoutAction()
+	{
+		$session = new Container();
+		if ($session->offsetExists('user')) {
+			$session->offsetUnset('user');
 		}
 		return $this->redirect()->toRoute('home');
 	}
-	public function resetPasswordAction() {
-		if (isset($_POST['email-address'])) {
-			$email = $_POST['email-address'];
-			$user = $this->getUserByEmail($email);
-			if (!$user) {
-				return new ViewModel(array(
-					'error' => "The email you are using was not found in the database."
-				));
-			}
-			/*
-			$mailConfig = $this->serviceLocator->get("AbaLookup\Configuration\Mail");
-			$mailTransport = new Mail\Transport\Sendmail();
-			$resetUrl = $mailConfig->getUrl() . "/user/updatepassword/" . $user->getId() . "/" . $this->makeResetPasswordHash($user);
-			$message = new Mail\Message();
-			$message->addFrom($mailConfig->getMailFrom(), $mailConfig->getMailFromName());
-			$message->addTo($user->getEmail());
-			$message->setBody(str_replace("{URL}", $resetUrl, $mailConfig->getResetPasswordMessage()));
-			$message->setSubject($mailConfig->getResetPasswordSubject());
-			$mailTransport->send($message);
-			*/
-			return $this->redirect()->toRoute('user', array('action' => 'login'));
+
+	/**
+	 * Display the user's profile
+	 *
+	 * Editing capabilites for the user profile
+	 * have a this same route with a parameter
+	 * of 'mode' => 'edit' which should show a
+	 * form for editing the user's profile information.
+	 */
+	public function profileAction()
+	{
+		// no user is in session
+		if (($user = $this->currentUser()) == NULL) {
+			return $this->redirectToLoginPage();
 		}
-		return new ViewModel();
-	}
-	/*
-	public function resetPasswordSuccessAction() {
-		return new ViewModel();
-	}
-	*/
-	public function updatePasswordAction() {
-		$id = $this->getEvent()->getRouteMatch()->getParam('id');
-		$verification = $this->getEvent()->getRouteMatch()->getParam('verification');
-		$user = $this->getUserById($id);
-		if ($verification && $this->makeVerificationHash($user)) {
-			if (isset($_POST['newpassword']) && isset($_POST['confirmpassword']) ) {
-				$newpassword = $_POST['newpassword'];
-				$confirmpassword = $_POST['confirmpassword'];
-				if (strlen($newpassword) < 6) {
-					return new ViewModel(array(
-						'id' => $id,
-						'verification' => $verification,
-						'error' => "Your password must be at least 6 characters."
-					));
-				}
-				if ($newpassword == $confirmpassword) {
-					$bcrypt = new Bcrypt();
-					$user->setPassword($bcrypt->create($newpassword));
-					$this->getEntityManager()->persist($user);
-					$this->getEntityManager()->flush();
-					$session = new Container();
-					$session->offsetSet("loggedIn", $user->getId());
-					if ($user->getTherapist()) {
-						return $this->redirect()->toRoute('therapist');
-					}
-					else {
-						return $this->redirect()->toRoute('parent');
-					}
-				}
-				return new ViewModel(array(
-					'id' => $id,
-					'verification' => $verification,
-					'error' => "Your passwords did not match."
-				));
-			}
-			return new ViewModel(array(
-				'id' => $id,
-				'verification' => $verification
-			));
-		}
-		return $this->redirect()->toRoute('user', array('action' => 'updatePasswordError'));
-	}
-	public function updatePasswordErrorAction() {
-		return new ViewModel();
-	}
-	public function verifyUserAction() {
-		$id = $this->getEvent()->getRouteMatch()->getParam('id');
-		$verification = $this->getEvent()->getRouteMatch()->getParam('verification');
-		$user = $this->getUserById($id);
-		if ($user) {
-			if ($this->makeVerificationHash($user) == $verification) {
-				$user->setVerified(true);
-				$this->getEntityManager()->persist($user);
-				$this->getEntityManager()->flush();
-				$session = new Container();
-				$session->offsetSet("loggedIn", $user->getId());
-				if ($user->getTherapist()) {
-					return $this->redirect()->toRoute('therapist-profile');
-				}
-				else {
-					return $this->redirect()->toRoute('parent-profile');
-				}
-			}
-		}
-		return new ViewModel();
-	}
-	public function changePasswordAction() {
-		if (isset($_POST["submit"])) {
-			$password = $_POST["password"];
-			$newpassword = $_POST["newpassword"];
-			$confirmpassword = $_POST["confirmpassword"];
-			if ($newpassword != $confirmpassword) {
-				return new ViewModel(array('error' => 'Your new passwords do not match.'));
-			}
-			$bcrypt = new Bcrypt();
-			$user = $this->currentUser();
-			if (!$bcrypt->verify($password, $user->getPassword())) {
-				return new ViewModel(array('error' => 'Your current password does not match.'));
-			}
-			$user->setPassword($bcrypt->create($newpassword));
-			$this->getEntityManager()->persist($user);
-			$this->getEntityManager()->flush();
-			return new ViewModel(array('error' => 'Your password has been updated'));
-		}
-		return new ViewModel();
-	}
-	public function profileAction() {
-		if (!$this->loggedIn()) {
-			return $this->redirect()->toRoute('auth', array('action' => 'login'));
-		}
-		$profile = $this->currentUser();
-		$userId = $profile->getId();
-		$profile->url = "/users/{$userId}";
+		// prepare the view layout
 		$layout = $this->layout();
-		$footer = new ViewModel();
-		$footer->setTemplate('widget/footer');
-		$layout->addChild($footer, 'footer');
-		$layout->profile = $profile;
-		return new ViewModel(array(
-			'profile' => $profile
-		));
-	}
-	public function scheduleAction() {
-		if (!$this->loggedIn()) {
-			return $this->redirect()->toRoute('auth', array('action' => 'login'));
+		$this->prepareLayout($layout, $user);
+		// check for user editing profile
+		if ($this->params('mode', NULL) != 'edit') {
+			// show the user's profile
+			return ['user' => $user];
 		}
-		$profile = $this->currentUser();
-		$userId = $profile->getId();
-		$profile->url = "/users/{$userId}";
-		$layout = $this->layout();
-		$footer = new ViewModel();
-		$footer->setTemplate('widget/footer');
-		$layout->addChild($footer, 'footer');
-		$layout->profile = $profile;
-		return new ViewModel(array(
-			'profile' => $profile
-		));
-	}
-	public function matchesAction() {
-		if (!$this->loggedIn()) {
-			return $this->redirect()->toRoute('auth', array('action' => 'login'));
+		// check for profile edits
+		$request = $this->request;
+		if (!$request->isPost()) {
+			// show the profile edit form
+			$edit = new ViewModel(['user' => $user]);
+			$edit->setTemplate('users/profile-edit');
+			return $edit;
 		}
-		$profile = $this->currentUser();
-		$userId = $profile->getId();
-		$profile->url = "/users/{$userId}";
+		// update the user's information
+		$displayName = $request->getPost('display-name', NULL);
+		$email = $request->getPost('email-address', $user->getEmail());
+		$sex = $request->getPost('sex', NULL);
+		$user->setDisplayName($displayName);
+		$user->setEmail($email);
+		$user->setSex($sex == "Undisclosed" ? NULL : $sex);
+		// change the user's password
+		$oldPassword = $request->getPost('old-password', NULL);
+		$newPassword = $request->getPost('new-password', NULL);
+		$newConfirmPassword = $request->getPost('new-confirm-password', NULL);
+		if ($oldPassword
+		    && $user->verifyPassword($oldPassword)
+		    && $newPassword
+		    && (strlen($newPassword) >= User::MINIMUM_PASSWORD_LENGTH)
+		    && $newConfirmPassword
+		    && ($newPassword == $newConfirmPassword)) {
+			// change the user's password
+			$user->setPassword($newPassword);
+		} else {
+			// the user did not change their password
+			// TODO allow the user to skip changing their password
+			$edit = new ViewModel([
+				'user'  => $user,
+				'error' => 'Error',
+			]);
+			$edit->setTemplate('users/profile-edit');
+			return $edit;
+		}
+		// persist the changes
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist($user);
+		$entityManager->flush();
+		// show the user's profile
+		return $this->redirect()->toRoute('users', [
+			'id'     => $user->getId(),
+			'action' => 'profile',
+		]);
+	}
+
+	/**
+	 * Display the user's schedule
+	 *
+	 * Edits to the schedule arrive via POST with
+	 * a parameter of 'mode' => 'add'.
+	 */
+	public function scheduleAction()
+	{
+		// no user in session
+		if (($user = $this->currentUser()) == NULL) {
+			return $this->redirectToLoginPage();
+		}
+		// prepare the view layout
 		$layout = $this->layout();
-		$footer = new ViewModel();
-		$footer->setTemplate('widget/footer');
-		$layout->addChild($footer, 'footer');
-		$layout->profile = $profile;
-		return new ViewModel(array(
-			'profile' => $profile
-		));
+		$this->prepareLayout($layout, $user);
+		// the user's schedule
+		$schedule = $this->getUserSchedule($user);
+		// check for schedule availabilities
+		$request = $this->request;
+		if ($request->isPost() && $this->params('mode', NULL) == 'add') {
+			// TODO add the availability to the user's schedule
+		}
+		// show ther user's schedule
+		return [
+			'user'      => $user,
+			'schedule'  => $schedule,
+		];
 	}
-	private function getUserByEmail($email) {
-		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('email' => $email));
-	}
-	private function getUserById($id) {
-		return $this->getEntityManager()->getRepository('AbaLookup\Entity\User')->findOneBy(array('id' => $id));
-	}
-	private function makeVerificationHash($user) {
-		return substr(hash('sha512', '!!!VerificationHash$' . $user->getEmail() . $user->getPassword()), -10);
-	}
-	private function makeResetPasswordHash($user) {
-		return substr(hash('sha512', '%&@#^(jwgwetiyQ%Kgw$' . $user->getEmail() . $user->getPassword()), -10);
+
+	/**
+	 * Display the user's matches
+	 */
+	public function matchesAction()
+	{
+		if (($user = $this->currentUser()) == NULL) {
+			return $this->redirectToLoginPage();
+		}
+		// prepare the view layout
+		$layout = $this->layout();
+		$this->prepareLayout($layout, $user);
+		// show the user's matches
+		return ['user' => $user];
 	}
 }
