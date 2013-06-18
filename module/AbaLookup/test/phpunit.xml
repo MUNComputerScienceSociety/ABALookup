@@ -4,8 +4,5 @@
 		<testsuite name="ABA Lookup Tests">
 			<directory>AbaLookupTest</directory>
 		</testsuite>
-		<testsuite name="Selenium Server Tests">
-			<directory>SeleniumTest</directory>
-		</testsuite>
 	</testsuites>
 </phpunit>
