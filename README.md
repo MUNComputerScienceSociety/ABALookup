@@ -3,6 +3,8 @@ ABA Lookup
 
 A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents.
 
+[![Build Status](https://travis-ci.org/MUNComputerScienceSociety/ABALookup.png)][Travis]
+
 How to help
 -----------
 
@@ -73,6 +75,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose. See the GNU General Public License for more details.
 
+  [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
   [forking]:https://help.github.com/articles/fork-a-repo
   [pull requests]:https://help.github.com/articles/using-pull-requests
   [issues]:https://help.github.com/articles/be-social#issues
