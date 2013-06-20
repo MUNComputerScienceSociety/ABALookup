@@ -35,7 +35,7 @@ class User
 	/**
 	 * BCrypt for hashing and verifying password
 	 */
-	private static $bcrypt;
+	protected static $bcrypt;
 
 	/**
 	 * @Id
