@@ -1,8 +1,10 @@
 {
-	"repositories": [{
+	"repositories": [
+		{
 			"type": "composer",
 			"url": "https://packages.zendframework.com/"
-	}],
+		}
+	],
 	"require": {
 		"zendframework/zendframework": "2.*",
 		"doctrine/doctrine-orm-module": "0.*"

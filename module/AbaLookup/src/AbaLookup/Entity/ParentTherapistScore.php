@@ -28,14 +28,17 @@ class ParentTherapistScore
 	 * @GeneratedValue
 	 */
 	protected $id;
+
 	/**
 	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $parent;
+
 	/**
 	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $therapist;
+
 	/**
 	 * @Column(type = "float", precision = 3)
 	 */
