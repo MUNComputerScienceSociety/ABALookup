@@ -18,7 +18,7 @@ use
  *     @UniqueConstraint(name = "parent_therapist_exclusions_idx", columns = {"therapist_id", "parent_id"})
  * })
  *
- * A parent and therapist paring that has been flagged not to work
+ * A parent and therapist pairing that has been flagged not to work
  */
 class ParentTherapistExclusion
 {
@@ -28,14 +28,17 @@ class ParentTherapistExclusion
 	 * @GeneratedValue
 	 */
 	protected $id;
+
 	/**
 	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $parent;
+
 	/**
 	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $therapist;
+
 	/**
 	 * @Column(type = "boolean")
 	 */

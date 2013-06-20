@@ -10,6 +10,10 @@
 	<p><?php echo $this->user->getDisplayName(); ?></p>
 	<h3>Email address</h3>
 	<p><?php echo $this->user->getEmail(); ?></p>
+
+	<h3>Phone number</h3>
+	<p><?php echo $this->user->getPhone() ? $this->user->getPhone() : "n/a"; ?></p>
+
 	<h3>Verification status</h3>
 	<p><?php echo ($this->user->getVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
 

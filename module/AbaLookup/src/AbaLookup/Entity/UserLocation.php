@@ -28,10 +28,12 @@ class UserLocation
 	 * @GeneratedValue
 	 */
 	protected $id;
+
 	/**
 	 * @OneToOne(targetEntity = "User")
 	 */
 	protected $user;
+
 	/**
 	 * @OneToOne(targetEntity = "Location")
 	 */

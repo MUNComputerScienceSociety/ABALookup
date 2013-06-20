@@ -11,26 +11,32 @@ class Mail
 	 * The email address from which this email is coming
 	 */
 	protected $mailFrom;
+
 	/**
 	 * The sender of this message
 	 */
 	protected $mailFromName;
+
 	/**
 	 * The message signifying account verification
 	 */
 	protected $verificationMessage;
+
 	/**
 	 * The subject of the verification email
 	 */
 	protected $verificationSubject;
+
 	/**
 	 * The URL to the website
 	 */
 	protected $url;
+
 	/**
 	 * The message signifying a password reset
 	 */
 	protected $resetPasswordMessage;
+
 	/**
 	 * The subject of the password reset email
 	 */

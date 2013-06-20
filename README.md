@@ -28,7 +28,6 @@ If you already have a development environment ready to go with the above require
     git clone git@github.com:<your username>/<your fork name>.git
     cd <clone location>
     # composer self-update
-    composer update
     composer install
     # run the following to create the database
     scripts/database
@@ -69,11 +68,7 @@ See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-do
 License
 -------
 
-Copyright (C) 2013
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantability or fitness for a particular purpose. See the GNU General Public License for more details.
+This software is licensed under the Simplified BSD License. (See LICENSE file.)
 
   [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
   [forking]:https://help.github.com/articles/fork-a-repo

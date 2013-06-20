@@ -7,7 +7,8 @@ use
 	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
-	Doctrine\ORM\Mapping\Table
+	Doctrine\ORM\Mapping\Table,
+	InvalidArgumentException
 ;
 
 /**
@@ -54,7 +55,7 @@ class ScheduleInterval
 	public function __construct($startTime, $endTime, $available = FALSE)
 	{
 		if ($endTime <= $startTime) {
-			throw new \InvalidArgumentException();
+			throw new InvalidArgumentException();
 		}
 		$this->startTime = $startTime;
 		$this->endTime = $endTime;

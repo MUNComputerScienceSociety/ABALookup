@@ -11,7 +11,8 @@ use
 	Doctrine\ORM\Mapping\JoinColumn,
 	Doctrine\ORM\Mapping\JoinTable,
 	Doctrine\ORM\Mapping\ManyToMany,
-	Doctrine\ORM\Mapping\Table
+	Doctrine\ORM\Mapping\Table,
+	InvalidArgumentException
 ;
 
 /**
@@ -146,6 +147,23 @@ class ScheduleDay
 	{
 		$this->abbreviation = $abbreviation;
 		return $this;
+	}
+
+	/**
+	 * Set the availability of the interval with the given start time
+	 */
+	public function setAvailability($startTime, $endTime, $available = TRUE)
+	{
+		if ($startTime >= $endTime) {
+			throw new InvalidArgumentException(sprintf(
+				"The start time cannot be greater than the end time"
+			));
+		}
+		foreach ($this->intervals as $interval) {
+			if ($interval->getStartTime() >= $startTime && $interval->getEndTime() <= $endTime) {
+				$interval->setAvailability($available);
+			}
+		}
 	}
 
 	/**

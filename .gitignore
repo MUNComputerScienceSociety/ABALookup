@@ -1,14 +1,15 @@
 *.lock
-
+*.tmp
+*.bak
 database/
 vendor/
 
-# Windows image file caches
+# Windows junk
 ehthumbs.db
 Thumbs.db
 Destop.ini
 
-# Mac junk file
+# OS X junk
 .DS_Store
 
 # Swap files
@@ -16,16 +17,15 @@ Destop.ini
 
 # Local ideas
 *.idea.md
+*.ideas.md
 
-# Visual Studio files
+# Visual Studio
 *.tmp_proj
 *.suo
 *.user
 *.sln.docstates
 
-*.tmp
-*.bak
-
+# Eclipse
 *.project
 *.settings/
 

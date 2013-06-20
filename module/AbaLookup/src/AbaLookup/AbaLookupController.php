@@ -12,6 +12,11 @@ use
 abstract class AbaLookupController extends AbstractActionController
 {
 	/**
+	 * The key used to store the user in session
+	 */
+	const SESSION_KEY = 'user';
+
+	/**
 	 * @var Doctrine\ORM\EntityManager
 	 */
 	private $entityManager;
@@ -33,7 +38,7 @@ abstract class AbaLookupController extends AbstractActionController
 	protected function userLoggedIn()
 	{
 		$session = new Container();
-		return $session->offsetExists("user");
+		return $session->offsetExists(self::SESSION_KEY);
 	}
 
 	/**
@@ -47,7 +52,7 @@ abstract class AbaLookupController extends AbstractActionController
 		$session = new Container();
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['id' => $session->offsetGet("user")]);
+		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_KEY)]);
 	}
 
 	/**

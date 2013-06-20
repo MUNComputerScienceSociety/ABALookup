@@ -4,7 +4,9 @@ namespace AbaLookupTest\Controller;
 
 use
 	AbaLookup\Entity\User,
+	PHPUnit_Framework_Exception,
 	ReflectionProperty,
+	SimpleXMLElement,
 	Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase
 ;
 
@@ -120,5 +122,50 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 		$cookie   = $cookie;
 
 		return $this;
+	}
+
+	/**
+	 * Assert that the given HTML validates
+	 *
+	 * Modified <http://git.io/BNxJcA>.
+	 *
+	 * @param string $html The HTML to validate
+	 */
+	public function assertValidHtml($html)
+	{
+		// cURL
+		$curl = curl_init();
+		curl_setopt_array($curl, [
+			// CURLOPT_CONNECTTIMEOUT => 1,
+			CURLOPT_URL => 'http://html5.validator.nu/',
+			CURLOPT_RETURNTRANSFER => TRUE,
+			CURLOPT_POST => TRUE,
+			CURLOPT_POSTFIELDS => [
+				'out' => 'xml',
+				'content' => $html,
+			],
+		]);
+		$response = curl_exec($curl);
+		if (!$response) {
+			$this->markTestIncomplete(
+				'Issues checking HTML validity.'
+			);
+		}
+		curl_close($curl);
+
+		// fail if errors
+		$xml = new SimpleXMLElement($response);
+		$nonDocumentErrors = $xml->{'non-document-error'};
+		$errors = $xml->error;
+		if (count($nonDocumentErrors) > 0) {
+			// indeterminate
+			$this->markTestIncomplete();
+		} elseif (count($errors) > 0) {
+			// invalid
+			$this->fail("HTML output did not validate.");
+		}
+
+		// valid
+		$this->assertTrue(TRUE);
 	}
 }

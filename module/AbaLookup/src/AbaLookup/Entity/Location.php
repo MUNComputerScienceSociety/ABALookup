@@ -24,10 +24,12 @@ class Location
 	 * @GeneratedValue
 	 */
 	protected $id;
+
 	/**
 	 * @Column(type = "string")
 	 */
 	protected $name;
+
 	/**
 	 * @Column(type = "boolean")
 	 */
