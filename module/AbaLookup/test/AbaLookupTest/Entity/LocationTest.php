@@ -45,6 +45,24 @@ class LocationTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($name, $this->location->setName($name)->getName());
 	}
 
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonStringPassed()
+	{
+		$name = 3;
+		$this->location->setName($name);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfEmptyStringPassed()
+	{
+		$name = "";
+		$this->location->setName($name);
+	}
+
 	public function testGetEnabled()
 	{
 		$this->assertTrue($this->location->getEnabled());
@@ -61,5 +79,13 @@ class LocationTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($this->location->getEnabled());
 		$this->location->setEnabled(TRUE);
 		$this->assertTrue($this->location->getEnabled());
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonBoolPassed()
+	{
+		$this->location->setEnabled("");
 	}
 }
