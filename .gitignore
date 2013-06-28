@@ -1,8 +1,9 @@
 *.lock
 *.tmp
 *.bak
-database/
-vendor/
+
+/database
+/vendor
 
 # Windows junk
 ehthumbs.db
