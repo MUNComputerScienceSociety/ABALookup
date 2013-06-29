@@ -12,8 +12,9 @@
 ?>
 	<div class="row">
 		<?php
-			if ($element->hasAttribute('label')) {
-				echo $this->formLabel($element);
+			$label = $element->getLabel();
+			if ($label) {
+				echo $this->formLabel($element, $label);
 			}
 			echo $this->formElement($element);
 		?>

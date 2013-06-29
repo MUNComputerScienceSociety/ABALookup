@@ -1,0 +1,87 @@
+form label {
+	@extend %semibold-type;
+	color: #6a6868;
+	// display: none;
+	display: block;
+	text-transform: uppercase;
+}
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="text"] {
+	background-color: #e1e9e8;
+	border: 1px solid #96b2ae;
+	box-shadow: inset 0 0 2px $white;
+	color: $grey-dark;
+	font-family: $typeface;
+	font-size: 12pt;
+	margin: 0 0 10px 0;
+	padding: 8px;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+	width: 650px;
+}
+select {
+	background-color: #e1e9e8;
+	border: 1px solid #96b2ae;
+	box-shadow: inset 0 0 2px $white;
+	color: $grey-dark;
+	font-family: $typeface;
+	font-size: 12pt;
+	margin: 0 0 10px 0;
+	padding: 8px;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+select[multiple] {
+	background-color: #e1e9e8;
+	border: 1px solid #96b2ae;
+	box-shadow: inset 0 0 2px $white;
+	color: $grey-dark;
+	font-family: $typeface;
+	font-size: 12pt;
+	margin-bottom: 10px;
+	padding: 0;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+	width: 400px;
+}
+input[type="checkbox"] {
+	display: none;
+}
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+input[type="checkbox"] + label:after {
+	background: url(../imgs/sprites.png) left top no-repeat;
+	content: "";
+	display: inline-block;
+	height: 25px;
+	margin-left: 10px;
+	padding-left: 26px;
+	vertical-align: middle;
+	width: 0;
+}
+input[type="checkbox"]:checked + label:after {
+	content: "";
+	background: url(../imgs/sprites.png) -29px top no-repeat;
+}
+input[type="radio"] + label:after {
+	background: url(../imgs/sprites.png) -60px top no-repeat;
+	content: "";
+	cursor: pointer;
+	display: inline-block;
+	height: 25px;
+	margin: -1px 4px 0 0;
+	padding-left: 26px;
+	vertical-align: middle;
+	width: 0;
+}
+input[type="radio"]:checked + label:after {
+	content: "";
+	background: url(../imgs/sprites.png) -87px top no-repeat;
+}
+input[type="submit"] {
+	@extend .button;
+	margin: 0;
+}

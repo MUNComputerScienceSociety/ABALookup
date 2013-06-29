@@ -1,0 +1,33 @@
+@font-face {
+	font-family: "Open Sans Condensed";
+	src: url('fonts/open-sans-condensed/open-sans-condensed-light.eot');
+	src: url('fonts/open-sans-condensed/open-sans-condensed-light.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-light.woff') format('woff'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-light.ttf') format('truetype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-light.svg#OpenSansCondensedLight') format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Open Sans Condensed";
+	src: url('fonts/open-sans-condensed/open-sans-condensed-italic.eot');
+	src: url('fonts/open-sans-condensed/open-sans-condensed-italic.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-italic.woff') format('woff'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-italic.ttf') format('truetype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-italic.svg#OpenSansCondensedLightItalic') format('svg');
+	font-weight: 200;
+	font-style: italic;
+
+}
+
+@font-face {
+	font-family: "Open Sans Condensed";
+	src: url('fonts/open-sans-condensed/open-sans-condensed-bold.eot');
+	src: url('fonts/open-sans-condensed/open-sans-condensed-bold.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-bold.woff') format('woff'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-bold.ttf') format('truetype'),
+	     url('fonts/open-sans-condensed/open-sans-condensed-bold.svg#OpenSansCondensedBold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}

@@ -72,6 +72,7 @@ class Schedule extends AbstractViewHelper
 				if ($i == 0) {
 					// pad the military time with zeros on the left and format the time for humans
 					$time = (new DateTime(str_pad($military, 4, '0', STR_PAD_LEFT)))->format('h:i A');
+					$time = ltrim($time, "0");
 					$this->timeOptions .= "<option value=\"{$military}\">{$time}</option>" . PHP_EOL;
 					$tableRows[$j] = "<td>{$time}</td>" . PHP_EOL;
 				}

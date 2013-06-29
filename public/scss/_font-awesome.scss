@@ -1,4 +1,4 @@
-/*!
+/*
  *  Font Awesome 3.0.2
  *  the iconic font designed for use with Twitter Bootstrap
  *  -------------------------------------------------------
@@ -6,7 +6,7 @@
  *  can be found at: http://fortawesome.github.com/Font-Awesome/
  *
  *  License
- *  -------------------------------------------------------
+ *  -------
  *  - The Font Awesome font is licensed under the SIL Open Font License - http://scripts.sil.org/OFL
  *  - Font Awesome CSS, LESS, and SASS files are licensed under the MIT License -
  *    http://opensource.org/licenses/mit-license.html
@@ -15,40 +15,38 @@
  *    "Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome"
 
  *  Contact
- *  -------------------------------------------------------
+ *  -------
  *  Email: dave@davegandy.com
  *  Twitter: http://twitter.com/fortaweso_me
  *  Work: Lead Product Designer @ http://kyruus.com
  */
 @font-face {
-	font-family: 'FontAwesome';
-	src: url('font/fontawesome-webfont.eot?v=3.0.1');
-	src: url('font/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'),
-	     url('font/fontawesome-webfont.woff?v=3.0.1') format('woff'),
-	     url('font/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
+	font-family: "Font Awesome";
+	src: url('fonts/font-awesome/font-awesome.eot?v=3.0.1');
+	src: url('fonts/font-awesome/font-awesome.eot?#iefix&v=3.0.1') format('embedded-opentype'),
+	     url('fonts/font-awesome/font-awesome.woff?v=3.0.1') format('woff'),
+	     url('fonts/font-awesome/font-awesome.ttf?v=3.0.1') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
-/*  Font Awesome styles
-    ------------------------------------------------------- */
+/* Font Awesome styles
+   ------------------- */
 [class^="icon-"],
 [class*=" icon-"] {
-	font-family: FontAwesome;
-	font-weight: normal;
-	font-style: normal;
-	text-decoration: inherit;
 	-webkit-font-smoothing: antialiased;
-	
-	/* sprites.less reset */
-	display: inline;
-	width: auto;
-	height: auto;
-	line-height: normal;
-	vertical-align: baseline;
 	background-image: none;
 	background-position: 0% 0%;
 	background-repeat: repeat;
+	display: inline;
+	font-family: "Font Awesome";
+	font-style: normal;
+	font-weight: normal;
+	height: auto;
+	line-height: normal;
 	margin-top: 0;
+	text-decoration: inherit;
+	vertical-align: baseline;
+	width: auto;
 }
 /* more sprites.less reset */
 .icon-white,
@@ -68,9 +66,9 @@
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-	text-decoration: inherit;
 	display: inline-block;
 	speak: none;
+	text-decoration: inherit;
 }
 /* makes sure icons active on rollover in links */
 a [class^="icon-"],
@@ -79,8 +77,8 @@ a [class*=" icon-"] {
 }
 /* makes the font 33% larger relative to the icon container */
 .icon-large:before {
-	vertical-align: -10%;
 	font-size: 1.3333333333333333em;
+	vertical-align: -10%;
 }
 .btn [class^="icon-"],
 .nav [class^="icon-"],
@@ -88,7 +86,6 @@ a [class*=" icon-"] {
 .nav [class*=" icon-"] {
 	display: inline;
 	/* keeps button heights with and without icons the same */
-
 }
 .btn [class^="icon-"].icon-large,
 .nav [class^="icon-"].icon-large,
@@ -123,15 +120,14 @@ li [class^="icon-"],
 li [class*=" icon-"],
 .nav li [class*=" icon-"] {
 	display: inline-block;
-	width: 1.25em;
 	text-align: center;
+	width: 1.25em;
 }
 li [class^="icon-"].icon-large,
 .nav li [class^="icon-"].icon-large,
 li [class*=" icon-"].icon-large,
 .nav li [class*=" icon-"].icon-large {
 	/* increased font size for icon-large */
-	
 	width: 1.5625em;
 }
 ul.icons {
@@ -143,133 +139,134 @@ ul.icons li [class*=" icon-"] {
 	width: .75em;
 }
 .icon-muted {
-	color: #eeeeee;
+	color: #eee;
 }
 .icon-border {
-	border: solid 1px #eeeeee;
-	padding: .2em .25em .15em;
+	        border-radius: 3px;
+	   -moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	border: solid 1px #eee;
+	padding: .2em .25em .15em;
 }
 .icon-2x {
 	font-size: 2em;
 }
 .icon-2x.icon-border {
-	border-width: 2px;
+	   -moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	        border-radius: 4px;
+	border-width: 2px;
 }
 .icon-3x {
-  font-size: 3em;
+	font-size: 3em;
 }
 .icon-3x.icon-border {
-  border-width: 3px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+	   -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	        border-radius: 5px;
+	border-width: 3px;
 }
 .icon-4x {
-  font-size: 4em;
+	font-size: 4em;
 }
 .icon-4x.icon-border {
-  border-width: 4px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+	   -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	border-width: 4px;
 }
 .pull-right {
-  float: right;
+	float: right;
 }
 .pull-left {
-  float: left;
+	float: left;
 }
 [class^="icon-"].pull-left,
 [class*=" icon-"].pull-left {
-  margin-right: .3em;
+	margin-right: .3em;
 }
 [class^="icon-"].pull-right,
 [class*=" icon-"].pull-right {
-  margin-left: .3em;
+	margin-left: .3em;
 }
 .btn [class^="icon-"].pull-left.icon-2x,
 .btn [class*=" icon-"].pull-left.icon-2x,
 .btn [class^="icon-"].pull-right.icon-2x,
 .btn [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .18em;
+	margin-top: .18em;
 }
 .btn [class^="icon-"].icon-spin.icon-large,
 .btn [class*=" icon-"].icon-spin.icon-large {
-  line-height: .8em;
+	line-height: .8em;
 }
 .btn.btn-small [class^="icon-"].pull-left.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-small [class^="icon-"].pull-right.icon-2x,
 .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .25em;
+	margin-top: .25em;
 }
 .btn.btn-large [class^="icon-"],
 .btn.btn-large [class*=" icon-"] {
-  margin-top: 0;
+	margin-top: 0;
 }
 .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .05em;
+	margin-top: .05em;
 }
 .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
-  margin-right: .2em;
+	margin-right: .2em;
 }
 .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-left: .2em;
+	margin-left: .2em;
 }
 .icon-spin {
-  display: inline-block;
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
+	   -moz-animation: spin 2s infinite linear;
+	     -o-animation: spin 2s infinite linear;
+	-webkit-animation: spin 2s infinite linear;
+	        animation: spin 2s infinite linear;
+	display: inline-block;
 }
 @-moz-keyframes spin {
-  0% { -moz-transform: rotate(0deg); }
-  100% { -moz-transform: rotate(359deg); }
+	0% { -moz-transform: rotate(0deg); }
+	100% { -moz-transform: rotate(359deg); }
 }
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(359deg); }
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(359deg); }
 }
 @-o-keyframes spin {
-  0% { -o-transform: rotate(0deg); }
-  100% { -o-transform: rotate(359deg); }
+	0% { -o-transform: rotate(0deg); }
+	100% { -o-transform: rotate(359deg); }
 }
 @-ms-keyframes spin {
-  0% { -ms-transform: rotate(0deg); }
-  100% { -ms-transform: rotate(359deg); }
+	0% { -ms-transform: rotate(0deg); }
+	100% { -ms-transform: rotate(359deg); }
 }
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(359deg); }
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(359deg); }
 }
 @-moz-document url-prefix() {
-  .icon-spin {
-    height: .9em;
-  }
-  .btn .icon-spin {
-    height: auto;
-  }
-  .icon-spin.icon-large {
-    height: 1.25em;
-  }
-  .btn .icon-spin.icon-large {
-    height: .75em;
-  }
+	.icon-spin {
+		height: .9em;
+	}
+	.btn .icon-spin {
+		height: auto;
+	}
+	.icon-spin.icon-large {
+		height: 1.25em;
+	}
+	.btn .icon-spin.icon-large {
+		height: .75em;
+	}
 }
-/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-    readers do not read off random characters that represent icons */
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure
+ * screen readers do not read off random characters that represent icons
+ */
 .icon-glass:before                { content: "\f000"; }
 .icon-music:before                { content: "\f001"; }
 .icon-search:before               { content: "\f002"; }
@@ -285,7 +282,6 @@ ul.icons li [class*=" icon-"] {
 .icon-ok:before                   { content: "\f00c"; }
 .icon-remove:before               { content: "\f00d"; }
 .icon-zoom-in:before              { content: "\f00e"; }
-
 .icon-zoom-out:before             { content: "\f010"; }
 .icon-off:before                  { content: "\f011"; }
 .icon-signal:before               { content: "\f012"; }
@@ -301,8 +297,7 @@ ul.icons li [class*=" icon-"] {
 .icon-inbox:before                { content: "\f01c"; }
 .icon-play-circle:before          { content: "\f01d"; }
 .icon-repeat:before               { content: "\f01e"; }
-
-/* \f020 doesn't work in Safari. all shifted one down */
+/* \f020 does not work in Safari. all shifted one down */
 .icon-refresh:before              { content: "\f021"; }
 .icon-list-alt:before             { content: "\f022"; }
 .icon-lock:before                 { content: "\f023"; }
@@ -318,7 +313,6 @@ ul.icons li [class*=" icon-"] {
 .icon-book:before                 { content: "\f02d"; }
 .icon-bookmark:before             { content: "\f02e"; }
 .icon-print:before                { content: "\f02f"; }
-
 .icon-camera:before               { content: "\f030"; }
 .icon-font:before                 { content: "\f031"; }
 .icon-bold:before                 { content: "\f032"; }
@@ -334,7 +328,6 @@ ul.icons li [class*=" icon-"] {
 .icon-indent-right:before         { content: "\f03c"; }
 .icon-facetime-video:before       { content: "\f03d"; }
 .icon-picture:before              { content: "\f03e"; }
-
 .icon-pencil:before               { content: "\f040"; }
 .icon-map-marker:before           { content: "\f041"; }
 .icon-adjust:before               { content: "\f042"; }
@@ -350,7 +343,6 @@ ul.icons li [class*=" icon-"] {
 .icon-pause:before                { content: "\f04c"; }
 .icon-stop:before                 { content: "\f04d"; }
 .icon-forward:before              { content: "\f04e"; }
-
 .icon-fast-forward:before         { content: "\f050"; }
 .icon-step-forward:before         { content: "\f051"; }
 .icon-eject:before                { content: "\f052"; }
@@ -366,7 +358,6 @@ ul.icons li [class*=" icon-"] {
 .icon-remove-circle:before        { content: "\f05c"; }
 .icon-ok-circle:before            { content: "\f05d"; }
 .icon-ban-circle:before           { content: "\f05e"; }
-
 .icon-arrow-left:before           { content: "\f060"; }
 .icon-arrow-right:before          { content: "\f061"; }
 .icon-arrow-up:before             { content: "\f062"; }
@@ -382,7 +373,6 @@ ul.icons li [class*=" icon-"] {
 .icon-leaf:before                 { content: "\f06c"; }
 .icon-fire:before                 { content: "\f06d"; }
 .icon-eye-open:before             { content: "\f06e"; }
-
 .icon-eye-close:before            { content: "\f070"; }
 .icon-warning-sign:before         { content: "\f071"; }
 .icon-plane:before                { content: "\f072"; }
@@ -398,7 +388,6 @@ ul.icons li [class*=" icon-"] {
 .icon-folder-open:before          { content: "\f07c"; }
 .icon-resize-vertical:before      { content: "\f07d"; }
 .icon-resize-horizontal:before    { content: "\f07e"; }
-
 .icon-bar-chart:before            { content: "\f080"; }
 .icon-twitter-sign:before         { content: "\f081"; }
 .icon-facebook-sign:before        { content: "\f082"; }
@@ -414,7 +403,6 @@ ul.icons li [class*=" icon-"] {
 .icon-linkedin-sign:before        { content: "\f08c"; }
 .icon-pushpin:before              { content: "\f08d"; }
 .icon-external-link:before        { content: "\f08e"; }
-
 .icon-signin:before               { content: "\f090"; }
 .icon-trophy:before               { content: "\f091"; }
 .icon-github-sign:before          { content: "\f092"; }
@@ -430,7 +418,6 @@ ul.icons li [class*=" icon-"] {
 .icon-unlock:before               { content: "\f09c"; }
 .icon-credit-card:before          { content: "\f09d"; }
 .icon-rss:before                  { content: "\f09e"; }
-
 .icon-hdd:before                  { content: "\f0a0"; }
 .icon-bullhorn:before             { content: "\f0a1"; }
 .icon-bell:before                 { content: "\f0a2"; }
@@ -446,11 +433,9 @@ ul.icons li [class*=" icon-"] {
 .icon-globe:before                { content: "\f0ac"; }
 .icon-wrench:before               { content: "\f0ad"; }
 .icon-tasks:before                { content: "\f0ae"; }
-
 .icon-filter:before               { content: "\f0b0"; }
 .icon-briefcase:before            { content: "\f0b1"; }
 .icon-fullscreen:before           { content: "\f0b2"; }
-
 .icon-group:before                { content: "\f0c0"; }
 .icon-link:before                 { content: "\f0c1"; }
 .icon-cloud:before                { content: "\f0c2"; }
@@ -466,7 +451,6 @@ ul.icons li [class*=" icon-"] {
 .icon-strikethrough:before        { content: "\f0cc"; }
 .icon-underline:before            { content: "\f0cd"; }
 .icon-table:before                { content: "\f0ce"; }
-
 .icon-magic:before                { content: "\f0d0"; }
 .icon-truck:before                { content: "\f0d1"; }
 .icon-pinterest:before            { content: "\f0d2"; }
@@ -482,7 +466,6 @@ ul.icons li [class*=" icon-"] {
 .icon-sort:before                 { content: "\f0dc"; }
 .icon-sort-down:before            { content: "\f0dd"; }
 .icon-sort-up:before              { content: "\f0de"; }
-
 .icon-envelope-alt:before         { content: "\f0e0"; }
 .icon-linkedin:before             { content: "\f0e1"; }
 .icon-undo:before                 { content: "\f0e2"; }
@@ -498,7 +481,6 @@ ul.icons li [class*=" icon-"] {
 .icon-exchange:before             { content: "\f0ec"; }
 .icon-cloud-download:before       { content: "\f0ed"; }
 .icon-cloud-upload:before         { content: "\f0ee"; }
-
 .icon-user-md:before              { content: "\f0f0"; }
 .icon-stethoscope:before          { content: "\f0f1"; }
 .icon-suitcase:before             { content: "\f0f2"; }
@@ -514,7 +496,6 @@ ul.icons li [class*=" icon-"] {
 .icon-beer:before                 { content: "\f0fc"; }
 .icon-h-sign:before               { content: "\f0fd"; }
 .icon-plus-sign-alt:before        { content: "\f0fe"; }
-
 .icon-double-angle-left:before    { content: "\f100"; }
 .icon-double-angle-right:before   { content: "\f101"; }
 .icon-double-angle-up:before      { content: "\f102"; }
@@ -530,7 +511,6 @@ ul.icons li [class*=" icon-"] {
 .icon-circle-blank:before         { content: "\f10c"; }
 .icon-quote-left:before           { content: "\f10d"; }
 .icon-quote-right:before          { content: "\f10e"; }
-
 .icon-spinner:before              { content: "\f110"; }
 .icon-circle:before               { content: "\f111"; }
 .icon-reply:before                { content: "\f112"; }

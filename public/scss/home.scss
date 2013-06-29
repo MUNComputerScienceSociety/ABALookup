@@ -1,0 +1,80 @@
+@charset "utf-8";
+@import "global";
+
+body {
+	background: url("../imgs/pic-bg.jpg") no-repeat center center fixed;
+	        background-size: cover;
+	     -o-background-size: cover;
+	   -moz-background-size: cover;
+	-webkit-background-size: cover;
+	margin: 0;
+	padding: 0;
+}
+.yellow {
+	color: $yellow;
+}
+header {
+	@extend %bold-type;
+	background: url(../imgs/texture.png);
+	border-bottom: 1px solid $black;
+	box-shadow: 0 0 50px $black;
+	color: $grey-darker;
+	height: 130px;
+	text-shadow: 1px 1px 0 $white;
+	text-transform: uppercase;
+	width: 100%;
+	.logo {
+		background: url(../imgs/ribbon-logo.png) no-repeat;
+		float: left;
+		height: 0;
+		margin: 0;
+		overflow: hidden;
+		padding: 163px 0 0 0;
+		text-align: left;
+		width: 213px;
+	}
+	.right {
+		float: right;
+		padding-top: 40px;
+		text-align: right;
+		width: 500px;
+	}
+	a.button {
+		margin: 0 15px;
+	}
+}
+.intro {
+	@extend %large-bold-type;
+	color: $white;
+	line-height: 30px;
+	margin: 0 auto;
+	padding: 80px 0;
+	text-align: right;
+	text-shadow: 1px 1px 1px $black;
+	text-transform: uppercase;
+	width: 580px;
+	.learn {
+		margin-top: 10px;
+		position: relative;
+		&:before {
+			background-image: url(../imgs/btn-ribbon.png);
+			content: "";
+			display: inline;
+			position: absolute;
+			left: 420px;
+			height: 48px;
+			width: 21px;
+		}
+	}
+}
+.main {
+	background: url(../imgs/texture.png);
+	border-top: 1px solid $black;
+	box-shadow: -1px 0 50px $black;
+	padding: 50px 0;
+	width: 100%;
+	color: $grey-darker;
+	h2:first-child {
+		margin-top: 0;
+	}
+}

@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+.availability {
+	background: rgba(205, 205, 205, 0.3);
+	font-family: $typeface;
+	font-size: 14pt;
+	margin: 20px 0 0;
+	padding: 20px;
+	h3 {
+		margin: 0 0 20px;
+	}
+	label {
+		display: none;
+	}
+}
+table {
+	border-spacing: 0;
+	font: 10pt sans-serif;
+	margin-top: 20px;
+	width: 100%;
+}
+table tr > :first-child {
+	@extend %semibold-type;
+	background: url(../imgs/texture.png);
+	border-right: 2px solid #cecece;
+	color: #3b5b56;
+	padding-right: 5px;
+	text-align: right;
+	width: 85px;
+}
+thead > :first-child {
+	background-color: #cecece;
+	color: $white;
+	font-family: $typeface;
+	font-size: 16pt;
+	height: 50px;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+	text-transform: uppercase;
+}
+thead tr > :first-child {
+	// background: url(../imgs/texture.png);
+	background-color: transparent;
+	border-right: 2px solid #cecece;
+}
+thead tr + tr > :first-child {
+	border: 0;
+	height: 0;
+	width: 0;
+}
+tbody > :nth-child(2n) {
+	background: rgba(206, 206, 206, 0.3);
+}
+tbody > :last-child td {
+	border-bottom: 2px solid #cecece;
+}
+tbody tr > :last-child {
+	border-right: 2px solid #cecece;
+}
+tbody > :last-child > :first-child {
+	border-bottom: 0;
+}
+td.available,
+td.selected,
+td[data-available] {
+	background: #67b0a5;
+	color: $white;
+	font-family: $typeface;
+	font-size: 10pt;
+	font-weight: 700;
+	padding: 10px;
+	text-align: center;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+	text-transform: uppercase;
+}

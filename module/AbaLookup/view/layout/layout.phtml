@@ -1,20 +1,15 @@
-<?php echo $this->doctype() . "\n"; ?>
+<?php echo $this->doctype(); ?>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<?php echo $this->headTitle("ABA Lookup")->setSeparator(':'); ?>
+		<?php echo $this->headTitle('ABA Lookup'); ?>
 		<meta name="description" content="">
-		<?php echo $this->headLink()->prependStylesheet($this->basePath() . "/css/font-awesome.css")
-									->prependStylesheet($this->basePath() . "/css/general.css")
-									->prependStylesheet($this->basePath() . "/css/style.css")
-									->prependStylesheet($this->basePath() . "/css/admin.css")
-									->prependStylesheet($this->basePath() . "/css/schedule.css");
-		?>
+		<?php echo $this->headLink()->prependStylesheet($this->basePath() . '/css/layout.css'); ?>
 	</head>
 	<body>
 		<header>
 			<div class="container clearfix">
-				<a href="/"><h1>ABA Lookup</h1></a>
+				<a href="/"><h1 class="logo">ABA Lookup</h1></a>
 				<?php if (isset($this->user)): ?>
 				<nav class="right">
 					<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>">Profile</a>
@@ -25,24 +20,11 @@
 				<?php endif; ?>
 			</div>
 		</header>
-		<div id="content">
+		<div class="main">
 			<div class="container clearfix">
 				<?php echo $this->content; ?>
 			</div>
 		</div>
 		<?php echo $this->footer; ?>
-		<script>
-			WebFontConfig = {
-				google: { families: [ 'Open+Sans:400,800,700:latin' ] }
-			};
-			(function() {
-				var wf = document.createElement('script');
-				wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-				wf.type = 'text/javascript';
-				wf.async = 'true';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(wf, s);
-			})();
-		</script>
 	</body>
 </html>

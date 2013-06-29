@@ -12,10 +12,20 @@
 ?>
 	<div class="row">
 		<?php
-			if ($element->hasAttribute('label')) {
-				echo $this->formLabel($element);
+			$type = $element->getAttribute('type');
+			$label = $element->getLabel();
+			// to style checkboxes and radio buttons, the label needs to come after the element
+			// in all other cases, it is more semantic for the label to come before the element
+			if ($label && ($type == 'checkbox' || $type == 'radio')) {
+				echo $this->formElement($element);
+				echo $this->formLabel($element, $label);
+			} elseif ($label) {
+				echo $this->formLabel($element, $label);
+				echo $this->formElement($element);
+			} else {
+				// if there is no label
+				echo $this->formElement($element);
 			}
-			echo $this->formElement($element);
 		?>
 	</div>
 <?php
@@ -28,6 +38,6 @@
 	<p>
 		Please specify whether you are a parent seeking
 		treatment for a child or a therapist seeking a
-		client. You will sign in with your username and password. All fields are required.
+		client. You will sign in with your username and password.
 	</p>
 </div>

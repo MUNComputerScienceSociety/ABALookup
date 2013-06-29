@@ -1,0 +1,141 @@
+@charset "utf-8";
+@import "global";
+@import "forms";
+@import "schedule";
+
+header {
+	@extend %medium-bold-type;
+	background: url(../imgs/top-bg.png);
+	color: $grey-darker;
+	height: 100px;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	width: 100%;
+	.logo {
+		background: url(../imgs/logo.png) no-repeat;
+		float: left;
+		height: 0;
+		margin-top: 15px;
+		overflow: hidden;
+		padding: 72px 0 0 0;
+		width: 199px;
+	}
+	.right {
+		float: right;
+		padding: 10px 0 0 0;
+		text-align: right;
+		width: 650px;
+		/*
+		&:before {
+			border-right: 1px solid #548880;
+			box-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+			content: "";
+			display: inline-block;
+			height: 80px;
+			margin: 0 20px -30px 20px;
+			width: 0;
+		}
+		*/
+		a:after {
+			// border-right: 1px solid #548880;
+			box-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+			content: "";
+			display: inline-block;
+			height: 80px;
+			margin: 0 10px -30px;
+			width: 0;
+		}
+	}
+	.icon {
+		background: rgba(255, 255, 255, 0.3);
+		display: inline-block;
+		margin: 0 10px 0 0;
+		padding: 0 6px 3px 6px;
+	}
+}
+.main {
+	background: url(../imgs/texture.png);
+	border-top: 1px solid $grey;
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+	color: $grey-darker;
+	min-height: 600px;
+	padding-bottom: 40px;
+	width: 100%;
+	.left {
+		float: left;
+		width: 750px;
+	}
+	.right {
+		float: right;
+		font-family: sans-serif;
+		font-size: 9pt;
+		width: 210px;
+	}
+	.button {
+		display: inline-block;
+	}
+	form {
+		margin-top: 1em;
+	}
+	h2 {
+		margin-bottom: 0;
+	}
+}
+.close {
+	color: #4d9085;
+	display: block;
+	font-size: 13pt;
+	margin-left: 104px;
+	margin-top: -31px;
+	position: absolute;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+	text-transform: lowercase;
+}
+.conduct {
+	background: rgba(205, 205, 205, 0.4);
+	color: $grey-darker;
+	display: inline-block;
+	font-family: $typeface;
+	font-size: 12pt;
+	font-weight: $bold;
+	padding: 10px;
+	text-shadow: 1px 1px 0 $white;
+	text-transform: uppercase;
+}
+.match {
+	border-top: 2px solid #e6e5e5;
+	font-family: sans-serif;
+	font-size: 10pt;
+	margin: 20px 0;
+	padding-top: 20px;
+	h5 {
+		font-family: $typeface;
+		font-size: 20pt;
+		font-weight: $bold;
+		margin: 0;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	ul li {
+		background: #69b4a8;
+		color: $white;
+		display: inline-block;
+		font: normal 9pt Arial, sans-serif;
+		margin-right: 5px;
+		padding: 5px 15px;
+		text-transform: uppercase;
+	}
+	.other {
+		color: $grey-dark;
+		font-family: $typeface;
+		margin-bottom: 20px;
+		text-transform: uppercase;
+	}
+	.email {
+		@extend %large-normal-italic-type;
+		margin-bottom: 20px;
+	}
+}

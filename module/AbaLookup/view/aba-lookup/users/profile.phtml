@@ -4,7 +4,7 @@
 		echo "<p>{$this->confirm}</p>";
 	}
 ?>
-<form method="post" action="<?php echo $this->user->getUrlBase() . "profile"; ?>" class="left">
+<div class="left">
 
 	<h3>Display name</h3>
 	<p><?php echo $this->user->getDisplayName(); ?></p>
@@ -37,8 +37,8 @@
 
 	<?php endif; ?>
 
-	<a href="<?php echo $this->user->getUrlBase() . 'profile/edit' ?>" class="button">Edit</a>
-</form>
+	<a href="<?php echo $this->user->getUrlBase() . 'profile/edit' ?>" class="button">Edit your information</a>
+</div>
 <div class="right">
 	<h3>Details</h3>
 	<p>

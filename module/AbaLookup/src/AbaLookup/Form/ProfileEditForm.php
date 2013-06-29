@@ -49,7 +49,7 @@ class ProfileEditForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 				'value' => $user->getDisplayName(),
 			],
 			'options' => ['label' => $label],
@@ -62,7 +62,7 @@ class ProfileEditForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 				'value' => $user->getEmail(),
 			],
 			'options' => ['label' => $label],
@@ -75,7 +75,7 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_OLD_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -87,7 +87,7 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_NEW_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -99,7 +99,7 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -111,7 +111,7 @@ class ProfileEditForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 				'type' => 'tel',
 				'value' => $user->getPhone(),
 			],
