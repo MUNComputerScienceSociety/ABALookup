@@ -2,27 +2,33 @@
 	// reference to the schedule view helper
 	$schedule = $this->schedule();
 ?>
-<h2>Complete your schedule</h2>
-<div class="availability">
-	<h3>Add availability:</h3>
-	<form method="post" action="<?php echo $this->user->getUrlBase() . 'schedule/add'; ?>">
-		<div class="row">
-			<label for="day">Day</label>
-			<select id="day" name="day">
-				<?php echo $schedule->getDayOptions(); ?>
-			</select>
-			from
-			<label for="start-time">Start time</label>
-			<select id="start-time" name="start-time">
-				<?php echo $schedule->getTimeOptions(); ?>
-			</select>
-			to
-			<label for="end-time">End time</label>
-			<select id="end-time" name="end-time">
-				<?php echo $schedule->getTimeOptions(); ?>
-			</select>
-			<input type="submit" value="Add availability">
+<div class="twelve columns">
+	<h2>Complete your schedule</h2>
+	<div class="availability">
+		<h3>Add availability:</h3>
+		<form method="post" action="<?php echo $this->user->getUrlBase() . 'schedule/add'; ?>">
+			<div class="row">
+				<label for="day">Day</label>
+				<select id="day" name="day">
+					<?php echo $schedule->getDayOptions(); ?>
+				</select>
+				from
+				<label for="start-time">Start time</label>
+				<select id="start-time" name="start-time">
+					<?php echo $schedule->getTimeOptions(); ?>
+				</select>
+				to
+				<label for="end-time">End time</label>
+				<select id="end-time" name="end-time">
+					<?php echo $schedule->getTimeOptions(); ?>
+				</select>
+				<input type="submit" value="Add availability">
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="twelve columns table-wrapper">
+			<?php echo $schedule->html(); ?>
 		</div>
-	</form>
+	</div>
 </div>
-<?php echo $schedule->html(); ?>

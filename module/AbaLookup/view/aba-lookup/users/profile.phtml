@@ -1,11 +1,10 @@
-<h2>Your profile information</h2>
-<?php
-	if (isset($this->confirm)) {
-		echo "<p>{$this->confirm}</p>";
-	}
-?>
-<div class="left">
-
+<div class="eight columns">
+	<h2>Your profile information</h2>
+	<?php
+		if (isset($this->confirm)) {
+			echo "<p>{$this->confirm}</p>";
+		}
+	?>
 	<h3>Display name</h3>
 	<p><?php echo $this->user->getDisplayName(); ?></p>
 	<h3>Email address</h3>
@@ -39,11 +38,11 @@
 
 	<a href="<?php echo $this->user->getUrlBase() . 'profile/edit' ?>" class="button">Edit your information</a>
 </div>
-<div class="right">
+<aside class="aside four columns">
 	<h3>Details</h3>
 	<p>
 		This page contains the information associated with your account
 		and may be publically visible.
 		The edit button will allow you to edit your information.
 	</p>
-</div>
+</aside>

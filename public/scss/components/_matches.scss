@@ -1,0 +1,55 @@
+// MATCHES
+// =======
+
+.conduct {
+	background: rgba(205, 205, 205, 0.4);
+	color: $grey-darker;
+	display: inline-block;
+	font-family: $typeface;
+	font-size: 12pt;
+	font-weight: $bold;
+	padding: 10px;
+	text-shadow: 1px 1px 0 $white;
+	text-transform: uppercase;
+}
+.match {
+	border-top: 2px solid $grey-lightest;
+	font-family: $typeface;
+	font-size: 10pt;
+	margin: 20px 0;
+	padding-top: 20px;
+	h5 {
+		font-family: $typeface;
+		font-size: 20pt;
+		font-weight: $bold;
+		margin: 0;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	ul li {
+		background: $turquoise;
+		color: $white;
+		display: inline-block;
+		font: normal 9pt $typeface;
+		margin-right: 5px;
+		padding: 5px 15px;
+		text-transform: uppercase;
+		@media screen and (max-width: 549px) {
+			display: block;
+			margin: 5px 0;
+		}
+	}
+	.other {
+		color: $grey-dark;
+		font-family: $typeface;
+		margin-bottom: 20px;
+		text-transform: uppercase;
+	}
+	.email {
+		@extend %large-normal-italic-type;
+		margin-bottom: 20px;
+	}
+}

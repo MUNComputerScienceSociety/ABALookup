@@ -1,32 +1,36 @@
-<h2>Edit your profile information</h2>
-<?php
-	if (isset($this->error)) {
-		echo "<p>{$this->error}</p>";
-	}
-	$this->form->setAttribute('class', 'left');
-	$this->form->setAttribute('action', $user->getUrlBase() . 'profile/edit');
-	$this->form->setAttribute('method', 'post');
-	echo $this->form()->openTag($this->form);
+<div class="eight columns">
+	<h2>Edit your profile information</h2>
+	<?php
+		if (isset($this->error)) {
+			echo "<p>{$this->error}</p>";
+		}
+		$this->form->setAttribute('class', 'left');
+		$this->form->setAttribute('action', $user->getUrlBase() . 'profile/edit');
+		$this->form->setAttribute('method', 'post');
+		echo $this->form()->openTag($this->form);
 
-	foreach ($this->form as $element) {
-?>
-	<div class="row">
-		<?php
-			$label = $element->getLabel();
-			if ($label) {
-				echo $this->formLabel($element, $label);
-			}
-			echo $this->formElement($element);
-		?>
-	</div>
-<?php
-	}
+		foreach ($this->form as $element) {
+	?>
+		<div class="row">
+			<div class="twelve columns">
+			<?php
+				$label = $element->getLabel();
+				if ($label) {
+					echo $this->formLabel($element, $label);
+				}
+				echo $this->formElement($element);
+			?>
+			</div>
+		</div>
+	<?php
+		}
 
-	echo $this->form()->closeTag();
-?>
-<div class="right">
+		echo $this->form()->closeTag();
+	?>
+</div>
+<aside class="aside four columns">
 	<h3>Details</h3>
 	<p>
 		Edit your profile information.
 	</p>
-</div>
+</aside>

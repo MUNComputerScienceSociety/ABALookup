@@ -1,34 +1,43 @@
 <?php echo $this->doctype(); ?>
-<html lang="en">
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<?php echo $this->headTitle('ABA Lookup - Connecting Families with ABA Therapists'); ?>
 		<meta name="description" content="">
-		<?php echo $this->headLink()->appendStylesheet($this->basePath() . '/css/home.css'); ?>
+		<meta name="viewport" content="width=device-width">
+		<?php echo $this->headLink()->appendStylesheet($this->basePath() . '/' . 'css/app.home.css'); ?>
 	</head>
 	<body>
 		<header>
-			<div class="container">
-				<a href="/"><h1 class="logo">ABA Lookup</h1></a>
-				<nav class="right">
-					<?php if (isset($this->user)): ?>
-					<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>" class="button"><?php echo $this->user->getDisplayName(); ?></a>
-					<a href="/users/logout">Logout</a>
-					<?php else: ?>
-					<a href="/users/login" class="button">Login</a>
-					<a href="/users/register">Signup</a>
-					<?php endif; ?>
-				</nav>
+			<div class="row">
+				<div class="twelve columns">
+					<a href="/" class="mobile-seven">
+						<h1 class="four columns logo">ABA Lookup</h1>
+					</a>
+					<nav class="eight columns mobile-three text-right nav">
+						<?php if (isset($this->user)): ?>
+						<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>" class="button">
+							<?php echo $this->user->getDisplayName(); ?>
+						</a>
+						<a href="/users/logout">Logout</a>
+						<?php else: ?>
+						<a href="/users/login" class="button">Login</a>
+						<a href="/users/register">Signup</a>
+						<?php endif; ?>
+					</nav>
+				</div>
 			</div>
 		</header>
-		<div class="intro">
-			<span class="yellow">Connecting</span> families in<br>Newfoundland &amp; Labrador<br>with ABA therapists<br>
-			<div class="learn">
-				<a href="/about" class="button">Learn More</a>
+		<div class="row">
+			<div class="eight columns centered intro">
+				<span class="yellow">Connecting</span> families in<br>Newfoundland &amp; Labrador<br>with ABA therapists<br>
+				<a href="/about" class="learn button">Learn More</a>
 			</div>
 		</div>
 		<div class="main">
-			<div class="container">
+			<div class="row">
 				<?php echo $this->content; ?>
 			</div>
 		</div>

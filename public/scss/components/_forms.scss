@@ -9,7 +9,7 @@ input[type="email"],
 input[type="password"],
 input[type="tel"],
 input[type="text"] {
-	background-color: #e1e9e8;
+	background: #e1e9e8;
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
@@ -18,10 +18,9 @@ input[type="text"] {
 	margin: 0 0 10px 0;
 	padding: 8px;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
-	width: 650px;
 }
 select {
-	background-color: #e1e9e8;
+	background-: #e1e9e8;
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
@@ -30,9 +29,10 @@ select {
 	margin: 0 0 10px 0;
 	padding: 8px;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+	width: auto;
 }
 select[multiple] {
-	background-color: #e1e9e8;
+	background: #e1e9e8;
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
@@ -41,7 +41,7 @@ select[multiple] {
 	margin-bottom: 10px;
 	padding: 0;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-	width: 400px;
+	// width: 400px;
 }
 input[type="checkbox"] {
 	display: none;
