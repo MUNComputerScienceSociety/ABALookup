@@ -13,10 +13,10 @@ To contribute to the project, you will need to have the requirements listed belo
 Requirements
 ------------
 
+- Apache HTTP Server
+- PHP 5.4+ (with PDO, cURL, and the SQLite driver)
 - Composer
 - PHPUnit
-- Apache HTTP Server
-- PHP 5.4+ (for the `[]` array syntax and traits)
 - SQLite 3+
 
 Downloading the project
