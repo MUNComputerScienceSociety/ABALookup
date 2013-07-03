@@ -1,7 +1,7 @@
 ABA Lookup
 ==========
 
-A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents.
+A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents of children with Autism.
 
 How to help
 -----------
@@ -11,11 +11,13 @@ To contribute to the project, you will need to have the requirements listed belo
 Requirements
 ------------
 
+- Apache HTTP Server
+- PHP 5.4+ (with PDO, cURL, and the SQLite driver)
 - Composer
 - PHPUnit
-- Apache HTTP Server
-- PHP 5.4+ (for the `[]` array syntax and traits)
 - SQLite 3+
+
+(Dependencies, such as ZF2 and the Doctrine ORM, are installed via Composer - by running `composer install`.)
 
 Downloading the project
 -----------------------
