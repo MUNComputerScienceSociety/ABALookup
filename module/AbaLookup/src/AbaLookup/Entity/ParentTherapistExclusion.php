@@ -9,7 +9,8 @@ use
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\OneToOne,
 	Doctrine\ORM\Mapping\Table,
-	Doctrine\ORM\Mapping\UniqueConstraint
+	Doctrine\ORM\Mapping\UniqueConstraint,
+	InvalidArgumentException
 ;
 
 /**
@@ -50,7 +51,7 @@ class ParentTherapistExclusion
 	public function __construct(User $parent, User $therapist, $active = TRUE)
 	{
 		if ($parent->getTherapist() || !$therapist->getTherapist()) {
-			throw new \InvalidArgumentException();
+			throw new InvalidArgumentException();
 		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;

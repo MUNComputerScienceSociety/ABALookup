@@ -5,6 +5,7 @@ namespace AbaLookup\View\Helper;
 use
 	AbaLookup\Entity\Schedule as ScheduleEntity,
 	DateTime,
+	InvalidArgumentException,
 	Zend\View\Helper\AbstractHelper as AbstractViewHelper
 ;
 

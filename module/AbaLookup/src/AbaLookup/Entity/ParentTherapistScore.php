@@ -9,7 +9,8 @@ use
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\OneToOne,
 	Doctrine\ORM\Mapping\Table,
-	Doctrine\ORM\Mapping\UniqueConstraint
+	Doctrine\ORM\Mapping\UniqueConstraint,
+	InvalidArgumentException
 ;
 
 /**
@@ -50,10 +51,10 @@ class ParentTherapistScore
 	public function __construct(User $parent, User $therapist, $score)
 	{
 		if ($parent->getTherapist() || !$therapist->getTherapist()) {
-			throw new \InvalidArgumentException();
+			throw new InvalidArgumentException();
 		}
 		if (!is_numeric($score)) {
-			throw new \InvalidArgumentException();
+			throw new InvalidArgumentException();
 		}
 		$this->parent = $parent;
 		$this->therapist = $therapist;
@@ -63,7 +64,7 @@ class ParentTherapistScore
 	public function setScore($score)
 	{
 		if (!is_numeric($score)) {
-			throw new \InvalidArgumentException();
+			throw new InvalidArgumentException();
 		}
 		$this->score = $score;
 		return $this;

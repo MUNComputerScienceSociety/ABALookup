@@ -13,6 +13,7 @@ use
 	Doctrine\ORM\Mapping\ManyToMany,
 	Doctrine\ORM\Mapping\OneToOne,
 	Doctrine\ORM\Mapping\Table,
+	InvalidArgumentException,
 	Traversable,
 	Zend\Stdlib\ArrayUtils
 ;
