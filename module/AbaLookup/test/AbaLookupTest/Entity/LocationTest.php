@@ -31,6 +31,22 @@ class LocationTest extends PHPUnit_Framework_TestCase
 		$this->location = new Location($this->name);
 	}
 
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonStringPassedToConstructor()
+	{
+		new Location(FALSE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfEmptyStringPassedToConstructor()
+	{
+		new Location('');
+	}
+
 	public function testGetName()
 	{
 		$this->assertEquals($this->name, $this->location->getName());

@@ -1,7 +1,7 @@
 ABA Lookup
 ==========
 
-A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents.
+A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents of children with Autism.
 
 [![Build Status](https://travis-ci.org/MUNComputerScienceSociety/ABALookup.png)][Travis]
 
@@ -18,6 +18,8 @@ Requirements
 - Composer
 - PHPUnit
 - SQLite 3+
+
+(Dependencies, such as ZF2 and the Doctrine ORM, are installed via Composer - by running `composer install`.)
 
 Downloading the project
 -----------------------
