@@ -81,7 +81,7 @@ class UsersControllerTest extends BaseControllerTestCase
 
 		// mock the EntityManager
 		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
+		$serviceManager->setAllowOverride(TRUE);
 		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
 		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
 
@@ -103,7 +103,7 @@ class UsersControllerTest extends BaseControllerTestCase
 
 		// re-mock the EntityManager post reset
 		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(true);
+		$serviceManager->setAllowOverride(TRUE);
 		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
 		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
 

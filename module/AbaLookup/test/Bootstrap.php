@@ -99,7 +99,7 @@ class Bootstrap
 
 		AutoloaderFactory::factory([
 			'Zend\Loader\StandardAutoloader' => [
-				'autoregister_zf' => true,
+				'autoregister_zf' => TRUE,
 				'namespaces' => [__NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__],
 			],
 		]);
