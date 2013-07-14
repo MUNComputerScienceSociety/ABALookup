@@ -1,33 +1,47 @@
-<h2>Register to start using ABA Lookup</h2>
-<?php
-	if (isset($this->error)) {
-		echo "<p>{$this->error}</p>";
-	}
-	$this->form->setAttribute('class', 'left');
-	$this->form->setAttribute('action', '/users/register');
-	$this->form->setAttribute('method', 'post');
-	echo $this->form()->openTag($this->form);
+<div class="eight columns">
+	<h2>Register to start using ABA Lookup</h2>
+	<?php
+		if (isset($this->error)) {
+			echo "<p>{$this->error}</p>";
+		}
+		$this->form->setAttribute('class', 'left');
+		$this->form->setAttribute('action', '/users/register');
+		$this->form->setAttribute('method', 'post');
+		echo $this->form()->openTag($this->form);
 
-	foreach ($this->form as $element) {
-?>
-	<div class="row">
-		<?php
-			if ($element->hasAttribute('label')) {
-				echo $this->formLabel($element);
-			}
-			echo $this->formElement($element);
-		?>
-	</div>
-<?php
-	}
+		foreach ($this->form as $element) {
+	?>
+		<div class="row">
+			<div class="twelve columns">
+			<?php
+				$type = $element->getAttribute('type');
+				$label = $element->getLabel();
+				// to style checkboxes and radio buttons, the label needs to come after the element
+				// in all other cases, it is more semantic for the label to come before the element
+				if ($label && ($type == 'checkbox' || $type == 'radio')) {
+					echo $this->formElement($element);
+					echo $this->formLabel($element, $label);
+				} elseif ($label) {
+					echo $this->formLabel($element, $label);
+					echo $this->formElement($element);
+				} else {
+					// if there is no label
+					echo $this->formElement($element);
+				}
+			?>
+			</div>
+		</div>
+	<?php
+		}
 
-	echo $this->form()->closeTag();
-?>
-<div class="right">
+		echo $this->form()->closeTag();
+	?>
+</div>
+<aside class="aside four columns">
 	<h3>Details</h3>
 	<p>
 		Please specify whether you are a parent seeking
 		treatment for a child or a therapist seeking a
-		client. You will sign in with your username and password. All fields are required.
+		client. You will sign in with your username and password.
 	</p>
-</div>
+</aside>

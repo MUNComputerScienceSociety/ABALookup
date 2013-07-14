@@ -61,7 +61,7 @@ abstract class AbaLookupController extends AbstractActionController
 	 * Nests the footer widget into the layout and adds the current
 	 * user's base URL to the layout.
 	 */
-	protected function prepareLayout(&$layout, &$user)
+	protected function prepareLayout(&$layout, &$user = NULL)
 	{
 		// add the footer
 		$footer = new ViewModel();

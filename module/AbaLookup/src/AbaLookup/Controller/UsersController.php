@@ -65,6 +65,10 @@ class UsersController extends AbaLookupController
 	 */
 	public function registerAction()
 	{
+		// prepare the view layout
+		$layout = $this->layout();
+		$this->prepareLayout($layout);
+		// get the registration form
 		$form = new RegisterForm();
 		$request = $this->request;
 		if (!$request->isPost()) {
@@ -110,6 +114,10 @@ class UsersController extends AbaLookupController
 	 */
 	public function loginAction()
 	{
+		// prepare the view layout
+		$layout = $this->layout();
+		$this->prepareLayout($layout);
+		// get the login form
 		$form = new LoginForm();
 		$request = $this->request;
 		// the user has not attempted to login

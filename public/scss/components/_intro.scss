@@ -1,0 +1,28 @@
+// INTRO
+// =====
+
+.intro {
+	@extend %large-bold-type;
+	color: $white;
+	line-height: 30px;
+	padding: 90px 20px;
+	text-align: right;
+	text-shadow: 1px 1px 1px $black;
+	text-transform: uppercase;
+}
+.learn {
+	font-size: 15pt;
+	margin-top: 10px;
+	padding: 8px;
+	position: relative;
+	&:before {
+		background: url(../imgs/btn-ribbon.png);
+		content: "";
+		display: inline;
+		height: 48px;
+		left: -15px;
+		position: absolute;
+		top: -1px;
+		width: 21px;
+	}
+}

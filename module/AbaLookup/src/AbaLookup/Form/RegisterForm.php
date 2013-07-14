@@ -52,7 +52,7 @@ class RegisterForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -64,7 +64,7 @@ class RegisterForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -76,7 +76,7 @@ class RegisterForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -88,7 +88,7 @@ class RegisterForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_CONFIRM_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -101,7 +101,7 @@ class RegisterForm extends Form
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
 				'type' => 'tel',
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);

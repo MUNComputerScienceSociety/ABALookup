@@ -1,0 +1,93 @@
+// FOOTER
+// ======
+
+footer {
+	background: $grey;
+	border-bottom: 1px solid $black;
+	border-top: 1px solid $black;
+	box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+	color: $white;
+	padding: 30px 0;
+	text-align: left;
+	h4 {
+		color: $white;
+		margin: 10px 0;
+		padding: 0;
+		text-shadow: 1px 1px 0 $black;
+		text-transform: uppercase;
+	}
+	.left a {
+		@extend %semibold-type;
+		@extend .clearfix;
+		background: $grey-light;
+		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+		display: block;
+		height: 30px;
+		margin-bottom: 11px;
+		padding-top: 6px;
+		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+		text-transform: uppercase;
+		i {
+			background: $grey-lighter;
+			color: $grey;
+			display: block;
+			float: left;
+			font-size: 16pt;
+			height: 30px;
+			margin-top: -6px;
+			padding: 4px 0 11px 4px;
+			text-align: center;
+			text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.1);
+			width: 30px;
+		}
+		.triangle-right {
+			@include triangle-right(15px, $grey-lighter);
+			display: block;
+			float: left;
+			height: 0;
+			margin: -6px 10px 0 0;
+			width: 0;
+		}
+	}
+	.center a {
+		@extend %small-type;
+		background: $grey-light;
+		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+		display: block;
+		height: 25px;
+		margin-bottom: 7px;
+		padding: 0 0 5px 5px;
+		text-decoration: none;
+		&:before {
+			@include triangle-right(10px, $grey);
+			content: "";
+			display: inline-block;
+			height: 0;
+			margin: 2px 20px -5px -5px;
+			width: 0;
+		}
+	}
+	.about {
+		background: $grey-light;
+		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+		min-height: 153px;
+		padding: 10px;
+		@media only screen and (max-width: 767px) {
+			min-height: 0;
+		}
+		h5 {
+			background: url(../imgs/footer-logo.png) no-repeat;
+			height: 0;
+			margin: 0 auto;
+			overflow: hidden;
+			padding: 71px 0 0 0;
+			text-align: center;
+			width: 192px;
+		}
+		p {
+			@extend %legal-type;
+			margin-bottom: 0;
+			margin-top: 5px;
+		}
+	}
+}

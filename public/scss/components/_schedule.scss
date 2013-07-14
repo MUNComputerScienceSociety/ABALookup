@@ -1,0 +1,98 @@
+// SCHEDULE
+// ========
+
+.availability {
+	background: rgba(205, 205, 205, 0.3);
+	font-family: $typeface;
+	font-size: 14pt;
+	margin: 20px 0 0;
+	padding: 20px;
+	h3 {
+		margin: 0 0 20px;
+	}
+	label {
+		display: none;
+	}
+	select {
+		margin: 0 5px;
+		@media screen and (max-width: 767px) {
+			display: block;
+			margin: 10px 0;
+		}
+	}
+	input[type="submit"] {
+		margin-left: 10px;
+		@media screen and (max-width: 767px) {
+			margin-left: 0;
+		}
+	}
+}
+.table-wrapper {
+	display: block;
+	width: 100%;
+	@media screen and (max-width: 767px) {
+		overflow-x: scroll;
+	}
+}
+table {
+	@extend %large-normal-type;
+	border-spacing: 0;
+	border: none;
+	margin-top: 20px;
+	table-layout: fixed;
+	width: 100%;
+	@media screen and (max-width: 767px) {
+		width: 960px;
+	}
+}
+table tr > :first-child {
+	@extend %semibold-type;
+	background: url(../imgs/texture.png);
+	border-right: 2px solid $grey-lightest;
+	color: #3b5b56;
+	text-align: right;
+}
+table thead tr th {
+	@extend %medium-bold-type;
+	color: $white;
+	text-align: center;
+}
+thead > :first-child {
+	background: $grey-lightest;
+	color: $white;
+	font-family: $typeface;
+	font-size: 16pt;
+	height: 50px;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+	text-transform: uppercase;
+}
+thead > :last-child {
+	border-right: 2px solid $grey-lightest;
+}
+tbody > :nth-child(2n) {
+	background: rgba(206, 206, 206, 0.3);
+}
+tbody > :last-child > :first-child {
+	border-bottom: none;
+}
+tbody tr > :last-child {
+	border-right: 2px solid $grey-lightest;
+}
+tbody > :last-child td {
+	border-bottom: 2px solid $grey-lightest;
+}
+td.available,
+td.selected,
+td[data-available] {
+	background: $turquoise;
+}
+.close {
+	color: #4d9085;
+	display: block;
+	font-size: 13pt;
+	margin-left: 104px;
+	margin-top: -31px;
+	position: absolute;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+	text-transform: lowercase;
+}

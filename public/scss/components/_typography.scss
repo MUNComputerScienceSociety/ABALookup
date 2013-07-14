@@ -1,0 +1,66 @@
+%legal-type {
+	font-family: $typeface;
+	font-size: 8pt;
+	font-weight: $normal;
+}
+%small-type {
+	font-family: $typeface;
+	font-size: 10pt;
+	font-weight: $normal;
+}
+%normal-type {
+	font-family: $typeface;
+	font-size: 12pt;
+	font-weight: $normal;
+}
+%large-normal-type {
+	font-family: $typeface;
+	font-size: 14pt;
+	font-weight: $normal;
+}
+%large-normal-italic-type {
+	@extend %large-normal-type;
+	font-style: italic;
+}
+%semibold-type {
+	font-family: $typeface;
+	font-size: 13pt;
+	font-weight: $semibold;
+}
+%medium-semibold-type {
+	font-family: $typeface;
+	font-size: 16pt;
+	font-weight: $semibold;
+}
+%large-semibold-type {
+	font-family: $typeface;
+	font-size: 25pt;
+	font-weight: $semibold;
+}
+%bold-type {
+	font-family: $typeface;
+	font-size: 14pt;
+	font-weight: $bold;
+}
+%medium-bold-type {
+	font-family: $typeface;
+	font-size: 16pt;
+	font-weight: $bold;
+}
+%large-bold-type {
+	font-family: $typeface;
+	font-size: 25pt;
+	font-weight: $bold;
+}
+h2 {
+	@extend %large-semibold-type;
+}
+h3 {
+	@extend %medium-semibold-type;
+}
+h4 {
+	@extend %bold-type;
+}
+ol, li, p {
+	@extend %normal-type;
+}

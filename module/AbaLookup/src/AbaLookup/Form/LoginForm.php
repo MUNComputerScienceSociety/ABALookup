@@ -41,7 +41,7 @@ class LoginForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -53,7 +53,7 @@ class LoginForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
-				'placeholder' => $label,
+				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);

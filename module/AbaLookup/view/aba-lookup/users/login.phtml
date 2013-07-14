@@ -1,29 +1,26 @@
-<h2>Login to your account</h2>
-<?php
-	if (isset($this->error)) {
-		echo "<p>{$this->error}</p>";
-	}
-	$this->form->setAttribute('class', 'left');
-	$this->form->setAttribute('action', '/users/login');
-	$this->form->setAttribute('method', 'post');
-	echo $this->form()->openTag($this->form);
+<div class="eight columns">
+	<h2>Login to your account</h2>
+	<?php
+		if (isset($this->error)) {
+			echo "<p>{$this->error}</p>";
+		}
+		$this->form->setAttribute('class', 'left');
+		$this->form->setAttribute('action', '/users/login');
+		$this->form->setAttribute('method', 'post');
+		echo $this->form()->openTag($this->form);
 
-	foreach ($this->form as $element) {
-?>
-	<div class="row">
-		<?php
-			if ($element->hasAttribute('label')) {
-				echo $this->formLabel($element);
+		foreach ($this->form as $element) {
+			$label = $element->getLabel();
+			if ($label) {
+				echo $this->formLabel($element, $label);
 			}
 			echo $this->formElement($element);
-		?>
-	</div>
-<?php
-	}
+		}
 
-	echo $this->form()->closeTag();
-?>
-<div class="right">
+		echo $this->form()->closeTag();
+	?>
+</div>
+<aside class="aside four columns">
 	<h3>Details</h3>
 	<p>Please enter your email and password. Please note that credentials are case-sensitive.</p>
-</div>
+</aside>
