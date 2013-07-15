@@ -1,0 +1,1 @@
+ABA Lookup is built by the Memorial University Computer Science Society, and many other great open-source contributors. If you'd like to help out, see github.com/MUNComputerScienceSociety/ABALookup.
