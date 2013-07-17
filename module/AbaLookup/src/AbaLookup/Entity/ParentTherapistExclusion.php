@@ -58,27 +58,55 @@ class ParentTherapistExclusion
 		$this->active = $active;
 	}
 
+	/**
+	 * Set whether or not this exclusion is active.
+	 *
+	 * An active exclusion will remove the parent and therapist
+	 * from their respective matches listings.
+	 *
+	 * @param bool $active Whether the exclusion is active.
+	 * @return $this
+	 */
 	public function setActive($active)
 	{
+		if (!isset($active) || !is_bool($active)) {
+			throw new InvalidArgumentException();
+		}
 		$this->active = $active;
 		return $this;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * Returns the parent in the exclusion
+	 *
+	 * @return User
+	 */
 	public function getParent()
 	{
 		return $this->parent;
 	}
 
+	/**
+	 * Returns the therapist in the exclusion
+	 *
+	 * @return User
+	 */
 	public function getTherapist()
 	{
 		return $this->therapist;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getActive()
 	{
 		return $this->active;

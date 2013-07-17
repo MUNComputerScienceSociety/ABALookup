@@ -26,22 +26,22 @@ class ParentTherapistExclusionTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @var AbaLookup\Entity\ParentTherapistExclusion
 	 */
-	protected $pte;
+	protected $exclusion;
 
 	/**
 	 * Reset for isolation
 	 */
 	public function setUp()
 	{
-		$this->parent = new User("Jane", "jane@email.com", "password", FALSE, NULL, FALSE, FALSE);
+		$this->parent    = new User("Jane", "jane@email.com", "password", FALSE, NULL, FALSE, FALSE);
 		$this->therapist = new User("Jack", "jack@email.com", "password", TRUE, "M", TRUE, TRUE);
-		$this->pte = new ParentTherapistExclusion($this->parent, $this->therapist);
+		$this->exclusion = new ParentTherapistExclusion($this->parent, $this->therapist);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionThrownIfTherapistPassedAsParent()
+	public function testExceptionThrownIfTherapistPassedAsParentInConstructor()
 	{
 		new ParentTherapistExclusion($this->therapist, $this->therapist);
 	}
@@ -49,24 +49,24 @@ class ParentTherapistExclusionTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionThrownIfParentPassedAsTherapist()
+	public function testExceptionThrownIfParentPassedAsTherapistInConstructor()
 	{
 		new ParentTherapistExclusion($this->parent, $this->parent);
 	}
 
 	public function testGetParent()
 	{
-		$this->assertEquals($this->parent, $this->pte->getParent());
+		$this->assertEquals($this->parent, $this->exclusion->getParent());
 	}
 
 	public function testGetTherapist()
 	{
-		$this->assertEquals($this->therapist, $this->pte->getTherapist());
+		$this->assertEquals($this->therapist, $this->exclusion->getTherapist());
 	}
 
 	public function testGetActive()
 	{
-		$this->assertTrue($this->pte->getActive());
+		$this->assertTrue($this->exclusion->getActive());
 	}
 
 	/**
@@ -74,6 +74,22 @@ class ParentTherapistExclusionTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetActive()
 	{
-		$this->assertFalse($this->pte->setActive(FALSE)->getActive());
+		$this->assertFalse($this->exclusion->setActive(FALSE)->getActive());
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrowIfSetActivePassedNull()
+	{
+		$this->exclusion->setActive(NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetActivePassedNonBool()
+	{
+		$this->exclusion->setActive('');
 	}
 }
