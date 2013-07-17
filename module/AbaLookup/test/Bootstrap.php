@@ -52,7 +52,7 @@ class Bootstrap
 	}
 
 	/**
-	 *
+	 * Initialise the bootstrap class
 	 */
 	public static function init()
 	{
@@ -82,7 +82,7 @@ class Bootstrap
 	}
 
 	/**
-	 *
+	 * Load the autoloader file
 	 */
 	protected static function initAutoloader()
 	{
