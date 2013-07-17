@@ -5,7 +5,7 @@
 			echo "<p>{$this->error}</p>";
 		}
 		$this->form->setAttribute('class', 'left');
-		$this->form->setAttribute('action', $user->getUrlBase() . 'profile/edit');
+		$this->form->setAttribute('action', '/users' . '/' . $this->user->getId() . '/profile/edit');
 		$this->form->setAttribute('method', 'post');
 		echo $this->form()->openTag($this->form);
 

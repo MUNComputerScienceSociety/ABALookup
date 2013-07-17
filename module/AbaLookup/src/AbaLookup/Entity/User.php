@@ -112,11 +112,6 @@ class User
 	protected $moderator;
 
 	/**
-	 * The base of the URL for the user's profile
-	 */
-	protected $urlBase;
-
-	/**
 	 * Initialise static fields
 	 *
 	 * Called immediately after class definition.
@@ -203,12 +198,6 @@ class User
 		return $this;
 	}
 
-	public function setUrlBase($urlBase)
-	{
-		$this->urlBase = $urlBase;
-		return $this;
-	}
-
 	public function getId()
 	{
 		return $this->id;
@@ -262,11 +251,6 @@ class User
 	public function getModerator()
 	{
 		return $this->moderator;
-	}
-
-	public function getUrlBase()
-	{
-		return $this->urlBase;
 	}
 }
 

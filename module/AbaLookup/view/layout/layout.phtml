@@ -19,9 +19,9 @@
 				</a>
 				<?php if (isset($this->user)): ?>
 				<nav class="nav eight columns mobile-ten">
-					<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>">Profile</a>
-					<a href="<?php echo $this->user->getUrlBase() . 'schedule'; ?>">Schedule</a>
-					<a href="<?php echo $this->user->getUrlBase() . 'matches'; ?>">Matches</a>
+					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile'; ?>">Profile</a>
+					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/schedule'; ?>">Schedule</a>
+					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/matches'; ?>">Matches</a>
 					<a href="/users/logout">Logout</a>
 				</nav>
 				<?php endif; ?>

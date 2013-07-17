@@ -71,8 +71,6 @@ abstract class AbaLookupController extends AbstractActionController
 		if (!isset($user)) {
 			return;
 		}
-		$userId = $user->getId();
-		$user->setUrlBase("/users/{$userId}/");
 		$layout->setVariable('user', $user);
 	}
 }
