@@ -1,4 +1,8 @@
 #!/bin/sh
 
-mkdir database
+
+if [ ! -e database ]; then
+	mkdir database
+fi
+
 vendor/bin/doctrine-module orm:schema-tool:create

@@ -114,4 +114,11 @@ return [
 			__DIR__ . '/../view',
 		],
 	],
+	// Placeholder for console routes
+	'console' => array(
+		'router' => array(
+			'routes' => array(
+			),
+		),
+	),
 ];
