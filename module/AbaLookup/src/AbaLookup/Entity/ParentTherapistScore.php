@@ -61,30 +61,48 @@ class ParentTherapistScore
 		$this->score = $score;
 	}
 
+	/**
+	 * Set the match score for the parent and therapist pairing
+	 *
+	 * @param $score The score for the parent therapist pairing
+	 * @return $this
+	 */
 	public function setScore($score)
 	{
-		if (!is_numeric($score)) {
+		if (!isset($score) || !is_numeric($score)) {
 			throw new InvalidArgumentException();
 		}
 		$this->score = $score;
 		return $this;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return User
+	 */
 	public function getParent()
 	{
 		return $this->parent;
 	}
 
+	/**
+	 * @return User
+	 */
 	public function getTherapist()
 	{
 		return $this->therapist;
 	}
 
+	/**
+	 * @return float
+	 */
 	public function getScore()
 	{
 		return $this->score;

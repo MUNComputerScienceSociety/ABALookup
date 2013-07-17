@@ -24,14 +24,14 @@ class ParentTherapistScoreTest extends PHPUnit_Framework_TestCase
 	protected $therapist;
 
 	/**
-	 * @var AbaLookup\Entity\ParentTherapistScore
-	 */
-	protected $pts;
-
-	/**
 	 * The score for the parent and therapist match
 	 */
 	protected $score;
+
+	/**
+	 * @var AbaLookup\Entity\ParentTherapistScore
+	 */
+	protected $pts;
 
 	/**
 	 * Reset for isolation
@@ -63,7 +63,7 @@ class ParentTherapistScoreTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionThrownIfTherapistPassedAsParent()
+	public function testExceptionThrownIfTherapistPassedAsParentInConstructor()
 	{
 		new ParentTherapistScore($this->therapist, $this->therapist, $this->score);
 	}
@@ -71,7 +71,7 @@ class ParentTherapistScoreTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionThrownIfParentPassedAsTherapist()
+	public function testExceptionThrownIfParentPassedAsTherapistInConstructor()
 	{
 		new ParentTherapistScore($this->parent, $this->parent, $this->score);
 	}
@@ -103,7 +103,15 @@ class ParentTherapistScoreTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionThrownIfNotNumericPassed()
+	public function testExceptionIsThrownIfSetScorePassedNull()
+	{
+		$this->pts->setScore(NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetScorePassedNonNumeric()
 	{
 		$score = "?";
 		$this->pts->setScore($score);
