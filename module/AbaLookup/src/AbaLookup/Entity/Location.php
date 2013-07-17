@@ -8,8 +8,7 @@ use
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\Table,
-	InvalidArgumentException,
-	Zend\Validator\StringLength
+	InvalidArgumentException
 ;
 
 /**
@@ -38,26 +37,11 @@ class Location
 	protected $enabled;
 
 	/**
-	 * String length validator
-	 */
-	protected static $strlen;
-
-	/**
-	 * Initialise static fields
-	 *
-	 * Called immediately after class definition.
-	 */
-	public static function init()
-	{
-		self::$strlen = new StringLength(['min' => 1]);
-	}
-
-	/**
 	 * Constructor
 	 */
 	public function __construct($name)
 	{
-		if (!is_string($name) || !self::$strlen->isValid($name)) {
+		if (!is_string($name) || !$name) {
 			throw new InvalidArgumentException();
 		}
 		$this->name = $name;
@@ -72,7 +56,7 @@ class Location
 	 */
 	public function setName($name)
 	{
-		if (!self::$strlen->isValid($name)) {
+		if (!isset($name) || !is_string($name) || !$name) {
 			throw new InvalidArgumentException();
 		}
 		$this->name = $name;
@@ -117,7 +101,7 @@ class Location
 	}
 
 	/**
-	 * @return int $id
+	 * @return int
 	 */
 	public function getId()
 	{
@@ -125,7 +109,7 @@ class Location
 	}
 
 	/**
-	 * @return string $name
+	 * @return string
 	 */
 	public function getName()
 	{
@@ -133,12 +117,10 @@ class Location
 	}
 
 	/**
-	 * @return bool $enabled
+	 * @return bool
 	 */
 	public function getEnabled()
 	{
 		return $this->enabled;
 	}
 }
-
-Location::init();
