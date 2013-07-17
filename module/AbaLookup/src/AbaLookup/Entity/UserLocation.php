@@ -42,33 +42,54 @@ class UserLocation
 	/**
 	 * Constructor
 	 */
-	public function __construct(User $user, Location $location){
+	public function __construct(User $user, Location $location) {
 		$this->user = $user;
 		$this->location = $location;
 	}
 
+	/**
+	 * Set the user
+	 *
+	 * @param $user The user object.
+	 * @return $this
+	 */
 	public function setUser(User $user)
 	{
 		$this->user = $user;
 		return $this;
 	}
 
+	/**
+	 * Set the location for the user
+	 *
+	 * @param $location The location object.
+	 * @return $this
+	 */
 	public function setLocation(Location $location)
 	{
 		$this->location = $location;
 		return $this;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return User
+	 */
 	public function getUser()
 	{
 		return $this->user;
 	}
 
+	/**
+	 * @return Location
+	 */
 	public function getLocation()
 	{
 		return $this->location;
