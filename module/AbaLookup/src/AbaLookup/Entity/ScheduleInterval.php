@@ -50,33 +50,46 @@ class ScheduleInterval
 	/**
 	 * Constructor
 	 *
-	 * Create a new ScheduleInterval that is available by default.
+	 * Create a new ScheduleInterval that is unavailable by default.
+	 * @param int $startTime The start time for the interval.
+	 * @param int $endTime The end time for the interval.
+	 * @param bool $available Whether the intervals is available (default: FALSE).
 	 */
 	public function __construct($startTime, $endTime, $available = FALSE)
 	{
+		if (!isset($startTime, $endTime, $available) || !is_int($startTime) || !is_int($endTime)) {
+			throw new InvalidArgumentException();
+		}
+		if (!is_bool($available)) {
+			throw new InvalidArgumentException();
+		}
 		if ($endTime <= $startTime) {
 			throw new InvalidArgumentException();
 		}
 		$this->startTime = $startTime;
-		$this->endTime = $endTime;
+		$this->endTime   = $endTime;
 		$this->available = $available;
 	}
 
 	/**
 	 * Set the availability of the interval
 	 *
-	 * @return ScheduleInterval $this
+	 * @param bool $available Whether or not the interval is available.
+	 * @return $this
 	 */
 	public function setAvailability($available)
 	{
+		if (!isset($available) || !is_bool($available)) {
+			throw new InvalidArgumentException();
+		}
 		$this->available = $available;
 		return $this;
 	}
 
 	/**
-	 * Set this day as available
+	 * Set this interval as available
 	 *
-	 * @return ScheduleInterval $this
+	 * @return $this
 	 */
 	public function setAvailable()
 	{
@@ -85,9 +98,9 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Set this day as unavailable
+	 * Set this interval as unavailable
 	 *
-	 * @return ScheduleInterval $this
+	 * @return $this
 	 */
 	public function setUnavailable()
 	{
@@ -95,21 +108,41 @@ class ScheduleInterval
 		return $this;
 	}
 
+	/**
+	 * Return the ID for the interval
+	 *
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * Return the start time for the interval
+	 *
+	 * @return int
+	 */
 	public function getStartTime()
 	{
 		return $this->startTime;
 	}
 
+	/**
+	 * Return the end time for the interval
+	 *
+	 * @return int
+	 */
 	public function getEndTime()
 	{
 		return $this->endTime;
 	}
 
+	/**
+	 * Return whether the interval is available
+	 *
+	 * @return bool
+	 */
 	public function getAvailability()
 	{
 		return $this->available;

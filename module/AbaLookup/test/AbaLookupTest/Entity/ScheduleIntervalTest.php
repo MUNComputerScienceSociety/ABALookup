@@ -18,7 +18,7 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 	protected $scheduleInterval;
 
 	/**
-	 * Fields for the interval
+	 * Properties for the interval
 	 */
 	protected $startTime;
 	protected $endTime;
@@ -36,9 +36,57 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfInvalidInterval()
+	public function testExceptionIsThrownIfNullPassedAsStartTimeInConstructor()
+	{
+		new ScheduleInterval(NULL, 100);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNullPassedAsEndTimeInConstructor()
+	{
+		new ScheduleInterval(0, NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonIntPassedAsStartTimeInConstructor()
+	{
+		new ScheduleInterval(0.5, 100);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonIntPassedAsEndTimeInConstructor()
+	{
+		new ScheduleInterval(0, 0.5);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfInvalidIntervalConstructed()
 	{
 		new ScheduleInterval(100, 0);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNonBoolPassedAsAvailabilityInConstructor()
+	{
+		new ScheduleInterval(0, 100, '');
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfNullPassedAsAvailabilityInConstructor()
+	{
+		new ScheduleInterval(0, 100, NULL);
 	}
 
 	public function testGetStartTime()
@@ -59,13 +107,43 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @depends testGetAvailability
 	 */
-	public function testSetAvailability()
+	public function testSetAvailable()
 	{
 		$this->scheduleInterval->setAvailable();
 		$this->assertTrue($this->scheduleInterval->getAvailability());
+	}
+
+	/**
+	 * @depends testGetAvailability
+	 */
+	public function testSetUnavailable()
+	{
 		$this->scheduleInterval->setUnavailable();
 		$this->assertFalse($this->scheduleInterval->getAvailability());
+	}
+
+	/**
+	 * @depends testGetAvailability
+	 */
+	public function testSetAvailability()
+	{
 		$this->scheduleInterval->setAvailability(TRUE);
 		$this->assertTrue($this->scheduleInterval->getAvailability());
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNull()
+	{
+		$this->scheduleInterval->setAvailability(NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNonBool()
+	{
+		$this->scheduleInterval->setAvailability(3);
 	}
 }
