@@ -41,7 +41,6 @@ class LoginForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -53,7 +52,6 @@ class LoginForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -86,7 +84,7 @@ class LoginForm extends Form
 
 		if (!is_array($this->data)) {
 			$data = $this->extract();
-			if (!is_array($data)) {
+			if (!is_array($data) || !isset($this->data)) {
 				// no data set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
