@@ -290,18 +290,18 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->user->setCodeOfConduct(3);
 	}
 
-	public function testGetVerified()
+	public function testIsVerified()
 	{
-		$this->assertFalse($this->user->getVerified());
+		$this->assertFalse($this->user->isVerified());
 	}
 
 	/**
-	 * @depends testGetVerified
+	 * @depends testIsVerified
 	 */
 	public function testSetVerified()
 	{
 		$this->user->setVerified(TRUE);
-		$this->assertTrue($this->user->getVerified());
+		$this->assertTrue($this->user->isVerified());
 	}
 
 	/**
@@ -312,18 +312,18 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->user->setVerified('');
 	}
 
-	public function testGetModerator()
+	public function testIsModerator()
 	{
-		$this->assertFalse($this->user->getModerator());
+		$this->assertFalse($this->user->isModerator());
 	}
 
 	/**
-	 * @depends testGetModerator
+	 * @depends testIsModerator
 	 */
 	public function testSetModerator()
 	{
 		$this->user->setModerator(TRUE);
-		$this->assertTrue($this->user->getModerator());
+		$this->assertTrue($this->user->isModerator());
 	}
 
 	/**

@@ -386,7 +386,7 @@ class User
 	/**
 	 * @return bool
 	 */
-	public function getVerified()
+	public function isVerified()
 	{
 		return $this->verified;
 	}
@@ -394,7 +394,7 @@ class User
 	/**
 	 * @return bool
 	 */
-	public function getModerator()
+	public function isModerator()
 	{
 		return $this->moderator;
 	}

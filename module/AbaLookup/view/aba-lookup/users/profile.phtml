@@ -14,7 +14,7 @@
 	<p><?php echo $this->user->getPhone() ? $this->user->getPhone() : "n/a"; ?></p>
 
 	<h3>Verification status</h3>
-	<p><?php echo ($this->user->getVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
+	<p><?php echo ($this->user->isVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
 
 	<?php if ($this->user->isTherapist()): ?>
 

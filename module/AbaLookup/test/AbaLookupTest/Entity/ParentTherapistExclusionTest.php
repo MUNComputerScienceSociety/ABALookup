@@ -64,17 +64,17 @@ class ParentTherapistExclusionTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($this->therapist, $this->exclusion->getTherapist());
 	}
 
-	public function testGetActive()
+	public function testIsActive()
 	{
-		$this->assertTrue($this->exclusion->getActive());
+		$this->assertTrue($this->exclusion->isActive());
 	}
 
 	/**
-	 * @depends testGetActive
+	 * @depends testIsActive
 	 */
 	public function testSetActive()
 	{
-		$this->assertFalse($this->exclusion->setActive(FALSE)->getActive());
+		$this->assertFalse($this->exclusion->setActive(FALSE)->isActive());
 	}
 
 	/**

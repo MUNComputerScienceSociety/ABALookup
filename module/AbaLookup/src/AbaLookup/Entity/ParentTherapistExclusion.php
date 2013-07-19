@@ -107,7 +107,7 @@ class ParentTherapistExclusion
 	/**
 	 * @return bool
 	 */
-	public function getActive()
+	public function isActive()
 	{
 		return $this->active;
 	}
