@@ -50,7 +50,7 @@ class ParentTherapistScore
 	 */
 	public function __construct(User $parent, User $therapist, $score)
 	{
-		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+		if ($parent->isTherapist() || !$therapist->isTherapist()) {
 			throw new InvalidArgumentException();
 		}
 		if (!is_numeric($score)) {

@@ -202,18 +202,18 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->user->setPhone('');
 	}
 
-	public function testGetTherapist()
+	public function testIsTherapist()
 	{
-		$this->assertTrue($this->user->getTherapist());
+		$this->assertTrue($this->user->isTherapist());
 	}
 
 	/**
-	 * @depends testGetTherapist
+	 * @depends testIsTherapist
 	 */
 	public function testSetTherapist()
 	{
 		$this->user->setTherapist(FALSE);
-		$this->assertFalse($this->user->getTherapist());
+		$this->assertFalse($this->user->isTherapist());
 	}
 
 	/**
@@ -292,7 +292,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 	public function testGetVerified()
 	{
-		$this->assertFalse($this->user->getVErified());
+		$this->assertFalse($this->user->getVerified());
 	}
 
 	/**

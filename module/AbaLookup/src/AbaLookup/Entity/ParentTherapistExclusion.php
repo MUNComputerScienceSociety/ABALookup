@@ -50,7 +50,7 @@ class ParentTherapistExclusion
 	 */
 	public function __construct(User $parent, User $therapist, $active = TRUE)
 	{
-		if ($parent->getTherapist() || !$therapist->getTherapist()) {
+		if ($parent->isTherapist() || !$therapist->isTherapist()) {
 			throw new InvalidArgumentException();
 		}
 		$this->parent = $parent;

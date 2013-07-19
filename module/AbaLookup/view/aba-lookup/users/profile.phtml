@@ -16,7 +16,7 @@
 	<h3>Verification status</h3>
 	<p><?php echo ($this->user->getVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
 
-	<?php if ($this->user->getTherapist()): ?>
+	<?php if ($this->user->isTherapist()): ?>
 
 	<h3>Sex</h3>
 	<p>

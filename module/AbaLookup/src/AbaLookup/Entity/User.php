@@ -354,7 +354,7 @@ class User
 	/**
 	 * @return bool
 	 */
-	public function getTherapist()
+	public function isTherapist()
 	{
 		return $this->therapist;
 	}

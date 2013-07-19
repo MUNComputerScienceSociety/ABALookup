@@ -112,10 +112,6 @@ class ProfileEditForm extends Form
 			'options' => ['label' => $label],
 		]);
 
-		if ($user->getTherapist()) {
-			// add therapist specifc form elements
-		}
-
 		// submit button
 		$this->add([
 			'type' => 'submit',

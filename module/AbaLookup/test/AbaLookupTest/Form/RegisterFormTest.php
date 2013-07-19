@@ -75,7 +75,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($displayName, $user->getDisplayName());
 		$this->assertEquals($emailAddress, $user->getEmail());
 		$this->assertTrue($user->verifyPassword($password));
-		$this->assertFalse($user->getTherapist());
+		$this->assertFalse($user->isTherapist());
 		$this->assertTrue(((int) $phoneNumber) === $user->getPhone());
 		$this->assertEquals($sex, $user->getSex());
 	}
