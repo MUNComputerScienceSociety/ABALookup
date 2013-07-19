@@ -49,7 +49,6 @@ class ProfileEditForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
-				// 'placeholder' => $label,
 				'value' => $user->getDisplayName(),
 			],
 			'options' => ['label' => $label],
@@ -62,7 +61,6 @@ class ProfileEditForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				// 'placeholder' => $label,
 				'value' => $user->getEmail(),
 			],
 			'options' => ['label' => $label],
@@ -75,7 +73,6 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_OLD_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -87,7 +84,6 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_NEW_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -99,7 +95,6 @@ class ProfileEditForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -111,7 +106,6 @@ class ProfileEditForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
-				// 'placeholder' => $label,
 				'type' => 'tel',
 				'value' => $user->getPhone(),
 			],
@@ -150,7 +144,7 @@ class ProfileEditForm extends Form
 
 		if (!is_array($this->data)) {
 			$data = $this->extract();
-			if (!is_array($data)) {
+			if (!is_array($data) || !isset($this->data)) {
 				// no data has been set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
@@ -184,35 +178,59 @@ class ProfileEditForm extends Form
 		$confirmNewPassword = $this->data[self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD];
 		$phone              = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
 
-		if (!$notEmpty->isValid($displayName) // is empty
+		if (!isset($displayName) // has not been set or is NULL
+		    || !$notEmpty->isValid($displayName) // is empty
 		    || !$alpha->isValid($displayName) // or is not letter or space
 		    || !$oneChar->isValid($displayName) // or is less than one character
 		) {
-			// (is empty) OR (is not letter or space) OR (is less than on char)
+
+			// (not set OR NULL) OR (is empty) OR (is not letter or space) OR (is less than on char)
 			$this->message = "You must enter a display name contining only characters.";
-		} elseif (!$emailAddress->isValid($email)) {
+
+		} elseif (!isset($email) // has not been set or is NULL
+		          || !$emailAddress->isValid($email) // is not a valid email address
+		) {
+
 			// is not a valid email address
 			$this->message = "You must provide a valid email address.";
-		} elseif ($notEmpty->isValid($newPassword) && !$minPasswordChars->isValid($newPassword)) {
+
+		} elseif (!isset($newPassword) // has not been set or is NULL
+		          || $notEmpty->isValid($newPassword) // is empty
+		          && !$minPasswordChars->isValid($newPassword) // is not long enough
+		) {
+
 			// password was entered but is not long enough
 			$this->message = sprintf(
 				"Your new password must be %d characters in length.",
 				User::MINIMUM_PASSWORD_LENGTH
 			);
-		} elseif ($notEmpty->isValid($newPassword) && ($newPassword !== $confirmNewPassword)) {
+
+		} elseif ($notEmpty->isValid($newPassword) // is not empty (i.e. has been entered)
+		          && ($newPassword !== $confirmNewPassword) // new password wasn't confirmed
+		) {
+
 			// new password and confirmation do not match
 			$this->message = "You must confirm your new password.";
-		} elseif ($notEmpty->isValid($newPassword) && !$notEmpty->isValid($oldPassword)) {
-			// old password was not entered
+
+		} elseif ($notEmpty->isValid($newPassword) // is not empty (i.e. has been entered)
+		          && (!isset($oldPassword) || !$notEmpty->isValid($oldPassword)) // old password not entered
+		) {
+
+			// trying to enter new password and old password was not entered
 			$this->message = "You must enter your old password to change it.";
+
 		} elseif ($notEmpty->isValid($phone)
 		          && (!$allDigits->isValid($phone) || !$minPhoneChars->isValid($phone))
 		) {
+
 			// phone number was entered and it was (NOT all digits or NOT more than seven characters)
 			$this->message = "The phone number provided is not valid.";
+
 		} else {
+
 			// form is valid
 			$this->isValid = TRUE;
+
 		}
 
 		$this->hasValidated = TRUE;
@@ -233,7 +251,7 @@ class ProfileEditForm extends Form
 	 * Takes (via reference) the user to update and populates
 	 * the fields with the updated data.
 	 *
-	 * @return bool Whether the update was successful
+	 * @return bool Whether the update was successful.
 	 */
 	public function updateUser(User &$user)
 	{
@@ -265,8 +283,9 @@ class ProfileEditForm extends Form
 		$user->setEmail($email);
 		if ($phone) {
 			// the user entered a phone number
-			$user->setPhone($phone);
+			$user->setPhone((int) $phone);
 		}
+
 		return TRUE;
 	}
 }
