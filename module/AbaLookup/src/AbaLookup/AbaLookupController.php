@@ -3,6 +3,8 @@
 namespace AbaLookup;
 
 use
+	AbaLookup\Entity\Schedule,
+	AbaLookup\Entity\User,
 	Doctrine\ORM\EntityManager,
 	Zend\Mvc\Controller\AbstractActionController,
 	Zend\Session\Container,
@@ -14,7 +16,7 @@ abstract class AbaLookupController extends AbstractActionController
 	/**
 	 * The key used to store the user in session
 	 */
-	const SESSION_KEY = 'user';
+	const SESSION_USER_KEY = 'user';
 
 	/**
 	 * @var Doctrine\ORM\EntityManager
@@ -23,45 +25,145 @@ abstract class AbaLookupController extends AbstractActionController
 
 	/**
 	 * Return the Entity Manager
+	 *
+	 * @return EntityManager
 	 */
 	protected function getEntityManager()
 	{
-		if ($this->entityManager === NULL) {
+		if (!isset($this->entityManager)) {
 			$this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 		}
 		return $this->entityManager;
 	}
 
 	/**
-	 * Return whether a user is currently in session
+	 * Return the user associated with the given email address
+	 *
+	 * @param string $email The email address for the user.
+	 * @return User
 	 */
-	protected function userLoggedIn()
+	protected function getUserByEmail($email)
+	{
+		return $this->getEntityManager()
+		            ->getRepository('AbaLookup\Entity\User')
+		            ->findOneBy(['email' => $email]);
+	}
+
+	/**
+	 * Return the user associated with the given ID
+	 *
+	 * @param int $id The ID for the user.
+	 * @return User
+	 */
+	protected function getUserById($id)
+	{
+		return $this->getEntityManager()
+		            ->getRepository('AbaLookup\Entity\User')
+		            ->findOneBy(['id' => $id]);
+	}
+
+	/**
+	 * Return the given user's schedule
+	 *
+	 * @param User $user The user to whom the schedule belongs.
+	 * @return Schedule
+	 */
+	protected function getUserSchedule($user)
+	{
+		$schedule = $this->getEntityManager()
+		                 ->getRepository('AbaLookup\Entity\Schedule')
+		                 ->findOneBy(['user' => $user->getId()]);
+		if (!$schedule) {
+			$schedule = new Schedule($user);
+			$this->save($schedule);
+		}
+		return $schedule;
+	}
+
+	/**
+	 * Tell the EntityManager to make an instance managed and persistent
+	 * and flushes all changes to the entity
+	 *
+	 * This effectively synchronizes the in-memory state of the entity with the database.
+	 *
+	 * @param object $entity The entity to save.
+	 */
+	protected function save($entity)
+	{
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist($entity);
+		$entityManager->flush();
+	}
+
+	/**
+	 * Return a redirect to the login page
+	 *
+	 * @return ViewModel
+	 */
+	protected function redirectToLoginPage() {
+		return $this->redirect()->toRoute('auth', ['action' => 'login']);
+	}
+
+	/**
+	 * Set the session for the given user
+	 *
+	 * @param User $user The user in session.
+	 */
+	protected function setUserSession(User $user)
 	{
 		$session = new Container();
-		return $session->offsetExists(self::SESSION_KEY);
+		$session->offsetSet(self::SESSION_USER_KEY, $user->getId());
+	}
+
+	/**
+	 * Unset the session
+	 */
+	protected function unsetUserSession()
+	{
+		$session = new Container();
+		$session->offsetUnset(self::SESSION_USER_KEY);
+	}
+
+	/**
+	 * Return whether a user is currently in session
+	 *
+	 * @return bool
+	 */
+	protected function isUserInSession()
+	{
+		$session = new Container();
+		return $session->offsetExists(self::SESSION_USER_KEY);
 	}
 
 	/**
 	 * Return the current user in session
+	 *
+	 * Returns the current user in session if a user has logged in,
+	 * returns NULL otherwise.
+	 *
+	 * @return User
 	 */
-	protected function currentUser()
+	protected function currentSessionUser()
 	{
-		if (!$this->userLoggedIn()) {
+		if (!$this->isUserInSession()) {
 			return NULL;
 		}
 		$session = new Container();
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_KEY)]);
+		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_USER_KEY)]);
 	}
 
 	/**
 	 * Prepare the given layout to be displayed for the given user
 	 *
-	 * Nests the footer widget into the layout and adds the current
-	 * user's base URL to the layout.
+	 * Nests the footer widget into the layout, and attaches the current
+	 * to the layout as a variable.
+	 *
+	 * @param ViewModel $layout The layout for the view.
+	 * @param User $user The user currently in session.
 	 */
-	protected function prepareLayout(&$layout, &$user = NULL)
+	protected function prepareLayout($layout, User $user = NULL)
 	{
 		// add the footer
 		$footer = new ViewModel();

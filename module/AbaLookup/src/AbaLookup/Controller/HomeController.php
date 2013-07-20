@@ -2,10 +2,7 @@
 
 namespace AbaLookup\Controller;
 
-use
-	AbaLookup\AbaLookupController,
-	Zend\View\Model\ViewModel
-;
+use AbaLookup\AbaLookupController;
 
 class HomeController extends AbaLookupController
 {
@@ -16,7 +13,7 @@ class HomeController extends AbaLookupController
 	{
 		$this->layout('layout/home');
 		$layout = $this->layout();
-		$user = $this->currentUser();
+		$user = $this->currentSessionUser();
 		$this->prepareLayout($layout, $user);
 		return ['user' => $user];
 	}
@@ -26,11 +23,7 @@ class HomeController extends AbaLookupController
 	 */
 	public function aboutAction()
 	{
-		$this->layout('layout/home');
-		$layout = $this->layout();
-		$user = $this->currentUser();
-		$this->prepareLayout($layout, $user);
-		return ['user' => $user];
+		return $this->indexAction();
 	}
 
 	/**
@@ -38,11 +31,7 @@ class HomeController extends AbaLookupController
 	 */
 	public function privacyAction()
 	{
-		$this->layout('layout/home');
-		$layout = $this->layout();
-		$user = $this->currentUser();
-		$this->prepareLayout($layout, $user);
-		return ['user' => $user];
+		return $this->indexAction();
 	}
 
 	/**
@@ -50,10 +39,6 @@ class HomeController extends AbaLookupController
 	 */
 	public function termsAction()
 	{
-		$this->layout('layout/home');
-		$layout = $this->layout();
-		$user = $this->currentUser();
-		$this->prepareLayout($layout, $user);
-		return ['user' => $user];
+		return $this->indexAction();
 	}
 }
