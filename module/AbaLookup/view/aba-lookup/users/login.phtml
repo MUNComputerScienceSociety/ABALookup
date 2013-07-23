@@ -10,11 +10,30 @@
 		echo $this->form()->openTag($this->form);
 
 		foreach ($this->form as $element) {
-			$label = $element->getLabel();
-			if ($label) {
-				echo $this->formLabel($element, $label);
-			}
-			echo $this->formElement($element);
+	?>
+		<div class="row">
+			<div class="twelve columns">
+			<?php
+				$type = $element->getAttribute('type');
+				$label = $element->getLabel();
+
+				// to style checkboxes and radio buttons, the label needs to come after the element
+				// in all other cases, it is more semantic for the label to come before the element
+
+				if ($label && ($type == 'checkbox' || $type == 'radio')) {
+					echo $this->formElement($element);
+					echo $this->formLabel($element, $label);
+				} elseif ($label) {
+					echo $this->formLabel($element, $label);
+					echo $this->formElement($element);
+				} else {
+					// if there is no label
+					echo $this->formElement($element);
+				}
+			?>
+			</div>
+		</div>
+	<?php
 		}
 
 		echo $this->form()->closeTag();
