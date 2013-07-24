@@ -5,7 +5,7 @@ namespace AbaLookup;
 class Module
 {
 	/**
-	 * Include the module configuration
+	 * Return the module configuration
 	 */
 	public function getConfig()
 	{

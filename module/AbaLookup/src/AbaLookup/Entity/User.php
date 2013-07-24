@@ -124,6 +124,15 @@ class User
 
 	/**
 	 * Constructor
+	 *
+	 * @param string $displayName The display name for the user.
+	 * @param string $email The email address of the user.
+	 * @param string $password The password for the user.
+	 * @param bool $therapist Is the user a therapist?
+	 * @param string|NULL The sex of the user.
+	 * @param bool $abaCourse Has the user completed the course.
+	 * @param bool $codeOfConduct Has the user accepted the code of conduct.
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($displayName,
 	                            $email,
@@ -152,6 +161,7 @@ class User
 	 * Set the display name of the user
 	 *
 	 * @param string $displayName The display name of the user.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setDisplayName($displayName)
@@ -167,6 +177,7 @@ class User
 	 * Set the email address of the user
 	 *
 	 * @param string $email The email address for the user.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setEmail($email)
@@ -185,6 +196,7 @@ class User
 	 * be hashed internally.
 	 *
 	 * @param string $password The plaintext password for the user.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setPassword($password)
@@ -200,6 +212,7 @@ class User
 	 * Set the phone number for the user
 	 *
 	 * @param int $phone The phone number for the user.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setPhone($phone)
@@ -215,6 +228,7 @@ class User
 	 * Set whether or not the user is a therapist
 	 *
 	 * @param bool $therapist Whether or not the user is a therapist.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setTherapist($therapist)
@@ -230,6 +244,7 @@ class User
 	 * Set the sex of the user
 	 *
 	 * @param string $sex The sex of the user (NULL, 'M', or 'F').
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setSex($sex)
@@ -245,6 +260,7 @@ class User
 	 * Set whether the user has completed the course
 	 *
 	 * @param bool $abaCourse Whether or not the user has completed their course.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAbaCourse($abaCourse)
@@ -260,6 +276,7 @@ class User
 	 * Set whether the user has agreed to the code of conduct
 	 *
 	 * @param bool $codeOfConduct Whether the user has agreed to the code of conduct.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setCodeOfConduct($codeOfConduct)
@@ -275,6 +292,7 @@ class User
 	 * Set whether or not the user has been verified
 	 *
 	 * @param bool $verified Whether or not the user has been verified.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setVerified($verified)
@@ -290,6 +308,7 @@ class User
 	 * Set if the user is or is not a moderator
 	 *
 	 * @param bool $moderator Whether the user is a moderator or not.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setModerator($moderator)
@@ -333,6 +352,7 @@ class User
 	 * if that is not the case.
 	 *
 	 * @param string $password The plaintext password to be verified.
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function verifyPassword($password)

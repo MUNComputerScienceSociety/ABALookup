@@ -107,6 +107,7 @@ class ScheduleDay
 	 * @param string $name The name of the day.
 	 * @param int $hours The number of hours in the day.
 	 * @param int $intervalMinutes The number of minutes in a interval on this day.
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($day, $name, $hours = self::HOURS_DAY, $intervalMinutes = self::MINUTES_HALF_HOUR)
 	{
@@ -152,6 +153,7 @@ class ScheduleDay
 	 * Override the default name for the day
 	 *
 	 * @param string $name The name of the day.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setName($name)
@@ -167,6 +169,7 @@ class ScheduleDay
 	 * Override the default abbreviation for the day
 	 *
 	 * @param string $abbreviation The abbreviated name of the day.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAbbrev($abbreviation)
@@ -186,6 +189,7 @@ class ScheduleDay
 	 * @param int $startTime The start time of the interval which is having its availability set.
 	 * @param int $endTime The end time of the interval which is having its availability set.
 	 * @param bool $available Whether the strech of time from the start time to the end time is available or not.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAvailability($startTime, $endTime, $available)
@@ -249,6 +253,7 @@ class ScheduleDay
 	 *
 	 * @param int $startTime The start time of the interval which is having its availability checked.
 	 * @param int $endTime The end time of the interval which is having its availability checked.
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function getAvailability($startTime, $endTime)

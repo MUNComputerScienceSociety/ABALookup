@@ -68,14 +68,6 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure that a user can register
-	 */
-	public function testUserCanRegister()
-	{
-		// TODO
-	}
-
-	/**
 	 * Ensure that a user can login
 	 *
 	 * @requires extension curl

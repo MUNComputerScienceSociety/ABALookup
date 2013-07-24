@@ -54,6 +54,7 @@ class ScheduleInterval
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
 	 * @param bool $available Whether the intervals is available (default: FALSE).
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($startTime, $endTime, $available = FALSE)
 	{
@@ -75,6 +76,7 @@ class ScheduleInterval
 	 * Set the availability of the interval
 	 *
 	 * @param bool $available Whether or not the interval is available.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAvailability($available)

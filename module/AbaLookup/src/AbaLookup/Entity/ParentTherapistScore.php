@@ -47,6 +47,11 @@ class ParentTherapistScore
 
 	/**
 	 * Constructor
+	 *
+	 * @param User $parent The parent for this pairing.
+	 * @param User $therapist The therapist for this pairing.
+	 * @param numeric $score The score.
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(User $parent, User $therapist, $score)
 	{
@@ -64,7 +69,8 @@ class ParentTherapistScore
 	/**
 	 * Set the match score for the parent and therapist pairing
 	 *
-	 * @param $score The score for the parent therapist pairing
+	 * @param $score The score for the parent therapist pairing.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setScore($score)

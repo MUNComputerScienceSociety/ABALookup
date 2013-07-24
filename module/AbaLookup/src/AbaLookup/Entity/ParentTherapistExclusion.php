@@ -47,6 +47,11 @@ class ParentTherapistExclusion
 
 	/**
 	 * Constructor
+	 *
+	 * @param User $parent The parent in this pairing.
+	 * @param User $therapist The therapist in this pairing.
+	 * @param bool $active Is this exclusion active?
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(User $parent, User $therapist, $active = TRUE)
 	{
@@ -65,6 +70,7 @@ class ParentTherapistExclusion
 	 * from their respective matches listings.
 	 *
 	 * @param bool $active Whether the exclusion is active.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setActive($active)

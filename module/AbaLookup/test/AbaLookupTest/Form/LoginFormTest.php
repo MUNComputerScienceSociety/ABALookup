@@ -21,7 +21,8 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 	{
 		return [
 			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
-			LoginForm::ELEMENT_NAME_PASSWORD => $password
+			LoginForm::ELEMENT_NAME_PASSWORD => $password,
+			LoginForm::ELEMENT_NAME_REMEMBER_ME => '0'
 		];
 	}
 

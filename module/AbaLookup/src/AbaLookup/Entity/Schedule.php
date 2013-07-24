@@ -81,6 +81,10 @@ class Schedule
 	 * Constructor
 	 *
 	 * Create a new Schedule and fill it with days.
+	 *
+	 * @param User $user The user to whom the schedule belongs.
+	 * @param bool $enabled Is the schedule active?
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(User $user, $enabled = TRUE)
 	{
@@ -109,6 +113,7 @@ class Schedule
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
 	 * @param bool $available Whether the specified interval is to be marked as available.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAvailability($day, $startTime, $endTime, $available)
@@ -202,6 +207,7 @@ class Schedule
 	 * @param int $day The day on which the time interval lies.
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
+	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
 	public function getAvailability($day, $startTime, $endTime)

@@ -38,6 +38,9 @@ class Location
 
 	/**
 	 * Constructor
+	 *
+	 * @param string $name The name of the location.
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($name)
 	{
@@ -52,6 +55,7 @@ class Location
 	 * Set the name of the location
 	 *
 	 * @param string $name The name of the location.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setName($name)
@@ -67,6 +71,7 @@ class Location
 	 * Set the enabled value of the location
 	 *
 	 * @param bool $enabled Whether this location is enabled.
+	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setEnabled($enabled)
