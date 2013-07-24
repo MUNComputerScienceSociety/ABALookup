@@ -16,7 +16,13 @@ abstract class AbaLookupController extends AbstractActionController
 	/**
 	 * The key used to store the user in session
 	 */
-	const SESSION_USER_KEY = 'user';
+	const SESSION_USER_NAMESPACE = 'user';
+	const SESSION_USER_ID_KEY    = 'id';
+
+	/**
+	 * 3 months in seconds
+	 */
+	const SECONDS_3_MONTHS = 7884000;
 
 	/**
 	 * @var Doctrine\ORM\EntityManager
@@ -109,10 +115,14 @@ abstract class AbaLookupController extends AbstractActionController
 	 *
 	 * @param User $user The user in session.
 	 */
-	protected function setUserSession(User $user)
+	protected function setUserSession(User $user, $remember = FALSE)
 	{
-		$session = new Container();
-		$session->offsetSet(self::SESSION_USER_KEY, $user->getId());
+		$session = new Container(self::SESSION_USER_NAMESPACE);
+		if (isset($remember) && $remember) {
+			$session->getManager()
+			        ->rememberMe(self::SECONDS_3_MONTHS);
+		}
+		$session->offsetSet(self::SESSION_USER_ID_KEY, $user->getId());
 	}
 
 	/**
@@ -120,8 +130,8 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function unsetUserSession()
 	{
-		$session = new Container();
-		$session->offsetUnset(self::SESSION_USER_KEY);
+		$session = new Container(self::SESSION_USER_NAMESPACE);
+		$session->offsetUnset(self::SESSION_USER_ID_KEY);
 	}
 
 	/**
@@ -131,8 +141,8 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function isUserInSession()
 	{
-		$session = new Container();
-		return $session->offsetExists(self::SESSION_USER_KEY);
+		$session = new Container(self::SESSION_USER_NAMESPACE);
+		return $session->offsetExists(self::SESSION_USER_ID_KEY);
 	}
 
 	/**
@@ -148,10 +158,10 @@ abstract class AbaLookupController extends AbstractActionController
 		if (!$this->isUserInSession()) {
 			return NULL;
 		}
-		$session = new Container();
+		$session = new Container(self::SESSION_USER_NAMESPACE);
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_USER_KEY)]);
+		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_USER_ID_KEY)]);
 	}
 
 	/**

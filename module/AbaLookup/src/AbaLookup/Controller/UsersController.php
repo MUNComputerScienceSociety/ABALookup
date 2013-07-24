@@ -121,10 +121,10 @@ class UsersController extends AbaLookupController
 			];
 		}
 
-		$this->setUserSession($user);
+		$this->setUserSession($user, $form->rememberMe());
 		return $this->redirect()->toRoute('users', [
 			'id' => $user->getId(),
-			'action' => 'profile',
+			'action' => 'profile'
 		]);
 	}
 

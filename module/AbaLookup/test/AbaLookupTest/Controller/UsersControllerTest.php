@@ -86,7 +86,8 @@ class UsersControllerTest extends BaseControllerTestCase
 
 		$data = [
 			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $user->getEmail(),
-			LoginForm::ELEMENT_NAME_PASSWORD => 'password'
+			LoginForm::ELEMENT_NAME_PASSWORD => 'password',
+			LoginForm::ELEMENT_NAME_REMEMBER_ME => '0'
 		];
 
 		$this->dispatch('/users/login', 'POST', $data);

@@ -21,6 +21,7 @@ class LoginForm extends Form
 	 */
 	const ELEMENT_NAME_EMAIL_ADDRESS = 'email-address';
 	const ELEMENT_NAME_PASSWORD      = 'password';
+	const ELEMENT_NAME_REMEMBER_ME   = 'remember-me';
 
 	/**
 	 * Error message if form is invalid
@@ -53,6 +54,15 @@ class LoginForm extends Form
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
 			],
+			'options' => ['label' => $label],
+		]);
+
+		// remember me
+		$label = 'Remember me';
+		$this->add([
+			'name' => self::ELEMENT_NAME_REMEMBER_ME,
+			'type' => 'checkbox',
+			'attributes' => ['id' => self::ELEMENT_NAME_REMEMBER_ME],
 			'options' => ['label' => $label],
 		]);
 
@@ -148,5 +158,15 @@ class LoginForm extends Form
 			return NULL;
 		}
 		return $this->data[self::ELEMENT_NAME_PASSWORD];
+	}
+
+	/**
+	 * Return whether to remember
+	 *
+	 * @return bool
+	 */
+	public function rememberMe()
+	{
+		return (bool) $this->data[self::ELEMENT_NAME_REMEMBER_ME];
 	}
 }
