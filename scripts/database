@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-
-if [ ! -e database ]; then
-	mkdir database
-fi
-
+rm -rf database
+mkdir database
 vendor/bin/doctrine-module orm:schema-tool:create
