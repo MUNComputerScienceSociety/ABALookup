@@ -52,7 +52,6 @@ class RegisterForm extends Form
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -64,7 +63,6 @@ class RegisterForm extends Form
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -76,7 +74,6 @@ class RegisterForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -88,7 +85,6 @@ class RegisterForm extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_CONFIRM_PASSWORD,
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -101,7 +97,6 @@ class RegisterForm extends Form
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
 				'type' => 'tel',
-				// 'placeholder' => $label,
 			],
 			'options' => ['label' => $label],
 		]);
@@ -189,7 +184,7 @@ class RegisterForm extends Form
 
 		if (!is_array($this->data)) {
 			$data = $this->extract();
-			if (!is_array($data)) {
+			if (!is_array($data) || !isset($this->data)) {
 				// no data has been set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
@@ -222,32 +217,58 @@ class RegisterForm extends Form
 		$confirmPassword = $this->data[self::ELEMENT_NAME_CONFIRM_PASSWORD];
 		$phone           = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
 		$userType        = $this->data[self::ELEMENT_NAME_USER_TYPE];
+		$sex             = $this->data[self::ELEMENT_NAME_SEX];
 
-		if (!$notEmpty->isValid($displayName)
-		    || !$alpha->isValid($displayName)
-		    || !$oneChar->isValid($displayName)
+		if (!isset($displayName) // has not been set or is NULL
+		    || !$notEmpty->isValid($displayName) // is empty
+		    || !$alpha->isValid($displayName) // contains invalid characters
+		    || !$oneChar->isValid($displayName) // is longer than one char
 		) {
-			// (is empty) OR (is not letter or space) OR (is less than on char)
+
+			// (has not been set OR is NULL) OR (is empty) OR (is not letter) OR (is less than one char)
 			$this->message = "You must enter a display name contining only characters.";
-		} elseif (!$emailAddress->isValid($email)) {
+
+		} elseif (!isset($email) // has ne been set or is NULL
+		          || !$emailAddress->isValid($email) // is not valid email
+		) {
+
 			$this->message = "You must provide a valid email address.";
-		} elseif (!$minPasswordChars->isValid($password)) {
+
+		} elseif (!isset($password) // has not been set or is NULL
+		          || !$minPasswordChars->isValid($password) // is too short
+		) {
+
 			$this->message = sprintf(
 				"Your password must be at least %d characters in length.",
 				User::MINIMUM_PASSWORD_LENGTH
 			);
+
 		} elseif ($password !== $confirmPassword) {
+
 			$this->message = "You must confirm your password.";
-		} elseif ($notEmpty->isValid($phone)
+
+		} elseif ($notEmpty->isValid($phone) // not empty
 		          && (!$allDigits->isValid($phone) || !$minPhoneChars->isValid($phone))
 		) {
-			// user entered a phone number and (it is not digits or not long enough)
+
+			// user entered a phone number and (it's not digits or not long enough)
 			$this->message = "The phone number provided is not valid.";
-		} elseif (!$notEmpty->isValid($userType)) {
+
+		} elseif (!isset($userType) // has not been set or is NULL
+		          || !$notEmpty->isValid($userType) // is empty
+		) {
+
 			$this->message = "You need to specify either parent or therapist";
+
+		} elseif (!isset($sex)) {
+
+			$this->message = "Gender cannot be empty.";
+
 		} else {
+
 			// all good
 			$this->isValid = TRUE;
+
 		}
 
 		$this->hasValidated = TRUE;
@@ -295,8 +316,9 @@ class RegisterForm extends Form
 		);
 		if ($phone) {
 			// the user entered a phone number
-			$user->setPhone($phone);
+			$user->setPhone((int) $phone);
 		}
+
 		return $user;
 	}
 }

@@ -2,7 +2,10 @@
 
 namespace AbaLookupTest\Controller;
 
-use AbaLookup\Entity\Schedule;
+use
+	AbaLookup\Entity\Schedule,
+	AbaLookup\Form\LoginForm
+;
 
 /**
  * Test the UsersController
@@ -26,19 +29,20 @@ class UsersControllerTest extends BaseControllerTestCase
 	public function usersActions()
 	{
 		return [
-			['/users/42/profile', 'users'],
-			['/users/42/schedule', 'users'],
-			['/users/42/matches', 'users'],
+			['/users/1/profile', 'users'],
+			['/users/1/schedule', 'users'],
+			['/users/1/matches', 'users'],
 		];
 	}
 
 	/**
-	 * Ensure the authentication actions for the UsersController can be accessed
+	 * Ensure the authtentication actions for UsersController
+	 * contains valid HTML
 	 *
 	 * @requires extension curl
 	 * @dataProvider authActions
 	 */
-	public function testAuthenticationActionsCanBeAccessedAndAreValid($url, $route)
+	public function testAuthActionsContainValidHtml($url, $route)
 	{
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
@@ -46,9 +50,7 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
-		// is the output valid?
-		$html = $this->getResponse()->getContent();
-		$this->assertValidHtml($html);
+		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 
 	/**
@@ -66,57 +68,54 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure that a user can login and access all actions
+	 * Ensure that a user can register
+	 */
+	public function testUserCanRegister()
+	{
+		// TODO
+	}
+
+	/**
+	 * Ensure that a user can login
 	 *
 	 * @requires extension curl
-	 * @dataProvider usersActions
 	 */
-	public function testCanLoginAndCanAccessUsersActionsAndAreValid($url, $route)
+	public function testUserCanLogin()
 	{
-		// the ID of the user attempting to login
-		$id = 42;
-		// the user about to login
-		$user = $this->getMockUser($id);
-		$schedule = new Schedule($user);
+		$user = $this->mockUser();
 
-		// mock the EntityManager
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(TRUE);
-		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
-		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
-
-		// POST data
 		$data = [
-			'email-address' => $user->getEmail(),
-			'password' => 'password',
+			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $user->getEmail(),
+			LoginForm::ELEMENT_NAME_PASSWORD => 'password'
 		];
 
-		// can users login?
 		$this->dispatch('/users/login', 'POST', $data);
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
-		$this->assertRedirectTo("/users/{$id}/profile");
+		$this->assertMatchedRouteName('auth');
+		$this->assertRedirectTo('/users' . '/' . $user->getId() . '/profile');
 
-		// reset
-		$this->resetRequest();
+		return $_SESSION;
+	}
 
-		// re-mock the EntityManager post reset
-		$serviceManager = $this->getApplicationServiceLocator();
-		$serviceManager->setAllowOverride(TRUE);
-		$mockEntityManager = $this->getMockEntityManager($user, $schedule);
-		$serviceManager->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
+	/**
+	 * Ensure that once logged in a user can access their pages
+	 *
+	 * @dataProvider usersActions
+	 * @depends testUserCanLogin
+	 */
+	public function testLoggedInUserCanAccessPages($url, $route, $session)
+	{
+		$_SESSION = $session;
+		$this->mockUser();
 
-		// can users access pages?
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('AbaLookup\Controller\Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
-
-		// is the output valid?
-		$html = $this->getResponse()->getContent();
-		$this->assertValidHtml($html);
+		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 }

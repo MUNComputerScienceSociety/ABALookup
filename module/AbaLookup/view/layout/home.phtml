@@ -18,7 +18,7 @@
 					</a>
 					<nav class="eight columns mobile-three text-right nav">
 						<?php if (isset($this->user)): ?>
-						<a href="<?php echo $this->user->getUrlBase() . 'profile'; ?>" class="button">
+						<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile'; ?>" class="button">
 							<?php echo $this->user->getDisplayName(); ?>
 						</a>
 						<a href="/users/logout">Logout</a>

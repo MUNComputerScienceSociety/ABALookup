@@ -14,9 +14,9 @@
 	<p><?php echo $this->user->getPhone() ? $this->user->getPhone() : "n/a"; ?></p>
 
 	<h3>Verification status</h3>
-	<p><?php echo ($this->user->getVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
+	<p><?php echo ($this->user->isVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
 
-	<?php if ($this->user->getTherapist()): ?>
+	<?php if ($this->user->isTherapist()): ?>
 
 	<h3>Sex</h3>
 	<p>
@@ -36,7 +36,7 @@
 
 	<?php endif; ?>
 
-	<a href="<?php echo $this->user->getUrlBase() . 'profile/edit' ?>" class="button">Edit your information</a>
+	<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile/edit' ?>" class="button">Edit your information</a>
 </div>
 <aside class="aside four columns">
 	<h3>Details</h3>

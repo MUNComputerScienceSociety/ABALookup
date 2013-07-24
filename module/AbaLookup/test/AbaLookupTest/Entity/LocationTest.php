@@ -34,6 +34,14 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
+	public function testExceptionIsThrownIfNullPassedToConstructor()
+	{
+		new Location(NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
 	public function testExceptionIsThrownIfNonStringPassedToConstructor()
 	{
 		new Location(FALSE);
@@ -64,19 +72,25 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonStringPassed()
+	public function testExceptionIsThrownIfSetNamePassedNull()
 	{
-		$name = 3;
-		$this->location->setName($name);
+		$this->location->setName(NULL);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfEmptyStringPassed()
+	public function testExceptionIsThrownIfSetNamePassedNonString()
 	{
-		$name = "";
-		$this->location->setName($name);
+		$this->location->setName(3);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetNamePassedEmptyString()
+	{
+		$this->location->setName("");
 	}
 
 	public function testGetEnabled()
@@ -87,20 +101,43 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @depends testGetEnabled
 	 */
-	public function testSetEnabled()
+	public function testEnable()
 	{
 		$this->location->enable();
 		$this->assertTrue($this->location->getEnabled());
+	}
+
+	/**
+	 * @depends testGetEnabled
+	 */
+	public function testDisable()
+	{
 		$this->location->disable();
 		$this->assertFalse($this->location->getEnabled());
+	}
+
+	/**
+	 * @depends testGetEnabled
+	 */
+	public function testSetEnabledTrue()
+	{
 		$this->location->setEnabled(TRUE);
 		$this->assertTrue($this->location->getEnabled());
 	}
 
 	/**
+	 * @depends testGetEnabled
+	 */
+	public function testSetEnabledFalse()
+	{
+		$this->location->setEnabled(FALSE);
+		$this->assertFalse($this->location->getEnabled());
+	}
+
+	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonBoolPassed()
+	public function testExceptionIsThrownIfSetEnabledPassedNonBool()
 	{
 		$this->location->setEnabled("");
 	}

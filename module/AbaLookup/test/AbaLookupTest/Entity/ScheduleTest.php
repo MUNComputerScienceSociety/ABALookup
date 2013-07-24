@@ -40,14 +40,140 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 		$this->schedule = new Schedule($this->user);
 	}
 
-	public function testGetWeek()
+	public function testSetAvailability()
+	{
+		$this->schedule->setAvailability(4, 0, 100, TRUE);
+		$this->assertTrue($this->schedule->getAvailability(4, 0, 100));
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfStartTimeGreaterThanEndTime()
+	{
+		$this->schedule->setAvailability(1, 3, 2, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNonIntDay()
+	{
+		$this->schedule->setAvailability('3', 0, 100, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNullDay()
+	{
+		$this->schedule->setAvailability(NULL, 1, 2, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNonIntStartTime()
+	{
+		$this->schedule->setAvailability(3, '0', 100, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNullStartTime()
+	{
+		$this->schedule->setAvailability(1, NULL, 3, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNonIntEndTime()
+	{
+		$this->schedule->setAvailability(1, 2, '3', TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNullEndTime()
+	{
+		$this->schedule->setAvailability(1, 2, NULL, TRUE);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNonBoolAvailability()
+	{
+		$this->schedule->setAvailability(2, 0, 30, '');
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetAvailabilityPassedNullAvailability()
+	{
+		$this->schedule->setAvailability(1, 2, 3, NULL);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntDay()
+	{
+		$this->schedule->getAvailability('1', 0, 30);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNullDay()
+	{
+		$this->schedule->getAvailability(NULL, 0, 30);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntStartTime()
+	{
+		$this->schedule->getAvailability(0, '0', 30);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNullStartTime()
+	{
+		$this->schedule->getAvailability(0, NULL, 30);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntEndTime()
+	{
+		$this->schedule->getAvailability(0, 0, '30');
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfGetAvailabilityPassedNullEndTime()
+	{
+		$this->schedule->getAvailability(0, 0, NULL);
+	}
+
+	public function testGetWeekReturnsArray()
 	{
 		$this->assertInternalType('array', $this->schedule->getWeek());
 	}
 
 	public function testGetNumberOfDays()
 	{
-		$this->assertEquals(7, $this->schedule->getNumberOfDays());
+		$this->assertEquals(count($this->schedule->getWeek()), $this->schedule->getNumberOfDays());
 	}
 
 	public function testGetUser()
@@ -63,21 +189,35 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @depends testGetEnabled
 	 */
-	public function testSetEnabled()
+	public function testEnable()
 	{
-		$this->schedule->disable();
-		$this->assertFalse($this->schedule->getEnabled());
 		$this->schedule->enable();
-		$this->assertTrue($this->schedule->getEnabled());
-		$this->schedule->disable()->enable();
 		$this->assertTrue($this->schedule->getEnabled());
 	}
 
-	public function testGetDays()
+	/**
+	 * @depends testGetEnabled
+	 */
+	public function testDisable()
+	{
+		$this->schedule->disable();
+		$this->assertFalse($this->schedule->getEnabled());
+	}
+
+	public function testGetDaysReturnsArrayCollection()
 	{
 		$days = $this->schedule->getDays();
 		$this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $days);
-		$this->assertCount(7, $days);
+	}
+
+	public function testGetDaysCount()
+	{
+		$this->assertCount(7, $this->schedule->getDays());
+	}
+
+	public function testGetDaysArrayContainsScheduleDays()
+	{
+		$days = $this->schedule->getDays();
 		foreach ($days as $day) {
 			$this->assertInstanceOf('AbaLookup\Entity\ScheduleDay', $day);
 		}

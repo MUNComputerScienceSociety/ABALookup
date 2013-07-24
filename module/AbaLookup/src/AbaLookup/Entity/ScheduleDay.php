@@ -102,17 +102,38 @@ class ScheduleDay
 	 * Constructor
 	 *
 	 * Create a new ScheduleDay and fill it with the appropriate intervals.
+	 *
+	 * @param int $day The integer representation of the day.
+	 * @param string $name The name of the day.
+	 * @param int $hours The number of hours in the day.
+	 * @param int $intervalMinutes The number of minutes in a interval on this day.
 	 */
 	public function __construct($day, $name, $hours = self::HOURS_DAY, $intervalMinutes = self::MINUTES_HALF_HOUR)
 	{
-		$this->day = $day;
-		$this->name = $name;
-		$this->abbreviation = substr($name, 0, 3);
-		$this->intervals = new ArrayCollection();
+		if (!isset($day, $name, $hours, $intervalMinutes)) {
+			throw new InvalidArgumentException();
+		}
+		if (!is_int($day)
+		    || !is_string($name)
+		    || !$name
+		    || !is_int($hours)
+		    || ($hours <= 0)
+		    || !is_int($intervalMinutes)
+		    || ($intervalMinutes <= 0)
+		) {
+			throw new InvalidArgumentException();
+		}
+
+		$this->day             = $day;
+		$this->name            = $name;
+		$this->abbreviation    = substr($name, 0, 3);
+		$this->intervals       = new ArrayCollection();
 		$this->intervalMinutes = $intervalMinutes; // number of minutes in an interval
+
 		// create and add intervals to the day
 		$numberOfIntervalsPerHr = self::MINUTES_HOUR / $intervalMinutes; // number of intervals each hr
 		$hoursMilitary = $hours * self::MILITARY_TIME;
+
 		for ($hour = 0; $hour < $hoursMilitary; $hour += self::MILITARY_TIME) {
 			for ($i = 0; $i < $numberOfIntervalsPerHr; $i++) {
 				// calculate start and end military times
@@ -130,10 +151,14 @@ class ScheduleDay
 	/**
 	 * Override the default name for the day
 	 *
-	 * @return ScheduleDay $this
+	 * @param string $name The name of the day.
+	 * @return $this
 	 */
 	public function setName($name)
 	{
+		if (!isset($name) || !is_string($name) || !$name) {
+			throw new InvalidArgumentException();
+		}
 		$this->name = $name;
 		return $this;
 	}
@@ -141,19 +166,37 @@ class ScheduleDay
 	/**
 	 * Override the default abbreviation for the day
 	 *
-	 * @return ScheduleDay $this
+	 * @param string $abbreviation The abbreviated name of the day.
+	 * @return $this
 	 */
 	public function setAbbrev($abbreviation)
 	{
+		if (!isset($abbreviation) || !is_string($abbreviation) || !$abbreviation) {
+			throw new InvalidArgumentException();
+		}
 		$this->abbreviation = $abbreviation;
 		return $this;
 	}
 
 	/**
-	 * Set the availability of the interval with the given start time
+	 * Set the availability of the interval with the given start and end times
+	 *
+	 * The start and end times given may span multiple intervals.
+	 *
+	 * @param int $startTime The start time of the interval which is having its availability set.
+	 * @param int $endTime The end time of the interval which is having its availability set.
+	 * @param bool $available Whether the strech of time from the start time to the end time is available or not.
+	 * @return $this
 	 */
-	public function setAvailability($startTime, $endTime, $available = TRUE)
+	public function setAvailability($startTime, $endTime, $available)
 	{
+		if (!isset($startTime, $endTime, $available)
+		    || !is_int($startTime)
+		    || !is_int($endTime)
+		    || !is_bool($available)
+		) {
+			throw new InvalidArgumentException();
+		}
 		if ($startTime >= $endTime) {
 			throw new InvalidArgumentException(sprintf(
 				"The start time cannot be greater than the end time"
@@ -164,10 +207,13 @@ class ScheduleDay
 				$interval->setAvailability($available);
 			}
 		}
+		return $this;
 	}
 
 	/**
 	 * Return the integer representation of the day
+	 *
+	 * @return int
 	 */
 	public function getDay()
 	{
@@ -176,6 +222,8 @@ class ScheduleDay
 
 	/**
 	 * Return the name of the day
+	 *
+	 * @return string
 	 */
 	public function getName()
 	{
@@ -184,6 +232,8 @@ class ScheduleDay
 
 	/**
 	 * Return the abbreviated name of the day
+	 *
+	 * @return string
 	 */
 	public function getAbbrev()
 	{
@@ -191,7 +241,37 @@ class ScheduleDay
 	}
 
 	/**
-	 * @return integer The number of minutes in an interval for the day
+	 * Return the availability of the interval with the given start and end times
+	 *
+	 * If the start and end times span multiple intervals, TRUE will be returned if
+	 * and only if all intervals in the time are marked as available. If the start
+	 * and end times corresponds to a single interval, the interval's availability is returned.
+	 *
+	 * @param int $startTime The start time of the interval which is having its availability checked.
+	 * @param int $endTime The end time of the interval which is having its availability checked.
+	 * @return bool
+	 */
+	public function getAvailability($startTime, $endTime)
+	{
+		if (!isset($startTime, $endTime) || !is_int($startTime) || !is_int($endTime)) {
+			throw new InvalidArgumentException();
+		}
+		if ($startTime >= $endTime) {
+			throw new InvalidArgumentException();
+		}
+		$available = TRUE;
+		foreach ($this->intervals as $interval) {
+			if ($interval->getStartTime() >= $startTime && $interval->getEndTime() <= $endTime) {
+				$available = $available && $interval->getAvailability();
+			}
+		}
+		return $available;
+	}
+
+	/**
+	 * Return the number of minutes in an interval for the day
+	 *
+	 * @return int
 	 */
 	public function getIntervalMinutes()
 	{
@@ -199,7 +279,9 @@ class ScheduleDay
 	}
 
 	/**
-	 * @return ArrayCollection The intervals for the day
+	 * Return the ArrayCollection of intervals for the day
+	 *
+	 * @return ArrayCollection
 	 */
 	public function getIntervals()
 	{

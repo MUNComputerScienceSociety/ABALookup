@@ -19,13 +19,14 @@ class HomeControllerTest extends BaseControllerTestCase
 			['/terms', 'terms'],
 		];
 	}
+
 	/**
-	 * Ensure the actions for the HomeController can be accessed
+	 * Ensure the actions for the HomeController can be accessed and contain valid HTML
 	 *
 	 * @requires extension curl
 	 * @dataProvider homeActions
 	 */
-	public function testActionsCanBeAccessedAndAreValid($url, $route)
+	public function testActionsCanBeAccessedAndContainValidHtml($url, $route)
 	{
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
@@ -33,8 +34,6 @@ class HomeControllerTest extends BaseControllerTestCase
 		$this->assertControllerName('AbaLookup\Controller\Home');
 		$this->assertControllerClass('HomeController');
 		$this->assertMatchedRouteName($route);
-		// is the output valid?
-		$html = $this->getResponse()->getContent();
-		$this->assertValidHtml($html);
+		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 }
