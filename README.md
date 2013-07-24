@@ -10,6 +10,8 @@ How to help
 
 To contribute to the project, you will need to have the requirements listed below available, as well as Git installed (and a GitHub account). Once you have the requirements, fork the project on GitHub, make some changes, and open a pull request. You can learn more about [forking] and [pull requests] from GitHub Help. As well, please open [issues] for any possible enhancements or bugs you find.
 
+For more details on contributing, please see the [the guidelines for contributing to this repository.](CONTRIBUTING.md)
+
 Requirements
 ------------
 
