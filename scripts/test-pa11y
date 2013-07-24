@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 [[ -x node_modules/.bin/pa11y ]] || npm install pa11y
 pa11y='node_modules/.bin/pa11y'
 
