@@ -3,4 +3,4 @@
 DIR="module/AbaLookup/test/"
 
 cd $DIR
-phpunit || exit 1
+../../../vendor/bin/phpunit || exit 1
