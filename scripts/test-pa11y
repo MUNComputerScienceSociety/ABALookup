@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -e
+
+[[ -x node_modules/.bin/pa11y ]] || npm install pa11y
+pa11y='node_modules/.bin/pa11y'
+
+localhost='localhost:7211'
+
+cd "public"
+php -S "$localhost" &> /dev/null &
+server=$!
+cd ..
+
+end () { kill $server; exit $1; }
+
+urls=(
+	"$localhost/"
+	"$localhost/privacy"
+	"$localhost/about"
+	"$localhost/terms"
+	"$localhost/users/register"
+	"$localhost/users/login"
+)
+
+# $pa11y --version
+for url in ${urls[@]}
+do
+	$pa11y --config .pa11y.json --standard WCAG2AAA "$url" || end $?
+done
+
+end 0

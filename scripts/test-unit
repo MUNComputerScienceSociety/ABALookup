@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+DIR="module/AbaLookup/test/"
+
+cd $DIR
+phpunit || exit 1

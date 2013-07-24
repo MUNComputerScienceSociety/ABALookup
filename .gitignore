@@ -1,6 +1,10 @@
 *.tmp
 *.bak
 
+# node.js modules
+node_modules
+
+# project specific dirs
 /database
 /vendor
 

@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-DIR="module/AbaLookup/test"
+set -e
 
-cd $DIR
-phpunit || exit 1
+scripts/test-unit
+scripts/test-pa11y

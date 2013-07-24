@@ -10,4 +10,4 @@ git:
 before_install:
     - composer install
 
-script: ./scripts/test
+script: scripts/test

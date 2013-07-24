@@ -1,0 +1,8 @@
+{
+	"ignore": [
+		"WCAG2AAA.Principle1.Guideline1_4.1_4_6.G17.Fail",
+		"WCAG2AAA.Principle1.Guideline1_4.1_4_6.G17.BgImage",
+		"WCAG2AAA.Principle1.Guideline1_4.1_4_6.G18.Fail",
+		"WCAG2AAA.Principle1.Guideline1_4.1_4_6.G18.BgImage"
+	]
+}

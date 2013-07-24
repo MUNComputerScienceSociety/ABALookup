@@ -106,13 +106,16 @@ class RegisterForm extends Form
 		$this->add([
 			'name' => self::ELEMENT_NAME_USER_TYPE,
 			'type' => 'select',
-			'attributes' => ['id' => self::ELEMENT_NAME_USER_TYPE],
 			'options' => [
 				'label' => $label,
 				'value_options' => [
 					0 => 'Parent',
 					1 => 'Therapist',
 				],
+			],
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_USER_TYPE,
+				'value' => 0
 			],
 		]);
 
@@ -121,7 +124,6 @@ class RegisterForm extends Form
 		$this->add([
 			'name' => self::ELEMENT_NAME_SEX,
 			'type' => 'select',
-			'attributes' => ['id' => self::ELEMENT_NAME_SEX],
 			'options' => [
 				'label' => $label,
 				'value_options' => [
@@ -129,6 +131,10 @@ class RegisterForm extends Form
 					'M' => 'Male',
 					'F' => 'Female',
 				],
+			],
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_SEX,
+				'value' => 0
 			],
 		]);
 
