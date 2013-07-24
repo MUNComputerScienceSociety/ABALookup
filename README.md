@@ -21,7 +21,7 @@ Requirements
 - PHPUnit
 - SQLite 3+
 
-(Dependencies, such as ZF2 and the Doctrine ORM, are installed via Composer - by running `composer install`.)
+(Dependencies, such as ZF2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer - by running `composer install`.)
 
 Downloading the project
 -----------------------
