@@ -28,13 +28,15 @@ Downloading the project
 
 If you already have a development environment ready to go with the above requirements available and are using *nix, you can issue the following commands at a shell:
 
-    cd <where you keep your projects>
-    git clone git@github.com:<your username>/<your fork name>.git
-    cd <clone location>
-    # composer self-update
-    composer install
-    # run the following to create the database
-    scripts/database
+```bash
+cd <where you keep your projects>
+git clone git@github.com:<your username>/<your fork name>.git
+cd <clone location>
+# composer self-update
+composer install
+# run the following to create the database
+scripts/database
+```
 
 If not, see [Preparing a development environment] in the Wiki.
 
@@ -52,20 +54,24 @@ Unit tests
 
 Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` folder and can be run with the following command:
 
-    # in top level dir of project
-    scripts/test
+```bash
+# from the top level directory
+scripts/test
+```
 
 Contributing to the Wiki
 ------------------------
 
 To help fill out the Wiki with information on setting up development environments, installing the app, app usage, the matching algorithm, or anything else that you think will be useful to have documented:
 
-    cd <where you keep your projects>
-    git clone git@github.com:<your username>/<your fork name>.wiki.git
-    cd <clone location>
-    # edit Markdown files
-    git push
-    # file an issue in the issue tracker requesting the changes be pulled in
+```bash
+cd <where you keep your projects>
+git clone git@github.com:<your username>/<your fork name>.wiki.git
+cd <clone location>
+# edit Markdown files
+git push
+# file an issue in the issue tracker requesting the changes be pulled in
+```
 
 See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow for forking gollum Wikis.
 
