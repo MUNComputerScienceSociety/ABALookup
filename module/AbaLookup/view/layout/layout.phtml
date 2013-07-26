@@ -4,11 +4,12 @@
 <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
-		<?php echo $this->headTitle('ABA Lookup'); ?>
-		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width">
 		<?php
-			echo $this->headLink()->appendStylesheet($this->basePath() . '/' . 'css/app.layout.css');
+			echo $this->headTitle();
+			echo $this->headMeta()
+			          ->appendName('viewport', 'width=device-width');
+			echo $this->headLink()
+			          ->appendStylesheet($this->basePath('css/app.layout.css'));
 		?>
 	</head>
 	<body>
