@@ -1922,7 +1922,7 @@ header .nav { padding: 40px 0; }
 header .button { margin: 0 15px; }
 @media only screen and (max-width: 767px) { header .button { margin: 30px 0 15px 0; } }
 
-.main { background: url(../imgs/texture.png); border-top: 1px solid black; box-shadow: -1px 0 50px black; color: #333333; padding: 50px; }
+.main { background: url(../imgs/texture.png); border-top: 1px solid black; box-shadow: -1px 0 50px black; color: #333333; padding: 50px 0; }
 .main h2:first-child { margin-top: 0; }
 
 .intro { color: white; line-height: 30px; padding: 90px 20px; text-align: right; text-shadow: 1px 1px 1px black; text-transform: uppercase; }
