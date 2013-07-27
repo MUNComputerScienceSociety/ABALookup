@@ -16,3 +16,5 @@ Reporting issues
 Issues can really be anything - bugs, enhancements, questions, tweaks, etc.
 
 Please file one ticket per issue. You can label issues with one of the predefined labels created -- label browser specific issues with one of the browser labels (Firefox, Chromium, MSIE, Webkit, etc).
+
+Before opening a new issue, check to see if the issue you going to open has already been filed -- comment on a closed issue to have it reopened.
