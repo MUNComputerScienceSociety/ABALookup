@@ -49,6 +49,16 @@ This project **tries** to adhere to the [Zend Framework Coding Standard for PHP]
 - All files should end with a trailing newline (LF)
 - PHP constants should be uppercased (including `TRUE`, `FALSE`, and `NULL`)
 
+Browser support
+---------------
+
+The site supports the following browsers:
+
+- Internet Explorer 8+
+- The newest version of Google Chrome, Safari, and Firefox
+
+Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers. If the site does not work in a browser not listed above, feel free to still open an issue, but do know that the possibility of it being fixed is slightly smaller.
+
 Unit tests
 ----------
 
