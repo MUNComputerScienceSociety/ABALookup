@@ -1,36 +1,48 @@
 <?php
 	$this->headTitle('Schedule - ' . $this->user->getDisplayName());
 
-	// reference to the schedule view helper
-	$schedule = $this->schedule();
+	// reference to the schedule view helper calls __invoke()
+	// which will render the HTML for the schedule and "cache" it
+	$scheduleHelper = $this->scheduleHelper();
 ?>
 <div class="twelve columns">
 	<h2>Complete your schedule</h2>
+	<?php
+		if (isset($this->error)) {
+			echo "<p>{$this->error}</p>";
+		}
+	?>
 	<div class="availability">
-		<h3>Add availability:</h3>
-		<form method="post" action="<?php echo '/users' . '/' . $this->user->getId() . '/schedule/add'; ?>">
-			<div class="row">
+		<h3>Availability:</h3>
+		<form method="post" action="<?php echo "/users/{$this->user->getId()}/schedule/edit"; ?>">
+			<p>
 				<label for="day">Day</label>
 				<select id="day" name="day">
-					<?php echo $schedule->getDayOptions(); ?>
+					<?php echo $scheduleHelper->getSelectOptionDays(); ?>
 				</select>
 				from
 				<label for="start-time">Start time</label>
 				<select id="start-time" name="start-time">
-					<?php echo $schedule->getTimeOptions(); ?>
+					<?php echo $scheduleHelper->getSelectOptionTimes(); ?>
 				</select>
 				to
 				<label for="end-time">End time</label>
 				<select id="end-time" name="end-time">
-					<?php echo $schedule->getTimeOptions(); ?>
+					<?php echo $scheduleHelper->getSelectOptionTimes(); ?>
 				</select>
-				<input type="submit" value="Add availability">
-			</div>
+			</p>
+			<p>
+				<input name="add-remove" type="radio" id="add-availability" value="add" checked>
+				<label for="add-availability">Add</label>
+				<input name="add-remove" type="radio" id="remove-availability" value="remove">
+				<label for="remove-availability">Remove</label>
+			</p>
+			<input type="submit" value="Update schedule">
 		</form>
 	</div>
 	<div class="row">
 		<div class="twelve columns table-wrapper">
-			<?php echo $schedule->html(); ?>
+			<?php echo $scheduleHelper->markup(); ?>
 		</div>
 	</div>
 </div>

@@ -7,6 +7,7 @@ use
 	AbaLookup\Form\LoginForm,
 	AbaLookup\Form\ProfileEditForm,
 	AbaLookup\Form\RegisterForm,
+	InvalidArgumentException,
 	Zend\View\Model\ViewModel
 ;
 
@@ -210,11 +211,24 @@ class UsersController extends AbaLookupController
 
 		// check for schedule availabilities
 		if ($this->request->isPost()) {
-			if ($this->params('mode') === 'add') {
+			if ($this->params('mode') === 'edit') {
 				// add the availability to the user's schedule
 				$params = array_values($this->request->getPost()->toArray());
-				list($day, $startTime, $endTime) = $params;
-				$schedule->setAvailability((int) $day, (int) $startTime, (int) $endTime, TRUE);
+				list($day, $startTime, $endTime, $addRemove) = $params;
+				try {
+					$schedule->setAvailability(
+						(int) $day,
+						(int) $startTime,
+						(int) $endTime,
+						($addRemove == 'add')
+					);
+				} catch (InvalidArgumentException $e) {
+					return [
+						'error' => $e->getMessage(),
+						'user' => $user,
+						'schedule' => $schedule
+					];
+				}
 				$this->save($schedule);
 				return $this->redirect()->toRoute('users', [
 					'id' => $user->getId(),

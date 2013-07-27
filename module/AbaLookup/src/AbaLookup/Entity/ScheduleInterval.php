@@ -62,10 +62,14 @@ class ScheduleInterval
 			throw new InvalidArgumentException();
 		}
 		if (!is_bool($available)) {
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException(sprintf(
+				'The availability must be a boolean value.'
+			));
 		}
 		if ($endTime <= $startTime) {
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException(sprintf(
+				'The end time must be be greater than the start time.'
+			));
 		}
 		$this->startTime = $startTime;
 		$this->endTime   = $endTime;
@@ -82,7 +86,9 @@ class ScheduleInterval
 	public function setAvailability($available)
 	{
 		if (!isset($available) || !is_bool($available)) {
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException(sprintf(
+				'The availability must be a boolean value.'
+			));
 		}
 		$this->available = $available;
 		return $this;
@@ -145,7 +151,7 @@ class ScheduleInterval
 	 *
 	 * @return bool
 	 */
-	public function getAvailability()
+	public function isAvailable()
 	{
 		return $this->available;
 	}

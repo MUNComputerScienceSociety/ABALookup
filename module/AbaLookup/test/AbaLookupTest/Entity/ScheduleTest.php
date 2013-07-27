@@ -43,7 +43,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	public function testSetAvailability()
 	{
 		$this->schedule->setAvailability(4, 0, 100, TRUE);
-		$this->assertTrue($this->schedule->getAvailability(4, 0, 100));
+		$this->assertTrue($this->schedule->isAvailable(4, 0, 100));
 	}
 
 	/**
@@ -121,49 +121,49 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntDay()
+	public function testExceptionIsThrownIfIsAvailablePassedNonIntDay()
 	{
-		$this->schedule->getAvailability('1', 0, 30);
+		$this->schedule->isAvailable('1', 0, 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNullDay()
+	public function testExceptionIsThrownIfIsAvailablePassedNullDay()
 	{
-		$this->schedule->getAvailability(NULL, 0, 30);
+		$this->schedule->isAvailable(NULL, 0, 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntStartTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNonIntStartTime()
 	{
-		$this->schedule->getAvailability(0, '0', 30);
+		$this->schedule->isAvailable(0, '0', 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNullStartTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNullStartTime()
 	{
-		$this->schedule->getAvailability(0, NULL, 30);
+		$this->schedule->isAvailable(0, NULL, 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntEndTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNonIntEndTime()
 	{
-		$this->schedule->getAvailability(0, 0, '30');
+		$this->schedule->isAvailable(0, 0, '30');
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNullEndTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNullEndTime()
 	{
-		$this->schedule->getAvailability(0, 0, NULL);
+		$this->schedule->isAvailable(0, 0, NULL);
 	}
 
 	public function testGetWeekReturnsArray()

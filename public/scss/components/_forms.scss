@@ -1,7 +1,6 @@
 form label {
 	@extend %semibold-type;
 	color: #6a6868;
-	// display: none;
 	display: block;
 	text-transform: uppercase;
 }
@@ -41,16 +40,15 @@ select[multiple] {
 	margin-bottom: 10px;
 	padding: 0;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-	// width: 400px;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
 	display: none;
 }
 input[type="checkbox"] + label,
 input[type="radio"] + label {
 	cursor: pointer;
 	display: inline-block;
-	margin-bottom: 10px;
 }
 input[type="checkbox"] + label:after {
 	background: url(../imgs/sprites.png) left top no-repeat;
@@ -72,7 +70,7 @@ input[type="radio"] + label:after {
 	cursor: pointer;
 	display: inline-block;
 	height: 25px;
-	margin: -1px 4px 0 0;
+	margin: -1px 5px 0 10px;
 	padding-left: 26px;
 	vertical-align: middle;
 	width: 0;

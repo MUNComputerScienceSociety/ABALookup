@@ -162,7 +162,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	public function testSetAvailability()
 	{
 		$this->scheduleDay->setAvailability(100, 300, TRUE);
-		$this->assertTrue($this->scheduleDay->getAvailability(100, 300));
+		$this->assertTrue($this->scheduleDay->isAvailable(100, 300));
 	}
 
 	/**
@@ -216,33 +216,33 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntStartTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNonIntStartTime()
 	{
-		$this->scheduleDay->getAvailability('0', 30);
+		$this->scheduleDay->isAvailable('0', 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNullStartTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNullStartTime()
 	{
-		$this->scheduleDay->getAvailability(NULL, 30);
+		$this->scheduleDay->isAvailable(NULL, 30);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNonIntEndTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNonIntEndTime()
 	{
-		$this->scheduleDay->getAvailability(0, '30');
+		$this->scheduleDay->isAvailable(0, '30');
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfGetAvailabilityPassedNullEndTime()
+	public function testExceptionIsThrownIfIsAvailablePassedNullEndTime()
 	{
-		$this->scheduleDay->getAvailability(0, NULL);
+		$this->scheduleDay->isAvailable(0, NULL);
 	}
 
 	public function testGetDay()

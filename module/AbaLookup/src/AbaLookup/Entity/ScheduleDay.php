@@ -203,7 +203,7 @@ class ScheduleDay
 		}
 		if ($startTime >= $endTime) {
 			throw new InvalidArgumentException(sprintf(
-				"The start time cannot be greater than the end time"
+				'The end time must be be greater than the start time.'
 			));
 		}
 		foreach ($this->intervals as $interval) {
@@ -256,18 +256,20 @@ class ScheduleDay
 	 * @throws InvalidArgumentException
 	 * @return bool
 	 */
-	public function getAvailability($startTime, $endTime)
+	public function isAvailable($startTime, $endTime)
 	{
 		if (!isset($startTime, $endTime) || !is_int($startTime) || !is_int($endTime)) {
 			throw new InvalidArgumentException();
 		}
 		if ($startTime >= $endTime) {
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException(sprintf(
+				'The end time must be be greater than the start time.'
+			));
 		}
 		$available = TRUE;
 		foreach ($this->intervals as $interval) {
 			if ($interval->getStartTime() >= $startTime && $interval->getEndTime() <= $endTime) {
-				$available = $available && $interval->getAvailability();
+				$available = $available && $interval->isAvailable();
 			}
 		}
 		return $available;

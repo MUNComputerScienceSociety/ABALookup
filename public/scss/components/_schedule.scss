@@ -15,15 +15,12 @@
 	}
 	select {
 		margin: 0 5px;
+		&:first-of-type {
+			margin-left: 0;
+		}
 		@media screen and (max-width: 767px) {
 			display: block;
 			margin: 10px 0;
-		}
-	}
-	input[type="submit"] {
-		margin-left: 10px;
-		@media screen and (max-width: 767px) {
-			margin-left: 0;
 		}
 	}
 }
@@ -85,14 +82,4 @@ td.available,
 td.selected,
 td[data-available] {
 	background: $turquoise;
-}
-.close {
-	color: #4d9085;
-	display: block;
-	font-size: 13pt;
-	margin-left: 104px;
-	margin-top: -31px;
-	position: absolute;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
-	text-transform: lowercase;
 }

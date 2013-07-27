@@ -26,7 +26,7 @@ class Module
 	{
 		return [
 			'invokables' => [
-				'schedule' => 'AbaLookup\View\Helper\Schedule',
+				'scheduleHelper' => 'AbaLookup\View\Helper\ScheduleHelper',
 			],
 		];
 	}

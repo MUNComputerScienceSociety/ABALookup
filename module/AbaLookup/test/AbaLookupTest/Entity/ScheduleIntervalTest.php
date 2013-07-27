@@ -99,36 +99,36 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($this->endTime, $this->scheduleInterval->getEndTime());
 	}
 
-	public function testGetAvailability()
+	public function testIsAvailable()
 	{
-		$this->assertFalse($this->scheduleInterval->getAvailability());
+		$this->assertFalse($this->scheduleInterval->isAvailable());
 	}
 
 	/**
-	 * @depends testGetAvailability
+	 * @depends testIsAvailable
 	 */
 	public function testSetAvailable()
 	{
 		$this->scheduleInterval->setAvailable();
-		$this->assertTrue($this->scheduleInterval->getAvailability());
+		$this->assertTrue($this->scheduleInterval->isAvailable());
 	}
 
 	/**
-	 * @depends testGetAvailability
+	 * @depends testIsAvailable
 	 */
 	public function testSetUnavailable()
 	{
 		$this->scheduleInterval->setUnavailable();
-		$this->assertFalse($this->scheduleInterval->getAvailability());
+		$this->assertFalse($this->scheduleInterval->isAvailable());
 	}
 
 	/**
-	 * @depends testGetAvailability
+	 * @depends testIsAvailable
 	 */
 	public function testSetAvailability()
 	{
 		$this->scheduleInterval->setAvailability(TRUE);
-		$this->assertTrue($this->scheduleInterval->getAvailability());
+		$this->assertTrue($this->scheduleInterval->isAvailable());
 	}
 
 	/**
