@@ -69,6 +69,18 @@ Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` fold
 scripts/test
 ```
 
+Accessibility tests
+-------------------
+
+Accessibility tests for the site are use the [pa11y](https://github.com/nature/pa11y) node.js module, and can be run with the following command:
+
+```bash
+# from the top level directory
+scripts/test-pa11y
+```
+
+Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([node.js](http://nodejs.org), [npm](https://npmjs.org), [PhantomJS](http://phantomjs.org), etc). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
+
 Contributing to the Wiki
 ------------------------
 
