@@ -3,3 +3,4 @@
 rm -rf database
 mkdir database
 vendor/bin/doctrine-module orm:schema-tool:create
+scripts/test-user
