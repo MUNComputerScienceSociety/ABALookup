@@ -33,6 +33,11 @@
 				<?php echo $this->content; ?>
 			</div>
 		</div>
-		<?php echo $this->footer; ?>
+		<?php
+			echo $this->footer;
+			echo $this->script(['vendor', 'jquery.min.js']);
+			echo $this->script(['vendor', 'hsp.jquery.min.js']);
+			echo $this->script(['app.min.js']);
+		?>
 	</body>
 </html>

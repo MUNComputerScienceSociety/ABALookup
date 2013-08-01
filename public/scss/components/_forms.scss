@@ -8,8 +8,8 @@ input[type="email"],
 input[type="password"],
 input[type="tel"],
 input[type="text"] {
-	background: #e1e9e8;
-	border: 1px solid #96b2ae;
+	background: $white-darker;
+	border: 1px solid $grey-lightest;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
 	font-family: $typeface;
@@ -82,4 +82,16 @@ input[type="radio"]:checked + label:after {
 input[type="submit"] {
 	@extend .button;
 	margin: 0;
+}
+.hsp-toggle {
+	@extend %small-type;
+	color: $grey-dark;
+	cursor: pointer;
+	font-weight: bold;
+	padding: 10px;
+	text-transform: uppercase;
+	// because default input elements have a z-index so that
+	// their borders will overlap on focus, we'll give ours
+	// a higher one to make sure they're always visible
+	z-index: 3;
 }

@@ -1887,7 +1887,7 @@ ul.icons li [class^="icon-"], ul.icons li [class*=" icon-"] { width: .75em; }
 
 @font-face { font-family: "Open Sans Condensed"; src: url("fonts/open-sans-condensed/open-sans-condensed-bold.eot"); src: url("fonts/open-sans-condensed/open-sans-condensed-bold.eot?#iefix") format("embedded-opentype"), url("fonts/open-sans-condensed/open-sans-condensed-bold.woff") format("woff"), url("fonts/open-sans-condensed/open-sans-condensed-bold.ttf") format("truetype"), url("fonts/open-sans-condensed/open-sans-condensed-bold.svg#OpenSansCondensedBold") format("svg"); font-weight: 700; font-style: normal; }
 
-footer .center a, footer .about p { font-family: "Open Sans", sans-serif; font-size: 10pt; font-weight: 200; }
+.hsp-toggle, footer .center a, footer .about p { font-family: "Open Sans", sans-serif; font-size: 10pt; font-weight: 200; }
 
 ol, li, p { font-family: "Open Sans", sans-serif; font-size: 12pt; font-weight: 200; }
 
@@ -1952,7 +1952,7 @@ header .icon { background: rgba(255, 255, 255, 0.3); display: inline-block; marg
 
 form label { color: #6a6868; display: block; text-transform: uppercase; }
 
-input[type="email"], input[type="password"], input[type="tel"], input[type="text"] { background: #e1e9e8; border: 1px solid #96b2ae; box-shadow: inset 0 0 2px white; color: #555555; font-family: "Open Sans", sans-serif; font-size: 12pt; margin: 0 0 10px 0; padding: 8px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8); }
+input[type="email"], input[type="password"], input[type="tel"], input[type="text"] { background: #fafafa; border: 1px solid #cecece; box-shadow: inset 0 0 2px white; color: #555555; font-family: "Open Sans", sans-serif; font-size: 12pt; margin: 0 0 10px 0; padding: 8px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8); }
 
 select { background-: #e1e9e8; border: 1px solid #96b2ae; box-shadow: inset 0 0 2px white; color: #555555; font-family: "Open Sans", sans-serif; font-size: 12pt; margin: 0 0 10px 0; padding: 8px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5); width: auto; }
 
@@ -1971,6 +1971,8 @@ input[type="radio"] + label:after { background: url(../imgs/sprites.png) -60px t
 input[type="radio"]:checked + label:after { content: ""; background: url(../imgs/sprites.png) -87px top no-repeat; }
 
 input[type="submit"] { margin: 0; }
+
+.hsp-toggle { color: #555555; cursor: pointer; font-weight: bold; padding: 10px; text-transform: uppercase; z-index: 3; }
 
 .availability { background: rgba(205, 205, 205, 0.3); font-family: "Open Sans", sans-serif; font-size: 14pt; margin: 20px 0 0; padding: 20px; }
 .availability h3 { margin: 0 0 20px; }
