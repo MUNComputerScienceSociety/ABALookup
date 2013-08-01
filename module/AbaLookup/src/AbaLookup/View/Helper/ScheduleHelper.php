@@ -12,138 +12,164 @@ use
 class ScheduleHelper extends AbstractHelper
 {
 	/**
-	 * The HTML select options for the days of the week and times of the days
+	 * @var Doctrine\Common\Collections\ArrayCollection
+	 *
+	 * The collection of days in a week
 	 */
-	protected $selectOptionDays;
-	protected $selectOptionTimes;
+	protected $days;
 
 	/**
-	 * The HTML representing the schedule
+	 * @var Schedule
+	 *
+	 * The schedule object to render
 	 */
-	protected $markup = NULL;
+	protected $schedule;
 
 	/**
-	 * Generate the HTML for the schedule and "cache" it
+	 * Magic method called when invoked
 	 *
-	 * Renders the schedule.
-	 *
-	 * @param Schedule $schedule The schedule to render.
+	 * @return $this
 	 */
-	protected function render(Schedule $schedule)
+	public function __invoke(Schedule $schedule)
 	{
-		// if the schedule has already been rendered
-		if (isset($this->markup)) {
-			return $this->markup;
-		}
-
-		// the days in the schedule
-		$days = $schedule->getDays()->toArray();
-		$i = 0;
-		// start with the headers for the leftmost
-		// column which holds the time intervals
-		$tableHeaders = "<th></th>";
-		// array of the table rows for each interval
-		$tableRows = [];
-
-		foreach ($days as $day) {
-
-			// the form option for the day
-			$value = $day->getDay();
-			$name = $day->getName();
-			$abbrev = $day->getAbbrev();
-			$this->selectOptionDays .= "<option value=\"{$value}\">{$name}</option>";
-			// the header for the day
-			$tableHeaders .= "<th>{$abbrev}</th>";
-			// all the intervals
-			$intervals = $day->getIntervals()->toArray();
-			$intervalsCount = count($intervals);
-			$j = 0;
-
-			foreach ($intervals as $interval) {
-				$military = $interval->getStartTime();
-				// only generate time options once
-				// also only populate the leftmost column once
-				if ($i == 0) {
-					// pad the military time with zeros on the left and format for humans
-					$time = ltrim((new DateTime(str_pad($military, 4, '0', STR_PAD_LEFT)))->format('h:i A'), "0");
-					$this->selectOptionTimes .= "<option value=\"{$military}\">{$time}</option>";
-					$tableRows[$j] = "<td>{$time}</td>";
-				}
-				// add a cell to the appropriate row in the table, and wrap
-				// around once all the days (columns) have a cell in this row
-				if ($interval->isAvailable()) {
-					$tableRows[$j % $intervalsCount] .= '<td data-available></td>';
-				} else {
-					$tableRows[$j % $intervalsCount] .= '<td></td>';
-				}
-				$j++;
-			}
-
-			// increase the count to signify that
-			// the first column has been generated
-			// and only add cells when ($i > 0)
-			$i++;
-		}
-
-		// wrap each row in the table with HTML
-		$renderRow = function ($html, $row) {
-			return $html . "<tr>{$row}</tr>";
-		};
-		$tableRows = array_reduce($tableRows, $renderRow);
-		// generate the HTML
-		$thead = "<thead><tr>{$tableHeaders}</tr></thead>";
-		$tbody = "<tbody>{$tableRows}</tbody>";
-		$this->markup = "<table>{$thead}{$tbody}</table>";
-	}
-
-	/**
-	 * Called when invoking the view helper
-	 *
-	 * Passes the view attached to schedule to the {@code render}
-	 * method.
-	 *
-	 * @throws InvalidArgumentException
-	 */
-	public function __invoke()
-	{
-		$view = $this->getView();
-		if (isset($view->schedule) && $view->schedule instanceof Schedule) {
-			$this->render($view->schedule);
-		} else {
-			throw new InvalidArgumentException(sprintf(
-				'No schedule attached to the view.'
-			));
-		}
+		$this->schedule = $schedule;
+		$this->days = $schedule->getDays();
+		$this->intervals = $this->days->first()->getIntervals();
 		return $this;
 	}
 
 	/**
-	 * Return the HTML representing the schedule
+	 * Return the days of the week as options
+	 *
+	 * Return a string of HTML in which each of the days of the week
+	 * are represented by option tags (<option>).
 	 *
 	 * @return string
+	 * @throws InvalidArgumnentException
 	 */
-	public function markup()
+	public function getSelectOptionsForDays($index = 0)
 	{
-		return $this->markup;
+		if (!isset($index) || !is_int($index)) {
+			throw new InvalidArgumentException(sprintf(
+				'Selected index must be an integer.'
+			));
+		}
+		$markup = '';
+		$i = 0;
+		foreach ($this->days as $day) {
+			$markup .= sprintf(
+				'<option value="%d"%s>%s</option>',
+				$day->getDay(),
+				($i === $index) ? ' selected' : '',
+				$day->getName()
+			);
+			++$i;
+		}
+		return $markup;
 	}
 
 	/**
-	 * Return the select options for the times of the days
+	 * Return the daily intervals as options
 	 *
+	 * Return a string of HTML in which each possible daily interval
+	 * is represented by an option tag (<option>).
+	 *
+	 * @param int $index The selected option index.
 	 * @return string
+	 * @throws InvalidArgumnentException
 	 */
-	public function getSelectOptionTimes()
+	public function getSelectOptionsForTimes($index = 0)
 	{
-		return $this->selectOptionTimes;
+		if (!isset($index) || !is_int($index)) {
+			throw new InvalidArgumentException(sprintf(
+				'Selected index must be an integer.'
+			));
+		}
+		$markup = '';
+		$i = 0;
+		foreach ($this->intervals as $interval) {
+			$markup .= sprintf(
+				'<option value="%d"%s>%s</option>',
+				$interval->getStartTime(),
+				($i === $index) ? ' selected' : '',
+				$this->formatMilitaryTime($interval->getStartTime())
+			);
+			++$i;
+		}
+		return $markup;
 	}
 
 	/**
-	 * Return the select options for the days of the week
+	 * Returns the HTML representing the schedule.
 	 *
+	 * @param array $class The class names to apply to the schedule.
 	 * @return string
 	 */
-	public function getSelectOptionDays()
+	public function renderSchedule(array $class = array())
 	{
-		return $this->selectOptionDays;
+		$numberOfDays = $this->days->count();
+		$numberOfIntervals = $this->intervals->count() + 1;
+		$rows = [];
+		for ($i = 0; $i < $numberOfIntervals; ++$i) {
+			$data = '';
+			for ($j = 0; $j < $numberOfDays; ++$j) {
+				$day = $this->days->get($j);
+				$interval = $day->getIntervals()->get($i - 1);
+				if ($j === 0) {
+					if ($i === 0) {
+						// top left corner
+						$data .= '<td></td>';
+					} else {
+						// leftmost column
+						$data .= sprintf(
+							'<td>%s</td>',
+							$this->formatMilitaryTime($interval->getStartTime())
+						);
+					}
+				}
+				if ($i === 0) {
+					// headers row
+					$data .= sprintf(
+						'<th>%s</th>',
+						$day->getAbbrev()
+					);
+				} else {
+					// body rows
+					$data .= sprintf(
+						'<td%s></td>',
+						$interval->isAvailable() ? ' data-available="true"' : ''
+					);
+				}
+			}
+			$rows[] = sprintf('<tr>%s</tr>', $data);
+		}
+		if (count($class) > 0) {
+			$class = sprintf(' class="%s"', implode(' ', $class));
+		} else {
+			$class = '';
+		}
+		return sprintf(
+			'<table%s><thead>%s</thead><tbody>%s</tbody></table>',
+			$class,
+			$rows[0],
+			implode('', array_slice($rows, 1))
+		);
+	}
+
+	/**
+	 * Format and return the given military time value
+	 *
+	 * @param int $military The time in military format.
+	 * @return string
+	 * @throws InvalidArgumnentException
+	 */
+	protected function formatMilitaryTime($military)
+	{
+		if (!isset($military)) {
+			throw new InvalidArgumentException();
+		}
+		$padded = str_pad($military, 4, '0', STR_PAD_LEFT);
+		$dateTime = new DateTime($padded);
+		return ltrim($dateTime->format('h:i A'), "0");
 	}
 }
