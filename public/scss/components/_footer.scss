@@ -85,9 +85,8 @@ footer {
 			width: 192px;
 		}
 		p {
-			@extend %legal-type;
-			margin-bottom: 0;
-			margin-top: 5px;
+			@extend %small-type;
+			margin: 2px 0 0 0;
 		}
 	}
 }

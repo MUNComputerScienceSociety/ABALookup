@@ -19,14 +19,6 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
-	 * Display the about page
-	 */
-	public function aboutAction()
-	{
-		return $this->indexAction();
-	}
-
-	/**
 	 * Display the privacy policy
 	 */
 	public function privacyAction()
@@ -35,9 +27,33 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
+	 * Display the about page
+	 */
+	public function aboutAction()
+	{
+		return $this->indexAction();
+	}
+
+	/**
 	 * Display the terms of service
 	 */
 	public function termsAction()
+	{
+		return $this->indexAction();
+	}
+
+	/**
+	 * Display information about the sponsors
+	 */
+	public function sponsorsAction()
+	{
+		return $this->indexAction();
+	}
+
+	/**
+	 * Display site colophon
+	 */
+	public function colophonAction()
 	{
 		return $this->indexAction();
 	}

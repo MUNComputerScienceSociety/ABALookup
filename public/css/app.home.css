@@ -1887,9 +1887,7 @@ ul.icons li [class^="icon-"], ul.icons li [class*=" icon-"] { width: .75em; }
 
 @font-face { font-family: "Open Sans Condensed"; src: url("fonts/open-sans-condensed/open-sans-condensed-bold.eot"); src: url("fonts/open-sans-condensed/open-sans-condensed-bold.eot?#iefix") format("embedded-opentype"), url("fonts/open-sans-condensed/open-sans-condensed-bold.woff") format("woff"), url("fonts/open-sans-condensed/open-sans-condensed-bold.ttf") format("truetype"), url("fonts/open-sans-condensed/open-sans-condensed-bold.svg#OpenSansCondensedBold") format("svg"); font-weight: 700; font-style: normal; }
 
-footer .about p { font-family: "Open Sans", sans-serif; font-size: 8pt; font-weight: 200; }
-
-footer .center a { font-family: "Open Sans", sans-serif; font-size: 10pt; font-weight: 200; }
+footer .center a, footer .about p { font-family: "Open Sans", sans-serif; font-size: 10pt; font-weight: 200; }
 
 ol, li, p { font-family: "Open Sans", sans-serif; font-size: 12pt; font-weight: 200; }
 
@@ -1942,4 +1940,4 @@ footer .center a:before { border-bottom: 10px solid transparent; border-left: 10
 footer .about { background: #46453f; box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5); min-height: 153px; padding: 10px; }
 @media only screen and (max-width: 767px) { footer .about { min-height: 0; } }
 footer .about h4 { background: url(../imgs/footer-logo.png) no-repeat; height: 0; margin: 0 auto; overflow: hidden; padding: 71px 0 0 0; text-align: center; width: 192px; }
-footer .about p { margin-bottom: 0; margin-top: 5px; }
+footer .about p { margin: 2px 0 0 0; }

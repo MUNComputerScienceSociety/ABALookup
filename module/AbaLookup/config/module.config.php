@@ -6,7 +6,9 @@ return [
 			'aba_lookup_annotation_driver' => [
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
-				'paths' => [realpath(__DIR__ . '/../src/AbaLookup/Entity/')],
+				'paths' => [
+					realpath(__DIR__ . '/../src/AbaLookup/Entity/'),
+				],
 			],
 			'orm_default' => [
 				'drivers' => [
@@ -24,94 +26,111 @@ return [
 	'router' => [
 		'routes' => [
 			'home' => [
-				'type'    => 'Literal',
+				'type' => 'Literal',
 				'options' => [
-					'route'    => '/',
+					'route' => '/',
 					'defaults' => [
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'index',
-					],
-				],
-			],
-			'about' => [
-				'type'    => 'Literal',
-				'options' => [
-					'route'    => '/about',
-					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'about',
+						'action' => 'index',
 					],
 				],
 			],
 			'privacy' => [
-				'type'    => 'Literal',
+				'type' => 'Literal',
 				'options' => [
-					'route'    => '/privacy',
+					'route' => '/privacy',
 					'defaults' => [
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'privacy',
+						'action' => 'privacy',
 					],
 				],
 			],
 			'terms' => [
-				'type'    => 'Literal',
+				'type' => 'Literal',
 				'options' => [
-					'route'    => '/terms',
+					'route' => '/terms',
 					'defaults' => [
 						'controller' => 'AbaLookup\Controller\Home',
-						'action'     => 'terms',
+						'action' => 'terms',
+					],
+				],
+			],
+			'about' => [
+				'type' => 'Literal',
+				'options' => [
+					'route' => '/about',
+					'defaults' => [
+						'controller' => 'AbaLookup\Controller\Home',
+						'action' => 'about',
+					],
+				],
+				'may_terminate' => TRUE,
+				'child_routes' => [
+					'sponsors' => [
+						'type' => 'Literal',
+						'options' => [
+							'route' => '/sponsors',
+							'defaults' => [
+								'action' => 'sponsors',
+							],
+						],
+					],
+					'colophon' => [
+						'type' => 'Literal',
+						'options' => [
+							'route' => '/colophon',
+							'defaults' => [
+								'action' => 'colophon',
+							],
+						],
 					],
 				],
 			],
 			'users' => [
-				'type'    => 'Segment',
+				'type' => 'Segment',
 				'options' => [
-					'route'       => '/users/:id/:action[/:mode]',
+					'route' => '/users/:id/:action[/:mode]',
 					'constraints' => [
-						'id'     => '[0-9]*',
-						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id' => '[0-9]*',
+						'action' => '[a-zA-Z0-9_-]+',
 					],
 					'defaults' => [
 						'controller' => 'AbaLookup\Controller\Users',
-						'action'     => 'profile',
+						'action' => 'profile',
 					],
 				],
 			],
 			'auth' => [
-				'type'    => 'Segment',
+				'type' => 'Segment',
 				'options' => [
-					'route'       => '/users/:action',
+					'route' => '/users/:action',
 					'constraints' => [
 						'action' => '(login)|(logout)|(register)',
 					],
 					'defaults' => [
 						'controller' => 'AbaLookup\Controller\Users',
-						'action'     => 'login',
+						'action' => 'login',
 					],
 				],
 			],
 		],
 	],
 	'view_manager' => [
+		'display_exceptions' => TRUE,
 		'display_not_found_reason' => TRUE,
-		'display_exceptions'       => TRUE,
-		'doctype'                  => 'HTML5',
-		'not_found_template'       => 'error/404',
-		'exception_template'       => 'error/index',
+		'doctype' => 'HTML5',
+		'exception_template' => 'error/index',
+		'not_found_template' => 'error/404',
 		'template_map' => [
-			// layouts
-			'layout/layout'     => __DIR__ . '/../view/layout/layout.phtml',
-			'layout/home'       => __DIR__ . '/../view/layout/home.phtml',
-			'layout/logged-out' => __DIR__ . '/../view/layout/logged-out.phtml',
-			// templates
-			'users/profile-edit' => __DIR__ . '/../view/aba-lookup/users/profile-edit.phtml',
-			'widget/footer'      => __DIR__ . '/../view/aba-lookup/widget/footer.phtml',
-			// error pages
-			'error/404'   => __DIR__ . '/../view/error/404.phtml',
-			'error/index' => __DIR__ . '/../view/error/index.phtml',
+			'error/404' => realpath(__DIR__ . '/../view/error/404.phtml'),
+			'error/index' => realpath(__DIR__ . '/../view/error/index.phtml'),
+			'layout/home' => realpath(__DIR__ . '/../view/layout/home.phtml'),
+			'layout/layout' => realpath(__DIR__ . '/../view/layout/layout.phtml'),
+			'users/profile-edit' => realpath(__DIR__ . '/../view/aba-lookup/users/profile-edit.phtml'),
+			'widget/footer' => realpath(__DIR__ . '/../view/aba-lookup/widget/footer.phtml'),
 		],
 		'template_path_stack' => [
-			__DIR__ . '/../view',
+			realpath(__DIR__ . '/../view'),
 		],
 	],
 ];
