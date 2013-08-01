@@ -36,7 +36,7 @@ curl --silent \
      --location \
      --cookie-jar $cookies \
      --cookie $cookies \
-     --data "email-address=jan%40foo.com&password=password&remember-me=0&login=Login" \
+     --data "email-address=jan%40foo.com&password=password&remember-me=0" \
      "$jeeves/users/login" \
      > "$abyss"
 
