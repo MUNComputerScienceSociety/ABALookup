@@ -18,7 +18,7 @@
 	font-size: 10pt;
 	margin: 20px 0;
 	padding-top: 20px;
-	h5 {
+	h3 {
 		font-family: $typeface;
 		font-size: 20pt;
 		font-weight: $bold;
@@ -50,6 +50,6 @@
 	}
 	.email {
 		@extend %large-normal-italic-type;
-		margin-bottom: 20px;
+		margin: 10px 0;
 	}
 }

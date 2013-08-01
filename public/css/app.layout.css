@@ -2008,12 +2008,12 @@ td.available, td.selected, td[data-available] { background: #44beae; }
 .conduct { background: rgba(205, 205, 205, 0.4); color: #333333; display: inline-block; font-family: "Open Sans", sans-serif; font-size: 12pt; font-weight: 700; padding: 10px; text-shadow: 1px 1px 0 white; text-transform: uppercase; }
 
 .match { border-top: 2px solid #cecece; font-family: "Open Sans", sans-serif; font-size: 10pt; margin: 20px 0; padding-top: 20px; }
-.match h5 { font-family: "Open Sans", sans-serif; font-size: 20pt; font-weight: 700; margin: 0; }
+.match h3 { font-family: "Open Sans", sans-serif; font-size: 20pt; font-weight: 700; margin: 0; }
 .match ul { list-style-type: none; margin: 0; padding: 0; }
 .match ul li { background: #44beae; color: white; display: inline-block; font: normal 9pt "Open Sans", sans-serif; margin-right: 5px; padding: 5px 15px; text-transform: uppercase; }
 @media screen and (max-width: 549px) { .match ul li { display: block; margin: 5px 0; } }
 .match .other { color: #555555; font-family: "Open Sans", sans-serif; margin-bottom: 20px; text-transform: uppercase; }
-.match .email { margin-bottom: 20px; }
+.match .email { margin: 10px 0; }
 
 footer { background: #2d2c28; border-bottom: 1px solid black; border-top: 1px solid black; box-shadow: 0 0 50px rgba(0, 0, 0, 0.2); color: white; padding: 30px 0; text-align: left; }
 footer h3 { color: white; margin: 10px 0; padding: 0; text-shadow: 1px 1px 0 black; text-transform: uppercase; }
