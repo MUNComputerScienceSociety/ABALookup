@@ -12,10 +12,11 @@ z=$!
 cd ..
 
 date=$(date)
-folder=$(md5 -qs "$date")
+folder=$(echo -n "$date" | openssl md5)
 tmp=".tmp"
 www="$tmp/$folder"
-[[ -d "$www" ]] || mkdir -p "$www"
+[[ -d "$tmp" ]] && echo "$tmp exists" || mkdir "$tmp"
+[[ -d "$www" ]] && echo "$www exists" || mkdir "$www"
 cd "$www"
 php -S "$alfred" &> "$abyss" &
 s=$!

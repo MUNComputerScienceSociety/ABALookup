@@ -2,5 +2,5 @@
 
 set -e
 
-scripts/test-unit
+scripts/test-phpunit
 scripts/test-pa11y
