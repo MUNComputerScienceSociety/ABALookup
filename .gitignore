@@ -1,6 +1,14 @@
 *.tmp
 *.bak
 
+# Minified JS files
+# Sources go into 'public/js/src'
+public/js/*.js
+
+# CSS files
+# Only have Sass files in the project
+public/css/*.css
+
 # node.js modules
 node_modules
 
