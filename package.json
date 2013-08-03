@@ -10,6 +10,7 @@
 		"grunt-contrib-jshint": "~0.6.2",
 		"grunt-contrib-sass": "~0.4.1",
 		"grunt-contrib-uglify": "~0.2.2",
+		"grunt-modernizr": "~0.3.0",
 		"matchdep": "~0.1.2",
 		"pa11y": "~1.2.0"
 	}
