@@ -18,27 +18,58 @@ Requirements
 - Apache HTTP Server
 - PHP 5.4+ (with PDO, cURL, and the SQLite driver)
 - Composer
+- node.js
 - PHPUnit
 - SQLite 3+
 
-(Dependencies, such as ZF2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer - by running `composer install`.)
+(Dependencies, such as ZF2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer - by running `composer install`. Grunt and its dependencies/tasks are installed by running `npm install`.)
 
 Downloading the project
 -----------------------
 
-If you already have a development environment ready to go with the above requirements available and are using *nix, you can issue the following commands at a shell:
+If you already have a development environment ready to go with the above requirements available and are using *nix, you can issue the following commands:
 
-```bash
-cd <where you keep your projects>
-git clone git@github.com:<your username>/<your fork name>.git
-cd <clone location>
-# composer self-update
-composer install
-# run the following to create the database
-scripts/database
-```
+    cd <where you keep your projects>
+    git clone git@github.com:<your username>/<your fork name>.git
+    cd <your fork name>
+    composer install
+    scripts/database
 
 If not, see [Preparing a development environment] in the Wiki.
+
+Running tasks (via Grunt)
+-------------------------
+
+After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/src/` folder. To do so:
+
+    gem install sass
+    npm install -g grunt-cli
+    npm install
+    grunt js
+    grunt sass
+
+Unit tests
+----------
+
+Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` folder and can be run with the following command:
+
+    scripts/test-phpunit
+
+Accessibility tests
+-------------------
+
+Accessibility tests for the site are use the [pa11y](https://github.com/nature/pa11y) node.js module, and can be run with the following command:
+
+    scripts/test-pa11y
+
+Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
+
+The whole enchilada
+-------------------
+
+To run the complete test suite, both the unit tests for PHP and the accessibility tests, run the following:
+
+    scripts/test
 
 Coding standards
 ----------------
@@ -59,41 +90,17 @@ The site supports the following browsers:
 
 Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers. If the site does not work in a browser not listed above, feel free to still open an issue, but do know that the possibility of it being fixed is slightly smaller.
 
-Unit tests
-----------
-
-Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` folder and can be run with the following command:
-
-```bash
-# from the top level directory
-scripts/test
-```
-
-Accessibility tests
--------------------
-
-Accessibility tests for the site are use the [pa11y](https://github.com/nature/pa11y) node.js module, and can be run with the following command:
-
-```bash
-# from the top level directory
-scripts/test-pa11y
-```
-
-Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([node.js](http://nodejs.org), [npm](https://npmjs.org), [PhantomJS](http://phantomjs.org), etc). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
-
 Contributing to the Wiki
 ------------------------
 
 To help fill out the Wiki with information on setting up development environments, installing the app, app usage, the matching algorithm, or anything else that you think will be useful to have documented:
 
-```bash
-cd <where you keep your projects>
-git clone git@github.com:<your username>/<your fork name>.wiki.git
-cd <clone location>
-# edit Markdown files
-git push
-# file an issue in the issue tracker requesting the changes be pulled in
-```
+    cd <where you keep your projects>
+    git clone git@github.com:<your username>/<your fork name>.wiki.git
+    cd <your fork name>
+    # edit Markdown files
+    git push
+    # file an issue in the issue tracker requesting the changes be pulled in
 
 See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow for forking gollum Wikis.
 
