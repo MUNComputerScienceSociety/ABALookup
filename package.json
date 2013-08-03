@@ -1,0 +1,23 @@
+{
+	"name": "ABALookup",
+	"description": "A project for the Autism Society to help with the matching of ABA therapists and parents.",
+	"author": "MUN Computer Science Society",
+	"license": "Simplified BSD",
+	"repository": {
+		"type": "Git",
+		"url": "https://github.com/MUNComputerScienceSociety/ABALookup.git"
+	},
+	"bugs": {
+		"url": "https://github.com/MUNComputerScienceSociety/ABALookup/issues"
+	},
+	"dependencies": {
+		"grunt": "~0.4.1",
+		"grunt-contrib-clean": "~0.5.0",
+		"grunt-contrib-concat": "~0.3.0",
+		"grunt-contrib-jshint": "~0.6.2",
+		"grunt-contrib-sass": "~0.4.1",
+		"grunt-contrib-uglify": "~0.2.2",
+		"matchdep": "~0.1.2",
+		"pa11y": "~1.2.0"
+	}
+}
