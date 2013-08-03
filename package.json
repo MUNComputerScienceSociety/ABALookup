@@ -1,4 +1,8 @@
 {
+	"repository": {
+		"type": "Git",
+		"url": "https://github.com/MUNComputerScienceSociety/ABALookup.git"
+	},
 	"dependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-clean": "~0.5.0",
