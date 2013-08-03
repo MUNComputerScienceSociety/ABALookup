@@ -42,7 +42,7 @@ curl --silent \
      > "$abyss"
 
 pa11y="node_modules/.bin/pa11y"
-[[ -x $pa11y ]] || npm install pa11y
+[[ -x $pa11y ]] || npm install
 
 routes=(
 	"/users/1/profile"

@@ -9,7 +9,7 @@
 			echo $this->headMeta()
 			          ->appendName('viewport', 'width=device-width');
 			echo $this->headLink()
-			          ->appendStylesheet($this->basePath('css/app.layout.css'));
+			          ->appendStylesheet($this->basePath('css/main.alt.css'));
 		?>
 	</head>
 	<body>
@@ -35,9 +35,7 @@
 		</div>
 		<?php
 			echo $this->footer;
-			echo $this->script(['vendor', 'jquery.min.js']);
-			echo $this->script(['vendor', 'hsp.jquery.min.js']);
-			echo $this->script(['app.min.js']);
+			echo $this->script(['main.min.js']);
 		?>
 	</body>
 </html>
