@@ -45,8 +45,7 @@ After downloading the project, you'll need to generate both the CSS files from t
     gem install sass
     npm install -g grunt-cli
     npm install
-    grunt js
-    grunt sass
+    grunt build
 
 Unit tests
 ----------

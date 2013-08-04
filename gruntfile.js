@@ -95,6 +95,7 @@ module.exports = function (grunt) {
 		grunt.log.write('Doing nothing.');
 	});
 	grunt.registerTask('js', 'Concat and minify JavaScript.', ['modernizr', 'concat', 'uglify']);
+	grunt.registerTask('build', 'The whole enchilada.', ['clean', 'js', 'sass']);
 	grunt.registerTask('lint', ['jshint']);
 	grunt.registerTask('hint', ['jshint']);
 };
