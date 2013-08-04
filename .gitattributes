@@ -4,3 +4,4 @@
 
 *.svg -diff
 *.css -diff
+*.min.js -diff
