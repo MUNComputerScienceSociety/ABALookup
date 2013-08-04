@@ -15,6 +15,35 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		modernizr: {
+			devFile: dirJs + 'vendor/modernizr.js',
+			outputFile: dirJs + 'vendor/modernizr.min.js',
+			extra: {
+				shiv: true,
+				printshiv: false,
+				load: true,
+				mq: false,
+				cssclasses: true
+			},
+			extensibility : {
+				addtest: false,
+				prefixed: false,
+				teststyles: false,
+				testprops: false,
+				testallprops: false,
+				hasevents: false,
+				prefixes: false,
+				domprefixes: false
+			},
+			uglify: true,
+			tests: [],
+			parseFiles: true,
+			files: [
+				dirJs + 'src/*.js'
+			],
+			matchCommunityTests: false,
+			customTests: []
+		},
 		jshint: {
 			options: {
 				ignores: [
@@ -33,6 +62,7 @@ module.exports = function (grunt) {
 				src: [
 					'vendor/jquery.min.js',
 					'vendor/hsp.jquery.min.js',
+					'vendor/modernizr.min.js',
 					'src/forms.js'
 				].map(function (f) { return dirJs + f; }),
 				dest: dirJs + 'main.js',
@@ -64,7 +94,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', 'Does nothing.', function () {
 		grunt.log.write('Doing nothing.');
 	});
-	grunt.registerTask('js', 'Concat and minify JavaScript.', ['concat', 'uglify']);
+	grunt.registerTask('js', 'Concat and minify JavaScript.', ['modernizr', 'concat', 'uglify']);
 	grunt.registerTask('lint', ['jshint']);
 	grunt.registerTask('hint', ['jshint']);
 };

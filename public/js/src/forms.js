@@ -3,7 +3,7 @@
 		show: false, // password is hidden by default
 		innerToggle: true, // create an inner toggle
 		hideToggleUntil: false, // toggle is immediately visible
-		touchSupport: false, // support touch events without losing focus
+		touchSupport: Modernizr.touch, // support touch events without losing focus
 		toggleEvent: 'click', // when touch support is false
 		toggleTouchEvent: 'touchstart mousedown', // when touch support is true
 		wrapperClass: 'hsp-wrapper', // class name for wrapper element
