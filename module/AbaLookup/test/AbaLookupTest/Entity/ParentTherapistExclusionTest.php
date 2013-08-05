@@ -29,7 +29,7 @@ class ParentTherapistExclusionTest extends PHPUnit_Framework_TestCase
 	protected $exclusion;
 
 	/**
-	 * Reset for isolation
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

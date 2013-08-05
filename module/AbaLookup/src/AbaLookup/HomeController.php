@@ -1,8 +1,6 @@
 <?php
 
-namespace AbaLookup\Controller;
-
-use AbaLookup\AbaLookupController;
+namespace AbaLookup;
 
 class HomeController extends AbaLookupController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaLookupTest\Controller;
+namespace AbaLookupTest;
 
 /**
  * Test the HomeController
@@ -8,7 +8,7 @@ namespace AbaLookupTest\Controller;
 class HomeControllerTest extends BaseControllerTestCase
 {
 	/**
-	 * Return an array of actions to be tested
+	 * Returns an array of actions to be tested
 	 */
 	public function homeActions()
 	{
@@ -21,7 +21,7 @@ class HomeControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure the actions for the HomeController can be accessed and contain valid HTML
+	 * Ensures the actions for the HomeController can be accessed and contain valid HTML
 	 *
 	 * @requires extension curl
 	 * @dataProvider homeActions
@@ -31,7 +31,7 @@ class HomeControllerTest extends BaseControllerTestCase
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('AbaLookup\Controller\Home');
+		$this->assertControllerName('Home');
 		$this->assertControllerClass('HomeController');
 		$this->assertMatchedRouteName($route);
 		$this->assertValidHtml($this->getResponse()->getContent());

@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\Table,
@@ -13,7 +13,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "users")
  *
  * A user
@@ -158,7 +158,7 @@ class User
 	}
 
 	/**
-	 * Set the display name of the user
+	 * Sets the display name of the user
 	 *
 	 * @param string $displayName The display name of the user.
 	 * @throws InvalidArgumentException
@@ -174,7 +174,7 @@ class User
 	}
 
 	/**
-	 * Set the email address of the user
+	 * Sets the email address of the user
 	 *
 	 * @param string $email The email address for the user.
 	 * @throws InvalidArgumentException
@@ -190,7 +190,7 @@ class User
 	}
 
 	/**
-	 * Set the password for the user
+	 * Sets the password for the user
 	 *
 	 * The password passed must be in plaintext, as it will
 	 * be hashed internally.
@@ -209,7 +209,7 @@ class User
 	}
 
 	/**
-	 * Set the phone number for the user
+	 * Sets the phone number for the user
 	 *
 	 * @param int $phone The phone number for the user.
 	 * @throws InvalidArgumentException
@@ -225,7 +225,7 @@ class User
 	}
 
 	/**
-	 * Set whether or not the user is a therapist
+	 * Sets whether or not the user is a therapist
 	 *
 	 * @param bool $therapist Whether or not the user is a therapist.
 	 * @throws InvalidArgumentException
@@ -241,7 +241,7 @@ class User
 	}
 
 	/**
-	 * Set the sex of the user
+	 * Sets the sex of the user
 	 *
 	 * @param string $sex The sex of the user (NULL, 'M', or 'F').
 	 * @throws InvalidArgumentException
@@ -257,7 +257,7 @@ class User
 	}
 
 	/**
-	 * Set whether the user has completed the course
+	 * Sets whether the user has completed the course
 	 *
 	 * @param bool $abaCourse Whether or not the user has completed their course.
 	 * @throws InvalidArgumentException
@@ -273,7 +273,7 @@ class User
 	}
 
 	/**
-	 * Set whether the user has agreed to the code of conduct
+	 * Sets whether the user has agreed to the code of conduct
 	 *
 	 * @param bool $codeOfConduct Whether the user has agreed to the code of conduct.
 	 * @throws InvalidArgumentException
@@ -289,7 +289,7 @@ class User
 	}
 
 	/**
-	 * Set whether or not the user has been verified
+	 * Sets whether or not the user has been verified
 	 *
 	 * @param bool $verified Whether or not the user has been verified.
 	 * @throws InvalidArgumentException
@@ -305,7 +305,7 @@ class User
 	}
 
 	/**
-	 * Set if the user is or is not a moderator
+	 * Sets if the user is or is not a moderator
 	 *
 	 * @param bool $moderator Whether the user is a moderator or not.
 	 * @throws InvalidArgumentException

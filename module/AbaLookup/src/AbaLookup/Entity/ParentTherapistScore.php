@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\OneToOne,
@@ -14,7 +14,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "parent_therapist_scores", uniqueConstraints = {
  *     @UniqueConstraint(name = "parent_therapist_scores_idx", columns = {"therapist_id", "parent_id"})
  * })
@@ -67,7 +67,7 @@ class ParentTherapistScore
 	}
 
 	/**
-	 * Set the match score for the parent and therapist pairing
+	 * Sets the match score for the parent and therapist pairing
 	 *
 	 * @param $score The score for the parent therapist pairing.
 	 * @throws InvalidArgumentException

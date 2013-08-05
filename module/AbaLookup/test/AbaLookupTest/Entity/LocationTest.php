@@ -23,7 +23,7 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	protected $name;
 
 	/**
-	 * Reset the location
+	 * Resets the location
 	 */
 	public function setUp()
 	{

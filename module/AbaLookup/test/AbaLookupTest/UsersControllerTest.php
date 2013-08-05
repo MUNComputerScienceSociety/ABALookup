@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaLookupTest\Controller;
+namespace AbaLookupTest;
 
 use
 	AbaLookup\Entity\Schedule,
@@ -13,7 +13,7 @@ use
 class UsersControllerTest extends BaseControllerTestCase
 {
 	/**
-	 * Return an array of actions to be tested
+	 * Returns an array of actions to be tested
 	 */
 	public function authActions()
 	{
@@ -24,7 +24,7 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Return an array of actions to be tested
+	 * Returns an array of actions to be tested
 	 */
 	public function usersActions()
 	{
@@ -36,8 +36,7 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure the authtentication actions for UsersController
-	 * contains valid HTML
+	 * Ensures the authtentication actions for UsersController contains valid HTML
 	 *
 	 * @requires extension curl
 	 * @dataProvider authActions
@@ -47,14 +46,14 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('AbaLookup\Controller\Users');
+		$this->assertControllerName('Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
 		$this->assertValidHtml($this->getResponse()->getContent());
 	}
 
 	/**
-	 * Certain URLs should redirect to the login page
+	 * Tests that certain URLs should redirect to the login page
 	 *
 	 * A user attempting to view their profile, schedule, or matches without
 	 * logging in first should redirect them to the login page.
@@ -68,7 +67,7 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure that a user can login
+	 * Ensures that a user can login
 	 *
 	 * @requires extension curl
 	 */
@@ -84,7 +83,7 @@ class UsersControllerTest extends BaseControllerTestCase
 
 		$this->dispatch('/users/login', 'POST', $data);
 		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('AbaLookup\Controller\Users');
+		$this->assertControllerName('Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName('auth');
 		$this->assertRedirectTo('/users' . '/' . $user->getId() . '/profile');
@@ -93,7 +92,7 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensure that once logged in a user can access their pages
+	 * Ensures that once logged in a user can access their pages
 	 *
 	 * @dataProvider usersActions
 	 * @depends testUserCanLogin
@@ -106,7 +105,7 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');
-		$this->assertControllerName('AbaLookup\Controller\Users');
+		$this->assertControllerName('Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName($route);
 		$this->assertValidHtml($this->getResponse()->getContent());

@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\OneToOne,
@@ -13,7 +13,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "user_locations", uniqueConstraints = {
  *     @UniqueConstraint(name = "user_locations_idx", columns = {"user_id", "location_id"})
  * })
@@ -48,7 +48,7 @@ class UserLocation
 	}
 
 	/**
-	 * Set the user
+	 * Sets the user
 	 *
 	 * @param $user The user object.
 	 * @return $this
@@ -60,7 +60,7 @@ class UserLocation
 	}
 
 	/**
-	 * Set the location for the user
+	 * Sets the location for the user
 	 *
 	 * @param $location The location object.
 	 * @return $this

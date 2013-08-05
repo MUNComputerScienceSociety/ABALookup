@@ -30,7 +30,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	protected $codeOfConduct;
 
 	/**
-	 * Reset the user
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

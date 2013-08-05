@@ -41,7 +41,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Reset for isolation
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

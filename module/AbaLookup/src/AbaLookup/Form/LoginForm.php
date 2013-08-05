@@ -29,7 +29,7 @@ class LoginForm extends Form
 	protected $message;
 
 	/**
-	 * Construct the form via factory
+	 * Constructs the form via factory
 	 */
 	public function __construct()
 	{
@@ -75,7 +75,7 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Validate the form
+	 * Validates the form
 	 *
 	 * Overrides Zend\Form\Form::isValid to not use Zend\InputFilter\InputFilter.
 	 *
@@ -131,7 +131,9 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Return the error message
+	 * Returns the error message
+	 *
+	 * @return string
 	 */
 	public function getMessage()
 	{
@@ -139,7 +141,9 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Return the email address entered
+	 * Returns the email address entered
+	 *
+	 * @return string
 	 */
 	public function getEmailAddress()
 	{
@@ -150,7 +154,9 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Return the password entered
+	 * Returns the password entered
+	 *
+	 * @return string
 	 */
 	public function getPassword()
 	{
@@ -161,7 +167,7 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Return whether to remember
+	 * Returns whether to remember
 	 *
 	 * @return bool
 	 */

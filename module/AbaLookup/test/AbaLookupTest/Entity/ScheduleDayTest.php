@@ -24,7 +24,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	protected $name;
 
 	/**
-	 * Reset the day
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

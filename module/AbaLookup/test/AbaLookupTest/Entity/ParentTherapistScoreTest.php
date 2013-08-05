@@ -34,7 +34,7 @@ class ParentTherapistScoreTest extends PHPUnit_Framework_TestCase
 	protected $pts;
 
 	/**
-	 * Reset for isolation
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

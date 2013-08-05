@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\Table,
@@ -12,7 +12,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "schedule_intervals")
  *
  * A interval in a schedule
@@ -77,7 +77,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Set the availability of the interval
+	 * Sets the availability of the interval
 	 *
 	 * @param bool $available Whether or not the interval is available.
 	 * @throws InvalidArgumentException
@@ -95,7 +95,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Set this interval as available
+	 * Sets this interval as available
 	 *
 	 * @return $this
 	 */
@@ -106,7 +106,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Set this interval as unavailable
+	 * Sets this interval as unavailable
 	 *
 	 * @return $this
 	 */
@@ -117,7 +117,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Return the ID for the interval
+	 * Returns the ID for the interval
 	 *
 	 * @return int
 	 */
@@ -127,7 +127,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Return the start time for the interval
+	 * Returns the start time for the interval
 	 *
 	 * @return int
 	 */
@@ -137,7 +137,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Return the end time for the interval
+	 * Returns the end time for the interval
 	 *
 	 * @return int
 	 */
@@ -147,7 +147,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Return whether the interval is available
+	 * Returns whether the interval is available
 	 *
 	 * @return bool
 	 */

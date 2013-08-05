@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\OneToOne,
@@ -14,7 +14,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "parent_therapist_exclusions", uniqueConstraints = {
  *     @UniqueConstraint(name = "parent_therapist_exclusions_idx", columns = {"therapist_id", "parent_id"})
  * })
@@ -64,7 +64,7 @@ class ParentTherapistExclusion
 	}
 
 	/**
-	 * Set whether or not this exclusion is active.
+	 * Sets whether or not this exclusion is active.
 	 *
 	 * An active exclusion will remove the parent and therapist
 	 * from their respective matches listings.

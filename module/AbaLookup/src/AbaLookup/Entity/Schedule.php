@@ -5,7 +5,7 @@ namespace AbaLookup\Entity;
 use
 	Doctrine\Common\Collections\ArrayCollection,
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\JoinColumn,
@@ -17,7 +17,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "schedules")
  *
  * A user's schedule
@@ -78,7 +78,7 @@ class Schedule
 	/**
 	 * Constructor
 	 *
-	 * Create a new Schedule and fill it with days.
+	 * Creates a new Schedule object and populates it.
 	 *
 	 * @param User $user The user to whom the schedule belongs.
 	 * @param bool $enabled Is the schedule active?
@@ -102,7 +102,7 @@ class Schedule
 	}
 
 	/**
-	 * Set the availability of the interval of time on the given day in the schedule
+	 * Sets the availability of the interval of time on the given day in the schedule
 	 *
 	 * Set the availability of the interval of time from {@code $startTime} to {@code $endTime}
 	 * on {@code $day}.
@@ -137,7 +137,7 @@ class Schedule
 	}
 
 	/**
-	 * Enable the schedule
+	 * Enables the schedule
 	 *
 	 * @return $this
 	 */
@@ -148,7 +148,7 @@ class Schedule
 	}
 
 	/**
-	 * Disable the schedule
+	 * Disables the schedule
 	 *
 	 * @return $this
 	 */
@@ -159,7 +159,7 @@ class Schedule
 	}
 
 	/**
-	 * Return the week for the schedule
+	 * Returns the week for the schedule
 	 *
 	 * @return array
 	 */
@@ -197,7 +197,7 @@ class Schedule
 	}
 
 	/**
-	 * Return whether the interval of time on the given day in the schedule is available
+	 * Returns whether the interval of time on the given day in the schedule is available
 	 *
 	 * Return whether the interval of time from {@code $startTime} to {@code $endTime}
 	 * on {@code $day} is set as available.

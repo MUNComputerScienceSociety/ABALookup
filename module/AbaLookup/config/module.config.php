@@ -7,7 +7,7 @@ return [
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
 				'paths' => [
-					realpath(__DIR__ . '/../src/AbaLookup/Entity/'),
+					realpath(sprintf('%s/../src/AbaLookup/Entity/', __DIR__)),
 				],
 			],
 			'orm_default' => [
@@ -19,66 +19,66 @@ return [
 	],
 	'controllers' => [
 		'invokables' => [
-			'AbaLookup\Controller\Home'  => 'AbaLookup\Controller\HomeController',
-			'AbaLookup\Controller\Users' => 'AbaLookup\Controller\UsersController',
+			'Home'  => 'AbaLookup\HomeController',
+			'Users' => 'AbaLookup\UsersController',
 		],
 	],
 	'router' => [
 		'routes' => [
 			'home' => [
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => [
-					'route' => '/',
+					'route'    => '/',
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Home',
-						'action' => 'index',
+						'controller' => 'Home',
+						'action'     => 'index',
 					],
 				],
 			],
 			'privacy' => [
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => [
-					'route' => '/privacy',
+					'route'    => '/privacy',
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Home',
-						'action' => 'privacy',
+						'controller' => 'Home',
+						'action'     => 'privacy',
 					],
 				],
 			],
 			'terms' => [
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => [
-					'route' => '/terms',
+					'route'    => '/terms',
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Home',
-						'action' => 'terms',
+						'controller' => 'Home',
+						'action'     => 'terms',
 					],
 				],
 			],
 			'about' => [
-				'type' => 'Literal',
+				'type'    => 'Literal',
 				'options' => [
-					'route' => '/about',
+					'route'    => '/about',
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Home',
-						'action' => 'about',
+						'controller' => 'Home',
+						'action'     => 'about',
 					],
 				],
 				'may_terminate' => TRUE,
-				'child_routes' => [
+				'child_routes'  => [
 					'sponsors' => [
-						'type' => 'Literal',
+						'type'    => 'Literal',
 						'options' => [
-							'route' => '/sponsors',
+							'route'    => '/sponsors',
 							'defaults' => [
 								'action' => 'sponsors',
 							],
 						],
 					],
 					'colophon' => [
-						'type' => 'Literal',
+						'type'    => 'Literal',
 						'options' => [
-							'route' => '/colophon',
+							'route'    => '/colophon',
 							'defaults' => [
 								'action' => 'colophon',
 							],
@@ -87,50 +87,50 @@ return [
 				],
 			],
 			'users' => [
-				'type' => 'Segment',
+				'type'    => 'Segment',
 				'options' => [
-					'route' => '/users/:id/:action[/:mode]',
+					'route'       => '/users/:id/:action[/:mode]',
 					'constraints' => [
-						'id' => '[0-9]*',
+						'id'     => '[0-9]*',
 						'action' => '[a-zA-Z0-9_-]+',
 					],
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Users',
-						'action' => 'profile',
+						'controller' => 'Users',
+						'action'     => 'profile',
 					],
 				],
 			],
 			'auth' => [
-				'type' => 'Segment',
+				'type'    => 'Segment',
 				'options' => [
-					'route' => '/users/:action',
+					'route'       => '/users/:action',
 					'constraints' => [
 						'action' => '(login)|(logout)|(register)',
 					],
 					'defaults' => [
-						'controller' => 'AbaLookup\Controller\Users',
-						'action' => 'login',
+						'controller' => 'Users',
+						'action'     => 'login',
 					],
 				],
 			],
 		],
 	],
 	'view_manager' => [
-		'display_exceptions' => TRUE,
+		'display_exceptions'       => TRUE,
 		'display_not_found_reason' => TRUE,
-		'doctype' => 'HTML5',
-		'exception_template' => 'error/index',
-		'not_found_template' => 'error/404',
-		'template_map' => [
-			'error/404' => realpath(__DIR__ . '/../view/error/404.phtml'),
-			'error/index' => realpath(__DIR__ . '/../view/error/index.phtml'),
-			'layout/home' => realpath(__DIR__ . '/../view/layout/home.phtml'),
-			'layout/layout' => realpath(__DIR__ . '/../view/layout/layout.phtml'),
-			'users/profile-edit' => realpath(__DIR__ . '/../view/aba-lookup/users/profile-edit.phtml'),
-			'widget/footer' => realpath(__DIR__ . '/../view/aba-lookup/widget/footer.phtml'),
+		'doctype'                  => 'HTML5',
+		'exception_template'       => 'error/index',
+		'not_found_template'       => 'error/404',
+		'template_path_stack'      => [
+			realpath(sprintf('%s/../view', __DIR__)),
 		],
-		'template_path_stack' => [
-			realpath(__DIR__ . '/../view'),
+		'template_map' => [
+			'layout/layout' => realpath(sprintf('%s/../view/layout/layout.phtml', __DIR__)),
+			'layout/home'   => realpath(sprintf('%s/../view/layout/home.phtml',   __DIR__)),
+			'error/index'   => realpath(sprintf('%s/../view/error/index.phtml',   __DIR__)),
+			'error/404'     => realpath(sprintf('%s/../view/error/404.phtml',     __DIR__)),
+			'profile/edit'  => realpath(sprintf('%s/../view/aba-lookup/users/profile-edit.phtml', __DIR__)),
+			'widget/footer' => realpath(sprintf('%s/../view/aba-lookup/widget/footer.phtml', __DIR__)),
 		],
 	],
 ];

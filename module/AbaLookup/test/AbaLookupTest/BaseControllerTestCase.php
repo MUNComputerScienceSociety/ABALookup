@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaLookupTest\Controller;
+namespace AbaLookupTest;
 
 use
 	AbaLookup\Entity\Schedule,
@@ -28,7 +28,7 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	protected $traceError = TRUE;
 
 	/**
-	 * Return a mock Doctrine\Common\Persistence\ObjectRepository
+	 * Returns a mock Doctrine\Common\Persistence\ObjectRepository
 	 *
 	 * Mocks and returns a ObjectRepository which
 	 * returns the same {@code $object} on subsequent
@@ -42,11 +42,11 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 		$mock = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectRepository')
 		             ->disableOriginalConstructor()
 		             ->setMethods([
-		             	'find',
-		             	'findAll',
-		             	'findBy',
-		             	'findOneBy',
-		             	'getClassName'
+		                   'find',
+		                   'findAll',
+		                   'findBy',
+		                   'findOneBy',
+		                   'getClassName'
 		               ])
 		             ->getMock();
 
@@ -61,7 +61,7 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	}
 
 	/**
-	 * Mock a Doctrine\Common\Persistence\ObjectManager
+	 * Mocks a Doctrine\Common\Persistence\ObjectManager
 	 *
 	 * @param User $user The mock user.
 	 * @param Schedule $schedule The schedule for {@code $user}.
@@ -70,19 +70,19 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	{
 		$mockObjectManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
 		                          ->setMethods([
-		                          	'find',
-		                          	'persist',
-		                          	'remove',
-		                          	'merge',
-		                          	'clear',
-		                          	'detach',
-		                          	'refresh',
-		                          	'flush',
-		                          	'getRepository',
-		                          	'getClassMetadata',
-		                          	'getMetadataFactory',
-		                          	'initializeObject',
-		                          	'contains'
+		                                'find',
+		                                'persist',
+		                                'remove',
+		                                'merge',
+		                                'clear',
+		                                'detach',
+		                                'refresh',
+		                                'flush',
+		                                'getRepository',
+		                                'getClassMetadata',
+		                                'getMetadataFactory',
+		                                'initializeObject',
+		                                'contains'
 		                            ])
 		                          ->disableOriginalConstructor()
 		                          ->getMock();
@@ -102,7 +102,7 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	}
 
 	/**
-	 * Return a mock user
+	 * Returns a mock user
 	 *
 	 * Mocks and returns an AbaLookup\Entity\User.
 	 *
@@ -123,18 +123,18 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	}
 
 	/**
-	 * Reset the application for isolation
+	 * Resets the application for isolation
 	 */
 	public function setUp()
 	{
 		$this->setApplicationConfig(
-			include __DIR__ . '/' . '../../../../../config/application.config.php'
+			include realpath(sprintf('%s/../../../../config/application.config.php', __DIR__))
 		);
 		parent::setUp();
 	}
 
 	/**
-	 * Assert that the given HTML markup validates
+	 * Asserts that the given HTML markup validates
 	 *
 	 * Modified from <http://git.io/BNxJcA>.
 	 *

@@ -1,9 +1,8 @@
 <?php
 
-namespace AbaLookup\Controller;
+namespace AbaLookup;
 
 use
-	AbaLookup\AbaLookupController,
 	AbaLookup\Form\LoginForm,
 	AbaLookup\Form\ProfileEditForm,
 	AbaLookup\Form\RegisterForm,
@@ -17,7 +16,7 @@ use
 class UsersController extends AbaLookupController
 {
 	/**
-	 * Register the user
+	 * Registers the user
 	 *
 	 * Validates the user's information, saves them into the database
 	 * and proceeds to log the user in (and show their profile).
@@ -75,7 +74,7 @@ class UsersController extends AbaLookupController
 	}
 
 	/**
-	 * Login the user
+	 * Logs the user in
 	 *
 	 * Verify the user credentials and if valid login user in.
 	 */
@@ -130,7 +129,7 @@ class UsersController extends AbaLookupController
 	}
 
 	/**
-	 * Logout the user
+	 * Logs the user out
 	 *
 	 * If a user is logged in, log them out.
 	 * Invalidates the session.
@@ -145,7 +144,7 @@ class UsersController extends AbaLookupController
 	}
 
 	/**
-	 * Display the user's profile
+	 * Displays the user's profile
 	 *
 	 * Edits to the user's profile arrive via POST with
 	 * a parameter of 'mode' => 'edit'.
@@ -169,7 +168,7 @@ class UsersController extends AbaLookupController
 		// the user is editing their profile
 		$form = new ProfileEditForm($user);
 		$edit = new ViewModel(['user' => $user, 'form' => $form]);
-		$edit->setTemplate('users/profile-edit');
+		$edit->setTemplate('profile/edit');
 		if (!$this->request->isPost()) {
 			// if not POST show the profile edit form
 			return $edit;
@@ -192,7 +191,7 @@ class UsersController extends AbaLookupController
 	}
 
 	/**
-	 * Display the user's schedule
+	 * Displays the user's schedule
 	 *
 	 * Edits to the schedule arrive via POST with
 	 * a parameter of 'mode' => 'add'.
@@ -242,7 +241,7 @@ class UsersController extends AbaLookupController
 	}
 
 	/**
-	 * Display the user's matches
+	 * Displays the user's matches
 	 */
 	public function matchesAction()
 	{

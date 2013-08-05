@@ -5,7 +5,6 @@ namespace AbaLookup;
 use
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
-	Doctrine\Common\Persistence\ObjectManager,
 	Zend\Mvc\Controller\AbstractActionController,
 	Zend\Session\Container,
 	Zend\View\Model\ViewModel
@@ -30,7 +29,7 @@ abstract class AbaLookupController extends AbstractActionController
 	private $oManager;
 
 	/**
-	 * Return the ObjectManager
+	 * Returns the ObjectManager
 	 *
 	 * @return ObjectManager
 	 */
@@ -43,7 +42,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return the user associated with the given email address
+	 * Returns the user associated with the given email address
 	 *
 	 * @param string $email The email address for the user.
 	 * @return User
@@ -56,7 +55,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return the user associated with the given ID
+	 * Returns the user associated with the given ID
 	 *
 	 * @param int $id The ID for the user.
 	 * @return User
@@ -69,7 +68,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return the given user's schedule
+	 * Returns the given user's schedule
 	 *
 	 * @param User $user The user to whom the schedule belongs.
 	 * @return Schedule
@@ -87,7 +86,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Tell the ObjectManager to make an instance managed and persistent
+	 * Tells the ObjectManager to make an instance managed and persistent
 	 * and flushes all changes to the object
 	 *
 	 * This effectively synchronizes the in-memory state of the object with the database.
@@ -102,7 +101,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return a redirect to the login page
+	 * Returns a redirect to the login page
 	 *
 	 * @return ViewModel
 	 */
@@ -111,7 +110,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Set the session for the given user
+	 * Sets the session for the given user
 	 *
 	 * @param User $user The user in session.
 	 */
@@ -126,7 +125,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Unset the session
+	 * Unsets the session
 	 */
 	protected function unsetUserSession()
 	{
@@ -135,7 +134,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return whether a user is currently in session
+	 * Returns whether a user is currently in session
 	 *
 	 * @return bool
 	 */
@@ -146,7 +145,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Return the current user in session
+	 * Returns the current user in session
 	 *
 	 * Returns the current user in session if a user has logged in,
 	 * returns NULL otherwise.
@@ -165,7 +164,7 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Prepare the given layout to be displayed for the given user
+	 * Prepares the given layout to be displayed for the given user
 	 *
 	 * Nests the footer widget into the layout, and attaches the current
 	 * to the layout as a variable.

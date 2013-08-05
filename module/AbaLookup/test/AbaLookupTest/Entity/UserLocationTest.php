@@ -46,7 +46,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 	protected $name;
 
 	/**
-	 * Reset the location
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

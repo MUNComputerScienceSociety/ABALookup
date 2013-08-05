@@ -5,7 +5,7 @@ namespace AbaLookup\Entity;
 use
 	Doctrine\Common\Collections\ArrayCollection,
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\JoinColumn,
@@ -16,7 +16,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "schedule_days")
  *
  * A day in a schedule
@@ -150,7 +150,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Override the default name for the day
+	 * Overrides the default name for the day
 	 *
 	 * @param string $name The name of the day.
 	 * @throws InvalidArgumentException
@@ -166,7 +166,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Override the default abbreviation for the day
+	 * Overrides the default abbreviation for the day
 	 *
 	 * @param string $abbreviation The abbreviated name of the day.
 	 * @throws InvalidArgumentException
@@ -182,7 +182,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Set the availability of the interval with the given start and end times
+	 * Sets the availability of the interval with the given start and end times
 	 *
 	 * The start and end times given may span multiple intervals.
 	 *
@@ -215,7 +215,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the integer representation of the day
+	 * Returns the integer representation of the day
 	 *
 	 * @return int
 	 */
@@ -225,7 +225,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the name of the day
+	 * Returns the name of the day
 	 *
 	 * @return string
 	 */
@@ -235,7 +235,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the abbreviated name of the day
+	 * Returns the abbreviated name of the day
 	 *
 	 * @return string
 	 */
@@ -245,7 +245,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the availability of the interval with the given start and end times
+	 * Returns the availability of the interval with the given start and end times
 	 *
 	 * If the start and end times span multiple intervals, TRUE will be returned if
 	 * and only if all intervals in the time are marked as available. If the start
@@ -276,7 +276,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the number of minutes in an interval for the day
+	 * Returns the number of minutes in an interval for the day
 	 *
 	 * @return int
 	 */
@@ -286,7 +286,7 @@ class ScheduleDay
 	}
 
 	/**
-	 * Return the ArrayCollection of intervals for the day
+	 * Returns the ArrayCollection of intervals for the day
 	 *
 	 * @return ArrayCollection
 	 */

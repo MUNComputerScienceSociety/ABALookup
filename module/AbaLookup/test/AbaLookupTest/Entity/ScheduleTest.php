@@ -24,7 +24,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	protected $schedule;
 
 	/**
-	 * Reset the schedule
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{

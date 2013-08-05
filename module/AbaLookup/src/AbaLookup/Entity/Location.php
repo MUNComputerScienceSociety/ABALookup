@@ -4,7 +4,7 @@ namespace AbaLookup\Entity;
 
 use
 	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity as DoctrineEntity,
+	Doctrine\ORM\Mapping\Entity,
 	Doctrine\ORM\Mapping\GeneratedValue,
 	Doctrine\ORM\Mapping\Id,
 	Doctrine\ORM\Mapping\Table,
@@ -12,7 +12,7 @@ use
 ;
 
 /**
- * @DoctrineEntity
+ * @Entity
  * @Table(name = "locations")
  *
  * A possible user location
@@ -52,7 +52,7 @@ class Location
 	}
 
 	/**
-	 * Set the name of the location
+	 * Sets the name of the location
 	 *
 	 * @param string $name The name of the location.
 	 * @throws InvalidArgumentException
@@ -68,7 +68,7 @@ class Location
 	}
 
 	/**
-	 * Set the enabled value of the location
+	 * Sets the enabled value of the location
 	 *
 	 * @param bool $enabled Whether this location is enabled.
 	 * @throws InvalidArgumentException
@@ -84,7 +84,7 @@ class Location
 	}
 
 	/**
-	 * Enable the location
+	 * Enables the location
 	 *
 	 * @return $this
 	 */
@@ -95,7 +95,7 @@ class Location
 	}
 
 	/**
-	 * Disable the location
+	 * Disables the location
 	 *
 	 * @return $this
 	 */

@@ -37,6 +37,9 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		];
 	}
 
+	/**
+	 * Resets for isolation
+	 */
 	public function setUp()
 	{
 		$this->form = new RegisterForm();

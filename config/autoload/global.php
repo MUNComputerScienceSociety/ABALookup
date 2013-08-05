@@ -5,7 +5,7 @@ return [
 		'connection' => [
 			'orm_default' => [
 				'driverClass' => 'Doctrine\DBAL\Driver\PDOSqlite\Driver',
-				'params' => [
+				'params'      => [
 					'path' => 'database/db.sqlite3',
 				],
 			],

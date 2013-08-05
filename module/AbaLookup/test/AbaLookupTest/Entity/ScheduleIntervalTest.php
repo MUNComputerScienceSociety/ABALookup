@@ -24,7 +24,7 @@ class ScheduleIntervalTest extends PHPUnit_Framework_TestCase
 	protected $endTime;
 
 	/**
-	 * Reset the interval
+	 * Resets for isolation
 	 */
 	public function setUp()
 	{
