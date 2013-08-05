@@ -28,61 +28,48 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	protected $traceError = TRUE;
 
 	/**
-	 * Returns a mock Doctrine\Common\Persistence\ObjectRepository
+	 * Returns a mock Doctrine\ORM\EntityRepository
 	 *
-	 * Mocks and returns a ObjectRepository which
-	 * returns the same {@code $object} on subsequent
+	 * Mocks and returns a EntityRepository which
+	 * returns the same {@code $entity} on subsequent
 	 * method calls to find entities in the repo.
 	 *
-	 * @param object $object The object to be returned by the ObjectRepository.
-	 * @return Doctrine\Common\Persistence\ObjectRepository
+	 * @param object $entity The entity to be returned by the EntityRepository.
+	 * @return Doctrine\ORM\EntityRepository
 	 */
-	public function getMockObjectRepository($object)
+	public function getMockObjectRepository($entity)
 	{
-		$mock = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectRepository')
+		$mock = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
 		             ->disableOriginalConstructor()
 		             ->setMethods([
-		                   'find',
-		                   'findAll',
-		                   'findBy',
 		                   'findOneBy',
-		                   'getClassName'
 		               ])
 		             ->getMock();
 
 		$mock->expects($this->any())
 		     ->method('find')
-		     ->will($this->returnValue($object));
+		     ->will($this->returnValue($entity));
 		$mock->expects($this->any())
 		     ->method('findOneBy')
-		     ->will($this->returnValue($object));
+		     ->will($this->returnValue($entity));
 
 		return $mock;
 	}
 
 	/**
-	 * Mocks a Doctrine\Common\Persistence\ObjectManager
+	 * Mocks a Doctrine\ORM\EntityManager
 	 *
 	 * @param User $user The mock user.
 	 * @param Schedule $schedule The schedule for {@code $user}.
 	 */
-	public function mockObjectManager(User $user, Schedule $schedule)
+	public function mockEntityManager(User $user, Schedule $schedule)
 	{
-		$mockObjectManager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
+		$mockEntityManager = $this->getMockBuilder('Doctrine\ORM\EntityManager')
 		                          ->setMethods([
 		                                'find',
 		                                'persist',
-		                                'remove',
-		                                'merge',
-		                                'clear',
-		                                'detach',
-		                                'refresh',
 		                                'flush',
 		                                'getRepository',
-		                                'getClassMetadata',
-		                                'getMetadataFactory',
-		                                'initializeObject',
-		                                'contains'
 		                            ])
 		                          ->disableOriginalConstructor()
 		                          ->getMock();
@@ -92,13 +79,13 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 			['AbaLookup\Entity\Schedule', $this->getMockObjectRepository($schedule)],
 		];
 
-		$mockObjectManager->expects($this->any())
+		$mockEntityManager->expects($this->any())
 		                  ->method('getRepository')
 		                  ->will($this->returnValueMap($map));
 
 		$serviceLocator = $this->getApplicationServiceLocator();
 		$serviceLocator->setAllowOverride(TRUE);
-		$serviceLocator->setService('doctrine.entitymanager.orm_default', $mockObjectManager);
+		$serviceLocator->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
 	}
 
 	/**
@@ -116,8 +103,8 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 		$reflectionProperty->setAccessible(TRUE);
 		$reflectionProperty->setValue($user, 1);
 
-		// mock Object Manager
-		$this->mockObjectManager($user, new Schedule($user));
+		// mock Entity Manager
+		$this->mockEntityManager($user, new Schedule($user));
 
 		return $user;
 	}

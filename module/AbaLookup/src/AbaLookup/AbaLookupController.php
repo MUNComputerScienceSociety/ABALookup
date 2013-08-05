@@ -24,21 +24,24 @@ abstract class AbaLookupController extends AbstractActionController
 	const SECONDS_3_MONTHS = 7884000;
 
 	/**
-	 * @var Doctrine\Common\Persistence\ObjectManager
+	 * @var Doctrine\ORM\EntityManager
+	 *
+	 * The EntityManager is the central access point to ORM functionality
 	 */
-	private $oManager;
+	private $entityManager;
 
 	/**
-	 * Returns the ObjectManager
+	 * Returns the EntityManager
 	 *
-	 * @return ObjectManager
+	 * @return EntityManager
 	 */
-	protected function getObjectManager()
+	protected function getEntityManager()
 	{
-		if (!isset($this->oManager)) {
-			$this->oManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+		if (!isset($this->entityManager)) {
+			$this->entityManager = $this->getServiceLocator()
+			                            ->get('doctrine.entitymanager.orm_default');
 		}
-		return $this->oManager;
+		return $this->entityManager;
 	}
 
 	/**
@@ -49,7 +52,7 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getUserByEmail($email)
 	{
-		return $this->getObjectManager()
+		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
 		            ->findOneBy(['email' => $email]);
 	}
@@ -62,7 +65,7 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getUserById($id)
 	{
-		return $this->getObjectManager()
+		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
 		            ->findOneBy(['id' => $id]);
 	}
@@ -73,9 +76,9 @@ abstract class AbaLookupController extends AbstractActionController
 	 * @param User $user The user to whom the schedule belongs.
 	 * @return Schedule
 	 */
-	protected function getUserSchedule($user)
+	protected function getUserSchedule(User $user)
 	{
-		$schedule = $this->getObjectManager()
+		$schedule = $this->getEntityManager()
 		                 ->getRepository('AbaLookup\Entity\Schedule')
 		                 ->findOneBy(['user' => $user->getId()]);
 		if (!$schedule) {
@@ -86,18 +89,18 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Tells the ObjectManager to make an instance managed and persistent
-	 * and flushes all changes to the object
+	 * Tells the EntityManager to make an instance managed and persistent
+	 * and flushes all changes to the entity
 	 *
-	 * This effectively synchronizes the in-memory state of the object with the database.
+	 * This effectively synchronizes the in-memory state of the entity with the database.
 	 *
-	 * @param object $object The object to save.
+	 * @param object $entity The entity to save.
 	 */
-	protected function save($object)
+	protected function save($entity)
 	{
-		$oManager = $this->getObjectManager();
-		$oManager->persist($object);
-		$oManager->flush();
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist($entity);
+		$entityManager->flush();
 	}
 
 	/**
@@ -147,10 +150,7 @@ abstract class AbaLookupController extends AbstractActionController
 	/**
 	 * Returns the current user in session
 	 *
-	 * Returns the current user in session if a user has logged in,
-	 * returns NULL otherwise.
-	 *
-	 * @return User
+	 * @return User|NULL
 	 */
 	protected function currentSessionUser()
 	{
@@ -158,7 +158,7 @@ abstract class AbaLookupController extends AbstractActionController
 			return NULL;
 		}
 		$session = new Container(self::SESSION_USER_NAMESPACE);
-		return $this->getObjectManager()
+		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
 		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_USER_ID_KEY)]);
 	}
