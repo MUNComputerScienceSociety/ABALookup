@@ -33,8 +33,10 @@ class Module
 	{
 		return [
 			'invokables' => [
+				'anchor'         => 'AbaLookup\View\Helper\AnchorLink',
 				'scheduleHelper' => 'AbaLookup\View\Helper\ScheduleHelper',
-				'script' => 'AbaLookup\View\Helper\Script',
+				'script'         => 'AbaLookup\View\Helper\Script',
+				'stylesheet'     => 'AbaLookup\View\Helper\Stylesheet',
 			],
 		];
 	}

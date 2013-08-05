@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); ?>
+<!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
@@ -8,8 +8,7 @@
 			echo $this->headTitle();
 			echo $this->headMeta()
 			          ->appendName('viewport', 'width=device-width');
-			echo $this->headLink()
-			          ->appendStylesheet($this->basePath('css/main.css'));
+			echo $this->stylesheet('main.css');
 		?>
 	</head>
 	<body>
@@ -20,15 +19,21 @@
 						<h1 class="four columns logo">ABA Lookup</h1>
 					</a>
 					<nav class="eight columns mobile-three text-right nav">
-						<?php if (isset($this->user)): ?>
-						<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile'; ?>" class="button">
-							<?php echo $this->user->getDisplayName(); ?>
-						</a>
-						<a href="/users/logout">Logout</a>
-						<?php else: ?>
-						<a href="/users/login" class="button">Login</a>
-						<a href="/users/register">Signup</a>
-						<?php endif; ?>
+						<?php
+							if (isset($this->user)):
+								echo $this->anchor(
+									$this->user->getDisplayName(),
+									sprintf('/users/%d/profile', $this->user->getId()),
+									['button']
+								);
+								echo '<a href="/users/logout">Logout</a>';
+							else:
+						?>
+							<a href="/users/login" class="button">Login</a>
+							<a href="/users/register">Signup</a>
+						<?php
+							endif;
+						?>
 					</nav>
 				</div>
 			</div>

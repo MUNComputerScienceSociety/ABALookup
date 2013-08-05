@@ -8,14 +8,14 @@ use
 ;
 
 /**
- * View helper that generates a <script> tag
+ * View helper that generates a stylesheet link
  */
-class Script extends AbstractHelper
+class Stylesheet extends AbstractHelper
 {
 	/**
-	 * Returns a HTML script tag
+	 * Returns a HTML stylesheet link tag
 	 *
-	 * @param string $filename The script filename
+	 * @param string $filename The filename
 	 * @return string
 	 */
 	public function __invoke($filename)
@@ -25,6 +25,6 @@ class Script extends AbstractHelper
 				'The filename must be a string.'
 			));
 		}
-		return sprintf('<script src="/js/%s"></script>', $filename);
+		return sprintf('<link rel="stylesheet" href="/css/%s">', $filename);
 	}
 }

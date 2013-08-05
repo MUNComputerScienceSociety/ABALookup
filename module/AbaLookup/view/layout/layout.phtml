@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); ?>
+<!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
@@ -8,8 +8,7 @@
 			echo $this->headTitle();
 			echo $this->headMeta()
 			          ->appendName('viewport', 'width=device-width');
-			echo $this->headLink()
-			          ->appendStylesheet($this->basePath('css/main.alt.css'));
+			echo $this->stylesheet('main.alt.css');
 		?>
 	</head>
 	<body>
@@ -20,9 +19,12 @@
 				</a>
 				<?php if (isset($this->user)): ?>
 				<nav class="nav eight columns mobile-ten">
-					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile'; ?>">Profile</a>
-					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/schedule'; ?>">Schedule</a>
-					<a href="<?php echo '/users' . '/' . $this->user->getId() . '/matches'; ?>">Matches</a>
+					<?php
+						$id = $this->user->getId();
+						echo $this->anchor('Profile', sprintf('/users/%d/profile', $id));
+						echo $this->anchor('Schedule', sprintf('/users/%d/schedule', $id));
+						echo $this->anchor('Matches', sprintf('/users/%d/matches', $id));
+					?>
 					<a href="/users/logout">Logout</a>
 				</nav>
 				<?php endif; ?>
@@ -35,7 +37,7 @@
 		</div>
 		<?php
 			echo $this->footer;
-			echo $this->script(['main.min.js']);
+			echo $this->script('main.min.js');
 		?>
 	</body>
 </html>
