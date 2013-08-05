@@ -39,9 +39,9 @@ class ScheduleHelper extends AbstractHelper
 	}
 
 	/**
-	 * Return the days of the week as options
+	 * Returns the days of the week as options
 	 *
-	 * Return a string of HTML in which each of the days of the week
+	 * Returns a string of HTML in which each of the days of the week
 	 * are represented by option tags (<option>).
 	 *
 	 * @return string
@@ -69,9 +69,9 @@ class ScheduleHelper extends AbstractHelper
 	}
 
 	/**
-	 * Return the daily intervals as options
+	 * Returns the daily intervals as options
 	 *
-	 * Return a string of HTML in which each possible daily interval
+	 * Returns a string of HTML in which each possible daily interval
 	 * is represented by an option tag (<option>).
 	 *
 	 * @param int $index The selected option index.
@@ -100,7 +100,7 @@ class ScheduleHelper extends AbstractHelper
 	}
 
 	/**
-	 * Returns the HTML representing the schedule.
+	 * Returns the HTML representing the schedule
 	 *
 	 * @param array $class The class names to apply to the schedule.
 	 * @return string
@@ -117,10 +117,10 @@ class ScheduleHelper extends AbstractHelper
 				$interval = $day->getIntervals()->get($i - 1);
 				if ($j === 0) {
 					if ($i === 0) {
-						// top left corner
+						// Top left corner
 						$data .= '<td></td>';
 					} else {
-						// leftmost column
+						// Leftmost column
 						$data .= sprintf(
 							'<td>%s</td>',
 							$this->formatMilitaryTime($interval->getStartTime())
@@ -128,13 +128,13 @@ class ScheduleHelper extends AbstractHelper
 					}
 				}
 				if ($i === 0) {
-					// headers row
+					// Headers row
 					$data .= sprintf(
 						'<th>%s</th>',
 						$day->getAbbrev()
 					);
 				} else {
-					// body rows
+					// Body rows
 					$data .= sprintf(
 						'<td%s></td>',
 						$interval->isAvailable() ? ' data-available="true"' : ''
@@ -157,11 +157,11 @@ class ScheduleHelper extends AbstractHelper
 	}
 
 	/**
-	 * Format and return the given military time value
+	 * Formats and returns the given military time value
 	 *
 	 * @param int $military The time in military format.
 	 * @return string
-	 * @throws InvalidArgumnentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function formatMilitaryTime($military)
 	{
