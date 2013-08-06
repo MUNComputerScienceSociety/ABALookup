@@ -36,7 +36,7 @@ class UsersControllerTest extends BaseControllerTestCase
 	}
 
 	/**
-	 * Ensures the authtentication actions for UsersController contains valid HTML
+	 * Ensures the authentication actions for UsersController contains valid HTML
 	 *
 	 * @requires extension curl
 	 * @dataProvider authActions
