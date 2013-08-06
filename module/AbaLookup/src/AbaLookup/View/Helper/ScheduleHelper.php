@@ -105,7 +105,7 @@ class ScheduleHelper extends AbstractHelper
 	 * @param array $class The class names to apply to the schedule.
 	 * @return string
 	 */
-	public function renderSchedule(array $class = array())
+	public function renderSchedule(array $class = NULL)
 	{
 		$numberOfDays = $this->days->count();
 		$numberOfIntervals = $this->intervals->count() + 1;
@@ -143,7 +143,7 @@ class ScheduleHelper extends AbstractHelper
 			}
 			$rows[] = sprintf('<tr>%s</tr>', $data);
 		}
-		if (count($class) > 0) {
+		if (isset($class) && count($class) > 0) {
 			$class = sprintf(' class="%s"', implode(' ', $class));
 		} else {
 			$class = '';
@@ -165,8 +165,10 @@ class ScheduleHelper extends AbstractHelper
 	 */
 	protected function formatMilitaryTime($military)
 	{
-		if (!isset($military)) {
-			throw new InvalidArgumentException();
+		if (!isset($military) || !is_int($military)) {
+			throw new InvalidArgumentException(
+				'The given military time must be an integer.'
+			);
 		}
 		$padded = str_pad($military, 4, '0', STR_PAD_LEFT);
 		$dateTime = new DateTime($padded);
