@@ -1,8 +1,10 @@
-(function (window, document, undefined) {
+(function (window, undefined) {
+	var document = window.document;
+	var jQuery = window.jQuery;
 	var hspOpts = {
 		show: false, // password is hidden by default
 		innerToggle: true, // create an inner toggle
-		hideToggleUntil: false, // toggle is immediately visible
+		hideToggleUntil: false, // show toggle immediately
 		touchSupport: Modernizr.touch, // support touch events without losing focus
 		toggleEvent: 'click', // when touch support is false
 		toggleTouchEvent: 'touchstart mousedown', // when touch support is true
@@ -38,6 +40,14 @@
 		widthMethod: 'outerWidth',
 		heightMethod: 'outerHeight'
 	};
-	$('#password').hideShowPassword(hspOpts);
-	$('#confirm-password').hideShowPassword(hspOpts);
-}(window, window.document));
+	var elements = [
+		'password',
+		'confirm-password',
+		'old-password',
+		'new-password',
+		'confirm-new-password'
+	];
+	jQuery.each(elements, function (i, v) {
+		jQuery('#' + v).hideShowPassword(hspOpts);
+	});
+}(window));
