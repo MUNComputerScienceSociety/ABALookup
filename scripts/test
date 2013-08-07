@@ -2,5 +2,6 @@
 
 set -e
 
+grunt lint
 scripts/test-phpunit
 scripts/test-pa11y
