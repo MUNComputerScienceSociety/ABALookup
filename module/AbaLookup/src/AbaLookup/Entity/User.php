@@ -21,17 +21,21 @@ use
 class User
 {
 	/**
-	 * The minimum length for the user's password
+	 * The minimum number of characters in a display name
 	 */
-	const MINIMUM_PASSWORD_LENGTH = 8;
+	const MINIMUM_LENGTH_DISPLAY_NAME = 1;
+
+	/**
+	 * The minimum length for users' passwords
+	 */
+	const MINIMUM_LENGTH_PASSWORD = 8;
 
 	/**
 	 * The minimum length for a phone number
 	 *
-	 * At minimum, 7 characters allows for phone numbers without
-	 * area codes (e.g. 5551234).
+	 * As a minimum, 7 characters allows for phone numbers without area codes (e.g. 5551234).
 	 */
-	const MINIMUM_PHONE_NUMBER_LENGTH = 7;
+	const MINIMUM_LENGTH_PHONE_NUMBER = 7;
 
 	/**
 	 * BCrypt for hashing and verifying password

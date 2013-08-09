@@ -14,27 +14,30 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $form;
 
-	protected function generateData($displayName,
-	                                $emailAddress,
-	                                $password,
-	                                $confirmPassword,
-	                                $phoneNumber   = '7095551234',
-	                                $userType      = '0',
-	                                $sex           = NULL,
-	                                $abaCourse     = FALSE,
-	                                $codeOfConduct = FALSE
+	/**
+	 * Set the form data
+	 */
+	protected function setFormData($displayName,
+	                               $emailAddress    = 'jdoe@email.com',
+	                               $password        = 'password',
+	                               $confirmPassword = 'password',
+	                               $phoneNumber     = '7095551234',
+	                               $userType        = '0',
+	                               $sex             = NULL,
+	                               $abaCourse       = FALSE,
+	                               $codeOfConduct   = FALSE
 	) {
-		return [
-			RegisterForm::ELEMENT_NAME_DISPLAY_NAME => $displayName,
-			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
-			RegisterForm::ELEMENT_NAME_PASSWORD => $password,
+		$this->form->setData([
+			RegisterForm::ELEMENT_NAME_DISPLAY_NAME     => $displayName,
+			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS    => $emailAddress,
+			RegisterForm::ELEMENT_NAME_PASSWORD         => $password,
 			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD => $confirmPassword,
-			RegisterForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber,
-			RegisterForm::ELEMENT_NAME_USER_TYPE => $userType,
-			RegisterForm::ELEMENT_NAME_SEX => $sex,
-			RegisterForm::ELEMENT_NAME_ABA_COURSE => $abaCourse,
-			RegisterForm::ELEMENT_NAME_CODE_OF_CONDUCT => $codeOfConduct
-		];
+			RegisterForm::ELEMENT_NAME_PHONE_NUMBER     => $phoneNumber,
+			RegisterForm::ELEMENT_NAME_USER_TYPE        => $userType,
+			RegisterForm::ELEMENT_NAME_SEX              => $sex,
+			RegisterForm::ELEMENT_NAME_ABA_COURSE       => $abaCourse,
+			RegisterForm::ELEMENT_NAME_CODE_OF_CONDUCT  => $codeOfConduct
+		]);
 	}
 
 	/**
@@ -59,9 +62,9 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$emailAddress = 'jdoe@email.com';
 		$password = 'password';
 		$phoneNumber = '7095551234';
-		$userType = '0'; // parent
+		$userType = '0'; // Parent
 		$sex = 'F';
-		$data = $this->generateData(
+		$this->setFormData(
 			$displayName,
 			$emailAddress,
 			$password,
@@ -70,9 +73,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			$userType,
 			$sex
 		);
-		$this->form->setData($data);
 		$this->assertTrue($this->form->isValid());
-
 		$user = $this->form->getUser();
 		$this->assertInstanceOf('AbaLookup\Entity\User', $user);
 		$this->assertEquals($displayName, $user->getDisplayName());
@@ -83,118 +84,131 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($sex, $user->getSex());
 	}
 
+	public function testDisplayNameWithNonEnglishCharactersDoesValidate()
+	{
+		$this->setFormData('Jöhn Dõę');
+		$this->assertTrue($this->form->isValid());
+	}
+
 	public function testNullDisplayNameDoesNotValidate()
 	{
-		$data = $this->generateData(
-			NULL,
-			'jdoe@email.com',
-			'password',
-			'password'
-		);
-		$this->form->setData($data);
+		$this->setFormData(NULL);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmptyDisplayNameDoesNotValidate()
 	{
-		$data = $this->generateData(
-			'',
-			'jdoe@email.com',
-			'password',
-			'password'
-		);
-		$this->form->setData($data);
+		$this->setFormData('');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testDisplayNameFilledWithSpacesDoesNotValidate()
 	{
-		$data = $this->generateData(
-			'     ',
-			'jdoe@email.com',
-			'password',
-			'password'
-		);
-		$this->form->setData($data);
+		$this->setFormData('     ');
+		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
+	{
+		$this->setFormData('John Doe', 'foö@bar.com');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmptyEmailAddressDoesNotValidate()
 	{
-		$data = $this->generateData(
-			'John Doe',
-			'',
-			'password',
-			'password'
-		);
-		$this->form->setData($data);
+		$this->setFormData('John Doe', '');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullEmailAddressDoesNotValidate()
 	{
-		$data = $this->generateData(
-			'John Doe',
-			NULL,
-			'password',
-			'password'
-		);
-		$this->form->setData($data);
+		$this->setFormData('John Doe', NULL);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testPasswordTooShortDoesNotValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
 			'pass',
 			'pass'
 		);
-		$this->form->setData($data);
-		$this->assertFalse($this->form->isValid());
-	}
-
-	public function testNotConfirmingPasswordDoesNotValidate()
-	{
-		$data = $this->generateData(
-			'John Doe',
-			'jdoe@email.com',
-			'password',
-			'not the same password'
-		);
-		$this->form->setData($data);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullPasswordDoesNotValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
-			NULL,
 			NULL
 		);
-		$this->form->setData($data);
+		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testNotConfirmingPasswordDoesNotValidate()
+	{
+		$this->setFormData(
+			'John Doe',
+			'jdoe@email.com',
+			'password',
+			'not the same password'
+		);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testInvalidPhoneNumberDoesNotValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
 			'password',
 			'password',
 			'000'
 		);
-		$this->form->setData($data);
 		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testPhoneNumberWithHyphensDoesValidate()
+	{
+		$this->setFormData(
+			'John Doe',
+			'jdoe@email.com',
+			'password',
+			'password',
+			'709-555-1234'
+		);
+		$this->assertTrue($this->form->isValid());
+	}
+
+	public function testPhoneNumberWithPeriodsBetweenSetsDoesValidate()
+	{
+		$this->setFormData(
+			'John Doe',
+			'jdoe@email.com',
+			'password',
+			'password',
+			'555.1234'
+		);
+		$this->assertTrue($this->form->isValid());
+	}
+
+	public function testPhoneNumberWithSpacesDoesValidate()
+	{
+		$this->setFormData(
+			'John Doe',
+			'jdoe@email.com',
+			'password',
+			'password',
+			'709 555 1133'
+		);
+		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testNullUserTypeDoesNotValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
 			'password',
@@ -202,13 +216,12 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'7095551234',
 			NULL
 		);
-		$this->form->setData($data);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testUndisclosedSexDoesValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
 			'password',
@@ -217,13 +230,12 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'1',
 			'Undisclosed'
 		);
-		$this->form->setData($data);
 		$this->assertTrue($this->form->isValid());
 	}
 
-	public function testNullSexDoesNotValidate()
+	public function testNullSexDoesValidate()
 	{
-		$data = $this->generateData(
+		$this->setFormData(
 			'John Doe',
 			'jdoe@email.com',
 			'password',
@@ -232,7 +244,6 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'1',
 			NULL
 		);
-		$this->form->setData($data);
-		$this->assertFalse($this->form->isValid());
+		$this->assertTrue($this->form->isValid());
 	}
 }

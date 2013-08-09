@@ -4,13 +4,13 @@ namespace AbaLookup\Form;
 
 use
 	AbaLookup\Entity\User,
+	Zend\Filter\Digits,
 	Zend\Filter\StringTrim,
 	Zend\Form\Exception\DomainException,
 	Zend\Form\Form,
-	Zend\Validator\Digits as DigitsValidator,
+	Zend\I18n\Filter\Alnum,
 	Zend\Validator\EmailAddress as EmailAddressValidator,
 	Zend\Validator\NotEmpty,
-	Zend\Validator\Regex,
 	Zend\Validator\StringLength as StringLengthValidator
 ;
 
@@ -37,95 +37,87 @@ class RegisterForm extends Form
 	 */
 	protected $message;
 
-	/**
-	 * Constructs the register form via factory
-	 */
 	public function __construct()
 	{
-		// super constructor
 		parent::__construct();
-
-		// display name
-		$label = 'Your display name';
+		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
 			'type' => 'text',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your display name'
+			],
 		]);
-
-		// email address
-		$label = 'Your email address';
+		// Email address
 		$this->add([
 			'name' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your email address'
+			],
 		]);
-
-		// password field
-		$label = 'Your password';
+		// Password field
 		$this->add([
 			'name' => self::ELEMENT_NAME_PASSWORD,
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your password'
+			],
 		]);
-
-		// confirm password
-		$label = 'Confirm your password';
+		// Confirm password
 		$this->add([
 			'name' => self::ELEMENT_NAME_CONFIRM_PASSWORD,
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_CONFIRM_PASSWORD,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Confirm your password'
+			],
 		]);
-
-		// phone number
-		$label = 'Your phone number (optional)';
+		// Phone number
 		$this->add([
 			'name' => self::ELEMENT_NAME_PHONE_NUMBER,
 			'type' => 'text',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
+				'id'   => self::ELEMENT_NAME_PHONE_NUMBER,
 				'type' => 'tel',
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your phone number (optional)'
+			],
 		]);
-
-		// user type
-		$label = 'Parent or therapist';
+		// User type
 		$this->add([
 			'name' => self::ELEMENT_NAME_USER_TYPE,
 			'type' => 'select',
 			'options' => [
-				'label' => $label,
+				'label'         => 'Parent or therapist',
 				'value_options' => [
 					0 => 'Parent',
 					1 => 'Therapist',
 				],
 			],
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_USER_TYPE,
+				'id'    => self::ELEMENT_NAME_USER_TYPE,
 				'value' => 0
 			],
 		]);
-
-		// sex
-		$label = 'Sex';
+		// Sex
 		$this->add([
 			'name' => self::ELEMENT_NAME_SEX,
 			'type' => 'select',
 			'options' => [
-				'label' => $label,
+				'label'         => 'Sex',
 				'value_options' => [
 					'Undisclosed',
 					'M' => 'Male',
@@ -133,47 +125,170 @@ class RegisterForm extends Form
 				],
 			],
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_SEX,
+				'id'     => self::ELEMENT_NAME_SEX,
 				'value' => 0
 			],
 		]);
-
 		// ABA course
-		$label = 'ABA course';
 		$this->add([
 			'name' => self::ELEMENT_NAME_ABA_COURSE,
 			'type' => 'checkbox',
-			'attributes' => ['id' => self::ELEMENT_NAME_ABA_COURSE],
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_ABA_COURSE
+			],
 			'options' => [
-				'label' => $label,
+				'label'         => 'ABA course',
 				'checked_value' => TRUE
 			],
 		]);
-
-		// code of conduct
-		$label = 'Code of conduct';
+		// Code of conduct
 		$this->add([
 			'name' => self::ELEMENT_NAME_CODE_OF_CONDUCT,
 			'type' => 'checkbox',
-			'attributes' => ['id' => self::ELEMENT_NAME_CODE_OF_CONDUCT],
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_CODE_OF_CONDUCT
+			],
 			'options' => [
-				'label' => $label,
+				'label'         => 'Code of conduct',
 				'checked_value' => TRUE
 			],
 		]);
-
-		// submit button
+		// Submit
 		$this->add([
 			'name' => 'register',
 			'type' => 'submit',
-			'attributes' => ['value' => 'Register'],
+			'attributes' => [
+				'value' => 'Register'
+			],
 		]);
+	}
+
+	/**
+	 * Returns whether the display name is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isDisplayNameValid()
+	{
+		// Filter out all but alphanumeric
+		$displayName = (new Alnum(/* Allow whitespace */ TRUE))
+		               ->filter($this->data[self::ELEMENT_NAME_DISPLAY_NAME]);
+		$this->data[self::ELEMENT_NAME_DISPLAY_NAME] = $displayName;
+		// Is valid?
+		$isValid =    isset($displayName)
+		           && (new StringLengthValidator(['min' => User::MINIMUM_LENGTH_DISPLAY_NAME]))
+		              ->isValid($displayName)
+		           && (new NotEmpty())->isValid($displayName)
+		;
+		// Set the message
+		if (!$isValid) {
+			$this->message = 'The entered display name is invalid.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the email address is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isEmailAddressValid()
+	{
+		// Is valid?
+		$isValid = (new EmailAddressValidator())
+		           ->isValid($this->data[self::ELEMENT_NAME_EMAIL_ADDRESS]);
+		// Set the message
+		if (!$isValid) {
+			$this->message = 'The entered email address is not valid.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the password is valid
+	 *
+	 * Also sets the error message appropriately if needed.
+	 *
+	 * @return bool
+	 */
+	protected function isPasswordValid()
+	{
+		// Aliases
+		$confirmPassword = $this->data[self::ELEMENT_NAME_CONFIRM_PASSWORD];
+		$minlen          = User::MINIMUM_LENGTH_PASSWORD;
+		$password        = $this->data[self::ELEMENT_NAME_PASSWORD];
+		// Validators
+		$strlen = new StringLengthValidator(['min' => $minlen]);
+		// Is valid?
+		$isValid =    isset($password, $confirmPassword)
+		           && $strlen->isValid($password)
+		;
+		if (!$isValid) {
+			$this->message = sprintf(
+				'Password must be at least %d characters long.',
+				$minlen
+			);
+		} elseif ($password !== $confirmPassword) {
+			$isValid = FALSE;
+			$this->message = 'You must confirm your password.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the user type was specififed and is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isUserTypeValid()
+	{
+		// Alias
+		$userType = $this->data[self::ELEMENT_NAME_USER_TYPE];
+		// Is valid?
+		$isValid =    isset($userType)
+		           && (new NotEmpty())->isValid($userType)
+		;
+		if (!$isValid) {
+			$this->message = 'You must specify either parent or therapist.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the phone number is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isPhoneNumberValid()
+	{
+		// Filter out all but digits
+		$phone = (new Digits())->filter($this->data[self::ELEMENT_NAME_PHONE_NUMBER]);
+		$this->data[self::ELEMENT_NAME_PHONE_NUMBER] = $phone;
+		// Is valid?
+		if ((new NotEmpty())->isValid($phone)) {
+			$isValid = (new StringLengthValidator(['min' => User::MINIMUM_LENGTH_PHONE_NUMBER]))
+			           ->isValid($phone);
+			// Set the message
+			if (!$isValid) {
+				$this->message = 'The entered phone number is not valid.';
+				return FALSE;
+			}
+		}
+		return TRUE;
 	}
 
 	/**
 	 * Validates the form
 	 *
-	 * Overrides Zend\Form\Form::isValid to not use Zend\InputFilter\InputFilter.
+	 * Overrides Zend\Form\Form::isValid.
 	 *
 	 * @return bool
 	 * @throws DomainException
@@ -181,102 +296,36 @@ class RegisterForm extends Form
 	public function isValid()
 	{
 		if ($this->hasValidated) {
-			// the form has already been validated
+			// Validation has already occurred
 			return $this->isValid;
 		}
-
-		// default to invalid
+		// Default to invalid
 		$this->isValid = FALSE;
-
 		if (!is_array($this->data)) {
 			$data = $this->extract();
 			if (!is_array($data) || !isset($this->data)) {
-				// no data has been set
+				// No data has been set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
 				));
 			}
 			$this->data = $data;
 		}
-
-		// trim all the data
+		// Trim all the data
 		$strtrim = new StringTrim();
 		foreach ($this->data as $k => $v) {
 			$this->data[$k] = $strtrim->filter($v);
 		}
-
-		// validators
-		$oneChar          = new StringLengthValidator(['min' => 1]);
-		$minPasswordChars = new StringLengthValidator(['min' => User::MINIMUM_PASSWORD_LENGTH]);
-		$minPhoneChars    = new StringLengthValidator(['min' => User::MINIMUM_PHONE_NUMBER_LENGTH]);
-
-		// validators
-		$allDigits    = new DigitsValidator(); // if is all digits
-		$notEmpty     = new NotEmpty(); // if is not empty
-		$alpha        = new Regex('/^[a-zA-Z ]+$/'); // if is letter or space
-		$emailAddress = new EmailAddressValidator(); // is is valid email
-
-		// aliases
-		$displayName     = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email           = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$password        = $this->data[self::ELEMENT_NAME_PASSWORD];
-		$confirmPassword = $this->data[self::ELEMENT_NAME_CONFIRM_PASSWORD];
-		$phone           = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-		$userType        = $this->data[self::ELEMENT_NAME_USER_TYPE];
-		$sex             = $this->data[self::ELEMENT_NAME_SEX];
-
-		if (!isset($displayName) // has not been set or is NULL
-		    || !$notEmpty->isValid($displayName) // is empty
-		    || !$alpha->isValid($displayName) // contains invalid characters
-		    || !$oneChar->isValid($displayName) // is longer than one char
+		// Validate the form
+		if (
+			   $this->isDisplayNameValid()
+			&& $this->isEmailAddressValid()
+			&& $this->isPasswordValid()
+			&& $this->isUserTypeValid()
+			&& $this->isPhoneNumberValid()
 		) {
-
-			// (has not been set OR is NULL) OR (is empty) OR (is not letter) OR (is less than one char)
-			$this->message = "You must enter a display name contining only characters.";
-
-		} elseif (!isset($email) // has ne been set or is NULL
-		          || !$emailAddress->isValid($email) // is not valid email
-		) {
-
-			$this->message = "You must provide a valid email address.";
-
-		} elseif (!isset($password) // has not been set or is NULL
-		          || !$minPasswordChars->isValid($password) // is too short
-		) {
-
-			$this->message = sprintf(
-				"Your password must be at least %d characters in length.",
-				User::MINIMUM_PASSWORD_LENGTH
-			);
-
-		} elseif ($password !== $confirmPassword) {
-
-			$this->message = "You must confirm your password.";
-
-		} elseif ($notEmpty->isValid($phone) // not empty
-		          && (!$allDigits->isValid($phone) || !$minPhoneChars->isValid($phone))
-		) {
-
-			// user entered a phone number and (it's not digits or not long enough)
-			$this->message = "The phone number provided is not valid.";
-
-		} elseif (!isset($userType) // has not been set or is NULL
-		          || !$notEmpty->isValid($userType) // is empty
-		) {
-
-			$this->message = "You need to specify either parent or therapist";
-
-		} elseif (!isset($sex)) {
-
-			$this->message = "Gender cannot be empty.";
-
-		} else {
-
-			// all good
 			$this->isValid = TRUE;
-
 		}
-
 		$this->hasValidated = TRUE;
 		return $this->isValid;
 	}
@@ -288,23 +337,20 @@ class RegisterForm extends Form
 	 */
 	public function getMessage()
 	{
-		return $this->message;
+		return isset($this->message) ? $this->message : '';
 	}
 
 	/**
-	 * Returns the new {@code User} from the form
+	 * Returns the new {@code User} from the form fields
 	 *
-	 * @return User
+	 * @return User|NULL
 	 */
 	public function getUser()
 	{
 		if (!$this->hasValidated || !$this->isValid) {
-			// form has not been validated
-			// OR is has been validated and is not valid
 			return NULL;
 		}
-
-		// aliases
+		// Data field aliases
 		$displayName   = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
 		$email         = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
 		$password      = $this->data[self::ELEMENT_NAME_PASSWORD];
@@ -313,8 +359,7 @@ class RegisterForm extends Form
 		$sex           = $this->data[self::ELEMENT_NAME_SEX];
 		$abaCourse     = $this->data[self::ELEMENT_NAME_ABA_COURSE];
 		$codeOfConduct = $this->data[self::ELEMENT_NAME_CODE_OF_CONDUCT];
-
-		// create and return a new user
+		// Create and return a new user
 		$user = new User(
 			$displayName,
 			$email,
@@ -325,10 +370,9 @@ class RegisterForm extends Form
 			(bool) $codeOfConduct
 		);
 		if ($phone) {
-			// the user entered a phone number
+			// The user entered a phone number
 			$user->setPhone((int) $phone);
 		}
-
 		return $user;
 	}
 }

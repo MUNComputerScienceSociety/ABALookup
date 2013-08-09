@@ -28,56 +28,56 @@ class LoginForm extends Form
 	 */
 	protected $message;
 
-	/**
-	 * Constructs the form via factory
-	 */
 	public function __construct()
 	{
 		parent::__construct();
-
-		// email address
-		$label = 'Your email address';
+		// Email address
 		$this->add([
 			'name' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			'type' => 'email',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your email address'
+			],
 		]);
-
-		// password field
-		$label = 'Your password';
+		// Password field
 		$this->add([
 			'name' => self::ELEMENT_NAME_PASSWORD,
 			'type' => 'password',
 			'attributes' => [
 				'id' => self::ELEMENT_NAME_PASSWORD,
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your password'
+			],
 		]);
-
-		// remember me
-		$label = 'Remember me';
+		// Remember me
 		$this->add([
 			'name' => self::ELEMENT_NAME_REMEMBER_ME,
 			'type' => 'checkbox',
-			'attributes' => ['id' => self::ELEMENT_NAME_REMEMBER_ME],
-			'options' => ['label' => $label],
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_REMEMBER_ME
+			],
+			'options' => [
+				'label' => 'Remember me'
+			],
 		]);
-
-		// submit button
+		// Submit
 		$this->add([
 			'name' => 'login',
 			'type' => 'submit',
-			'attributes' => ['value' => 'Login'],
+			'attributes' => [
+				'value' => 'Login'
+			],
 		]);
 	}
 
 	/**
 	 * Validates the form
 	 *
-	 * Overrides Zend\Form\Form::isValid to not use Zend\InputFilter\InputFilter.
+	 * Overrides Zend\Form\Form::isValid.
 	 *
 	 * @return bool
 	 * @throws DomainException
@@ -85,47 +85,39 @@ class LoginForm extends Form
 	public function isValid()
 	{
 		if ($this->hasValidated) {
-			// the form has already been validated
+			// Validation has already occurred
 			return $this->isValid;
 		}
-
-		// default to invalid
+		// Default to invalid
 		$this->isValid = FALSE;
-
 		if (!is_array($this->data)) {
 			$data = $this->extract();
 			if (!is_array($data) || !isset($this->data)) {
-				// no data set
+				// No data set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
 				));
 			}
 			$this->data = $data;
 		}
-
-		// trim all the data
+		// Trim all the data
 		$strtrim = new StringTrim();
 		foreach ($this->data as $k => $v) {
 			$this->data[$k] = $strtrim->filter($v);
 		}
-
-		// aliases
+		// Alias the data
 		$email    = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
 		$password = $this->data[self::ELEMENT_NAME_PASSWORD];
-
-		// validators
+		// Validators
 		$emailAddress     = new EmailAddressValidator();
-		$minPasswordChars = new StringLengthValidator(['min' => User::MINIMUM_PASSWORD_LENGTH]);
-
-		if (!$emailAddress->isValid($email)) {
-			$this->message = "You must enter a valid email address.";
-		} elseif (!$minPasswordChars->isValid($password)) {
-			$this->message = "The entered credentials are not valid.";
-		} else {
-			// all good
-			$this->isValid = TRUE;
+		$minPasswordChars = new StringLengthValidator(['min' => User::MINIMUM_LENGTH_PASSWORD]);
+		// Is valid?
+		if (!$emailAddress->isValid($email) || !$minPasswordChars->isValid($password)) {
+			$this->message      = 'The entered credentials are not valid.';
+			$this->hasValidated = TRUE;
+			return $this->isValid; // FALSE
 		}
-
+		$this->isValid      = TRUE;
 		$this->hasValidated = TRUE;
 		return $this->isValid;
 	}
@@ -137,13 +129,13 @@ class LoginForm extends Form
 	 */
 	public function getMessage()
 	{
-		return $this->message;
+		return isset($this->message) ? $this->message : '';
 	}
 
 	/**
 	 * Returns the email address entered
 	 *
-	 * @return string
+	 * @return string|NULL
 	 */
 	public function getEmailAddress()
 	{
@@ -156,7 +148,7 @@ class LoginForm extends Form
 	/**
 	 * Returns the password entered
 	 *
-	 * @return string
+	 * @return string|NULL
 	 */
 	public function getPassword()
 	{
@@ -167,12 +159,15 @@ class LoginForm extends Form
 	}
 
 	/**
-	 * Returns whether to remember
+	 * Returns whether to remember the user session
 	 *
-	 * @return bool
+	 * @return bool|NULL
 	 */
 	public function rememberMe()
 	{
+		if (!$this->hasValidated || !$this->isValid) {
+			return NULL;
+		}
 		return (bool) $this->data[self::ELEMENT_NAME_REMEMBER_ME];
 	}
 }

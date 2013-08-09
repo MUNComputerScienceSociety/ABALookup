@@ -17,13 +17,16 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $form;
 
-	protected function generateData($emailAddress, $password)
+	/**
+	 * Set the form data
+	 */
+	protected function setFormData($emailAddress, $password)
 	{
-		return [
+		$this->form->setData([
 			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
 			LoginForm::ELEMENT_NAME_PASSWORD => $password,
-			LoginForm::ELEMENT_NAME_REMEMBER_ME => '0'
-		];
+			LoginForm::ELEMENT_NAME_REMEMBER_ME => ''
+		]);
 	}
 
 	/**
@@ -44,38 +47,39 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 
 	public function testValidDataDoesValidate()
 	{
-		$data = $this->generateData('foo@bar.com', 'password');
-		$this->form->setData($data);
+		$this->setFormData('foo@bar.com', 'password');
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testInvalidEmailAddressDoesNotValidate()
 	{
-		$data = $this->generateData('foo', 'password');
-		$this->form->setData($data);
+		$this->setFormData('foo', 'password');
 		$this->assertFalse($this->form->isValid());
 	}
 
-	public function testInvalidPasswordDoesNotValidate()
+	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
 	{
-		$data = $this->generateData('foo@bar.com', 'bar');
-		$this->form->setData($data);
+		$this->setFormData('foö@bar.com', 'password');
+		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testShortPasswordDoesNotValidate()
+	{
+		$this->setFormData('foo@bar.com', 'bar');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testGetEmailAddressFromUnvalidatedForm()
 	{
 		$emailAddress = 'foo@bar.com';
-		$data = $this->generateData($emailAddress, 'password');
-		$this->form->setData($data);
+		$this->setFormData($emailAddress, 'password');
 		$this->assertEquals(NULL, $this->form->getEmailAddress());
 	}
 
 	public function testGetEmailAddressFromValidatedForm()
 	{
 		$emailAddress = 'foo@bar.com';
-		$data = $this->generateData($emailAddress, 'password');
-		$this->form->setData($data);
+		$this->setFormData($emailAddress, 'password');
 		$this->form->isValid();
 		$this->assertEquals($emailAddress, $this->form->getEmailAddress());
 	}
@@ -83,16 +87,14 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 	public function testGetPasswordFromUnvalidatedForm()
 	{
 		$password = 'password';
-		$data = $this->generateData('foo@bar.com', $password);
-		$this->form->setData($data);
+		$this->setFormData('foo@bar.com', $password);
 		$this->assertEquals(NULL, $this->form->getPassword());
 	}
 
 	public function testGetPasswordFromValidatedForm()
 	{
 		$password = 'password';
-		$data = $this->generateData('foo@bar.com', $password);
-		$this->form->setData($data);
+		$this->setFormData('foo@bar.com', $password);
 		$this->form->isValid();
 		$this->assertEquals($password, $this->form->getPassword());
 	}

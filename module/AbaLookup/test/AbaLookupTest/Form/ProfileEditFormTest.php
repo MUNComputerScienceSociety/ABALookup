@@ -23,21 +23,18 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected $form;
 
-	protected function generateData($displayName,
-	                                $emailAddress,
-	                                $oldPassword = '',
-	                                $newPassword = '',
-	                                $newPasswordConfirm = '',
-	                                $phoneNumber = NULL
+	/**
+	 * Set the form data
+	 */
+	protected function setFormData($displayName,
+	                               $emailAddress,
+	                               $phoneNumber = NULL
 	) {
-		return [
+		$this->form->setData([
 			ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName,
 			ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
-			ProfileEditForm::ELEMENT_NAME_OLD_PASSWORD => $oldPassword,
-			ProfileEditForm::ELEMENT_NAME_NEW_PASSWORD => $newPassword,
-			ProfileEditForm::ELEMENT_NAME_CONFIRM_NEW_PASSWORD => $newPasswordConfirm,
 			ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber
-		];
+		]);
 	}
 
 	/**
@@ -45,7 +42,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->user = new User('Ramus', 'ramus@email.com', 'password', FALSE);
+		$this->user = new User('Ramus', 'foo@bar.com', 'password', FALSE);
 		$this->form = new ProfileEditForm($this->user);
 	}
 
@@ -59,111 +56,131 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	public function testValidDataDoesVaildate()
 	{
-		$data = $this->generateData('John Doe', 'jdoe@email.com');
-		$this->form->setData($data);
+		$this->setFormData('John Doe', 'foo@bar.com');
+		$this->assertTrue($this->form->isValid());
+	}
+
+	public function testDisplayNameContainingNonEnglishCharactersDoesValidate()
+	{
+		$this->setFormData('Johñ Döe', 'foo@bar.com');
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testInvalidDisplayNameDoesNotValidate()
 	{
-		$data = $this->generateData('', 'jdoe@email.com');
-		$this->form->setData($data);
+		$this->setFormData('', 'foo@bar.com');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testDisplayNameOnlySpacesDoesNotValidate()
 	{
-		$data = $this->generateData('       ', 'jdoe@email.com');
-		$this->form->setData($data);
+		$this->setFormData('      ', 'foo@bar.com');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullDisplayNameDoesNotValidate()
 	{
-		$data = $this->generateData(NULL, 'jdoe@email.com');
-		$this->form->setData($data);
+		$this->setFormData(NULL, 'foo@bar.com');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmptyEmailAddressDoesNotValidate()
 	{
-		$data = $this->generateData('John Doe', '');
-		$this->form->setData($data);
+		$this->setFormData('John Doe', '');
+		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
+	{
+		$this->setFormData('John Doe', 'foö@bar.com');
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullEmailAddressDoesNotValidate()
 	{
-		$data = $this->generateData('John Doe', NULL);
-		$this->form->setData($data);
+		$this->setFormData('John Doe', NULL);
 		$this->assertFalse($this->form->isValid());
 	}
 
-	public function testUpdatePasswordWithoutOldPasswordDoesNotValidate()
+	public function testInvalidPhoneNumberDoesNotValidate()
 	{
-		$data = $this->generateData('John Doe', 'jdoe@email.com', '', 'new password', 'new password');
-		$this->form->setData($data);
+		$this->setFormData('John Doe', 'foo@bar.com', '1');
 		$this->assertFalse($this->form->isValid());
 	}
 
-	public function testEnterNewPasswordWithoutConfirmingDoesNotValidate()
+	public function testNullPhoneNumberDoesValidate()
 	{
-		$data = $this->generateData('John Doe', 'jdoe@email.com', 'password', 'new password');
-		$this->form->setData($data);
-		$this->assertFalse($this->form->isValid());
+		$this->setFormData('John Doe', 'foo@bar.com', NULL);
+		$this->assertTrue($this->form->isValid());
 	}
 
-	public function testShortPasswordDoesNotValidate()
+	public function testEmptyPhoneNumberDoesValidate()
 	{
-		$data = $this->generateData('John Doe', 'jdoe@email.com', 'password', 'foo', 'foo');
-		$this->form->setData($data);
-		$this->assertFalse($this->form->isValid());
+		$this->setFormData('John Doe', 'foo@bar.com', '');
+		$this->assertTrue($this->form->isValid());
 	}
 
-	public function testNullPasswordDoesNotValidate()
+	public function testPhoneNumberWithHyphensDoesValidate()
 	{
-		$data = $this->generateData('John Doe', 'jdoe@email.com', 'password', NULL, NULL);
-		$this->form->setData($data);
-		$this->assertFalse($this->form->isValid());
+		$this->setFormData('John Doe', 'foo@bar.com', '709-555-1111');
+		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testCanUpdateDisplayName()
 	{
 		$displayName = 'John Doe';
-		$data = $this->generateData($displayName, 'jdoe@email.com');
-		$this->form->setData($data);
+		$this->setFormData($displayName, 'foo@bar.com');
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertEquals($displayName, $this->user->getDisplayName());
 	}
 
-	public function testCanUpdatePassword()
+	public function testCanUpdateDisplayNameWithNonEnglishCharacters()
 	{
-		$oldPassword = 'password';
-		$newPassword = 'foobarbaz';
-		$this->assertTrue($this->user->verifyPassword($oldPassword));
-		$this->assertFalse($this->user->verifyPassword($newPassword));
-		$data = $this->generateData(
-			$this->user->getDisplayName(),
-			$this->user->getEmail(),
-			$oldPassword,
-			$newPassword,
-			$newPassword
-		);
-		$this->form->setData($data);
+		$displayName = 'ËèŒŁma Kæępø';
+		$this->setFormData($displayName, 'foo@bar.com');
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
-		$this->assertTrue($this->user->verifyPassword($newPassword));
+		$this->assertEquals($displayName, $this->user->getDisplayName());
 	}
 
 	public function testCanUpdatePhoneNumber()
 	{
 		$this->assertEquals(NULL, $this->user->getPhone());
-		$phoneNumber = '7095551234'; // string values are returned from forms
-		$data = $this->generateData('John Doe', 'jdoe@email.com', '', '', '', $phoneNumber);
-		$this->form->setData($data);
+		$phoneNumber = '7095551234'; // String values are returned from forms
+		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertTrue((int) $phoneNumber === $this->user->getPhone());
+	}
+
+	public function testCanUpdatePhoneNumberWithSpaces()
+	{
+		$this->assertEquals(NULL, $this->user->getPhone());
+		$phoneNumber = '709 555 1234';
+		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->assertTrue($this->form->isValid());
+		$this->form->updateUser($this->user);
+		$this->assertTrue(7095551234 === $this->user->getPhone());
+	}
+
+	public function testCanUpdatePhoneNumberWithPeriodsBetweensSets()
+	{
+		$this->assertEquals(NULL, $this->user->getPhone());
+		$phoneNumber = '709.555.1234';
+		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->assertTrue($this->form->isValid());
+		$this->form->updateUser($this->user);
+		$this->assertTrue(7095551234 === $this->user->getPhone());
+	}
+
+	public function testCanUpdatePhoneNumberWithHyphens()
+	{
+		$this->assertEquals(NULL, $this->user->getPhone());
+		$phoneNumber = '709-555-1234';
+		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->assertTrue($this->form->isValid());
+		$this->form->updateUser($this->user);
+		$this->assertTrue(7095551234 === $this->user->getPhone());
 	}
 }

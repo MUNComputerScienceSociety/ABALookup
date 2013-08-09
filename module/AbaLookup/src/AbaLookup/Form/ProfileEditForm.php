@@ -4,13 +4,13 @@ namespace AbaLookup\Form;
 
 use
 	AbaLookup\Entity\User,
+	Zend\Filter\Digits,
 	Zend\Filter\StringTrim,
 	Zend\Form\Exception\DomainException,
 	Zend\Form\Form,
-	Zend\Validator\Digits as DigitsValidator,
+	Zend\I18n\Filter\Alnum,
 	Zend\Validator\EmailAddress as EmailAddressValidator,
 	Zend\Validator\NotEmpty,
-	Zend\Validator\Regex,
 	Zend\Validator\StringLength as StringLengthValidator
 ;
 
@@ -22,108 +22,137 @@ class ProfileEditForm extends Form
 	/**
 	 * Constants for form element IDs and names
 	 */
-	const ELEMENT_NAME_DISPLAY_NAME         = 'display-name';
-	const ELEMENT_NAME_EMAIL_ADDRESS        = 'email-address';
-	const ELEMENT_NAME_OLD_PASSWORD         = 'old-password';
-	const ELEMENT_NAME_NEW_PASSWORD         = 'new-password';
-	const ELEMENT_NAME_CONFIRM_NEW_PASSWORD = 'confirm-new-password';
-	const ELEMENT_NAME_PHONE_NUMBER         = 'phone-number';
+	const ELEMENT_NAME_DISPLAY_NAME  = 'display-name';
+	const ELEMENT_NAME_EMAIL_ADDRESS = 'email-address';
+	const ELEMENT_NAME_PHONE_NUMBER  = 'phone-number';
 
 	/**
-	 * Error message if set
+	 * Error message
 	 */
 	protected $message;
 
-	/**
-	 * Constructs the edit form via factory
-	 */
 	public function __construct(User $user)
 	{
-		// super constructor
 		parent::__construct();
-
-		// display name
-		$label = 'Your display name';
+		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
 			'type' => 'text',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_DISPLAY_NAME,
+				'id'    => self::ELEMENT_NAME_DISPLAY_NAME,
 				'value' => $user->getDisplayName(),
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your display name'
+			],
 		]);
-
-		// email address
-		$label = 'Your email address';
+		// Email address
 		$this->add([
 			'name' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			'type' => 'email',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
+				'id'    => self::ELEMENT_NAME_EMAIL_ADDRESS,
 				'value' => $user->getEmail(),
 			],
-			'options' => ['label' => $label],
-		]);
-
-		// old password field
-		$label = 'Your old password';
-		$this->add([
-			'name' => self::ELEMENT_NAME_OLD_PASSWORD,
-			'type' => 'password',
-			'attributes' => [
-				'id' => self::ELEMENT_NAME_OLD_PASSWORD,
+			'options' => [
+				'label' => 'Your email address'
 			],
-			'options' => ['label' => $label],
 		]);
-
-		// new password field
-		$label = 'Set a new password';
-		$this->add([
-			'name' => self::ELEMENT_NAME_NEW_PASSWORD,
-			'type' => 'password',
-			'attributes' => [
-				'id' => self::ELEMENT_NAME_NEW_PASSWORD,
-			],
-			'options' => ['label' => $label],
-		]);
-
-		// confirm new password
-		$label = 'Confirm your new password';
-		$this->add([
-			'name' => self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD,
-			'type' => 'password',
-			'attributes' => [
-				'id' => self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD,
-			],
-			'options' => ['label' => $label],
-		]);
-
-		// phone number
-		$label = 'Your phone number (optional)';
+		// Phone number
 		$this->add([
 			'name' => self::ELEMENT_NAME_PHONE_NUMBER,
 			'type' => 'text',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_PHONE_NUMBER,
-				'type' => 'tel',
+				'id'    => self::ELEMENT_NAME_PHONE_NUMBER,
+				'type'  => 'tel',
 				'value' => $user->getPhone(),
 			],
-			'options' => ['label' => $label],
+			'options' => [
+				'label' => 'Your phone number (optional)'
+			],
 		]);
-
-		// submit button
+		// Submit btn
 		$this->add([
 			'type' => 'submit',
 			'name' => 'update',
-			'attributes' => ['value' => 'Update information'],
+			'attributes' => [
+				'value' => 'Update your information'
+			],
 		]);
+	}
+
+	/**
+	 * Returns whether the display name is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isDisplayNameValid()
+	{
+		$displayName = (new Alnum(/* Allow whitespace */ TRUE))
+		               ->filter($this->data[self::ELEMENT_NAME_DISPLAY_NAME]);
+		// Is valid?
+		$isValid =    isset($displayName)
+		           && (new StringLengthValidator(['min' => User::MINIMUM_LENGTH_DISPLAY_NAME]))
+		              ->isValid($displayName)
+		           && (new NotEmpty())->isValid($displayName)
+		;
+		// Set the message
+		if (!$isValid) {
+			$this->message = 'The entered display name is invalid.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the email address is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isEmailAddressValid()
+	{
+		// Is valid?
+		$isValid = (new EmailAddressValidator())
+		           ->isValid($this->data[self::ELEMENT_NAME_EMAIL_ADDRESS]);
+		// Set the message
+		if (!$isValid) {
+			$this->message = 'The entered email address is not valid.';
+		}
+		return $isValid;
+	}
+
+	/**
+	 * Returns whether the phone number is valid
+	 *
+	 * Also sets the error message appropriately.
+	 *
+	 * @return bool
+	 */
+	protected function isPhoneNumberValid()
+	{
+		// Filter out all but digits
+		$phone = (new Digits())->filter($this->data[self::ELEMENT_NAME_PHONE_NUMBER]);
+		$this->data[self::ELEMENT_NAME_PHONE_NUMBER] = $phone;
+		// Is valid?
+		if ((new NotEmpty())->isValid($phone)) {
+			$isValid = (new StringLengthValidator(['min' => User::MINIMUM_LENGTH_PHONE_NUMBER]))
+			           ->isValid($phone);
+			// Set the message
+			if (!$isValid) {
+				$this->message = 'The entered phone number is not valid.';
+				return FALSE;
+			}
+		}
+		return TRUE;
 	}
 
 	/**
 	 * Validates the form
 	 *
-	 * Overrides Zend\Form\Form::isValid to not use Zend\InputFilter\InputFilter.
+	 * Overrides Zend\Form\Form::isValid.
 	 *
 	 * @return bool
 	 * @throws DomainException
@@ -131,104 +160,35 @@ class ProfileEditForm extends Form
 	public function isValid()
 	{
 		if ($this->hasValidated) {
-			// the form has already been validated
+			// Validation has already occurred
 			return $this->isValid;
 		}
-
-		// default to invalid
+		// Default to invalid
 		$this->isValid = FALSE;
-
 		if (!is_array($this->data)) {
 			$data = $this->extract();
 			if (!is_array($data) || !isset($this->data)) {
-				// no data has been set
+				// No data has been set
 				throw new DomainException(sprintf(
 					'%s is unable to validate as there is no data currently set', __METHOD__
 				));
 			}
 			$this->data = $data;
 		}
-
-		// trim all the data
+		// Trim all the data
 		$strtrim = new StringTrim();
 		foreach ($this->data as $k => $v) {
 			$this->data[$k] = $strtrim->filter($v);
 		}
-
-		// validators
-		$oneChar          = new StringLengthValidator(['min' => 1]);
-		$minPasswordChars = new StringLengthValidator(['min' => User::MINIMUM_PASSWORD_LENGTH]);
-		$minPhoneChars    = new StringLengthValidator(['min' => User::MINIMUM_PHONE_NUMBER_LENGTH]);
-
-		// validators
-		$allDigits    = new DigitsValidator(); // if is all digits
-		$notEmpty     = new NotEmpty(); // if is not empty
-		$alpha        = new Regex('/^[a-zA-Z ]+$/'); // if is letter or space
-		$emailAddress = new EmailAddressValidator(); // is is valid email
-
-		// aliases
-		$displayName        = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email              = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$oldPassword        = $this->data[self::ELEMENT_NAME_OLD_PASSWORD];
-		$newPassword        = $this->data[self::ELEMENT_NAME_NEW_PASSWORD];
-		$confirmNewPassword = $this->data[self::ELEMENT_NAME_CONFIRM_NEW_PASSWORD];
-		$phone              = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-
-		if (!isset($displayName) // has not been set or is NULL
-		    || !$notEmpty->isValid($displayName) // is empty
-		    || !$alpha->isValid($displayName) // or is not letter or space
-		    || !$oneChar->isValid($displayName) // or is less than one character
+		// Validate the form
+		if (
+			   $this->isDisplayNameValid()
+			&& $this->isEmailAddressValid()
+			&& $this->isPhoneNumberValid()
 		) {
-
-			// (not set OR NULL) OR (is empty) OR (is not letter or space) OR (is less than on char)
-			$this->message = "You must enter a display name contining only characters.";
-
-		} elseif (!isset($email) // has not been set or is NULL
-		          || !$emailAddress->isValid($email) // is not a valid email address
-		) {
-
-			// is not a valid email address
-			$this->message = "You must provide a valid email address.";
-
-		} elseif (!isset($newPassword) // has not been set or is NULL
-		          || $notEmpty->isValid($newPassword) // is empty
-		          && !$minPasswordChars->isValid($newPassword) // is not long enough
-		) {
-
-			// password was entered but is not long enough
-			$this->message = sprintf(
-				"Your new password must be %d characters in length.",
-				User::MINIMUM_PASSWORD_LENGTH
-			);
-
-		} elseif ($notEmpty->isValid($newPassword) // is not empty (i.e. has been entered)
-		          && ($newPassword !== $confirmNewPassword) // new password wasn't confirmed
-		) {
-
-			// new password and confirmation do not match
-			$this->message = "You must confirm your new password.";
-
-		} elseif ($notEmpty->isValid($newPassword) // is not empty (i.e. has been entered)
-		          && (!isset($oldPassword) || !$notEmpty->isValid($oldPassword)) // old password not entered
-		) {
-
-			// trying to enter new password and old password was not entered
-			$this->message = "You must enter your old password to change it.";
-
-		} elseif ($notEmpty->isValid($phone)
-		          && (!$allDigits->isValid($phone) || !$minPhoneChars->isValid($phone))
-		) {
-
-			// phone number was entered and it was (NOT all digits or NOT more than seven characters)
-			$this->message = "The phone number provided is not valid.";
-
-		} else {
-
-			// form is valid
+			// The form is valid
 			$this->isValid = TRUE;
-
 		}
-
 		$this->hasValidated = TRUE;
 		return $this->isValid;
 	}
@@ -240,50 +200,33 @@ class ProfileEditForm extends Form
 	 */
 	public function getMessage()
 	{
-		return $this->message;
+		return isset($this->message) ? $this->message : '';
 	}
 
 	/**
-	 * Updates the user's information
+	 * Updates the user with their new information
 	 *
-	 * Takes (via reference) the user to update and populates
-	 * the fields with the updated data.
+	 * Takes the user to update and populates the fields with the updated data.
 	 *
+	 * @param User $user The user to update.
 	 * @return bool Whether the update was successful.
 	 */
-	public function updateUser(User &$user)
+	public function updateUser(User $user)
 	{
 		if (!$this->hasValidated || !$this->isValid) {
-			// the form is invalid
-			// or has not yet been validated
 			return FALSE;
 		}
-
-		// aliases
+		// Aliases
 		$displayName = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
 		$email       = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$oldPassword = $this->data[self::ELEMENT_NAME_OLD_PASSWORD];
-		$newPassword = $this->data[self::ELEMENT_NAME_NEW_PASSWORD];
 		$phone       = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-
-		if ($newPassword) {
-			if (!$user->verifyPassword($oldPassword)) {
-				// the user entered their password but it is invalid
-				$this->message = "The entered password is incorrect.";
-				return FALSE;
-			} else {
-				// the user correctly entered their old password
-				// and set a new password
-				$user->setPassword($newPassword);
-			}
-		}
+		// Update the information
 		$user->setDisplayName($displayName);
 		$user->setEmail($email);
 		if ($phone) {
-			// the user entered a phone number
+			// The user entered a phone number
 			$user->setPhone((int) $phone);
 		}
-
 		return TRUE;
 	}
 }
