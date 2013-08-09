@@ -2,11 +2,29 @@
 
 namespace AbaLookup;
 
+use
+	Zend\EventManager\EventInterface,
+	Zend\Mvc\MvcEvent
+;
+
 /**
  * Module class
  */
 class Module
 {
+	public function onBootstrap(EventInterface $event)
+	{
+		$event->getTarget()
+		      ->getEventManager()
+		      ->attach('finish', [$this, 'minify']);
+	}
+
+	public function minify(MvcEvent $e)
+	{
+		$response = $e->getResponse();
+		$response->setContent(preg_replace('#>\s+<#s', '><', $response->getBody()));
+	}
+
 	/**
 	 * Returns the module configuration
 	 */
