@@ -16,60 +16,62 @@ use
 class UsersController extends AbaLookupController
 {
 	/**
-	 * Registers the user
+	 * Registers the user or shows a registration form
 	 *
-	 * Validates the user's information, saves them into the database
-	 * and proceeds to log the user in (and show their profile).
+	 * Shows the registration form, validates the form data, creates a user from
+	 * the submitted data, and then adds the user into the database.
+	 *
+	 * @return array|Zend\Http\Response
 	 */
 	public function registerAction()
 	{
+		// If a user is already logged in
 		$user = $this->currentSessionUser();
 		if (isset($user)) {
+			// Redirect the user to their profile page
 			return $this->redirect()->toRoute('users', [
 				'id' => $user->getId(),
-				'action' => 'profile'
+				'action' => 'profile',
 			]);
 		}
-
-		// prepare the view layout
+		// Prepare the view layout
 		$this->prepareLayout($this->layout());
-
-		// get the registration form
+		// Create a registration form
 		$form = new RegisterForm();
-
+		// If the user has not submitted a POST request
 		if (!$this->request->isPost()) {
-			// the user has not submitted
-			// the registration form
-			return ['form' => $form];
+			// The user hs not submitted the form
+			return [
+				'form' => $form,
+			];
 		}
-
-		// the user has attempted to register
+		// The user has submitted via POST
+		// Pass the data along to the form
 		$form->setData($this->request->getPost());
+		// If the form does not validate
 		if (!$form->isValid()) {
+			// Show the user the error message
 			return [
 				'form' => $form,
 				'error' => $form->getMessage(),
 			];
 		}
-
-		// form is valid
+		// The form has validated
 		$user = $form->getUser();
 		if ($this->getUserByEmail($user->getEmail())) {
-			// the given email address is already in use
+			// The given email address is already in use
 			return [
 				'form' => $form,
-				'error' => 'The entered email address is already in use.'
+				'error' => 'The entered email address is already in use.',
 			];
 		}
 		$user->setVerified(TRUE);
-
-		// enter the user into the database
 		$this->save($user);
-
 		$this->setUserSession($user);
+		// Redirect the user to their profile page
 		return $this->redirect()->toRoute('users', [
 			'id'     => $user->getId(),
-			'action' => 'profile'
+			'action' => 'profile',
 		]);
 	}
 
@@ -77,63 +79,69 @@ class UsersController extends AbaLookupController
 	 * Logs the user in
 	 *
 	 * Verify the user credentials and if valid login user in.
+	 *
+	 * @return array|Zend\Http\Response
 	 */
 	public function loginAction()
 	{
+		// If a user is already logged in
 		$user = $this->currentSessionUser();
 		if (isset($user)) {
+			// Show the user their profile page
 			return $this->redirect()->toRoute('users', [
 				'id' => $user->getId(),
-				'action' => 'profile'
+				'action' => 'profile',
 			]);
 		}
-
-		// prepare the view layout
+		// Prepare the view layout
 		$this->prepareLayout($this->layout());
-
-		// get the login form
+		// Create a login form
 		$form = new LoginForm();
-
+		// If the user has not submitted a POST request
 		if (!$this->request->isPost()) {
-			// the user has not attempted to login
-			// show the login form
-			return ['form' => $form];
+			// Show the login form
+			return [
+				'form' => $form,
+			];
 		}
-
-		// the user has attempted to login
-		// retrieve the form values
+		// The user has submitted via POST
+		// Pass the data along to the form
 		$form->setData($this->request->getPost());
 		if (!$form->isValid()) {
+			// Show the user the error message
 			return [
 				'form' => $form,
 				'error' => $form->getMessage(),
 			];
 		}
-
-		// retrieve the validated values
+		// Retrieve the validated values
 		$emailAddress = $form->getEmailAddress();
-		$password = $form->getPassword();
-		$user = $this->getUserByEmail($emailAddress);
+		$password     = $form->getPassword();
+		$user         = $this->getUserByEmail($emailAddress);
+		// If the given email address yields no user
+		// Or the user entered the wrong password
 		if (!$user || !$user->verifyPassword($password)) {
+			// Show the user a error message
 			return [
 				'form' => $form,
-				'error' => 'The entered credentials are not valid.'
+				'error' => 'The entered credentials are not valid.',
 			];
 		}
-
+		// Create a session for the user
 		$this->setUserSession($user, $form->rememberMe());
 		return $this->redirect()->toRoute('users', [
 			'id' => $user->getId(),
-			'action' => 'profile'
+			'action' => 'profile',
 		]);
 	}
 
 	/**
 	 * Logs the user out
 	 *
-	 * If a user is logged in, log them out.
-	 * Invalidates the session.
+	 * If a user is logged in, log them out. Invalidates the session.
 	 * Reroutes the user to the home page.
+	 *
+	 * @return Zend\Http\Response
 	 */
 	public function logoutAction()
 	{
@@ -148,42 +156,52 @@ class UsersController extends AbaLookupController
 	 *
 	 * Edits to the user's profile arrive via POST with
 	 * a parameter of 'mode' => 'edit'.
+	 *
+	 * @return array|Zend\Http\Response
 	 */
 	public function profileAction()
 	{
+		// If a user is not in session
 		$user = $this->currentSessionUser();
 		if (!isset($user)) {
+			// Redirect to the login view
 			return $this->redirectToLoginPage();
 		}
-
-		// prepare the view layout
+		// Prepare the layout
 		$this->prepareLayout($this->layout(), $user);
-
-		// if mode is not edit, then user is viewing
+		// If the mode is not edit
+		// The user is viewing their profile
 		if ($this->params('mode') !== 'edit') {
-			// show the user's profile
-			return ['user' => $user];
+			// Show the user's profile
+			return [
+				'user' => $user,
+			];
 		}
-
-		// the user is editing their profile
+		// The user is editing their profile info
 		$form = new ProfileEditForm($user);
-		$edit = new ViewModel(['user' => $user, 'form' => $form]);
+		$edit = new ViewModel([
+			'user' => $user,
+			'form' => $form,
+		]);
 		$edit->setTemplate('profile/edit');
+		// If the user has not submitted a POST request
 		if (!$this->request->isPost()) {
-			// if not POST show the profile edit form
+			// Show the edit form
 			return $edit;
 		}
-
+		// The user has submitted via POST
+		// Pass the data along to the form
 		$form->setData($this->request->getPost());
+		// If the form is not valid
+		// Or an error occurred whilst updating the user
 		if (!$form->isValid() || !$form->updateUser($user)) {
+			// Show the error message
 			$edit->setVariable('error', $form->getMessage());
 			return $edit;
 		}
-
-		// update the user's information
+		// Persist the changes
 		$this->save($user);
-
-		// show the user's profile again
+		// Redirect to the profile page
 		return $this->redirect()->toRoute('users', [
 			'id' => $user->getId(),
 			'action' => 'profile',
@@ -193,67 +211,77 @@ class UsersController extends AbaLookupController
 	/**
 	 * Displays the user's schedule
 	 *
-	 * Edits to the schedule arrive via POST with
-	 * a parameter of 'mode' => 'add'.
+	 * Edits to the schedule arrive via POST with a 'mode' == 'add'.
+	 *
+	 * @return array|Zend\Http\Response
 	 */
 	public function scheduleAction()
 	{
+		// If a user is not in session
 		$user = $this->currentSessionUser();
 		if (!isset($user)) {
+			// Redirect to the login view
 			return $this->redirectToLoginPage();
 		}
-
-		// prepare the view layout
+		// Prepare the layout
 		$this->prepareLayout($this->layout(), $user);
-		// the user's schedule
+		// Get the user's schedule
 		$schedule = $this->getUserSchedule($user);
-
-		// check for schedule availabilities
-		if ($this->request->isPost()) {
-			if ($this->params('mode') === 'edit') {
-				// add the availability to the user's schedule
-				$params = array_values($this->request->getPost()->toArray());
-				list($day, $startTime, $endTime, $addRemove) = $params;
-				try {
-					$schedule->setAvailability(
-						(int) $day,
-						(int) $startTime,
-						(int) $endTime,
-						($addRemove == 'add')
-					);
-				} catch (InvalidArgumentException $e) {
-					return [
-						'error' => $e->getMessage(),
-						'user' => $user,
-						'schedule' => $schedule
-					];
-				}
-				$this->save($schedule);
-				return $this->redirect()->toRoute('users', [
-					'id' => $user->getId(),
-					'action' => 'schedule',
-				]);
+		// If the user submitted changes
+		if (
+			   $this->request->isPost()
+			&& ($this->params('mode') === 'edit')
+		) {
+			// Add the availability to the schedule
+			$params = array_values($this->request->getPost()->toArray());
+			list($day, $startTime, $endTime, $addRemove) = $params;
+			try {
+				$schedule->setAvailability(
+					(int) $day,
+					(int) $startTime,
+					(int) $endTime,
+					($addRemove == 'add')
+				);
+			} catch (InvalidArgumentException $e) {
+				return [
+					'error' => $e->getMessage(),
+					'user' => $user,
+					'schedule' => $schedule,
+				];
 			}
+			// Persist the changes
+			$this->save($schedule);
+			// Redirect to the schedule page
+			return $this->redirect()->toRoute('users', [
+				'id' => $user->getId(),
+				'action' => 'schedule',
+			]);
 		}
-
-		// show ther user's schedule
-		return ['user' => $user, 'schedule' => $schedule];
+		// Show the user their schedule
+		return [
+			'schedule' => $schedule,
+			'user' => $user,
+		];
 	}
 
 	/**
-	 * Displays the user's matches
+	 * Displays to the user their matches
+	 *
+	 * @return array|Zend\Http\Response
 	 */
 	public function matchesAction()
 	{
+		// If a user is not in session
 		$user = $this->currentSessionUser();
 		if (!isset($user)) {
+			// Redirect to the login view
 			return $this->redirectToLoginPage();
 		}
-
-		// prepare the view layout
+		// Prepare the layout
 		$this->prepareLayout($this->layout(), $user);
-
-		// show the user's matches
-		return ['user' => $user];
+		// Show the user their matches
+		return [
+			'user' => $user,
+		];
 	}
 }

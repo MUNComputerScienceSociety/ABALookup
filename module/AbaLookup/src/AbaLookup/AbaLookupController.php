@@ -26,7 +26,7 @@ abstract class AbaLookupController extends AbstractActionController
 	/**
 	 * @var Doctrine\ORM\EntityManager
 	 *
-	 * The EntityManager is the central access point to ORM functionality
+	 * The central access point to ORM functionality
 	 */
 	private $entityManager;
 
@@ -174,11 +174,11 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function prepareLayout($layout, User $user = NULL)
 	{
-		// add the footer
+		// Add the footer
 		$footer = new ViewModel();
 		$footer->setTemplate('widget/footer');
 		$layout->addChild($footer, 'footer');
-		// add the user's URL
+		// Add the user's URL
 		if (!isset($user)) {
 			return;
 		}

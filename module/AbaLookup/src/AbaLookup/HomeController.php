@@ -2,22 +2,33 @@
 
 namespace AbaLookup;
 
+/**
+ * Controller for home actions
+ */
 class HomeController extends AbaLookupController
 {
 	/**
-	 * Display the home page
+	 * Displays the home page
+	 *
+	 * @return array
 	 */
 	public function indexAction()
 	{
+		// Set the home layout
 		$this->layout('layout/home');
 		$layout = $this->layout();
 		$user = $this->currentSessionUser();
+		// Prepare the layout
 		$this->prepareLayout($layout, $user);
-		return ['user' => $user];
+		return [
+			'user' => $user,
+		];
 	}
 
 	/**
-	 * Display the privacy policy
+	 * Displays the privacy policy
+	 *
+	 * @return array
 	 */
 	public function privacyAction()
 	{
@@ -25,7 +36,9 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
-	 * Display the about page
+	 * Displays the about page
+	 *
+	 * @return array
 	 */
 	public function aboutAction()
 	{
@@ -33,7 +46,9 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
-	 * Display the terms of service
+	 * Displays the terms of service
+	 *
+	 * @return array
 	 */
 	public function termsAction()
 	{
@@ -41,7 +56,9 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
-	 * Display information about the sponsors
+	 * Displays information about the sponsors
+	 *
+	 * @return array
 	 */
 	public function sponsorsAction()
 	{
@@ -49,7 +66,9 @@ class HomeController extends AbaLookupController
 	}
 
 	/**
-	 * Display site colophon
+	 * Displays site colophon
+	 *
+	 * @return array
 	 */
 	public function colophonAction()
 	{
