@@ -23,11 +23,12 @@ class AnchorLink extends AbstractHelper
 	 */
 	public function __invoke($text, $href, array $class = NULL)
 	{
-		if (!isset($href, $text)
-		    || !is_string($text)
-		    || !is_string($href)
-		    || !$text // Empty string
-		    || !$href // Empty string
+		if (
+			   !isset($href, $text)
+			|| !is_string($text)
+			|| !is_string($href)
+			|| !$text // Empty string
+			|| !$href // Empty string
 		) {
 			throw new InvalidArgumentException(sprintf(
 				'Both the link text and href must be non-empty strings.'

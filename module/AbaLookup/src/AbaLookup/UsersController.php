@@ -29,10 +29,11 @@ class UsersController extends AbaLookupController
 		$user = $this->currentSessionUser();
 		if (isset($user)) {
 			// Redirect the user to their profile page
-			return $this->redirect()->toRoute('users', [
+			$params = [
 				'id' => $user->getId(),
 				'action' => 'profile',
-			]);
+			];
+			return $this->redirect()->toRoute('users', $params);
 		}
 		// Prepare the view layout
 		$this->prepareLayout($this->layout());
@@ -69,10 +70,11 @@ class UsersController extends AbaLookupController
 		$this->save($user);
 		$this->setUserSession($user);
 		// Redirect the user to their profile page
-		return $this->redirect()->toRoute('users', [
+		$params = [
 			'id'     => $user->getId(),
 			'action' => 'profile',
-		]);
+		];
+		return $this->redirect()->toRoute('users', $params);
 	}
 
 	/**
@@ -88,10 +90,11 @@ class UsersController extends AbaLookupController
 		$user = $this->currentSessionUser();
 		if (isset($user)) {
 			// Show the user their profile page
-			return $this->redirect()->toRoute('users', [
-				'id' => $user->getId(),
+			$params = [
+				'id'     => $user->getId(),
 				'action' => 'profile',
-			]);
+			];
+			return $this->redirect()->toRoute('users', $params);
 		}
 		// Prepare the view layout
 		$this->prepareLayout($this->layout());
@@ -129,10 +132,11 @@ class UsersController extends AbaLookupController
 		}
 		// Create a session for the user
 		$this->setUserSession($user, $form->rememberMe());
-		return $this->redirect()->toRoute('users', [
-			'id' => $user->getId(),
+		$params = [
+			'id'     => $user->getId(),
 			'action' => 'profile',
-		]);
+		];
+		return $this->redirect()->toRoute('users', $params);
 	}
 
 	/**
@@ -252,10 +256,11 @@ class UsersController extends AbaLookupController
 			// Persist the changes
 			$this->save($schedule);
 			// Redirect to the schedule page
-			return $this->redirect()->toRoute('users', [
-				'id' => $user->getId(),
+			$params = [
+				'id'     => $user->getId(),
 				'action' => 'schedule',
-			]);
+			];
+			return $this->redirect()->toRoute('users', $params);
 		}
 		// Show the user their schedule
 		return [

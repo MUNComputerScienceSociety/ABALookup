@@ -74,20 +74,20 @@ class UsersControllerTest extends BaseControllerTestCase
 	public function testUserCanLogin()
 	{
 		$user = $this->mockUser();
-
+		// Login page post data
 		$data = [
 			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $user->getEmail(),
-			LoginForm::ELEMENT_NAME_PASSWORD => 'password',
-			LoginForm::ELEMENT_NAME_REMEMBER_ME => '0'
+			LoginForm::ELEMENT_NAME_PASSWORD      => 'password',
+			LoginForm::ELEMENT_NAME_REMEMBER_ME   => '0'
 		];
-
+		// Asserts for the login page
 		$this->dispatch('/users/login', 'POST', $data);
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('Users');
 		$this->assertControllerClass('UsersController');
 		$this->assertMatchedRouteName('auth');
-		$this->assertRedirectTo('/users' . '/' . $user->getId() . '/profile');
-
+		$this->assertRedirectTo(sprintf('/users/%d/profile', $user->getId()));
+		// Pass along the session
 		return $_SESSION;
 	}
 
@@ -99,9 +99,11 @@ class UsersControllerTest extends BaseControllerTestCase
 	 */
 	public function testLoggedInUserCanAccessPages($url, $route, $session)
 	{
+		// Restore the session (post-'testUserCanLogin')
+		// Re-mock the user
 		$_SESSION = $session;
 		$this->mockUser();
-
+		// Dispatch the request and test the response
 		$this->dispatch($url);
 		$this->assertResponseStatusCode(self::HTTP_STATUS_OK);
 		$this->assertModuleName('AbaLookup');

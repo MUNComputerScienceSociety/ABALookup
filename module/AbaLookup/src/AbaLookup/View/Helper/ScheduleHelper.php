@@ -172,6 +172,6 @@ class ScheduleHelper extends AbstractHelper
 		}
 		$padded = str_pad($military, 4, '0', STR_PAD_LEFT);
 		$dateTime = new DateTime($padded);
-		return ltrim($dateTime->format('h:i A'), "0");
+		return ltrim($dateTime->format('h:i A'), '0');
 	}
 }

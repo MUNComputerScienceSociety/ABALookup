@@ -52,9 +52,12 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getUserByEmail($email)
 	{
+		$criteria = [
+			'email' => $email,
+		];
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['email' => $email]);
+		            ->findOneBy($criteria);
 	}
 
 	/**
@@ -65,9 +68,12 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getUserById($id)
 	{
+		$criteria = [
+			'id' => $id,
+		];
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['id' => $id]);
+		            ->findOneBy($criteria);
 	}
 
 	/**
@@ -78,9 +84,12 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getUserSchedule(User $user)
 	{
+		$criteria = [
+			'user' => $user->getId(),
+		];
 		$schedule = $this->getEntityManager()
 		                 ->getRepository('AbaLookup\Entity\Schedule')
-		                 ->findOneBy(['user' => $user->getId()]);
+		                 ->findOneBy($criteria);
 		if (!$schedule) {
 			$schedule = new Schedule($user);
 			$this->save($schedule);
@@ -109,7 +118,10 @@ abstract class AbaLookupController extends AbstractActionController
 	 * @return ViewModel
 	 */
 	protected function redirectToLoginPage() {
-		return $this->redirect()->toRoute('auth', ['action' => 'login']);
+		$params = [
+			'action' => 'login',
+		];
+		return $this->redirect()->toRoute('auth', $params);
 	}
 
 	/**
@@ -158,9 +170,12 @@ abstract class AbaLookupController extends AbstractActionController
 			return NULL;
 		}
 		$session = new Container(self::SESSION_USER_NAMESPACE);
+		$criteria = [
+			'id' => $session->offsetGet(self::SESSION_USER_ID_KEY),
+		];
 		return $this->getEntityManager()
 		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy(['id' => $session->offsetGet(self::SESSION_USER_ID_KEY)]);
+		            ->findOneBy($criteria);
 	}
 
 	/**

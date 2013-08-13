@@ -56,25 +56,28 @@ class Bootstrap
 	 */
 	public static function init()
 	{
-		// the path to the module directory
+		// The path to the module directory
 		$zf2ModulePaths = [dirname(dirname(__DIR__))];
-		// find the vendor directory
+		// Find the vendor directory
 		if (($path = static::findParentPath('vendor'))) {
 			$zf2ModulePaths[] = $path;
 		}
-		// check for another module directory
+		// Check for another module directory
 		if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
 			$zf2ModulePaths[] = $path;
 		}
 
 		static::initAutoloader();
 
-		// use ModuleManager to load this module and it's dependencies
+		// Use ModuleManager to load this module and its dependencies
 		$config = [
-			'module_listener_options' => ['module_paths' => $zf2ModulePaths],
-			'modules' => ['AbaLookup'],
+			'module_listener_options' => [
+				'module_paths' => $zf2ModulePaths,
+			],
+			'modules' => [
+				'AbaLookup',
+			],
 		];
-
 		$serviceManager = new ServiceManager(new ServiceManagerConfig());
 		$serviceManager->setService('ApplicationConfig', $config);
 		$serviceManager->get('ModuleManager')->loadModules();
@@ -86,21 +89,24 @@ class Bootstrap
 	 */
 	protected static function initAutoloader()
 	{
-		// the path to the vendor directory
-		$vendorPath = static::findParentPath('vendor');
-
+		// Autoload file
+		$autoloadFile = realpath(sprintf(
+			'%s/autoload.php',
+			static::findParentPath('vendor')
+		));
 		// Composer autoloading
-		if (file_exists($vendorPath . '/autoload.php')) {
-			$loader = include $vendorPath . '/autoload.php';
+		if (file_exists($autoloadFile)) {
+			$loader = include $autoloadFile;
 		}
 		if (!class_exists('Zend\Loader\AutoloaderFactory')) {
-			throw new RuntimeException('Unable to load ZF2. Run `composer install`.');
+			throw new RuntimeException('Unable to load ZF2. Run "composer install".');
 		}
-
 		AutoloaderFactory::factory([
 			'Zend\Loader\StandardAutoloader' => [
 				'autoregister_zf' => TRUE,
-				'namespaces' => [__NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__],
+				'namespaces'      => [
+					__NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+				],
 			],
 		]);
 	}

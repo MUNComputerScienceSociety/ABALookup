@@ -70,7 +70,7 @@ class Location
 	/**
 	 * Sets the enabled value of the location
 	 *
-	 * @param bool $enabled Whether this location is enabled.
+	 * @param bool $enabled Whether this location is to be enabled.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
@@ -122,9 +122,11 @@ class Location
 	}
 
 	/**
+	 * Returns whether the location is enabled
+	 *
 	 * @return bool
 	 */
-	public function getEnabled()
+	public function isEnabled()
 	{
 		return $this->enabled;
 	}

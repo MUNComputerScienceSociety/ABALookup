@@ -2,22 +2,22 @@
 	var document = window.document;
 	var jQuery = window.jQuery;
 	var hspOpts = {
-		show: false, // password is hidden by default
-		innerToggle: true, // create an inner toggle
-		hideToggleUntil: false, // show toggle immediately
-		touchSupport: Modernizr.touch, // support touch events without losing focus
-		toggleEvent: 'click', // when touch support is false
-		toggleTouchEvent: 'touchstart mousedown', // when touch support is true
-		wrapperClass: 'hsp-wrapper', // class name for wrapper element
-		toggleClass: 'hsp-toggle', // class name for the inner toggle
+		show: false, // Passwords are hidden by default
+		innerToggle: true, // Create an inner toggle
+		hideToggleUntil: false, // Show the toggle immediately
+		touchSupport: Modernizr.touch, // Support touch events without losing focus
+		toggleEvent: 'click', // Events to use when touch support is false
+		toggleTouchEvent: 'touchstart mousedown', // Events to use when touch support is true
+		wrapperClass: 'hsp-wrapper', // Class name for wrapper element
+		toggleClass: 'hsp-toggle', // Class name for the inner toggle
 		states: {
-			// these settings are applied when the password text is visible (show: true)
+			// These settings are applied when the password text is visible (show: true)
 			shown: {
-				inputClass: 'hsp-shown', // class name to apply to the input element
-				eventName: 'passwordShown', // event to trigger on the input
-				toggleClass: 'hsp-toggle-hide', // class name to apply to the toggle
-				toggleText: 'Hide', // text of the toggle element
-				// property values to apply to the input element
+				inputClass: 'hsp-shown', // Class name to apply to the input element
+				eventName: 'passwordShown', // Event to trigger on the input
+				toggleClass: 'hsp-toggle-hide', // Elass name to apply to the toggle
+				toggleText: 'Hide', // Text of the toggle element
+				// Property values to apply to the input element
 				attr: {
 					'type': 'text',
 					'autocapitalize': 'off',
@@ -26,7 +26,7 @@
 					'spellcheck': 'false'
 				}
 			},
-			// settings when text is hidden (show: false)
+			// Settings when text is hidden (show: false)
 			hidden: {
 				inputClass: 'hsp-hidden',
 				eventName: 'passwordHidden',

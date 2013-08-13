@@ -34,12 +34,12 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->displayName   = "Jane";
-		$this->email         = "jane@email.com";
-		$this->password      = "password";
+		$this->displayName   = 'Jane';
+		$this->email         = 'jane@email.com';
+		$this->password      = 'password';
 		$this->phone         = 7095551234;
 		$this->therapist     = TRUE;
-		$this->sex           = "F";
+		$this->sex           = 'F';
 		$this->abaCourse     = TRUE;
 		$this->codeOfConduct = TRUE;
 		$this->user = new User(
@@ -96,7 +96,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetDisplyName()
 	{
-		$name = "Mary";
+		$name = 'Mary';
 		$this->user->setDisplayName($name);
 		$this->assertEquals($name, $this->user->getDisplayName());
 	}
@@ -127,7 +127,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetEmail()
 	{
-		$email = "somebody@email.com";
+		$email = 'somebody@email.com';
 		$this->user->setEmail($email);
 		$this->assertEquals($email, $this->user->getEmail());
 	}
@@ -158,7 +158,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetPassword()
 	{
-		$password = "this is a strong password";
+		$password = 'this is a strong password';
 		$this->user->setPassword($password);
 		$this->assertTrue($this->user->verifyPassword($password));
 	}

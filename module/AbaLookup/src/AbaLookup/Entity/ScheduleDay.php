@@ -114,36 +114,35 @@ class ScheduleDay
 		if (!isset($day, $name, $hours, $intervalMinutes)) {
 			throw new InvalidArgumentException();
 		}
-		if (!is_int($day)
-		    || !is_string($name)
-		    || !$name
-		    || !is_int($hours)
-		    || ($hours <= 0)
-		    || !is_int($intervalMinutes)
-		    || ($intervalMinutes <= 0)
+		if (
+			   !is_int($day)
+			|| !is_string($name)
+			|| !$name
+			|| !is_int($hours)
+			|| ($hours <= 0)
+			|| !is_int($intervalMinutes)
+			|| ($intervalMinutes <= 0)
 		) {
 			throw new InvalidArgumentException();
 		}
-
 		$this->day             = $day;
 		$this->name            = $name;
 		$this->abbreviation    = substr($name, 0, 3);
 		$this->intervals       = new ArrayCollection();
-		$this->intervalMinutes = $intervalMinutes; // number of minutes in an interval
-
-		// create and add intervals to the day
-		$numberOfIntervalsPerHr = self::MINUTES_HOUR / $intervalMinutes; // number of intervals each hr
-		$hoursMilitary = $hours * self::MILITARY_TIME;
-
+		$this->intervalMinutes = $intervalMinutes; // The number of minutes in an interval
+		// Create and add intervals to the day
+		$numberOfIntervalsPerHr = self::MINUTES_HOUR / $intervalMinutes; // The number of intervals each hr
+		$hoursMilitary = $hours * self::MILITARY_TIME; // Hours in a day (in military time format)
+		// For each hour in a day
 		for ($hour = 0; $hour < $hoursMilitary; $hour += self::MILITARY_TIME) {
+			// For each interval in each the hour
 			for ($i = 0; $i < $numberOfIntervalsPerHr; $i++) {
-				// calculate start and end military times
+				// Calculate the start and end times (in military format)
 				$startTime = $hour + ($i * $intervalMinutes);
 				$endMinute = ((($i + 1) * $intervalMinutes) % self::MINUTES_HOUR);
 				$endTime = $hour + (($endMinute == 0) ? self::MILITARY_TIME : $endMinute);
-				// create an interval
+				// Create a new interval and add it to the day
 				$interval = new ScheduleInterval($startTime, $endTime);
-				// add the interval to this day
 				$this->intervals->add($interval);
 			}
 		}
@@ -194,10 +193,11 @@ class ScheduleDay
 	 */
 	public function setAvailability($startTime, $endTime, $available)
 	{
-		if (!isset($startTime, $endTime, $available)
-		    || !is_int($startTime)
-		    || !is_int($endTime)
-		    || !is_bool($available)
+		if (
+			   !isset($startTime, $endTime, $available)
+			|| !is_int($startTime)
+			|| !is_int($endTime)
+			|| !is_bool($available)
 		) {
 			throw new InvalidArgumentException();
 		}

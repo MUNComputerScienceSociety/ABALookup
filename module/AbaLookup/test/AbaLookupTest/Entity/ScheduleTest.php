@@ -183,7 +183,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 
 	public function testGetEnabled()
 	{
-		$this->assertTrue($this->schedule->getEnabled());
+		$this->assertTrue($this->schedule->isEnabled());
 	}
 
 	/**
@@ -192,7 +192,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	public function testEnable()
 	{
 		$this->schedule->enable();
-		$this->assertTrue($this->schedule->getEnabled());
+		$this->assertTrue($this->schedule->isEnabled());
 	}
 
 	/**
@@ -201,7 +201,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	public function testDisable()
 	{
 		$this->schedule->disable();
-		$this->assertFalse($this->schedule->getEnabled());
+		$this->assertFalse($this->schedule->isEnabled());
 	}
 
 	public function testGetDaysReturnsArrayCollection()

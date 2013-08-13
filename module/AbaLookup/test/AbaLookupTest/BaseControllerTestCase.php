@@ -45,14 +45,14 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 		                   'findOneBy',
 		               ])
 		             ->getMock();
-
+		// Calling 'find' or 'findOneBy' will return the passed in entity
 		$mock->expects($this->any())
 		     ->method('find')
 		     ->will($this->returnValue($entity));
 		$mock->expects($this->any())
 		     ->method('findOneBy')
 		     ->will($this->returnValue($entity));
-
+		// Return the mock object
 		return $mock;
 	}
 
@@ -73,16 +73,16 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 		                            ])
 		                          ->disableOriginalConstructor()
 		                          ->getMock();
-
+		// Return value map for the mock entity manager
 		$map = [
 			['AbaLookup\Entity\User', $this->getMockObjectRepository($user)],
 			['AbaLookup\Entity\Schedule', $this->getMockObjectRepository($schedule)],
 		];
-
+		// Mock entity manager
 		$mockEntityManager->expects($this->any())
 		                  ->method('getRepository')
 		                  ->will($this->returnValueMap($map));
-
+		// Override the real EM with the mock object
 		$serviceLocator = $this->getApplicationServiceLocator();
 		$serviceLocator->setAllowOverride(TRUE);
 		$serviceLocator->setService('doctrine.entitymanager.orm_default', $mockEntityManager);
@@ -97,15 +97,13 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	 */
 	public function mockUser()
 	{
-		// mock user
+		// Mock user
 		$user = new User('Jane', 'jane@email.com', 'password', TRUE, 'F', TRUE, TRUE);
 		$reflectionProperty = new ReflectionProperty('AbaLookup\Entity\User', 'id');
 		$reflectionProperty->setAccessible(TRUE);
 		$reflectionProperty->setValue($user, 1);
-
-		// mock Entity Manager
+		// Mock Entity Manager
 		$this->mockEntityManager($user, new Schedule($user));
-
 		return $user;
 	}
 
@@ -125,9 +123,9 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	 *
 	 * Modified from <http://git.io/BNxJcA>.
 	 *
-	 * @param string $html The HTML markup to validate.
+	 * @param string $markup The HTML markup to validate.
 	 */
-	public function assertValidHtml($html)
+	public function assertValidHtml($markup)
 	{
 		$curl = curl_init();
 		curl_setopt_array($curl, [
@@ -136,7 +134,7 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 			CURLOPT_POST => TRUE,
 			CURLOPT_POSTFIELDS => [
 				'out' => 'xml',
-				'content' => $html,
+				'content' => $markup,
 			]
 		]);
 		$response = curl_exec($curl);
@@ -144,9 +142,9 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 			$this->markTestSkipped('HTML validity cannot be checked');
 		}
 		curl_close($curl);
-
+		// Create a simple XML object from the response
+		// And assert that 0 errors exist
 		$xml = new SimpleXMLElement($response);
-		$errors = $xml->error;
-		$this->assertTrue(count($errors) == 0, 'The HTML output contains validation errors');
+		$this->assertTrue(count($xml->error) == 0, 'The HTML output contains validation errors');
 	}
 }

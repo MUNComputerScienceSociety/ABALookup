@@ -27,7 +27,7 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->name = "Paradise";
+		$this->name = 'Paradise';
 		$this->location = new Location($this->name);
 	}
 
@@ -65,7 +65,7 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetName()
 	{
-		$name = "Placentia";
+		$name = 'Placentia';
 		$this->assertEquals($name, $this->location->setName($name)->getName());
 	}
 
@@ -90,48 +90,48 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfSetNamePassedEmptyString()
 	{
-		$this->location->setName("");
+		$this->location->setName('');
 	}
 
-	public function testGetEnabled()
+	public function testIsEnabled()
 	{
-		$this->assertTrue($this->location->getEnabled());
+		$this->assertTrue($this->location->isEnabled());
 	}
 
 	/**
-	 * @depends testGetEnabled
+	 * @depends testIsEnabled
 	 */
 	public function testEnable()
 	{
 		$this->location->enable();
-		$this->assertTrue($this->location->getEnabled());
+		$this->assertTrue($this->location->isEnabled());
 	}
 
 	/**
-	 * @depends testGetEnabled
+	 * @depends testIsEnabled
 	 */
 	public function testDisable()
 	{
 		$this->location->disable();
-		$this->assertFalse($this->location->getEnabled());
+		$this->assertFalse($this->location->isEnabled());
 	}
 
 	/**
-	 * @depends testGetEnabled
+	 * @depends testIsEnabled
 	 */
 	public function testSetEnabledTrue()
 	{
 		$this->location->setEnabled(TRUE);
-		$this->assertTrue($this->location->getEnabled());
+		$this->assertTrue($this->location->isEnabled());
 	}
 
 	/**
-	 * @depends testGetEnabled
+	 * @depends testIsEnabled
 	 */
 	public function testSetEnabledFalse()
 	{
 		$this->location->setEnabled(FALSE);
-		$this->assertFalse($this->location->getEnabled());
+		$this->assertFalse($this->location->isEnabled());
 	}
 
 	/**
@@ -139,6 +139,6 @@ class LocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfSetEnabledPassedNonBool()
 	{
-		$this->location->setEnabled("");
+		$this->location->setEnabled('');
 	}
 }

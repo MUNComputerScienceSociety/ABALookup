@@ -28,13 +28,13 @@ class Schedule
 	 * The mapping from day integers to day names
 	 */
 	protected static $week = [
-		0 => "Monday",
-		1 => "Tuesday",
-		2 => "Wednesday",
-		3 => "Thursday",
-		4 => "Friday",
-		5 => "Saturday",
-		6 => "Sunday",
+		0 => 'Monday',
+		1 => 'Tuesday',
+		2 => 'Wednesday',
+		3 => 'Thursday',
+		4 => 'Friday',
+		5 => 'Saturday',
+		6 => 'Sunday',
 	];
 
 	/**
@@ -70,8 +70,8 @@ class Schedule
 	 *
 	 * The days in schedule
 	 *
-	 * Note the name of the JoinTable is the singular
-	 * of the name of the table for ScheduleDay.
+	 * Note the name of the join table is the singular version of the name
+	 * of the table for the ScheduleDay entities.
 	 */
 	protected $days;
 
@@ -89,12 +89,10 @@ class Schedule
 		if (!isset($enabled) || !is_bool($enabled)) {
 			throw new InvalidArgumentException();
 		}
-
 		$this->user    = $user;
 		$this->enabled = $enabled;
 		$this->days    = new ArrayCollection();
-
-		// add the days to the schedule
+		// Add the days to the schedule
 		foreach (self::$week as $day => $name) {
 			$scheduleDay = new ScheduleDay($day, $name);
 			$this->days->set($day, $scheduleDay);
@@ -102,10 +100,7 @@ class Schedule
 	}
 
 	/**
-	 * Sets the availability of the interval of time on the given day in the schedule
-	 *
-	 * Set the availability of the interval of time from {@code $startTime} to {@code $endTime}
-	 * on {@code $day}.
+	 * Sets the availability of the given interval of time
 	 *
 	 * @param int $day The day on which the time interval lies.
 	 * @param int $startTime The start time for the interval.
@@ -116,21 +111,20 @@ class Schedule
 	 */
 	public function setAvailability($day, $startTime, $endTime, $available)
 	{
-		if (!isset($day, $startTime, $endTime, $available)
-		    || !is_int($day)
-		    || !is_int($startTime)
-		    || !is_int($endTime)
-		    || !is_bool($available)
+		if (
+			   !isset($day, $startTime, $endTime, $available)
+			|| !is_int($day)
+			|| !is_int($startTime)
+			|| !is_int($endTime)
+			|| !is_bool($available)
 		) {
 			throw new InvalidArgumentException();
 		}
-
 		if ($startTime >= $endTime) {
 			throw new InvalidArgumentException(sprintf(
 				'The end time must be be greater than the start time.'
 			));
 		}
-
 		$scheduleDay = $this->days->get($day);
 		$scheduleDay->setAvailability($startTime, $endTime, $available);
 		return $this;
@@ -210,30 +204,29 @@ class Schedule
 	 */
 	public function isAvailable($day, $startTime, $endTime)
 	{
-		if (!isset($day, $startTime, $endTime)
-		    || !is_int($day)
-		    || !is_int($startTime)
-		    || !is_int($endTime)
+		if (
+			   !isset($day, $startTime, $endTime)
+			|| !is_int($day)
+			|| !is_int($startTime)
+			|| !is_int($endTime)
 		) {
 			throw new InvalidArgumentException();
 		}
-
 		if ($startTime >= $endTime) {
 			throw new InvalidArgumentException(sprintf(
 				'The end time must be be greater than the start time.'
 			));
 		}
-
 		$scheduleDay = $this->days->get($day);
 		return $scheduleDay->isAvailable($startTime, $endTime);
 	}
 
 	/**
-	 * Returns whether the schedule is enabled or not
+	 * Returns whether the schedule is enabled
 	 *
 	 * @return bool
 	 */
-	public function getEnabled()
+	public function isEnabled()
 	{
 		return $this->enabled;
 	}

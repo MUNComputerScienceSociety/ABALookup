@@ -50,11 +50,11 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->displayName   = "Jane";
-		$this->email         = "jane@email.com";
-		$this->password      = "password";
+		$this->displayName   = 'Jane';
+		$this->email         = 'jane@email.com';
+		$this->password      = 'password';
 		$this->therapist     = TRUE;
-		$this->sex           = "F";
+		$this->sex           = 'F';
 		$this->abaCourse     = TRUE;
 		$this->codeOfConduct = TRUE;
 		$this->user = new User(
@@ -66,9 +66,9 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 			$this->abaCourse,
 			$this->codeOfConduct
 		);
-		$this->name = "Somewhere";
+		$this->name     = 'Somewhere';
 		$this->location = new Location($this->name);
-		$this->ul = new UserLocation($this->user, $this->location);
+		$this->ul       = new UserLocation($this->user, $this->location);
 	}
 
 	public function testGetUser()
@@ -81,7 +81,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetUser()
 	{
-		$user = new User("John", "someone@email.com", "password", FALSE, NULL, FALSE, FALSE);
+		$user = new User('John', 'someone@email.com', 'password', FALSE, NULL, FALSE, FALSE);
 		$this->assertEquals($user, $this->ul->setUser($user)->getUser());
 	}
 
@@ -95,7 +95,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetLocation()
 	{
-		$location = new Location("Barçelona");
+		$location = new Location('Barçelona');
 		$this->assertEquals($location, $this->ul->setLocation($location)->getLocation());
 	}
 }

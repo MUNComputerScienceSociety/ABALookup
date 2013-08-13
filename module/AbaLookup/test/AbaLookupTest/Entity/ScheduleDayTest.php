@@ -28,9 +28,9 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->day = 6;
-		$this->name = "Sunday";
-		$this->abbrev = "Sun";
+		$this->day    = 6;
+		$this->name   = 'Sunday';
+		$this->abbrev = 'Sun';
 		$this->scheduleDay = new ScheduleDay($this->day, $this->name);
 	}
 
@@ -79,7 +79,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfNonIntegerHoursPassedToConstructor()
 	{
-		new ScheduleDay($this->day, $this->name, "24");
+		new ScheduleDay($this->day, $this->name, '24');
 	}
 
 	/**
@@ -87,7 +87,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfNonIntegerIntervalLengthPassedToConstructor()
 	{
-		new ScheduleDay($this->day, $this->name, 24, "30");
+		new ScheduleDay($this->day, $this->name, 24, '30');
 	}
 
 	public function testGetName()
@@ -100,7 +100,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetName()
 	{
-		$name = "Roasted Chicken Day";
+		$name = 'Roasted Chicken Day';
 		$this->scheduleDay->setName($name);
 		$this->assertEquals($name, $this->scheduleDay->getName());
 	}
@@ -131,7 +131,7 @@ class ScheduleDayTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetAbbrev()
 	{
-		$abbrev = "Abbrev";
+		$abbrev = 'Abbrev';
 		$this->assertEquals($abbrev, $this->scheduleDay->setAbbrev($abbrev)->getAbbrev());
 	}
 
