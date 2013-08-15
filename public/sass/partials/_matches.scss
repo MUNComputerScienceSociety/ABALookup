@@ -1,21 +1,13 @@
-// MATCHES
-// =======
-
 .conduct {
-	background: rgba(205, 205, 205, 0.4);
-	color: $grey-darker;
+	color: $grey-dark;
 	display: inline-block;
-	font-family: $typeface;
-	font-size: 12pt;
-	font-weight: $bold;
+	font: $bold 12pt $typeface;
 	padding: 10px;
-	text-shadow: 1px 1px 0 $white;
 	text-transform: uppercase;
 }
 .match {
-	border-top: 2px solid $grey-lightest;
-	font-family: $typeface;
-	font-size: 10pt;
+	border-top: 2px solid #ccc;
+	font: $normal 9.5pt $typeface;
 	margin: 20px 0;
 	padding-top: 20px;
 	h3 {
@@ -23,6 +15,9 @@
 		font-size: 20pt;
 		font-weight: $bold;
 		margin: 0;
+	}
+	i {
+		margin-left: 10px;
 	}
 	ul {
 		list-style-type: none;
@@ -33,7 +28,7 @@
 		background: $turquoise;
 		color: $white;
 		display: inline-block;
-		font: normal 9pt $typeface;
+		font: $normal 9.5pt $typeface;
 		margin-right: 5px;
 		padding: 5px 15px;
 		text-transform: uppercase;
@@ -49,7 +44,7 @@
 		text-transform: uppercase;
 	}
 	.email {
-		@extend %large-normal-italic-type;
+		font: italic $normal 14pt $typeface;
 		margin: 10px 0;
 	}
 }

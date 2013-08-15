@@ -1,0 +1,28 @@
+// Micro clearfix
+.clearfix {
+	*zoom: 1;
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+// Clickable links
+a {
+	color: inherit;
+	cursor: pointer;
+	text-decoration: none;
+	&:hover {
+		color: inherit;
+	}
+}
+// Body styles
+body.bg {
+	background: url(../imgs/pic-bg.jpg) no-repeat center center fixed;
+	     -o-background-size: cover;
+	   -moz-background-size: cover;
+	-webkit-background-size: cover;
+	        background-size: cover;
+}

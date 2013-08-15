@@ -1,21 +1,10 @@
-@charset "utf-8";
-@import
-	"vendor/normalize",
-	"vendor/foundation"
-	;
-@import
-	"fonts/font-awesome",
-	"fonts/open-sans",
-	"fonts/open-sans-condensed"
-	;
-@import
-	"components/variables",
-	"components/mixins",
-	"components/typography",
-	"components/buttons",
-	"components/reset",
-	"components/home",
-	"components/intro",
-	"components/colours",
-	"components/footer"
-	;
+@charset "UTF-8";
+
+// Normalize.css
+@import "vendor/normalize";
+// ZURB Foundation 3
+@import "vendor/foundation";
+// @ff
+@import "partials/fonts/all";
+// Partials
+@import "partials/all";

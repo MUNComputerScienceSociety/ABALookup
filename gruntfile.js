@@ -86,7 +86,6 @@ module.exports = function (grunt) {
 	gruntConfigOptions.uglify.main.files[dirJs + 'main.min.js'] = dirJs + 'main.js';
 	// Sass mappings
 	gruntConfigOptions.sass.main.files[dirCss + 'main.css'] = dirSass + 'main.scss';
-	gruntConfigOptions.sass.main.files[dirCss + 'main.alt.css'] = dirSass + 'main.alt.scss';
 	// Grunt options
 	grunt.initConfig(gruntConfigOptions);
 	var matchdep = require('matchdep');

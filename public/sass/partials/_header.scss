@@ -1,0 +1,64 @@
+header {
+	background: url(../imgs/texture.png);
+	border-bottom: 1px solid $black;
+	box-shadow: 0 0 50px $black;
+	color: $grey-dark;
+	height: 130px;
+	text-shadow: 1px 1px 0 $white;
+	text-transform: uppercase;
+	// Alternate header
+	&.alternate {
+		background: url(../imgs/top-bg.png);
+		color: $grey-dark;
+		height: auto;
+		text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+		text-transform: uppercase;
+	}
+	@media only screen and (max-width: 767px) {
+		height: auto;
+	}
+}
+.logo {
+	background: url(../imgs/ribbon-logo.png) no-repeat;
+	height: 0;
+	margin: 0;
+	overflow: hidden;
+	padding: 163px 0 0 0;
+	text-align: left;
+	width: 213px;
+	// Alternate logo
+	&.alternate {
+		background: url(../imgs/logo.png) no-repeat;
+		margin: 28px 0;
+		padding: 72px 0 0 0;
+		@media only screen and (max-width: 767px) {
+			background-position: center center;
+			margin-bottom: 0;
+		}
+	}
+	@media only screen and (max-width: 767px) {
+		background-position: center center;
+	}
+}
+.navigation {
+	padding: 40px 0 0;
+	ul {
+		margin: 0;
+	}
+	li {
+		float: right;
+		margin-left: 15px;
+		@media only screen and (max-width: 767px) {
+			float: none;
+			margin: 0;
+		}
+	}
+	a {
+		@extend %bold-type;
+		display: inline-block;
+		padding: 8px;
+	}
+	@media only screen and (max-width: 767px) {
+		padding: 20px 0;
+	}
+}

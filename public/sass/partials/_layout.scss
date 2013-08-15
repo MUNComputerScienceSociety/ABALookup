@@ -1,0 +1,22 @@
+.main {
+	background: url(../imgs/texture.png);
+	border-top: 1px solid $grey;
+	box-shadow: -1px 0 50px $black;
+	color: $grey-dark;
+	padding: 50px 0;
+	h2:first-child {
+		margin-top: 0;
+	}
+	&.alternate {
+		border-top: none;
+		box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+		min-height: 400px;
+		padding: 40px 0;
+	}
+}
+.aside {
+	p {
+		font-style: normal;
+		margin-bottom: 0;
+	}
+}

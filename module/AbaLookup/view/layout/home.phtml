@@ -7,33 +7,38 @@
 		<?php
 			echo $this->headTitle();
 			echo $this->headMeta()
-			          ->appendName('viewport', 'width=device-width');
+			          ->appendName('viewport', 'width=device-width, initial-scale=1');
 			echo $this->stylesheet('main.css');
 		?>
 	</head>
-	<body>
-		<header>
+	<body class="bg">
+		<header class="header">
 			<div class="row">
 				<div class="twelve columns">
-					<a href="/" class="mobile-seven">
+					<a href="/">
 						<h1 class="four columns logo">ABA Lookup</h1>
 					</a>
-					<nav class="eight columns mobile-three text-right nav">
+					<nav class="eight columns navigation">
+						<ul class="text-center clearfix">
 						<?php
 							if (isset($this->user)):
-								echo $this->anchor(
-									$this->user->getDisplayName(),
-									sprintf('/users/%d/profile', $this->user->getId()),
-									['button']
+								echo sprintf(
+									'<li>%s</li>',
+									$this->anchor(
+										$this->user->getDisplayName(),
+										sprintf('/users/%d/profile', $this->user->getId()),
+										['button', 'mobile-ten']
+									)
 								);
-								echo '<a href="/users/logout">Logout</a>';
+								echo '<li><a href="/users/logout" class="mobile-ten">Logout</a></li>';
 							else:
 						?>
-							<a href="/users/login" class="button">Login</a>
-							<a href="/users/register">Signup</a>
+							<li><a href="/users/login" class="button mobile-ten">Login</a></li>
+							<li><a href="/users/register" class="mobile-ten">Signup</a></li>
 						<?php
 							endif;
 						?>
+						</ul>
 					</nav>
 				</div>
 			</div>

@@ -297,7 +297,7 @@ ul.icons li [class*=" icon-"] {
 .icon-inbox:before                { content: "\f01c"; }
 .icon-play-circle:before          { content: "\f01d"; }
 .icon-repeat:before               { content: "\f01e"; }
-/* \f020 does not work in Safari. all shifted one down */
+// \f020 does not work in Safari. all shifted one down
 .icon-refresh:before              { content: "\f021"; }
 .icon-list-alt:before             { content: "\f022"; }
 .icon-lock:before                 { content: "\f023"; }

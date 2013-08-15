@@ -1,11 +1,8 @@
-// FOOTER
-// ======
-
-footer {
-	background: $grey;
+.footer {
+	background: $grey-dark;
 	border-bottom: 1px solid $black;
 	border-top: 1px solid $black;
-	box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 	color: $white;
 	padding: 30px 0;
 	text-align: left;
@@ -17,19 +14,20 @@ footer {
 		text-transform: uppercase;
 	}
 	.left a {
-		@extend %semibold-type;
 		@extend .clearfix;
-		background: $grey-light;
+		background: $grey;
 		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 		display: block;
+		font-family: $typeface;
+		font-size: 13pt;
 		height: 30px;
 		margin-bottom: 11px;
 		padding-top: 6px;
-		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 		text-transform: uppercase;
 		i {
-			background: $grey-lighter;
-			color: $grey;
+			background: $grey-light;
+			color: $grey-dark;
 			display: block;
 			float: left;
 			font-size: 16pt;
@@ -41,7 +39,7 @@ footer {
 			width: 30px;
 		}
 		.triangle-right {
-			@include triangle-right(15px, $grey-lighter);
+			@include triangle-right(15px, $grey-light);
 			display: block;
 			float: left;
 			height: 0;
@@ -50,16 +48,16 @@ footer {
 		}
 	}
 	.center a {
-		@extend %small-type;
-		background: $grey-light;
+		background: $grey;
 		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 		display: block;
+		font: $normal 9.5pt $typeface;
 		height: 25px;
 		margin-bottom: 7px;
 		padding: 0 0 5px 5px;
 		text-decoration: none;
 		&:before {
-			@include triangle-right(10px, $grey);
+			@include triangle-right(10px, $grey-dark);
 			content: "";
 			display: inline-block;
 			height: 0;
@@ -68,7 +66,7 @@ footer {
 		}
 	}
 	.about {
-		background: $grey-light;
+		background: $grey;
 		box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 		min-height: 153px;
 		padding: 10px;
@@ -85,7 +83,7 @@ footer {
 			width: 192px;
 		}
 		p {
-			@extend %small-type;
+			font: $normal 9.5pt $typeface;
 			margin: 2px 0 0 0;
 		}
 	}

@@ -1,10 +1,6 @@
-// SCHEDULE
-// ========
-
 .availability {
 	background: rgba(205, 205, 205, 0.3);
-	font-family: $typeface;
-	font-size: 14pt;
+	font: $normal 14pt $typeface;
 	margin: 20px 0 0;
 	padding: 20px;
 	h3 {
@@ -24,17 +20,17 @@
 		}
 	}
 }
-.table-wrapper {
+.schedule-wrapper {
 	display: block;
 	width: 100%;
 	@media screen and (max-width: 767px) {
 		overflow-x: scroll;
 	}
 }
-table {
-	@extend %large-normal-type;
+.schedule {
 	border-spacing: 0;
 	border: none;
+	font: $normal 14pt $typeface;
 	margin-top: 20px;
 	table-layout: fixed;
 	width: 100%;
@@ -43,10 +39,10 @@ table {
 	}
 }
 table tr > :first-child {
-	@extend %semibold-type;
 	background: url(../imgs/texture.png);
-	border-right: 2px solid $grey-lightest;
+	border-right: 2px solid $grey-light;
 	color: #3b5b56;
+	font: $semibold 13pt $typeface;
 	text-align: right;
 }
 table thead tr th {
@@ -55,7 +51,7 @@ table thead tr th {
 	text-align: center;
 }
 thead > :first-child {
-	background: $grey-lightest;
+	background: $grey-light;
 	color: $white;
 	font-family: $typeface;
 	font-size: 16pt;
@@ -64,7 +60,7 @@ thead > :first-child {
 	text-transform: uppercase;
 }
 thead > :last-child {
-	border-right: 2px solid $grey-lightest;
+	border-right: 2px solid $grey-light;
 }
 tbody > :nth-child(2n) {
 	background: rgba(206, 206, 206, 0.3);
@@ -73,10 +69,10 @@ tbody > :last-child > :first-child {
 	border-bottom: none;
 }
 tbody tr > :last-child {
-	border-right: 2px solid $grey-lightest;
+	border-right: 2px solid $grey-light;
 }
 tbody > :last-child td {
-	border-bottom: 2px solid $grey-lightest;
+	border-bottom: 2px solid $grey-light;
 }
 td.available,
 td.selected,

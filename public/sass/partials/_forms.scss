@@ -1,21 +1,25 @@
+form {
+	margin: 0;
+	width: 100%;
+}
 form label {
-	@extend %semibold-type;
-	color: #6a6868;
+	color: $grey-dark;
 	display: block;
+	font: $semibold 13pt $typeface;
 	text-transform: uppercase;
 }
 input[type="email"],
 input[type="password"],
 input[type="tel"],
 input[type="text"] {
-	background: $white-darker;
-	border: 1px solid $grey-lightest;
+	background: $white;
+	border: 1px solid #ccc;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
-	font-family: $typeface;
-	font-size: 12pt;
+	font: $normal 12pt $typeface;
+	height: 40px;
 	margin: 0 0 10px 0;
-	padding: 8px;
+	padding: 5px 8px 8px;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
 }
 select {
@@ -23,8 +27,7 @@ select {
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
-	font-family: $typeface;
-	font-size: 12pt;
+	font: $normal 12pt $typeface;
 	margin: 0 0 10px 0;
 	padding: 8px;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
@@ -35,8 +38,7 @@ select[multiple] {
 	border: 1px solid #96b2ae;
 	box-shadow: inset 0 0 2px $white;
 	color: $grey-dark;
-	font-family: $typeface;
-	font-size: 12pt;
+	font: $normal 12pt $typeface;
 	margin-bottom: 10px;
 	padding: 0;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
@@ -55,7 +57,7 @@ input[type="checkbox"] + label:after {
 	content: "";
 	display: inline-block;
 	height: 25px;
-	margin-left: 10px;
+	margin: 10px;
 	padding-left: 26px;
 	vertical-align: middle;
 	width: 0;
@@ -81,17 +83,16 @@ input[type="radio"]:checked + label:after {
 }
 input[type="submit"] {
 	@extend .button;
-	margin: 0;
+	margin: 10px 0;
 }
 .hsp-toggle {
-	@extend %small-type;
 	color: $grey-dark;
 	cursor: pointer;
 	font-weight: bold;
+	font: $normal 12pt $typeface;
 	padding: 10px;
 	text-transform: uppercase;
-	// because default input elements have a z-index so that
-	// their borders will overlap on focus, we'll give ours
-	// a higher one to make sure they're always visible
+	// Default input elements have a z-index so that their borders will overlap on focus
+	// So we give ours a higher one to make sure they're always visible.
 	z-index: 3;
 }
