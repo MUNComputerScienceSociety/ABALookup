@@ -9,6 +9,7 @@ git:
 
 before_install:
     - composer install
+    - npm install -g grunt-cli
     - npm install
 
 script: scripts/test
