@@ -70,7 +70,7 @@ class User
 	 * The user can optionally provide their phone number, the
 	 * field is NULL by default.
 	 *
-	 * @Column(type = "string", nullable = TRUE)
+	 * @Column(type = "integer", nullable = TRUE)
 	 */
 	protected $phone;
 
