@@ -11,18 +11,18 @@ Installing the Sass gem
 Directory structure
 -------------------
 
-The main Sass file (`main.scss`) imports the other files as needed via `@import` rules. Partial Sass files begin with an underscore, and reside in the `paritals/` folder -- these files do not generate a CSS counterpart. Highly-reusable classes, such as buttons, are in the `partials/components/` folder.
+The main Sass file (`main.scss`) imports the other files as needed via `@import` rules. Partial Sass files begin with an underscore, and reside in the `paritals/` folder - these files do not generate a CSS counterpart. Highly-reusable classes, such as buttons, are in the `partials/components/` folder.
 
 Vendor files are in the `vendor/` folder.
 
-Note: all Sass files are authored in the `.scss` syntax.
+All Sass files are authored in the `.scss` syntax.
 
 - `partials/`
-     - `components/`
-         - **`_buttons`**: The button styles
-         - **`_colors`**: Simple style classes for single colors
-     - `fonts/`
-         - The `@font-face` rules for various typefaces
+    - `components/`
+        - **`_buttons`**: The button styles
+        - **`_colors`**: Simple style classes for single colors
+    - `fonts/`
+        - The `@font-face` rules for various typefaces
     - **`_all`**: A shortcut for importing all the files in the folder
     - **`_footer`**: The styles for the site footer
     - **`_forms`**: Form-related styles
@@ -35,9 +35,9 @@ Note: all Sass files are authored in the `.scss` syntax.
     - **`_schedule`**: Styles for the user schedule
     - **`_typography`**: Base typography placeholders
     - **`_variables`**: Variable definitions
-- `vendor/`:
-    - **`foundation`**: A [custom build of the ZURB Foundation 3 framework][foundation]
-    - **`normalize`**: v1.1.2 of [Normalize.css] (renamed for a `scss` extension)
+- `vendor/`
+    - [A custom build of the ZURB foundation 3 framework](http://foundation.zurb.com/download-f3.php)
+    - v1.1.2 of [Normalize.css](http://necolas.github.io/normalize.css/) (renamed with a `.scss` extension)
 - **`main`**: The main Sass file
 
 Generating CSS from Sass (compiling)
@@ -46,6 +46,3 @@ Generating CSS from Sass (compiling)
 - Run the `sass` Grunt task:
 
         grunt sass
-
-  [foundation]:http://foundation.zurb.com/download-f3.php
-  [Normalize.css]:http://necolas.github.io/normalize.css/

@@ -3,26 +3,28 @@ ABA Lookup
 
 A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents of children with Autism.
 
-[![Build Status](https://travis-ci.org/MUNComputerScienceSociety/ABALookup.png)][Travis]
+[![Build Status]][Travis]
 
 How to help
 -----------
 
-To contribute to the project, you will need to have the requirements listed below available, as well as Git installed (and a GitHub account). Once you have the requirements, fork the project on GitHub, make some changes, and open a pull request. You can learn more about [forking] and [pull requests] from GitHub Help. As well, please open [issues] for any possible enhancements or bugs you find.
+To contribute to the project, you will need to have the requirements listed below available, as well as Git installed (and a GitHub account). Once you have the requirements, fork the project on GitHub, download your fork, make some changes, and open a pull request. You can learn more about [forking] and [pull requests] from GitHub Help.
+
+Please also open [issues] for any possible enhancements or bugs you find.
 
 For more details on contributing, please see the [the guidelines for contributing to this repository.](CONTRIBUTING.md)
 
 Requirements
 ------------
 
-- Apache HTTP Server
-- PHP 5.4+ (with PDO, cURL, and the SQLite driver)
+- Apache HTTP Server (or almost any HTTP Server)
+- PHP 5.4+ (with [PDO], [cURL], [SQLite], and [intl] at the least)
 - Composer
 - node.js
 - PHPUnit
 - SQLite 3+
 
-(Dependencies, such as ZF2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer - by running `composer install`. Grunt and its dependencies/tasks are installed by running `npm install`.)
+(Dependencies, such as Zend Framework 2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer by running `composer install`. Grunt and its dependencies/tasks are installed by running `npm install`.)
 
 Downloading the project
 -----------------------
@@ -40,7 +42,7 @@ If not, see [Preparing a development environment] in the Wiki.
 Running tasks (via Grunt)
 -------------------------
 
-After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/src/` folder. To do so:
+After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/js/src/` folder. To do so:
 
     gem install sass
     npm install -g grunt-cli
@@ -57,16 +59,16 @@ Unit tests for the `AbaLookup` module reside in the `module/AbaLookup/test` fold
 Accessibility tests
 -------------------
 
-Accessibility tests for the site are use the [pa11y](https://github.com/nature/pa11y) node.js module, and can be run with the following command:
+Accessibility tests for the site use the [pa11y](https://github.com/nature/pa11y) node.js module, and can be run with the following command:
 
     scripts/test-pa11y
 
-Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
+Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project's README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
 
 The whole enchilada
 -------------------
 
-To run the complete test suite, both the unit tests for PHP and the accessibility tests, run the following:
+To run the complete test suite, both the unit tests and the accessibility tests, run the following:
 
     scripts/test
 
@@ -75,7 +77,7 @@ Coding standards
 
 This project **tries** to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
 
-- Indentation should consist of tab characters. Spaces are to be used for formatting
+- Indentation should consist of **tab characters**, and spaces are to be used for formatting
 - All files should end with a trailing newline (LF)
 - PHP constants should be uppercased (including `TRUE`, `FALSE`, and `NULL`)
 
@@ -87,12 +89,12 @@ The site supports the following browsers:
 - Internet Explorer 8+
 - The newest version of Google Chrome, Safari, and Firefox
 
-Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers. If the site does not work in a browser not listed above, feel free to still open an issue, but do know that the possibility of it being fixed is slightly smaller.
+Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers. If the site does not work in a browser not listed above, feel free to open an issue, but do know that the possibility of it being fixed is slightly smaller.
 
 Contributing to the Wiki
 ------------------------
 
-To help fill out the Wiki with information on setting up development environments, installing the app, app usage, the matching algorithm, or anything else that you think will be useful to have documented:
+To help fill out the Wiki with information on setting up development environments, installing the application, usage, the matching algorithm, or anything else that you think will be useful to have documented:
 
     cd <where you keep your projects>
     git clone git@github.com:<your username>/<your fork name>.wiki.git
@@ -106,12 +108,17 @@ See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-do
 License
 -------
 
-This software is licensed under the Simplified BSD License. (See LICENSE file.)
+[This software is licensed under the Simplified BSD License.](LICENSE.md)
 
+  [Autism Society of NL]:http://www.autism.nf.net/
+  [Build Status]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.png
   [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
   [forking]:https://help.github.com/articles/fork-a-repo
   [pull requests]:https://help.github.com/articles/using-pull-requests
   [issues]:https://help.github.com/articles/be-social#issues
-  [Autism Society of NL]:http://www.autism.nf.net/
+  [PDO]:http://www.php.net/manual/en/book.pdo.php
+  [cURL]:http://php.net/manual/en/book.curl.php
+  [SQLite]:http://php.net/manual/en/book.sqlite.php
+  [intl]:http://php.net/manual/en/book.intl.php
   [Preparing a development environment]:http://git.io/jAivwA
   [Zend Framework Coding Standard for PHP]:http://framework.zend.com/wiki/display/ZFDEV2/Coding+Standards
