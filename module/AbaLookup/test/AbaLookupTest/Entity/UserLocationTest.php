@@ -38,7 +38,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 	protected $therapist;
 	protected $sex;
 	protected $abaCourse;
-	protected $codeOfConduct;
+	protected $certificateOfConduct;
 
 	/**
 	 * Location fields
@@ -56,7 +56,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 		$this->therapist     = TRUE;
 		$this->sex           = 'F';
 		$this->abaCourse     = TRUE;
-		$this->codeOfConduct = TRUE;
+		$this->certificateOfConduct = TRUE;
 		$this->user = new User(
 			$this->displayName,
 			$this->email,
@@ -64,7 +64,7 @@ class UserLocationTest extends PHPUnit_Framework_TestCase
 			$this->therapist,
 			$this->sex,
 			$this->abaCourse,
-			$this->codeOfConduct
+			$this->certificateOfConduct
 		);
 		$this->name     = 'Somewhere';
 		$this->location = new Location($this->name);

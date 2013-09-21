@@ -32,8 +32,8 @@
 			}
 		?>
 	</p>
-	<h3>Code of conduct</h3>
-	<p><?php echo ($this->user->getCodeOfConduct()) ? "Accepted" : "You need to accept the code of conduct"; ?></p>
+	<h3>Certificate of conduct</h3>
+	<p><?php echo ($this->user->hasCertificateOfConduct()) ? "Accepted" : "You may need to obtain a Certificate of Conduct"; ?></p>
 	<h3>ABA therapy course</h3>
 	<p><?php echo ($this->user->getAbaCourse()) ? "Completed" : "Not yet completed"; ?></p>
 

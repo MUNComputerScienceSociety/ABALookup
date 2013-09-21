@@ -27,21 +27,21 @@ class UserTest extends PHPUnit_Framework_TestCase
 	protected $therapist;
 	protected $sex;
 	protected $abaCourse;
-	protected $codeOfConduct;
+	protected $certificateOfConduct;
 
 	/**
 	 * Resets for isolation
 	 */
 	public function setUp()
 	{
-		$this->displayName   = 'Jane';
-		$this->email         = 'jane@email.com';
-		$this->password      = 'password';
-		$this->phone         = 7095551234;
-		$this->therapist     = TRUE;
-		$this->sex           = 'F';
-		$this->abaCourse     = TRUE;
-		$this->codeOfConduct = TRUE;
+		$this->displayName          = 'Jane';
+		$this->email                = 'jane@email.com';
+		$this->password             = 'password';
+		$this->phone                = 7095551234;
+		$this->therapist            = TRUE;
+		$this->sex                  = 'F';
+		$this->abaCourse            = TRUE;
+		$this->certificateOfConduct = TRUE;
 		$this->user = new User(
 			$this->displayName,
 			$this->email,
@@ -49,7 +49,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 			$this->therapist,
 			$this->sex,
 			$this->abaCourse,
-			$this->codeOfConduct
+			$this->certificateOfConduct
 		);
 		$this->user->setPhone($this->phone);
 	}
@@ -268,26 +268,26 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->user->setAbaCourse(3);
 	}
 
-	public function testGetCodeOfConduct()
+	public function testHasCertificateOfConduct()
 	{
-		$this->assertTrue($this->user->getCodeOfConduct());
+		$this->assertTrue($this->user->hasCertificateOfConduct());
 	}
 
 	/**
-	 * @depends testGetCodeOfConduct
+	 * @depends testHasCertificateOfConduct
 	 */
-	public function testSetCodeOfConduct()
+	public function testSetCertificateOfConduct()
 	{
-		$this->user->setCodeOfConduct(FALSE);
-		$this->assertFalse($this->user->getCodeOfConduct());
+		$this->user->setCertificateOfConduct(FALSE);
+		$this->assertFalse($this->user->hasCertificateOfConduct());
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonBoolCodeOfConduct()
+	public function testExceptionIsThrownIfNonBoolCertificateOfConduct()
 	{
-		$this->user->setCodeOfConduct(3);
+		$this->user->setCertificateOfConduct(3);
 	}
 
 	public function testIsVerified()

@@ -22,15 +22,15 @@ class RegisterForm extends Form
 	/**
 	 * Constants for form element IDs and names
 	 */
-	const ELEMENT_NAME_DISPLAY_NAME     = 'display-name';
-	const ELEMENT_NAME_EMAIL_ADDRESS    = 'email-address';
-	const ELEMENT_NAME_PASSWORD         = 'password';
-	const ELEMENT_NAME_CONFIRM_PASSWORD = 'confirm-password';
-	const ELEMENT_NAME_PHONE_NUMBER     = 'phone-number';
-	const ELEMENT_NAME_USER_TYPE        = 'user-type';
-	const ELEMENT_NAME_SEX              = 'sex';
-	const ELEMENT_NAME_ABA_COURSE       = 'aba-course';
-	const ELEMENT_NAME_CODE_OF_CONDUCT  = 'code-of-conduct';
+	const ELEMENT_NAME_DISPLAY_NAME            = 'display-name';
+	const ELEMENT_NAME_EMAIL_ADDRESS           = 'email-address';
+	const ELEMENT_NAME_PASSWORD                = 'password';
+	const ELEMENT_NAME_CONFIRM_PASSWORD        = 'confirm-password';
+	const ELEMENT_NAME_PHONE_NUMBER            = 'phone-number';
+	const ELEMENT_NAME_USER_TYPE               = 'user-type';
+	const ELEMENT_NAME_SEX                     = 'sex';
+	const ELEMENT_NAME_ABA_COURSE              = 'aba-course';
+	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT  = 'certificate-of-conduct';
 
 	/**
 	 * Error message if form is invalid
@@ -141,15 +141,15 @@ class RegisterForm extends Form
 				'checked_value' => TRUE
 			],
 		]);
-		// Code of conduct
+		// Certificate of conduct
 		$this->add([
-			'name' => self::ELEMENT_NAME_CODE_OF_CONDUCT,
+			'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
 			'type' => 'checkbox',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_CODE_OF_CONDUCT
+				'id' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT
 			],
 			'options' => [
-				'label'         => 'Code of conduct',
+				'label'         => 'Certificate of conduct',
 				'checked_value' => TRUE
 			],
 		]);
@@ -351,14 +351,14 @@ class RegisterForm extends Form
 			return NULL;
 		}
 		// Data field aliases
-		$displayName   = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email         = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$password      = $this->data[self::ELEMENT_NAME_PASSWORD];
-		$phone         = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-		$userType      = $this->data[self::ELEMENT_NAME_USER_TYPE];
-		$sex           = $this->data[self::ELEMENT_NAME_SEX];
-		$abaCourse     = $this->data[self::ELEMENT_NAME_ABA_COURSE];
-		$codeOfConduct = $this->data[self::ELEMENT_NAME_CODE_OF_CONDUCT];
+		$displayName          = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
+		$email                = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
+		$password             = $this->data[self::ELEMENT_NAME_PASSWORD];
+		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
+		$userType             = $this->data[self::ELEMENT_NAME_USER_TYPE];
+		$sex                  = $this->data[self::ELEMENT_NAME_SEX];
+		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
+		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
 		// Create and return a new user
 		$user = new User(
 			$displayName,
@@ -367,7 +367,7 @@ class RegisterForm extends Form
 			(bool) $userType,
 			$sex,
 			(bool) $abaCourse,
-			(bool) $codeOfConduct
+			(bool) $certificateOfConduct
 		);
 		if ($phone) {
 			// The user entered a phone number

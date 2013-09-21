@@ -18,25 +18,25 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	 * Set the form data
 	 */
 	protected function setFormData($displayName,
-	                               $emailAddress    = 'jdoe@email.com',
-	                               $password        = 'password',
-	                               $confirmPassword = 'password',
-	                               $phoneNumber     = '7095551234',
-	                               $userType        = '0',
-	                               $sex             = NULL,
-	                               $abaCourse       = FALSE,
-	                               $codeOfConduct   = FALSE
+	                               $emailAddress           = 'jdoe@email.com',
+	                               $password               = 'password',
+	                               $confirmPassword        = 'password',
+	                               $phoneNumber            = '7095551234',
+	                               $userType               = '0',
+	                               $sex                    = NULL,
+	                               $abaCourse              = FALSE,
+	                               $certificateOfConduct   = FALSE
 	) {
 		$this->form->setData([
-			RegisterForm::ELEMENT_NAME_DISPLAY_NAME     => $displayName,
-			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS    => $emailAddress,
-			RegisterForm::ELEMENT_NAME_PASSWORD         => $password,
-			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD => $confirmPassword,
-			RegisterForm::ELEMENT_NAME_PHONE_NUMBER     => $phoneNumber,
-			RegisterForm::ELEMENT_NAME_USER_TYPE        => $userType,
-			RegisterForm::ELEMENT_NAME_SEX              => $sex,
-			RegisterForm::ELEMENT_NAME_ABA_COURSE       => $abaCourse,
-			RegisterForm::ELEMENT_NAME_CODE_OF_CONDUCT  => $codeOfConduct
+			RegisterForm::ELEMENT_NAME_DISPLAY_NAME            => $displayName,
+			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS           => $emailAddress,
+			RegisterForm::ELEMENT_NAME_PASSWORD                => $password,
+			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD        => $confirmPassword,
+			RegisterForm::ELEMENT_NAME_PHONE_NUMBER            => $phoneNumber,
+			RegisterForm::ELEMENT_NAME_USER_TYPE               => $userType,
+			RegisterForm::ELEMENT_NAME_SEX                     => $sex,
+			RegisterForm::ELEMENT_NAME_ABA_COURSE              => $abaCourse,
+			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT  => $certificateOfConduct
 		]);
 	}
 

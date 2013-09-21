@@ -98,11 +98,11 @@ class User
 	protected $abaCourse;
 
 	/**
-	 * Whether the user has accepted the code of conduct
+	 * Whether the user has recieved their certificate of conduct/vulnerable sector check
 	 *
-	 * @Column(type = "boolean", name = "code_of_conduct")
+	 * @Column(type = "boolean", name = "certificate_of_conduct")
 	 */
-	protected $codeOfConduct;
+	protected $certificateOfConduct;
 
 	/**
 	 * Whether the user has verified their email address
@@ -135,30 +135,30 @@ class User
 	 * @param bool $therapist Is the user a therapist?
 	 * @param string|NULL The sex of the user.
 	 * @param bool $abaCourse Has the user completed the course.
-	 * @param bool $codeOfConduct Has the user accepted the code of conduct.
+	 * @param bool $certificateOfConduct Has the user recieved their certificate of conduct.
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($displayName,
 	                            $email,
 	                            $password,
 	                            $therapist,
-	                            $sex           = NULL,
-	                            $abaCourse     = FALSE,
-	                            $codeOfConduct = FALSE
+	                            $sex                  = NULL,
+	                            $abaCourse            = FALSE,
+	                            $certificateOfConduct = FALSE
 	) {
 		if (!isset($displayName, $email, $password) || !is_bool($therapist)) {
 			throw new InvalidArgumentException();
 		}
-		$this->displayName   = $displayName;
-		$this->email         = $email;
-		$this->password      = self::$bcrypt->create($password);
-		$this->phone         = NULL;
-		$this->therapist     = $therapist;
-		$this->sex           = $sex;
-		$this->abaCourse     = $abaCourse;
-		$this->codeOfConduct = $codeOfConduct;
-		$this->verified      = FALSE;
-		$this->moderator     = FALSE;
+		$this->displayName          = $displayName;
+		$this->email                = $email;
+		$this->password             = self::$bcrypt->create($password);
+		$this->phone                = NULL;
+		$this->therapist            = $therapist;
+		$this->sex                  = $sex;
+		$this->abaCourse            = $abaCourse;
+		$this->certificateOfConduct = $certificateOfConduct;
+		$this->verified             = FALSE;
+		$this->moderator            = FALSE;
 	}
 
 	/**
@@ -277,18 +277,18 @@ class User
 	}
 
 	/**
-	 * Sets whether the user has agreed to the code of conduct
+	 * Sets whether the user has recieved their certificate of conduct
 	 *
-	 * @param bool $codeOfConduct Whether the user has agreed to the code of conduct.
+	 * @param bool $certificateOfConduct Whether the user has recieved their certificate of conduct.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
-	public function setCodeOfConduct($codeOfConduct)
+	public function setCertificateOfConduct($certificateOfConduct)
 	{
-		if (!isset($codeOfConduct) || !is_bool($codeOfConduct)) {
+		if (!isset($certificateOfConduct) || !is_bool($certificateOfConduct)) {
 			throw new InvalidArgumentException();
 		}
-		$this->codeOfConduct = $codeOfConduct;
+		$this->certificateOfConduct = $certificateOfConduct;
 		return $this;
 	}
 
@@ -402,9 +402,9 @@ class User
 	/**
 	 * @return bool
 	 */
-	public function getCodeOfConduct()
+	public function hasCertificateOfConduct()
 	{
-		return $this->codeOfConduct;
+		return $this->certificateOfConduct;
 	}
 
 	/**
