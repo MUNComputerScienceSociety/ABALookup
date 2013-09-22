@@ -6,7 +6,7 @@
 		}
 	],
 	"require": {
-		"zendframework/zendframework": "2.2.0",
+		"zendframework/zendframework": "2.2.*",
 		"doctrine/doctrine-orm-module": "0.*"
 	},
 	"require-dev": {
