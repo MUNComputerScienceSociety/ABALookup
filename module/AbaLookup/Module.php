@@ -29,8 +29,7 @@ class Module
 	{
 		$response = $e->getResponse();
 		$response->getHeaders()
-		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'')
-		;
+		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'');
 	}
 
 	/**
