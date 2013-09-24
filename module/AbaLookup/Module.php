@@ -14,15 +14,23 @@ class Module
 {
 	public function onBootstrap(EventInterface $event)
 	{
-		$event->getTarget()
-		      ->getEventManager()
-		      ->attach('finish', [$this, 'minify']);
+		$em = $event->getTarget()->getEventManager();
+		$em->attach(MvcEvent::EVENT_FINISH, [$this, 'minify']);
+		$em->attach(MvcEvent::EVENT_FINISH, [$this, 'csp']);
 	}
 
 	public function minify(MvcEvent $e)
 	{
 		$response = $e->getResponse();
 		$response->setContent(preg_replace('#>\s+<#s', '><', $response->getBody()));
+	}
+
+	public function csp(MvcEvent $e)
+	{
+		$response = $e->getResponse();
+		$response->getHeaders()
+		         ->addHeaderLine('Content-Security-Policy', 'default-src \'self\'')
+		;
 	}
 
 	/**
