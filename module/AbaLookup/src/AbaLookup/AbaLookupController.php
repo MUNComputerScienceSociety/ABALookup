@@ -128,10 +128,14 @@ abstract class AbaLookupController extends AbstractActionController
 	 * Sets the session for the given user
 	 *
 	 * @param User $user The user in session.
+	 * @param boolean $remember Whether to set an explicit TTL for the user session.
 	 */
 	protected function setUserSession(User $user, $remember = FALSE)
 	{
 		$session = new Container(self::SESSION_USER_NAMESPACE);
+		$session->getManager()
+		        ->getConfig()
+		        ->setCookieHttpOnly(TRUE); // As per issue #87
 		if (isset($remember) && $remember) {
 			$session->getManager()
 			        ->rememberMe(self::SECONDS_3_MONTHS);
