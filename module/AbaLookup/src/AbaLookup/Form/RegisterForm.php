@@ -40,6 +40,22 @@ class RegisterForm extends Form
 	public function __construct()
 	{
 		parent::__construct();
+		// User type
+		$this->add([
+			'name' => self::ELEMENT_NAME_USER_TYPE,
+			'type' => 'select',
+			'options' => [
+				'label'         => 'Parent or therapist',
+				'empty_option'  => 'Please choose parent or therapist',
+				'value_options' => [
+					0 => 'Parent',
+					1 => 'Therapist',
+				],
+			],
+			'attributes' => [
+				'id'    => self::ELEMENT_NAME_USER_TYPE,
+			],
+		]);
 		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
@@ -94,22 +110,6 @@ class RegisterForm extends Form
 			],
 			'options' => [
 				'label' => 'Your phone number (optional)'
-			],
-		]);
-		// User type
-		$this->add([
-			'name' => self::ELEMENT_NAME_USER_TYPE,
-			'type' => 'select',
-			'options' => [
-				'label'         => 'Parent or therapist',
-				'value_options' => [
-					0 => 'Parent',
-					1 => 'Therapist',
-				],
-			],
-			'attributes' => [
-				'id'    => self::ELEMENT_NAME_USER_TYPE,
-				'value' => 0
 			],
 		]);
 		// Sex
