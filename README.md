@@ -20,11 +20,9 @@ Requirements
 - Apache HTTP Server (or almost any HTTP Server)
 - PHP 5.4+ (with [PDO], [cURL], [SQLite], and [intl] at the least)
 - Composer
-- node.js
-- PHPUnit
+- node.js/npm
+- Ruby and RubyGems (for Sass)
 - SQLite 3+
-
-(Dependencies, such as Zend Framework 2, Doctrine ORM, the Doctrine ORM Module, and PHPUnit are installed via Composer by running `composer install`. Grunt and its dependencies/tasks are installed by running `npm install`.)
 
 Downloading the project
 -----------------------
@@ -34,8 +32,7 @@ If you already have a development environment ready to go with the above require
     cd <where you keep your projects>
     git clone git@github.com:<your username>/<your fork name>.git
     cd <your fork name>
-    composer install
-    scripts/database
+    make install dependencies database
 
 If not, see [Preparing a development environment] in the Wiki.
 
@@ -44,10 +41,10 @@ Running tasks (via Grunt)
 
 After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/js/src/` folder. To do so:
 
-    gem install sass
-    npm install -g grunt-cli
-    npm install
+    gem install sass # This may need to be run as root
     grunt build
+
+For more information on the organization of the Sass files in this project, see the [README file in the Sass folder](public/sass/README.md).
 
 Unit tests
 ----------
@@ -65,8 +62,8 @@ Accessibility tests for the site use the [pa11y](https://github.com/nature/pa11y
 
 Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project's README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
 
-The whole enchilada
--------------------
+All the tests
+-------------
 
 To run the complete test suite, both the unit tests and the accessibility tests, run the following:
 

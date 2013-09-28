@@ -16,8 +16,8 @@ module.exports = function (grunt) {
 			}
 		},
 		modernizr: {
-			devFile: dirJs + 'vendor/modernizr.js',
-			outputFile: dirJs + 'vendor/modernizr.min.js',
+			devFile: dirJs + 'vendor/modernizr/modernizr.js',
+			outputFile: dirJs + 'modernizr.custom.js',
 			extra: {
 				shiv: true,
 				printshiv: false,
@@ -35,11 +35,11 @@ module.exports = function (grunt) {
 				prefixes: false,
 				domprefixes: false
 			},
-			uglify: true,
+			uglify: false,
 			tests: [],
 			parseFiles: true,
 			files: [
-				dirJs + 'src/*.js'
+				dirJs + 'src/**/*.js'
 			],
 			matchCommunityTests: false,
 			customTests: []
@@ -60,9 +60,9 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				src: [
-					'vendor/jquery.min.js',
-					'vendor/hsp.jquery.min.js',
-					'vendor/modernizr.min.js',
+					'vendor/jquery/jquery.min.js',
+					'vendor/hideShowPassword/hideShowPassword.min.js',
+					'modernizr.custom.js',
 					'src/forms.js'
 				].map(function (f) { return dirJs + f; }),
 				dest: dirJs + 'main.js',

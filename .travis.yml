@@ -8,8 +8,6 @@ git:
     depth: 25
 
 before_install:
-    - composer install
-    - npm install -g grunt-cli
-    - npm install
+    - make install dependencies
 
-script: scripts/test
+script: make test

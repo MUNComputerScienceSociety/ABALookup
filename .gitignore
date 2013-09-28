@@ -1,37 +1,27 @@
 .sass-cache
-
+*.swp
 *.tmp
 *.bak
 
-# Minified JS files
-# Sources go into 'public/js/src'
+database
+vendor
+
+# Compiled JS files
 public/js/*.js
 
-# CSS files
-# Only have Sass files in the project
+# Compiled CSS files
 public/css/*.css
 
 # node.js modules
 node_modules
 
-# project specific dirs
-/database
-/vendor
-
-# Windows junk
+# Windows
 ehthumbs.db
 Thumbs.db
 Destop.ini
 
-# OS X junk
+# OS X
 .DS_Store
-
-# Swap files
-*.swp
-
-# Local ideas
-*.idea.md
-*.ideas.md
 
 # Visual Studio
 *.tmp_proj
@@ -41,16 +31,20 @@ Destop.ini
 
 # Eclipse
 *.project
-*.settings/
+*.settings
 
 # Sublime Text
 *.sublime-workspace
 
-# Espresso projects
+# Espresso
 *.esproj
 
 # IntelliJ
-.idea/
+.idea
 *.iml
 *.ipr
 *.iws
+
+# Local ideas
+*.idea.md
+*.ideas.md

@@ -6,7 +6,7 @@ A bit of information about the contents of this folder.
 Installing the Sass gem
 -----------------------
 
-    gem install sass
+    gem install sass # This may need to be run as root
 
 Directory structure
 -------------------
