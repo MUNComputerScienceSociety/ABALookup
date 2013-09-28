@@ -54,6 +54,7 @@ class RegisterForm extends Form
 			],
 			'attributes' => [
 				'id'    => self::ELEMENT_NAME_USER_TYPE,
+				'value' => '',
 			],
 		]);
 		// Display name
@@ -125,7 +126,7 @@ class RegisterForm extends Form
 				],
 			],
 			'attributes' => [
-				'id'     => self::ELEMENT_NAME_SEX,
+				'id'    => self::ELEMENT_NAME_SEX,
 				'value' => 0
 			],
 		]);
