@@ -39,12 +39,14 @@ If not, see [Preparing a development environment] in the Wiki.
 Running tasks (via Grunt)
 -------------------------
 
-After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/js/src/` folder. To do so:
+After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/js/src/` folder.
+
+To do so:
 
     gem install sass # This may need to be run as root
     grunt build
 
-For more information on the organization of the Sass files in this project, see the [README file in the Sass folder](public/sass/README.md).
+For more information on the organization of the Sass files in this project, see the [README file](public/sass/README.md).
 
 Unit tests
 ----------
@@ -62,12 +64,19 @@ Accessibility tests for the site use the [pa11y](https://github.com/nature/pa11y
 
 Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project's README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
 
+JavaScript linting
+------------------
+
+To run JSHint against the project's JavaScript files:
+
+    grunt lint
+
 All the tests
 -------------
 
-To run the complete test suite, both the unit tests and the accessibility tests, run the following:
+To run the complete test suite, which includes JSHint, the unit tests, and the accessibility tests, run the following:
 
-    scripts/test
+    make test
 
 Coding standards
 ----------------
@@ -96,9 +105,9 @@ To help fill out the Wiki with information on setting up development environment
     cd <where you keep your projects>
     git clone git@github.com:<your username>/<your fork name>.wiki.git
     cd <your fork name>
-    # edit Markdown files
+    # Edit Markdown files
     git push
-    # file an issue in the issue tracker requesting the changes be pulled in
+    # File an issue in the issue tracker requesting the changes be pulled in
 
 See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow for forking gollum Wikis.
 
