@@ -40,6 +40,9 @@ class UsersController extends AbaLookupController
 		$this->prepareLayout($this->layout());
 		// Get the user type from the URL
 		$type = $this->params('type');
+		if (!UserType::contains($type)) {
+			$type = UserType::TYPE_PARENT; // Default
+		}
 		// Create a registration form
 		$form = new RegisterForm($type);
 		// If the user has not submitted a POST request
