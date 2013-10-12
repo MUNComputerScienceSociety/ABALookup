@@ -89,6 +89,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setFormData('Jöhn Dõę');
 		$this->assertTrue($this->form->isValid());
+		$this->form->getUser();
 	}
 
 	public function testNullDisplayNameDoesNotValidate()
@@ -181,6 +182,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'709-555-1234'
 		);
 		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals(7095551234, $user->getPhone());
 	}
 
 	public function testPhoneNumberWithPeriodsBetweenSetsDoesValidate()
@@ -193,6 +196,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'555.1234'
 		);
 		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals(5551234, $user->getPhone());
 	}
 
 	public function testPhoneNumberWithSpacesDoesValidate()
@@ -205,6 +210,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'709 555 1133'
 		);
 		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals(7095551133, $user->getPhone());
 	}
 
 	public function testRandomUserTypeDoesNotValidate()
@@ -245,6 +252,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'Undisclosed'
 		);
 		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertNull($user->getGender());
 	}
 
 	public function testNullGenderDoesValidate()
@@ -259,5 +268,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			NULL
 		);
 		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertNull($user->getGender());
 	}
 }

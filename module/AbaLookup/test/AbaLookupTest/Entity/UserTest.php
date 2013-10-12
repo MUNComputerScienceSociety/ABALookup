@@ -238,6 +238,23 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSetGender()
 	{
+		// The set gender function should always return uppercase genders
+		$this->assertEquals('F', $this->user->setGender('f')->getGender());
+	}
+
+	/**
+	 * @depends testGetGender
+	 */
+	public function testRandomGenderStringIsInterpretedAsNull()
+	{
+		$this->assertNull($this->user->setGender('foo')->getGender());
+	}
+
+	/**
+	 * @depends testGetGender
+	 */
+	public function testGenderCanBeNull()
+	{
 		$this->user->setGender(NULL);
 		$this->assertNull($this->user->getGender());
 	}
@@ -248,6 +265,14 @@ class UserTest extends PHPUnit_Framework_TestCase
 	public function testExceptionIsThrownIfInvalidGenderPassed()
 	{
 		$this->user->setGender(3);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfBooleanGenderPassed()
+	{
+		$this->user->setGender(FALSE);
 	}
 
 	public function testGetAbaCourse()

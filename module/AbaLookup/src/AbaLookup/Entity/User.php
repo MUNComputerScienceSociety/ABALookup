@@ -258,16 +258,25 @@ class User
 	/**
 	 * Sets the gender of the user
 	 *
+	 * Given values of 'M', 'F', or NULL, this function will set the gender field
+	 * of the user appropriately. Given any other string value, the field will be
+	 * set to NULL as a convenience.
+	 *
 	 * @param string|NULL $gender The gender of the user (NULL, 'M', or 'F').
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setGender($gender)
 	{
-		if ($gender !== NULL && $gender !== 'M' && $gender !== 'F') {
+		if ($gender !== NULL && !is_string($gender)) {
 			throw new InvalidArgumentException();
 		}
-		$this->gender = $gender;
+		$gender = strtoupper($gender);
+		if ($gender !== 'M' && $gender !== 'F') {
+			$this->gender = NULL; // As a convenience
+		} else {
+			$this->gender = $gender;
+		}
 		return $this;
 	}
 
