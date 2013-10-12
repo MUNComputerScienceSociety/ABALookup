@@ -118,10 +118,7 @@ abstract class AbaLookupController extends AbstractActionController
 	 * @return ViewModel
 	 */
 	protected function redirectToLoginPage() {
-		$params = [
-			'action' => 'login',
-		];
-		return $this->redirect()->toRoute('auth', $params);
+		return $this->redirect()->toRoute('auth/login');
 	}
 
 	/**

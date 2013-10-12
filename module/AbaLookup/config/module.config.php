@@ -101,15 +101,44 @@ return [
 				],
 			],
 			'auth' => [
-				'type'    => 'Segment',
+				'type'    => 'Literal',
 				'options' => [
-					'route'       => '/users/:action',
-					'constraints' => [
-						'action' => '(login)|(logout)|(register)',
-					],
+					'route' => '/users',
 					'defaults' => [
 						'controller' => 'Users',
-						'action'     => 'login',
+					],
+				],
+				'may_terminate' => FALSE,
+				'child_routes'  => [
+					'register' => [
+						'type'    => 'Segment',
+						'options' => [
+							'route'    => '/register/:type',
+							'defaults' => [
+								'action' => 'register',
+							],
+							'constraints' => [
+								'type' => '[a-z]+',
+							],
+						],
+					],
+					'login' => [
+						'type'    => 'Literal',
+						'options' => [
+							'route'    => '/login',
+							'defaults' => [
+								'action' => 'login',
+							],
+						],
+					],
+					'logout' => [
+						'type'    => 'Literal',
+						'options' => [
+							'route'    => '/logout',
+							'defaults' => [
+								'action' => 'logout',
+							],
+						],
 					],
 				],
 			],

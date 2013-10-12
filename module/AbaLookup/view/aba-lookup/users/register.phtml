@@ -3,14 +3,18 @@
 	$this->headMeta()
 	     ->appendName('description', '');
 ?>
-<div class="eight columns">
+<div class="twelve columns">
 	<h2>Register to start using ABA Lookup</h2>
+	<ul>
+		<li><a href="/users/register/parent">I am a parent</a></li>
+		<li><a href="/users/register/therapist">I am an ABA therapist</a></li>
+	</ul>
 	<?php
 		if (isset($this->error)) {
 			echo "<p>{$this->error}</p>";
 		}
 		$this->form->setAttribute('class', 'left');
-		$this->form->setAttribute('action', '/users/register');
+		$this->form->setAttribute('action', sprintf('/users/register/%s', $this->type));
 		$this->form->setAttribute('method', 'post');
 		echo $this->form()->openTag($this->form);
 		foreach ($this->form as $element) {
@@ -23,8 +27,10 @@
 				$type = $element->getAttribute('type');
 				$label = $element->getLabel();
 				if ($label && ($type == 'checkbox' || $type == 'radio')) {
+					echo '<div class="checkbox">';
 					echo $this->formElement($element);
 					echo $this->formLabel($element, $label);
+					echo '</div>';
 				} elseif ($label) {
 					echo $this->formLabel($element, $label);
 					echo $this->formElement($element);
@@ -39,11 +45,3 @@
 		echo $this->form()->closeTag();
 	?>
 </div>
-<aside class="aside four columns">
-	<h3>Details</h3>
-	<p>
-		Please specify whether you are a parent seeking
-		treatment for a child or a therapist seeking a
-		client. You will sign in with your username and password.
-	</p>
-</aside>

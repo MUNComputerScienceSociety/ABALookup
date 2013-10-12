@@ -18,8 +18,9 @@ class UsersControllerTest extends BaseControllerTestCase
 	public function authActions()
 	{
 		return [
-			['/users/register', 'auth'],
-			['/users/login', 'auth'],
+			['/users/register/parent', 'auth/register'],
+			['/users/register/therapist', 'auth/register'],
+			['/users/login', 'auth/login'],
 		];
 	}
 
@@ -85,7 +86,7 @@ class UsersControllerTest extends BaseControllerTestCase
 		$this->assertModuleName('AbaLookup');
 		$this->assertControllerName('Users');
 		$this->assertControllerClass('UsersController');
-		$this->assertMatchedRouteName('auth');
+		$this->assertMatchedRouteName('auth/login');
 		$this->assertRedirectTo(sprintf('/users/%d/profile', $user->getId()));
 		// Pass along the session
 		return $_SESSION;

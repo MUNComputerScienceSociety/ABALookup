@@ -52,7 +52,8 @@
 	<p>
 		<?php
 			$epoch = $this->user->getCertificateOfConduct();
-			echo isset($epoch) ? date('r', $epoch) : 'You will need to get a Certificate of Conduct from the RNC';
+			echo isset($epoch) ? 'Completed on ' . date('F jS, Y', $epoch) :
+			'You will need to get a Certificate of Conduct from the RNC';
 		?>
 	</p>
 	<h3>

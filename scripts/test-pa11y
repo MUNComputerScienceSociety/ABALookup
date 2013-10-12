@@ -53,7 +53,8 @@ routes=(
 	"/about"
 	"/terms"
 	"/users/login"
-	"/users/register"
+	"/users/register/parent"
+	"/users/register/therapist"
 )
 
 for route in ${routes[@]}

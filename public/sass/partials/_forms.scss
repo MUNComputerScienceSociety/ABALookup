@@ -7,7 +7,9 @@ form label {
 	display: block;
 	font: $semibold 13pt $typeface;
 	text-transform: uppercase;
+	margin-bottom: 10px;
 }
+input[type="date"],
 input[type="email"],
 input[type="password"],
 input[type="tel"],
@@ -43,43 +45,13 @@ select[multiple] {
 	padding: 0;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
-input[type="checkbox"],
-input[type="radio"] {
-	display: none;
+.checkbox {
+	margin-bottom: 10px;
 }
-input[type="checkbox"] + label,
-input[type="radio"] + label {
-	cursor: pointer;
-	display: inline-block;
-}
-input[type="checkbox"] + label:after {
-	background: url(../imgs/sprites.png) left top no-repeat;
-	content: "";
-	display: inline-block;
-	height: 25px;
-	margin: 10px;
-	padding-left: 26px;
+input[type="checkbox"] + label {
+	display: inline;
 	vertical-align: middle;
-	width: 0;
-}
-input[type="checkbox"]:checked + label:after {
-	content: "";
-	background: url(../imgs/sprites.png) -29px top no-repeat;
-}
-input[type="radio"] + label:after {
-	background: url(../imgs/sprites.png) -60px top no-repeat;
-	content: "";
-	cursor: pointer;
-	display: inline-block;
-	height: 25px;
-	margin: 10px;
-	padding-left: 26px;
-	vertical-align: middle;
-	width: 0;
-}
-input[type="radio"]:checked + label:after {
-	content: "";
-	background: url(../imgs/sprites.png) -87px top no-repeat;
+	margin-left: 10px;
 }
 input[type="submit"] {
 	@extend .button;

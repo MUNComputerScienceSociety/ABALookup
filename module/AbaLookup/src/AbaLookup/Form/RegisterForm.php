@@ -10,6 +10,7 @@ use
 	Zend\Form\Exception\DomainException,
 	Zend\Form\Form,
 	Zend\I18n\Filter\Alnum,
+	Zend\Validator\Date as DateValidator,
 	Zend\Validator\EmailAddress as EmailAddressValidator,
 	Zend\Validator\NotEmpty,
 	Zend\Validator\StringLength as StringLengthValidator
@@ -23,41 +24,35 @@ class RegisterForm extends Form
 	/**
 	 * Constants for form element IDs and names
 	 */
-	const ELEMENT_NAME_DISPLAY_NAME            = 'display-name';
-	const ELEMENT_NAME_EMAIL_ADDRESS           = 'email-address';
-	const ELEMENT_NAME_PASSWORD                = 'password';
-	const ELEMENT_NAME_CONFIRM_PASSWORD        = 'confirm-password';
-	const ELEMENT_NAME_PHONE_NUMBER            = 'phone-number';
-	const ELEMENT_NAME_USER_TYPE               = 'user-type';
-	const ELEMENT_NAME_GENDER                  = 'gender';
-	const ELEMENT_NAME_ABA_COURSE              = 'aba-course';
-	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT  = 'certificate-of-conduct';
+	const ELEMENT_NAME_DISPLAY_NAME                 = 'display-name';
+	const ELEMENT_NAME_EMAIL_ADDRESS                = 'email-address';
+	const ELEMENT_NAME_PASSWORD                     = 'password';
+	const ELEMENT_NAME_CONFIRM_PASSWORD             = 'confirm-password';
+	const ELEMENT_NAME_PHONE_NUMBER                 = 'phone-number';
+	const ELEMENT_NAME_GENDER                       = 'gender';
+	const ELEMENT_NAME_ABA_COURSE                   = 'aba-course';
+	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT       = 'certificate-of-conduct';
+	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE  = 'certificate-of-conduct-date';
 
 	/**
 	 * Error message if form is invalid
 	 */
 	protected $message;
 
-	public function __construct()
+	/**
+	 * The type of user this registration form is for
+	 */
+	protected $userType;
+
+	/**
+	 * Constructor
+	 *
+	 * @param string $userType The type of the user registering.
+	 */
+	public function __construct($userType)
 	{
 		parent::__construct();
-		// User type
-		$this->add([
-			'name' => self::ELEMENT_NAME_USER_TYPE,
-			'type' => 'select',
-			'options' => [
-				'label'         => 'Parent or therapist',
-				'empty_option'  => 'Please choose parent or therapist',
-				'value_options' => [
-					UserType::TYPE_PARENT        => 'Parent',
-					UserType::TYPE_ABA_THERAPIST => 'Therapist',
-				],
-			],
-			'attributes' => [
-				'id'    => self::ELEMENT_NAME_USER_TYPE,
-				'value' => '',
-			],
-		]);
+		$this->userType = $userType;
 		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
@@ -114,47 +109,63 @@ class RegisterForm extends Form
 				'label' => 'Your phone number (optional)'
 			],
 		]);
-		// Gender
-		$this->add([
-			'name' => self::ELEMENT_NAME_GENDER,
-			'type' => 'select',
-			'options' => [
-				'label'         => 'Gender',
-				'value_options' => [
-					'Undisclosed',
-					'M' => 'Male',
-					'F' => 'Female',
+		// Show therapist-only fields?
+		if ($userType === UserType::TYPE_ABA_THERAPIST) {
+			// Gender
+			$this->add([
+				'name' => self::ELEMENT_NAME_GENDER,
+				'type' => 'select',
+				'options' => [
+					'label'         => 'Gender',
+					'value_options' => [
+						'Undisclosed',
+						'M' => 'Male',
+						'F' => 'Female',
+					],
 				],
-			],
-			'attributes' => [
-				'id'    => self::ELEMENT_NAME_GENDER,
-				'value' => 0
-			],
-		]);
-		// ABA course
-		$this->add([
-			'name' => self::ELEMENT_NAME_ABA_COURSE,
-			'type' => 'checkbox',
-			'attributes' => [
-				'id' => self::ELEMENT_NAME_ABA_COURSE
-			],
-			'options' => [
-				'label'         => 'ABA course',
-				'checked_value' => TRUE
-			],
-		]);
-		// Certificate of conduct
-		$this->add([
-			'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
-			'type' => 'checkbox',
-			'attributes' => [
-				'id' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT
-			],
-			'options' => [
-				'label'         => 'Certificate of conduct',
-				'checked_value' => 0
-			],
-		]);
+				'attributes' => [
+					'id'    => self::ELEMENT_NAME_GENDER,
+					'value' => 0
+				],
+			]);
+			// ABA course
+			$this->add([
+				'name' => self::ELEMENT_NAME_ABA_COURSE,
+				'type' => 'checkbox',
+				'attributes' => [
+					'id' => self::ELEMENT_NAME_ABA_COURSE
+				],
+				'options' => [
+					'label'         => 'Completed ABA course',
+					'checked_value' => TRUE
+				],
+			]);
+			// Certificate of Conduct
+			$this->add([
+				'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
+				'type' => 'checkbox',
+				'attributes' => [
+					'id' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT
+				],
+				'options' => [
+					'label'         => 'Certificate of Conduct',
+					'checked_value' => TRUE
+				],
+			]);
+			// Certificate of Conduct Date
+			$this->add([
+				'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
+				'type' => 'text',
+				'attributes' => [
+					'id'   => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
+					'type' => 'date',
+					'max'  => date('Y-m-d'), // Today
+				],
+				'options' => [
+					'label' => 'Date on Certificate of Conduct'
+				],
+			]);
+		}
 		// Submit
 		$this->add([
 			'name' => 'register',
@@ -242,27 +253,6 @@ class RegisterForm extends Form
 	}
 
 	/**
-	 * Returns whether the user type was specififed and is valid
-	 *
-	 * Also sets the error message appropriately.
-	 *
-	 * @return bool
-	 */
-	protected function isUserTypeValid()
-	{
-		// Alias
-		$userType = $this->data[self::ELEMENT_NAME_USER_TYPE];
-		// Is valid?
-		$isValid =    isset($userType)
-		           && UserType::contains($userType);
-		;
-		if (!$isValid) {
-			$this->message = 'You must choose a user type.';
-		}
-		return $isValid;
-	}
-
-	/**
 	 * Returns whether the phone number is valid
 	 *
 	 * Also sets the error message appropriately.
@@ -285,6 +275,31 @@ class RegisterForm extends Form
 			}
 		}
 		return TRUE;
+	}
+
+	public function isCertificateOfConductValid()
+	{
+		// Treat the checkbox as a boolean value
+		$cert = (bool) $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
+		$date = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE];
+		// Is valid?
+		$isValid = FALSE;
+		// If checkbox was checked and date was valid
+		if ($cert) {
+			if ((new DateValidator(['format' => 'Y-m-d']))->isValid($date)) {
+				$this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT] = strtotime($date);
+				$isValid = TRUE;
+			} else {
+				// The checkbox was checked but invalid date
+				$this->message = 'The entered date is not valid.';
+				$isValid = FALSE;
+			}
+		} else {
+			// Checkbox was not checked
+			$this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT] = NULL;
+			$isValid = TRUE;
+		}
+		return $isValid;
 	}
 
 	/**
@@ -319,15 +334,12 @@ class RegisterForm extends Form
 			$this->data[$k] = $strtrim->filter($v);
 		}
 		// Validate the form
-		if (
-			   $this->isDisplayNameValid()
-			&& $this->isEmailAddressValid()
-			&& $this->isPasswordValid()
-			&& $this->isUserTypeValid()
-			&& $this->isPhoneNumberValid()
-		) {
-			$this->isValid = TRUE;
-		}
+		$this->isValid =    $this->isDisplayNameValid()
+		                 && $this->isEmailAddressValid()
+		                 && $this->isPasswordValid()
+		                 && $this->isPhoneNumberValid()
+		                 && $this->isCertificateOfConductValid()
+		;
 		$this->hasValidated = TRUE;
 		return $this->isValid;
 	}
@@ -357,7 +369,6 @@ class RegisterForm extends Form
 		$email                = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
 		$password             = $this->data[self::ELEMENT_NAME_PASSWORD];
 		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-		$userType             = $this->data[self::ELEMENT_NAME_USER_TYPE];
 		$gender               = $this->data[self::ELEMENT_NAME_GENDER];
 		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
 		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
@@ -366,9 +377,10 @@ class RegisterForm extends Form
 			$displayName,
 			$email,
 			$password,
-			$userType,
+			$this->userType,
 			$gender,
-			$abaCourse !== NULL ? (bool) $abaCourse : $abaCourse
+			$abaCourse !== NULL ? (bool) $abaCourse : $abaCourse,
+			$certificateOfConduct
 		);
 		if ($phone) {
 			// The user entered a phone number

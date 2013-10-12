@@ -3,6 +3,7 @@
 namespace AbaLookup;
 
 use
+	AbaLookup\Entity\UserType,
 	AbaLookup\Form\LoginForm,
 	AbaLookup\Form\ProfileEditForm,
 	AbaLookup\Form\RegisterForm,
@@ -37,13 +38,16 @@ class UsersController extends AbaLookupController
 		}
 		// Prepare the view layout
 		$this->prepareLayout($this->layout());
+		// Get the user type from the URL
+		$type = $this->params('type');
 		// Create a registration form
-		$form = new RegisterForm();
+		$form = new RegisterForm($type);
 		// If the user has not submitted a POST request
 		if (!$this->request->isPost()) {
-			// The user hs not submitted the form
+			// The user has not submitted the form
 			return [
 				'form' => $form,
+				'type' => $type,
 			];
 		}
 		// The user has submitted via POST
@@ -51,19 +55,22 @@ class UsersController extends AbaLookupController
 		$form->setData($this->request->getPost());
 		// If the form does not validate
 		if (!$form->isValid()) {
-			// Show the user the error message
+			// Force the user back to the registration page
 			return [
-				'form' => $form,
 				'error' => $form->getMessage(),
+				'form'  => $form,
+				'type'  => $type,
 			];
 		}
 		// The form has validated
 		$user = $form->getUser();
 		if ($this->getUserByEmail($user->getEmail())) {
 			// The given email address is already in use
+			// Force the user back to the registration page
 			return [
-				'form' => $form,
-				'error' => 'The entered email address is already in use.',
+				'error' => 'The provided email address is already in use.',
+				'form'  => $form,
+				'type'  => $type,
 			];
 		}
 		$this->save($user);

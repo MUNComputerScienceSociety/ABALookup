@@ -26,15 +26,15 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setFormData(array $data) {
 		$defaultValues = [
-			RegisterForm::ELEMENT_NAME_DISPLAY_NAME           => 'John Doe',
-			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS          => 'jdoe@email.com',
-			RegisterForm::ELEMENT_NAME_PASSWORD               => 'password',
-			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD       => 'password',
-			RegisterForm::ELEMENT_NAME_PHONE_NUMBER           => '7095551234',
-			RegisterForm::ELEMENT_NAME_USER_TYPE              => UserType::TYPE_PARENT,
-			RegisterForm::ELEMENT_NAME_GENDER                 => NULL,
-			RegisterForm::ELEMENT_NAME_ABA_COURSE             => FALSE,
-			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT => 0
+			RegisterForm::ELEMENT_NAME_DISPLAY_NAME                => 'John Doe',
+			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS               => 'jdoe@email.com',
+			RegisterForm::ELEMENT_NAME_PASSWORD                    => 'password',
+			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD            => 'password',
+			RegisterForm::ELEMENT_NAME_PHONE_NUMBER                => '7095551234',
+			RegisterForm::ELEMENT_NAME_GENDER                      => NULL,
+			RegisterForm::ELEMENT_NAME_ABA_COURSE                  => FALSE,
+			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => 0,
+			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => date('Y-m-d'),
 		];
 		$this->form->setData($data + $defaultValues);
 	}
@@ -44,7 +44,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->form = new RegisterForm();
+		// In this context (testing) the type makes no difference
+		$this->form = new RegisterForm(UserType::TYPE_PARENT);
 	}
 
 	/**
@@ -61,7 +62,6 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$emailAddress         = 'jdoe@email.com';
 		$password             = 'password';
 		$phoneNumber          = '7095551234';
-		$userType             = UserType::TYPE_ABA_THERAPIST;
 		$gender               = 'F';
 		$abaCourse            = TRUE;
 		$this->setFormData([
@@ -70,7 +70,6 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			RegisterForm::ELEMENT_NAME_PASSWORD               => $password,
 			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD       => $password,
 			RegisterForm::ELEMENT_NAME_PHONE_NUMBER           => $phoneNumber,
-			RegisterForm::ELEMENT_NAME_USER_TYPE              => $userType,
 			RegisterForm::ELEMENT_NAME_GENDER                 => $gender,
 			RegisterForm::ELEMENT_NAME_ABA_COURSE             => $abaCourse,
 		]);
@@ -82,7 +81,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($displayName, $user->getDisplayName());
 		$this->assertEquals($emailAddress, $user->getEmail());
 		$this->assertTrue($user->verifyPassword($password));
-		$this->assertEquals(UserType::TYPE_ABA_THERAPIST, $user->getUserType());
+		$this->assertEquals(UserType::TYPE_PARENT, $user->getUserType());
 		$this->assertTrue(((int) $phoneNumber) === $user->getPhone());
 		$this->assertEquals($gender, $user->getGender());
 		$this->assertTrue($user->getAbaCourse());
@@ -191,18 +190,6 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->form->isValid());
 		$user = $this->form->getUser();
 		$this->assertEquals(7095551133, $user->getPhone());
-	}
-
-	public function testRandomUserTypeDoesNotValidate()
-	{
-		$this->setFormData([RegisterForm::ELEMENT_NAME_USER_TYPE => 'this is random']);
-		$this->assertFalse($this->form->isValid());
-	}
-
-	public function testNullUserTypeDoesNotValidate()
-	{
-		$this->setFormData([RegisterForm::ELEMENT_NAME_USER_TYPE => NULL]);
-		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testUndisclosedGenderDoesValidate()
