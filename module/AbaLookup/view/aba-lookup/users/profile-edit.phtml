@@ -10,30 +10,10 @@
 		$this->form->setAttribute('class', 'left');
 		$this->form->setAttribute('action', '/users' . '/' . $this->user->getId() . '/profile/edit');
 		$this->form->setAttribute('method', 'post');
-		echo $this->form()->openTag($this->form);
-
-		foreach ($this->form as $element) {
-	?>
-		<div class="row">
-			<div class="twelve columns">
-			<?php
-				$label = $element->getLabel();
-				if ($label) {
-					echo $this->formLabel($element, $label);
-				}
-				echo $this->formElement($element);
-			?>
-			</div>
-		</div>
-	<?php
-		}
-
-		echo $this->form()->closeTag();
+		echo $this->form()->markup($this->form);
 	?>
 </div>
 <aside class="aside four columns">
 	<h3>Details</h3>
-	<p>
-		Edit your profile information.
-	</p>
+	<p>Edit your profile information.</p>
 </aside>

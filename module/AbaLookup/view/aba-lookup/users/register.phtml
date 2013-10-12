@@ -16,32 +16,6 @@
 		$this->form->setAttribute('class', 'left');
 		$this->form->setAttribute('action', sprintf('/users/register/%s', $this->type));
 		$this->form->setAttribute('method', 'post');
-		echo $this->form()->openTag($this->form);
-		foreach ($this->form as $element) {
-	?>
-		<div class="row">
-			<div class="twelve columns">
-			<?php
-				// To style checkboxes and radio buttons, the label needs to come after the element
-				// In all other cases, it is more semantic for the label to come before the element
-				$type = $element->getAttribute('type');
-				$label = $element->getLabel();
-				if ($label && ($type == 'checkbox' || $type == 'radio')) {
-					echo '<div class="checkbox">';
-					echo $this->formElement($element);
-					echo $this->formLabel($element, $label);
-					echo '</div>';
-				} elseif ($label) {
-					echo $this->formLabel($element, $label);
-					echo $this->formElement($element);
-				} else {
-					echo $this->formElement($element); // There is no label
-				}
-			?>
-			</div>
-		</div>
-	<?php
-		}
-		echo $this->form()->closeTag();
+		echo $this->form()->markup($this->form);
 	?>
 </div>

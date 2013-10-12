@@ -59,6 +59,7 @@ class Module
 		return [
 			'invokables' => [
 				'anchor'         => 'AbaLookup\View\Helper\AnchorLink',
+				'form'           => 'AbaLookup\Form\View\Helper\Form',
 				'scheduleHelper' => 'AbaLookup\View\Helper\ScheduleHelper',
 				'script'         => 'AbaLookup\View\Helper\Script',
 				'stylesheet'     => 'AbaLookup\View\Helper\Stylesheet',
