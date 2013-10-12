@@ -277,6 +277,18 @@ class RegisterForm extends Form
 		return TRUE;
 	}
 
+	/**
+	 * Returns whether the Certificate of Conduct is properly set
+	 *
+	 * Checks three possible cases:
+	 * 1. The checkbox to indicate that the user has recieved their Certificate
+	 *    of Conduct is checked, and the date entered is valid.
+	 * 2. The checkbox is checked, but the entered date is not valid. This will
+	 *    set the error message appropriately.
+	 * 3. The checkbox was not selected, and in this case, the value should be NULL.
+	 *
+	 * @return bool Whether the Certificate of Conduct is properly set.
+	 */
 	public function isCertificateOfConductValid()
 	{
 		// Treat the checkbox as a boolean value
