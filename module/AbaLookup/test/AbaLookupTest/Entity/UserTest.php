@@ -4,6 +4,7 @@ namespace AbaLookupTest\Entity;
 
 use
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	PHPUnit_Framework_TestCase
 ;
 
@@ -24,10 +25,11 @@ class UserTest extends PHPUnit_Framework_TestCase
 	protected $email;
 	protected $password;
 	protected $phone;
-	protected $therapist;
-	protected $sex;
+	protected $userType;
+	protected $gender;
 	protected $abaCourse;
 	protected $certificateOfConduct;
+	protected $postalCode;
 
 	/**
 	 * Resets for isolation
@@ -38,20 +40,22 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->email                = 'jane@email.com';
 		$this->password             = 'password';
 		$this->phone                = 7095551234;
-		$this->therapist            = TRUE;
-		$this->sex                  = 'F';
+		$this->userType             = UserType::TYPE_ABA_THERAPIST;
+		$this->gender               = 'F';
 		$this->abaCourse            = TRUE;
-		$this->certificateOfConduct = TRUE;
+		$this->certificateOfConduct = time();
+		$this->postalCode           = 'A1B 3X9';
 		$this->user = new User(
 			$this->displayName,
 			$this->email,
 			$this->password,
-			$this->therapist,
-			$this->sex,
+			$this->userType,
+			$this->gender,
 			$this->abaCourse,
 			$this->certificateOfConduct
 		);
 		$this->user->setPhone($this->phone);
+		$this->user->setPostalCode($this->postalCode);
 	}
 
 	/**
@@ -59,7 +63,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfConstructorPassedNullDisplayName()
 	{
-		new User(NULL, $this->email, $this->password, $this->therapist);
+		new User(NULL, $this->email, $this->password, $this->userType);
 	}
 
 	/**
@@ -67,7 +71,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfConstructorPassedNullEmail()
 	{
-		new User($this->displayName, NULL, $this->password, $this->therapist);
+		new User($this->displayName, NULL, $this->password, $this->userType);
 	}
 
 	/**
@@ -75,7 +79,7 @@ class UserTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testExceptionIsThrownIfConstructorPassedNullPassword()
 	{
-		new User($this->displayName, $this->email, NULL, $this->therapist);
+		new User($this->displayName, $this->email, NULL, $this->userType);
 	}
 
 	/**
@@ -197,53 +201,53 @@ class UserTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonIntegerNumberPassed()
+	public function testExceptionIsThrownIfNonIntegerPhoneNumberPassed()
 	{
 		$this->user->setPhone('');
 	}
 
-	public function testIsTherapist()
+	public function testGetUserType()
 	{
-		$this->assertTrue($this->user->isTherapist());
+		$this->assertEquals($this->userType, $this->user->getUserType());
 	}
 
 	/**
-	 * @depends testIsTherapist
+	 * @depends testGetUserType
 	 */
-	public function testSetTherapist()
+	public function testSetUserType()
 	{
-		$this->user->setTherapist(FALSE);
-		$this->assertFalse($this->user->isTherapist());
-	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testExceptionIsThrownIfNonBoolTherapistValueGiven()
-	{
-		$this->user->setTherapist(NULL);
-	}
-
-	public function testGetSex()
-	{
-		$this->assertEquals($this->sex, $this->user->getSex());
-	}
-
-	/**
-	 * @depends testGetSex
-	 */
-	public function testSetSex()
-	{
-		$this->user->setSex(NULL);
-		$this->assertNull($this->user->getSex());
+		$this->user->setUserType(UserType::TYPE_PARENT);
+		$this->assertEquals($this->user->getUserType(), UserType::TYPE_PARENT);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfInvalidSexPassed()
+	public function testExceptionIsThrownIfNonStringUserTypeGiven()
 	{
-		$this->user->setSex(3);
+		$this->user->setUserType(NULL);
+	}
+
+	public function testGetGender()
+	{
+		$this->assertEquals($this->gender, $this->user->getGender());
+	}
+
+	/**
+	 * @depends testGetGender
+	 */
+	public function testSetGender()
+	{
+		$this->user->setGender(NULL);
+		$this->assertNull($this->user->getGender());
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfInvalidGenderPassed()
+	{
+		$this->user->setGender(3);
 	}
 
 	public function testGetAbaCourse()
@@ -261,6 +265,15 @@ class UserTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @depends testGetAbaCourse
+	 */
+	public function testAbaCourseCanBeNull()
+	{
+		$this->user->setAbaCourse(NULL);
+		$this->assertNull($this->user->getAbaCourse());
+	}
+
+	/**
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testExceptionIsThrownIfNonBoolAbaCoursePassed()
@@ -268,69 +281,75 @@ class UserTest extends PHPUnit_Framework_TestCase
 		$this->user->setAbaCourse(3);
 	}
 
-	public function testHasCertificateOfConduct()
+	public function testGetCertificateOfConduct()
 	{
-		$this->assertTrue($this->user->hasCertificateOfConduct());
+		$this->assertEquals($this->certificateOfConduct, $this->user->getCertificateOfConduct());
 	}
 
 	/**
-	 * @depends testHasCertificateOfConduct
+	 * @depends testGetCertificateOfConduct
 	 */
 	public function testSetCertificateOfConduct()
 	{
-		$this->user->setCertificateOfConduct(FALSE);
-		$this->assertFalse($this->user->hasCertificateOfConduct());
+		$now = time();
+		$this->user->setCertificateOfConduct($now);
+		$this->assertEquals($now, $this->user->getCertificateOfConduct());
+	}
+
+	/**
+	 * @depends testGetCertificateOfConduct
+	 */
+	public function testSetCertificateOfConductCanBeNull()
+	{
+		$this->user->setCertificateOfConduct(NULL);
+		$this->assertNull($this->user->getCertificateOfConduct());
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonBoolCertificateOfConduct()
+	public function testExceptionIsThrownIfCertificateOfConductPassedNonNullAndNonInteger()
 	{
-		$this->user->setCertificateOfConduct(3);
+		$this->user->setCertificateOfConduct('');
 	}
 
-	public function testIsVerified()
+	public function testGetPostalCode()
 	{
-		$this->assertFalse($this->user->isVerified());
-	}
-
-	/**
-	 * @depends testIsVerified
-	 */
-	public function testSetVerified()
-	{
-		$this->user->setVerified(TRUE);
-		$this->assertTrue($this->user->isVerified());
+		$this->assertEquals($this->postalCode, $this->user->getPostalCode());
 	}
 
 	/**
-	 * @expectedException InvalidArgumentException
+	 * @depends testGetPostalCode
 	 */
-	public function testExceptionIsThrownIfNonBoolVerified()
+	public function testSetPostalCode()
 	{
-		$this->user->setVerified('');
-	}
-
-	public function testIsModerator()
-	{
-		$this->assertFalse($this->user->isModerator());
+		$this->postalCode = 'A1B 2C3';
+		$this->user->setPostalCode($this->postalCode);
+		$this->assertEquals($this->postalCode, $this->user->getPostalCode());
 	}
 
 	/**
-	 * @depends testIsModerator
+	 * @depends testGetPostalCode
 	 */
-	public function testSetModerator()
+	public function testPostalCodeCanBeNull()
 	{
-		$this->user->setModerator(TRUE);
-		$this->assertTrue($this->user->isModerator());
+		$this->user->setPostalCode(NULL);
+		$this->assertNull($this->user->getPostalCode());
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testExceptionIsThrownIfNonBoolModerator()
+	public function testExceptionisThrownIfSetPostalCodePassedInteger()
 	{
-		$this->user->setModerator(NULL);
+		$this->user->setPostalCode(3);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testExceptionIsThrownIfSetPostalCodePassedBoolean()
+	{
+		$this->user->setPostalCode(FALSE);
 	}
 }

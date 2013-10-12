@@ -5,6 +5,7 @@ namespace AbaLookupTest;
 use
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	PHPUnit_Framework_Exception,
 	ReflectionProperty,
 	SimpleXMLElement,
@@ -98,7 +99,7 @@ class BaseControllerTestCase extends AbstractHttpControllerTestCase
 	public function mockUser()
 	{
 		// Mock user
-		$user = new User('Jane', 'jane@email.com', 'password', TRUE, 'F', TRUE, TRUE);
+		$user = new User('Jane', 'jane@email.com', 'password', UserType::TYPE_PARENT);
 		$reflectionProperty = new ReflectionProperty('AbaLookup\Entity\User', 'id');
 		$reflectionProperty->setAccessible(TRUE);
 		$reflectionProperty->setValue($user, 1);

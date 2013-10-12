@@ -3,6 +3,7 @@
 namespace AbaLookupTest;
 
 use
+	AbaLookup\Entity\UserType,
 	AbaLookup\Form\RegisterForm,
 	PHPUnit_FrameWork_TestCase
 ;
@@ -22,10 +23,10 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	                               $password               = 'password',
 	                               $confirmPassword        = 'password',
 	                               $phoneNumber            = '7095551234',
-	                               $userType               = '0',
-	                               $sex                    = NULL,
+	                               $userType               = UserType::TYPE_PARENT,
+	                               $gender                 = NULL,
 	                               $abaCourse              = FALSE,
-	                               $certificateOfConduct   = FALSE
+	                               $certificateOfConduct   = 0
 	) {
 		$this->form->setData([
 			RegisterForm::ELEMENT_NAME_DISPLAY_NAME            => $displayName,
@@ -34,7 +35,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD        => $confirmPassword,
 			RegisterForm::ELEMENT_NAME_PHONE_NUMBER            => $phoneNumber,
 			RegisterForm::ELEMENT_NAME_USER_TYPE               => $userType,
-			RegisterForm::ELEMENT_NAME_SEX                     => $sex,
+			RegisterForm::ELEMENT_NAME_GENDER                  => $gender,
 			RegisterForm::ELEMENT_NAME_ABA_COURSE              => $abaCourse,
 			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT  => $certificateOfConduct
 		]);
@@ -62,8 +63,8 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$emailAddress = 'jdoe@email.com';
 		$password = 'password';
 		$phoneNumber = '7095551234';
-		$userType = '0'; // Parent
-		$sex = 'F';
+		$userType = UserType::TYPE_PARENT;
+		$gender = 'F';
 		$this->setFormData(
 			$displayName,
 			$emailAddress,
@@ -71,7 +72,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			$password,
 			$phoneNumber,
 			$userType,
-			$sex
+			$gender
 		);
 		$this->assertTrue($this->form->isValid());
 		$user = $this->form->getUser();
@@ -79,9 +80,9 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($displayName, $user->getDisplayName());
 		$this->assertEquals($emailAddress, $user->getEmail());
 		$this->assertTrue($user->verifyPassword($password));
-		$this->assertFalse($user->isTherapist());
+		$this->assertEquals(UserType::TYPE_PARENT, $user->getUserType());
 		$this->assertTrue(((int) $phoneNumber) === $user->getPhone());
-		$this->assertEquals($sex, $user->getSex());
+		$this->assertEquals($gender, $user->getGender());
 	}
 
 	public function testDisplayNameWithNonEnglishCharactersDoesValidate()
@@ -206,6 +207,19 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->form->isValid());
 	}
 
+	public function testRandomUserTypeDoesNotValidate()
+	{
+		$this->setFormData(
+			'John Doe',
+			'jdoe@email.com',
+			'password',
+			'password',
+			'7095551234',
+			'this is random'
+		);
+		$this->assertFalse($this->form->isValid());
+	}
+
 	public function testNullUserTypeDoesNotValidate()
 	{
 		$this->setFormData(
@@ -219,7 +233,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($this->form->isValid());
 	}
 
-	public function testUndisclosedSexDoesValidate()
+	public function testUndisclosedGenderDoesValidate()
 	{
 		$this->setFormData(
 			'John Doe',
@@ -227,13 +241,13 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'password',
 			'password',
 			'7095551234',
-			'1',
+			UserType::TYPE_ABA_THERAPIST,
 			'Undisclosed'
 		);
 		$this->assertTrue($this->form->isValid());
 	}
 
-	public function testNullSexDoesValidate()
+	public function testNullGenderDoesValidate()
 	{
 		$this->setFormData(
 			'John Doe',
@@ -241,7 +255,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			'password',
 			'password',
 			'7095551234',
-			'1',
+			UserType::TYPE_ABA_THERAPIST,
 			NULL
 		);
 		$this->assertTrue($this->form->isValid());

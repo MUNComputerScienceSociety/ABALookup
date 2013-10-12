@@ -43,6 +43,8 @@ class Pairing
 	protected $score;
 
 	/**
+	 * Whether this pairing should be excluded from results
+	 *
 	 * @Column(type = "boolean")
 	 */
 	protected $excluded;
@@ -52,7 +54,7 @@ class Pairing
 	 *
 	 * @param User $a The 1st user in this pairing.
 	 * @param User $a The 2nd user in this pairing.
-	 * @param float $score The score.
+	 * @param float $score The score for this pairing.
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(User $a, User $b, $score)
@@ -87,9 +89,9 @@ class Pairing
 	}
 
 	/**
-	 * Sets this pairing to be excluded
+	 * Sets whether this pairing is to be excluded from results
 	 *
-	 * @param bool $excluded Whether this pairing should be excluded in future matching.
+	 * @param bool $excluded This pairing should be excluded from results.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
@@ -135,6 +137,8 @@ class Pairing
 	}
 
 	/**
+	 * Returns whether this pairing is being excluded from results
+	 *
 	 * @return bool
 	 */
 	public function isExcluded()

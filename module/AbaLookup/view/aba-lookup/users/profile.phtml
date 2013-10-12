@@ -16,24 +16,21 @@
 	<h3>Phone number</h3>
 	<p><?php echo $this->user->getPhone() ? $this->user->getPhone() : "n/a"; ?></p>
 
-	<h3>Verification status</h3>
-	<p><?php echo ($this->user->isVerified()) ? "Verified" : "You need to verify your email address"; ?></p>
+	<?php if ($this->user->getUserType() === \ABALookup\Entity\UserType::TYPE_ABA_THERAPIST): ?>
 
-	<?php if ($this->user->isTherapist()): ?>
-
-	<h3>Sex</h3>
+	<h3>Gender</h3>
 	<p>
 		<?php
-			$sex = $this->user->getSex();
-			if (!isset($sex)) {
+			$gender = $this->user->getGender();
+			if (!isset($gender)) {
 				echo "Undisclosed";
 			} else {
-				echo ($sex == "F") ? "Female" : "Male";
+				echo ($gender == "F") ? "Female" : "Male";
 			}
 		?>
 	</p>
 	<h3>Certificate of conduct</h3>
-	<p><?php echo ($this->user->hasCertificateOfConduct()) ? "Accepted" : "You may need to obtain a Certificate of Conduct"; ?></p>
+	<p><?php echo $this->user->getCertificateOfConduct(); ?></p>
 	<h3>ABA therapy course</h3>
 	<p><?php echo ($this->user->getAbaCourse()) ? "Completed" : "Not yet completed"; ?></p>
 

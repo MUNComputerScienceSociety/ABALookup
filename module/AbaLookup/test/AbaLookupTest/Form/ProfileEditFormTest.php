@@ -4,6 +4,7 @@ namespace AbaLookupTest\Form;
 
 use
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	AbaLookup\Form\ProfileEditForm,
 	PHPUnit_Framework_TestCase
 ;
@@ -42,7 +43,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->user = new User('Ramus', 'foo@bar.com', 'password', FALSE);
+		$this->user = new User('Ramus', 'foo@bar.com', 'password', UserType::TYPE_PARENT);
 		$this->form = new ProfileEditForm($this->user);
 	}
 

@@ -5,6 +5,7 @@ namespace AbaLookupTest\Entity;
 use
 	AbaLookup\Entity\Pairing,
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	PHPUnit_Framework_TestCase
 ;
 
@@ -34,8 +35,8 @@ class PairingTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->a = new User('John Smith', 'johns@email.com', 'password', FALSE, 'M', FALSE, TRUE);
-		$this->b = new User('Jane Smith', 'janes@email.com', 'password', TRUE, 'F', TRUE, TRUE);
+		$this->a = new User('John Smith', 'johns@email.com', 'password', UserType::TYPE_ABA_THERAPIST);
+		$this->b = new User('Jane Smith', 'janes@email.com', 'password', UserType::TYPE_PARENT);
 		$this->score = 3.0;
 		$this->pairing = new Pairing($this->a, $this->b, $this->score);
 	}

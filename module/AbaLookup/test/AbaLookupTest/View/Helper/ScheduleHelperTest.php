@@ -5,6 +5,7 @@ namespace AbaLookupTest\View\Helper;
 use
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	AbaLookup\View\Helper\ScheduleHelper,
 	PHPUnit_Framework_TestCase
 ;
@@ -17,15 +18,9 @@ class ScheduleHelperTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->helper = new ScheduleHelper();
-		$this->schedule = new Schedule(new User(
-			'John Smith',
-			'js@email.com',
-			'password',
-			FALSE,
-			NULL,
-			FALSE,
-			FALSE
-		));
+		$this->schedule = new Schedule(
+			new User('John Smith', 'js@email.com', 'password', UserType::TYPE_PARENT)
+		);
 		$this->helper->__invoke($this->schedule);
 	}
 

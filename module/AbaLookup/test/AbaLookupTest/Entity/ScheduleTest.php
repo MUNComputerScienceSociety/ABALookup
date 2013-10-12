@@ -5,6 +5,7 @@ namespace AbaLookupTest\Entity;
 use
 	AbaLookup\Entity\Schedule,
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	PHPUnit_Framework_TestCase
 ;
 
@@ -28,15 +29,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->user = new User(
-			'John Smith',
-			'js@email.com',
-			'password',
-			FALSE,
-			NULL,
-			FALSE,
-			FALSE
-		);
+		$this->user = new User('John Smith', 'js@email.com', 'password', UserType::TYPE_PARENT);
 		$this->schedule = new Schedule($this->user);
 	}
 

@@ -4,6 +4,7 @@ namespace AbaLookup\Form;
 
 use
 	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType,
 	Zend\Filter\Digits,
 	Zend\Filter\StringTrim,
 	Zend\Form\Exception\DomainException,
@@ -28,7 +29,7 @@ class RegisterForm extends Form
 	const ELEMENT_NAME_CONFIRM_PASSWORD        = 'confirm-password';
 	const ELEMENT_NAME_PHONE_NUMBER            = 'phone-number';
 	const ELEMENT_NAME_USER_TYPE               = 'user-type';
-	const ELEMENT_NAME_SEX                     = 'sex';
+	const ELEMENT_NAME_GENDER                  = 'gender';
 	const ELEMENT_NAME_ABA_COURSE              = 'aba-course';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT  = 'certificate-of-conduct';
 
@@ -48,8 +49,8 @@ class RegisterForm extends Form
 				'label'         => 'Parent or therapist',
 				'empty_option'  => 'Please choose parent or therapist',
 				'value_options' => [
-					0 => 'Parent',
-					1 => 'Therapist',
+					UserType::TYPE_PARENT        => 'Parent',
+					UserType::TYPE_ABA_THERAPIST => 'Therapist',
 				],
 			],
 			'attributes' => [
@@ -113,12 +114,12 @@ class RegisterForm extends Form
 				'label' => 'Your phone number (optional)'
 			],
 		]);
-		// Sex
+		// Gender
 		$this->add([
-			'name' => self::ELEMENT_NAME_SEX,
+			'name' => self::ELEMENT_NAME_GENDER,
 			'type' => 'select',
 			'options' => [
-				'label'         => 'Sex',
+				'label'         => 'Gender',
 				'value_options' => [
 					'Undisclosed',
 					'M' => 'Male',
@@ -126,7 +127,7 @@ class RegisterForm extends Form
 				],
 			],
 			'attributes' => [
-				'id'    => self::ELEMENT_NAME_SEX,
+				'id'    => self::ELEMENT_NAME_GENDER,
 				'value' => 0
 			],
 		]);
@@ -151,7 +152,7 @@ class RegisterForm extends Form
 			],
 			'options' => [
 				'label'         => 'Certificate of conduct',
-				'checked_value' => TRUE
+				'checked_value' => 0
 			],
 		]);
 		// Submit
@@ -253,10 +254,10 @@ class RegisterForm extends Form
 		$userType = $this->data[self::ELEMENT_NAME_USER_TYPE];
 		// Is valid?
 		$isValid =    isset($userType)
-		           && (new NotEmpty())->isValid($userType)
+		           && UserType::contains($userType);
 		;
 		if (!$isValid) {
-			$this->message = 'You must specify either parent or therapist.';
+			$this->message = 'You must choose a user type.';
 		}
 		return $isValid;
 	}
@@ -357,7 +358,7 @@ class RegisterForm extends Form
 		$password             = $this->data[self::ELEMENT_NAME_PASSWORD];
 		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
 		$userType             = $this->data[self::ELEMENT_NAME_USER_TYPE];
-		$sex                  = $this->data[self::ELEMENT_NAME_SEX];
+		$gender               = $this->data[self::ELEMENT_NAME_GENDER];
 		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
 		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
 		// Create and return a new user
@@ -365,10 +366,10 @@ class RegisterForm extends Form
 			$displayName,
 			$email,
 			$password,
-			(bool) $userType,
-			$sex,
+			$userType,
+			$gender,
 			(bool) $abaCourse,
-			(bool) $certificateOfConduct
+			$certificateOfConduct
 		);
 		if ($phone) {
 			// The user entered a phone number

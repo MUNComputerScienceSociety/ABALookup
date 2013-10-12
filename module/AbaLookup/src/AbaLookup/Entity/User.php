@@ -26,7 +26,7 @@ class User
 	const MINIMUM_LENGTH_DISPLAY_NAME = 1;
 
 	/**
-	 * The minimum length for users' passwords
+	 * The minimum length for passwords
 	 */
 	const MINIMUM_LENGTH_PASSWORD = 8;
 
@@ -50,16 +50,22 @@ class User
 	protected $id;
 
 	/**
+	 * The user's display name
+	 *
 	 * @Column(type = "string", name = "display_name")
 	 */
 	protected $displayName;
 
 	/**
+	 * The user's email address
+	 *
 	 * @Column(type = "string", unique = TRUE)
 	 */
 	protected $email;
 
 	/**
+	 * The user's password
+	 *
 	 * @Column(type = "string")
 	 */
 	protected $password;
@@ -75,46 +81,55 @@ class User
 	protected $phone;
 
 	/**
-	 * @Column(type = "boolean")
+	 * The type of the user
+	 *
+	 * @see UserType The possible values for this property.
+	 * @Column(type = "string", name = "user_type")
 	 */
-	protected $therapist;
+	protected $userType;
 
 	/**
-	 * The sex of the user
+	 * The gender of the user
 	 *
-	 * The user can choose to not dicslose their sex, thus
+	 * The user can choose to not dicslose their gender, thus
 	 * this field can be NULL. This field is either a 'M' for
 	 * male or an 'F' for female.
 	 *
-	 * @Column(type = "string", nullable = TRUE, length = 1)
+	 * @Column(type = "string", length = 1, nullable = TRUE)
 	 */
-	protected $sex;
+	protected $gender;
 
 	/**
 	 * Whether the user has completed their course
 	 *
-	 * @Column(type = "boolean", name = "aba_course")
+	 * This field can be NULL, which represents that the user has not
+	 * yet completed the ABA training course.
+	 *
+	 * @Column(type = "boolean", name = "aba_course", nullable = TRUE)
 	 */
 	protected $abaCourse;
 
 	/**
-	 * Whether the user has recieved their certificate of conduct/vulnerable sector check
+	 * The date on which the user last recieved their Certificate of Conduct
 	 *
-	 * @Column(type = "boolean", name = "certificate_of_conduct")
+	 * This field can be NULL, which represents that the user has never recieved
+	 * their Certificate of Conduct or, in the case of a parent, the field is
+	 * not relevant. The field is stored as the number of seconds since the UNIX epoch.
+	 *
+	 * @Column(type = "integer", name = "certificate_of_conduct", nullable = TRUE)
 	 */
 	protected $certificateOfConduct;
 
 	/**
-	 * Whether the user has verified their email address
+	 * The user's postal code
 	 *
-	 * @Column(type = "boolean")
+	 * The user can optionally provide their postal code to be provied the
+	 * option of viewing/generating coarse location-based matches. Is they
+	 * decide to not provide this field, it will be NULL.
+	 *
+	 * @Column(type = "string", name = "postal_code", nullable = TRUE)
 	 */
-	protected $verified;
-
-	/**
-	 * @Column(type = "boolean")
-	 */
-	protected $moderator;
+	protected $postalCode;
 
 	/**
 	 * Initialise static fields
@@ -130,35 +145,31 @@ class User
 	 * Constructor
 	 *
 	 * @param string $displayName The display name for the user.
-	 * @param string $email The email address of the user.
-	 * @param string $password The password for the user.
-	 * @param bool $therapist Is the user a therapist?
-	 * @param string|NULL The sex of the user.
-	 * @param bool $abaCourse Has the user completed the course.
-	 * @param bool $certificateOfConduct Has the user recieved their certificate of conduct.
+	 * @param string $email The email address for the user.
+	 * @param string $password The user's password in plaintext.
+	 * @param string $userType The type of the user.
+	 * @param string|NULL $gender The gender of the user.
+	 * @param bool|NULL $abaCourse Whether the user has completed the ABA training course.
+	 * @param integer|NULL $certificateOfConduct The date on which the user last recieved their Certificate of Conduct.
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($displayName,
 	                            $email,
 	                            $password,
-	                            $therapist,
-	                            $sex                  = NULL,
-	                            $abaCourse            = FALSE,
-	                            $certificateOfConduct = FALSE
+	                            $userType,
+	                            $gender               = NULL,
+	                            $abaCourse            = NULL,
+	                            $certificateOfConduct = NULL
 	) {
-		if (!isset($displayName, $email, $password) || !is_bool($therapist)) {
-			throw new InvalidArgumentException();
-		}
-		$this->displayName          = $displayName;
-		$this->email                = $email;
-		$this->password             = self::$bcrypt->create($password);
-		$this->phone                = NULL;
-		$this->therapist            = $therapist;
-		$this->sex                  = $sex;
-		$this->abaCourse            = $abaCourse;
-		$this->certificateOfConduct = $certificateOfConduct;
-		$this->verified             = FALSE;
-		$this->moderator            = FALSE;
+		$this->setDisplayName($displayName);
+		$this->setEmail($email);
+		$this->setPassword($password);
+		$this->setPhone(NULL); // Default
+		$this->setUserType($userType);
+		$this->setGender($gender);
+		$this->setAbaCourse($abaCourse);
+		$this->setCertificateOfConduct($certificateOfConduct);
+		$this->setPostalCode(NULL); // Default
 	}
 
 	/**
@@ -196,7 +207,7 @@ class User
 	/**
 	 * Sets the password for the user
 	 *
-	 * The password passed must be in plaintext, as it will
+	 * The password must be in plaintext when passed in, as it will
 	 * be hashed internally.
 	 *
 	 * @param string $password The plaintext password for the user.
@@ -215,13 +226,13 @@ class User
 	/**
 	 * Sets the phone number for the user
 	 *
-	 * @param int $phone The phone number for the user.
+	 * @param int|NULL $phone The phone number for the user.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setPhone($phone)
 	{
-		if (!isset($phone) || !is_int($phone)) {
+		if ($phone !== NULL && !is_int($phone)) {
 			throw new InvalidArgumentException();
 		}
 		$this->phone = $phone;
@@ -229,47 +240,47 @@ class User
 	}
 
 	/**
-	 * Sets whether or not the user is a therapist
+	 * Sets the user type
 	 *
-	 * @param bool $therapist Whether or not the user is a therapist.
+	 * @param string $userType The type of the user.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
-	public function setTherapist($therapist)
+	public function setUserType($userType)
 	{
-		if (!isset($therapist) || !is_bool($therapist)) {
+		if (!isset($userType) || !is_string($userType) || !$userType) {
 			throw new InvalidArgumentException();
 		}
-		$this->therapist = $therapist;
+		$this->userType = $userType;
 		return $this;
 	}
 
 	/**
-	 * Sets the sex of the user
+	 * Sets the gender of the user
 	 *
-	 * @param string $sex The sex of the user (NULL, 'M', or 'F').
+	 * @param string|NULL $gender The gender of the user (NULL, 'M', or 'F').
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
-	public function setSex($sex)
+	public function setGender($gender)
 	{
-		if ($sex !== NULL && $sex !== 'M' && $sex !== 'F') {
+		if ($gender !== NULL && $gender !== 'M' && $gender !== 'F') {
 			throw new InvalidArgumentException();
 		}
-		$this->sex = $sex;
+		$this->gender = $gender;
 		return $this;
 	}
 
 	/**
-	 * Sets whether the user has completed the course
+	 * Sets whether the user has completed the ABA training course
 	 *
-	 * @param bool $abaCourse Whether or not the user has completed their course.
+	 * @param bool|NULL $abaCourse Whether or not the user has completed their course.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setAbaCourse($abaCourse)
 	{
-		if (!isset($abaCourse) || !is_bool($abaCourse)) {
+		if ($abaCourse !== NULL && !is_bool($abaCourse)) {
 			throw new InvalidArgumentException();
 		}
 		$this->abaCourse = $abaCourse;
@@ -277,15 +288,18 @@ class User
 	}
 
 	/**
-	 * Sets whether the user has recieved their certificate of conduct
+	 * Sets the date on which the user last recieved their certificate of conduct
 	 *
-	 * @param bool $certificateOfConduct Whether the user has recieved their certificate of conduct.
+	 * The {@code $certificateOfConduct} field is stored as the number of seconds
+	 * since the UNIX epoch. As such, the given value must be an integer.
+	 *
+	 * @param int|NULL $certificateOfConduct The date on which the user last recieved their certificate of conduct.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
 	public function setCertificateOfConduct($certificateOfConduct)
 	{
-		if (!isset($certificateOfConduct) || !is_bool($certificateOfConduct)) {
+		if ($certificateOfConduct !== NULL && !is_int($certificateOfConduct)) {
 			throw new InvalidArgumentException();
 		}
 		$this->certificateOfConduct = $certificateOfConduct;
@@ -293,34 +307,18 @@ class User
 	}
 
 	/**
-	 * Sets whether or not the user has been verified
+	 * Sets the postal code for the user
 	 *
-	 * @param bool $verified Whether or not the user has been verified.
+	 * @param string|NULL $postalCode The postal code for the user.
 	 * @throws InvalidArgumentException
 	 * @return $this
 	 */
-	public function setVerified($verified)
+	public function setPostalCode($postalCode)
 	{
-		if (!isset($verified) || !is_bool($verified)) {
+		if ($postalCode !== NULL && !is_string($postalCode)) {
 			throw new InvalidArgumentException();
 		}
-		$this->verified = $verified;
-		return $this;
-	}
-
-	/**
-	 * Sets if the user is or is not a moderator
-	 *
-	 * @param bool $moderator Whether the user is a moderator or not.
-	 * @throws InvalidArgumentException
-	 * @return $this
-	 */
-	public function setModerator($moderator)
-	{
-		if (!isset($moderator) || !is_bool($moderator)) {
-			throw new InvalidArgumentException();
-		}
-		$this->moderator = $moderator;
+		$this->postalCode = $postalCode;
 		return $this;
 	}
 
@@ -376,23 +374,23 @@ class User
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function isTherapist()
-	{
-		return $this->therapist;
-	}
-
-	/**
 	 * @return string
 	 */
-	public function getSex()
+	public function getUserType()
 	{
-		return $this->sex;
+		return $this->userType;
 	}
 
 	/**
-	 * @return bool
+	 * @return string|NULL
+	 */
+	public function getGender()
+	{
+		return $this->gender;
+	}
+
+	/**
+	 * @return bool|NULL
 	 */
 	public function getAbaCourse()
 	{
@@ -400,27 +398,19 @@ class User
 	}
 
 	/**
-	 * @return bool
+	 * @return int|NULL
 	 */
-	public function hasCertificateOfConduct()
+	public function getCertificateOfConduct()
 	{
 		return $this->certificateOfConduct;
 	}
 
 	/**
-	 * @return bool
+	 * @return string|NULL
 	 */
-	public function isVerified()
+	public function getPostalCode()
 	{
-		return $this->verified;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function isModerator()
-	{
-		return $this->moderator;
+		return $this->postalCode;
 	}
 }
 
