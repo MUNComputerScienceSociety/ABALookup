@@ -1,48 +1,82 @@
 <?php
+	use
+		AbaLookup\Entity\UserType
+	;
 	$this->headTitle('Profile - ' . $this->user->getDisplayName());
 ?>
 <div class="eight columns">
-	<h2>Your profile information</h2>
+	<h2>
+		Your profile information
+	</h2>
 	<?php
 		if (isset($this->confirm)) {
 			echo "<p>{$this->confirm}</p>";
 		}
 	?>
-	<h3>Display name</h3>
-	<p><?php echo $this->user->getDisplayName(); ?></p>
-	<h3>Email address</h3>
-	<p><?php echo $this->user->getEmail(); ?></p>
-
-	<h3>Phone number</h3>
-	<p><?php echo $this->user->getPhone() ? $this->user->getPhone() : "n/a"; ?></p>
-
-	<?php if ($this->user->getUserType() === \ABALookup\Entity\UserType::TYPE_ABA_THERAPIST): ?>
-
-	<h3>Gender</h3>
+	<h3>
+		Display name
+	</h3>
+	<p>
+		<?php echo $this->user->getDisplayName(); ?>
+	</p>
+	<h3>
+		Email address
+	</h3>
+	<p>
+		<?php echo $this->user->getEmail(); ?>
+	</p>
+	<h3>
+		Phone number
+	</h3>
+	<p>
+		<?php
+			$phone = $this->user->getPhone();
+			echo isset($phone) ? $phone : 'n/a';
+		?>
+	</p>
+	<?php
+		if ($this->user->getUserType() === UserType::TYPE_ABA_THERAPIST):
+	?>
+	<h3>
+		Gender
+	</h3>
 	<p>
 		<?php
 			$gender = $this->user->getGender();
-			if (!isset($gender)) {
-				echo "Undisclosed";
-			} else {
-				echo ($gender == "F") ? "Female" : "Male";
-			}
+			echo isset($gender) ? ($gender == 'F' ? 'Female' : 'Male') : 'Undisclosed';
 		?>
 	</p>
-	<h3>Certificate of conduct</h3>
-	<p><?php echo $this->user->getCertificateOfConduct(); ?></p>
-	<h3>ABA therapy course</h3>
-	<p><?php echo ($this->user->getAbaCourse()) ? "Completed" : "Not yet completed"; ?></p>
-
-	<?php endif; ?>
-
-	<a href="<?php echo '/users' . '/' . $this->user->getId() . '/profile/edit' ?>" class="button">Edit your information</a>
+	<h3>
+		Certificate of conduct
+	</h3>
+	<p>
+		<?php
+			$epoch = $this->user->getCertificateOfConduct();
+			echo isset($epoch) ? date('r', $epoch) : 'You will need to get a Certificate of Conduct from the RNC';
+		?>
+	</p>
+	<h3>
+		ABA therapy course
+	</h3>
+	<p>
+		<?php echo ($this->user->getAbaCourse()) ? 'Completed' : 'You will need to complete your ABA training course'; ?>
+	</p>
+	<?php
+		endif;
+		echo $this->anchor(
+			'Edit your information',
+			sprintf('/users/%d/profile/edit', $this->user->getId()),
+			['button']
+		);
+	?>
 </div>
 <aside class="aside four columns">
 	<h3>Details</h3>
 	<p>
-		This page contains the information associated with your account
-		and may be publically visible.
-		The edit button will allow you to edit your information.
+		Donec nec diam fringilla, feugiat nisi eget, pellentesque lorem. Duis sollicitudin rutrum ipsum, non pellentesque augue hendrerit id.
+		Ut turpis massa, viverra sed semper eget, sollicitudin id ante. Donec nisi odio, accumsan quis ante nec, consequat facilisis mauris.
+		Nunc vitae nunc metus. Cras sed sollicitudin mi, sit amet interdum orci. Praesent mattis nisi velit, sit amet commodo nunc aliquam tincidunt.
+		Nam tristique convallis ultrices. Integer eget dignissim sem. Vestibulum auctor nibh sem, sed facilisis nulla fringilla at.
+		Interdum et malesuada fames ac ante ipsum primis in faucibus.
 	</p>
 </aside>
