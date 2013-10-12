@@ -368,8 +368,7 @@ class RegisterForm extends Form
 			$password,
 			$userType,
 			$gender,
-			(bool) $abaCourse,
-			$certificateOfConduct
+			$abaCourse !== NULL ? (bool) $abaCourse : $abaCourse
 		);
 		if ($phone) {
 			// The user entered a phone number

@@ -66,7 +66,6 @@ class UsersController extends AbaLookupController
 				'error' => 'The entered email address is already in use.',
 			];
 		}
-		$user->setVerified(TRUE);
 		$this->save($user);
 		$this->setUserSession($user);
 		// Redirect the user to their profile page
