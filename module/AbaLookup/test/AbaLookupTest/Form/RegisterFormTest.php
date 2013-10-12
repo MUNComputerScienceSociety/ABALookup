@@ -35,6 +35,7 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			RegisterForm::ELEMENT_NAME_ABA_COURSE                  => FALSE,
 			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => 0,
 			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => date('Y-m-d'),
+			RegisterForm::ELEMENT_NAME_POSTAL_CODE                 => '',
 		];
 		$this->form->setData($data + $defaultValues);
 	}
@@ -230,5 +231,53 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->form->isValid());
 		$user = $this->form->getUser();
 		$this->assertFalse($user->getAbaCourse());
+	}
+
+	public function testValidPostalCodeWithSpaceDoesValidate()
+	{
+		$pc = 'A1B 3X9';
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => $pc]);
+		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals('A1B3X9', $user->getPostalCode());
+		// How about with a lot of whitespace?
+		$pc = '       A1B            3X9                                  ';
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => $pc]);
+		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals('A1B3X9', $user->getPostalCode());
+	}
+
+	public function testValidPostalCodeWithoutSpaceDoesValidate()
+	{
+		$pc = 'A1B3X9';
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => $pc]);
+		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertEquals($pc, $user->getPostalCode());
+	}
+
+	public function testEmptyPostalCodeDoesValidate()
+	{
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => '']);
+		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertNull($user->getPostalCode());
+	}
+
+	public function testInvalidPostalCodeDoesNotValidate()
+	{
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => 3]);
+		$this->assertFalse($this->form->isValid());
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => 'not a postal code']);
+		$this->assertFalse($this->form->isValid());
+	}
+
+	public function testNullPostalCodeDoesValidate()
+	{
+		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => NULL]);
+		$this->assertTrue($this->form->isValid());
+		$user = $this->form->getUser();
+		$this->assertNull($user->getPostalCode());
 	}
 }

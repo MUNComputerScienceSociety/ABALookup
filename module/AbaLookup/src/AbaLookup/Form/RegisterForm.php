@@ -13,6 +13,7 @@ use
 	Zend\Validator\Date as DateValidator,
 	Zend\Validator\EmailAddress as EmailAddressValidator,
 	Zend\Validator\NotEmpty,
+	Zend\Validator\Regex,
 	Zend\Validator\StringLength as StringLengthValidator
 ;
 
@@ -33,6 +34,7 @@ class RegisterForm extends Form
 	const ELEMENT_NAME_ABA_COURSE                   = 'aba-course';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT       = 'certificate-of-conduct';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE  = 'certificate-of-conduct-date';
+	const ELEMENT_NAME_POSTAL_CODE                  = 'postal-code';
 
 	/**
 	 * Error message if form is invalid
@@ -166,6 +168,17 @@ class RegisterForm extends Form
 				],
 			]);
 		}
+		// Postal code
+		$this->add([
+			'name' => self::ELEMENT_NAME_POSTAL_CODE,
+			'type' => 'text',
+			'attributes' => [
+				'id' => self::ELEMENT_NAME_POSTAL_CODE,
+			],
+			'options' => [
+				'label' => 'Postal code (optional)',
+			],
+		]);
 		// Submit
 		$this->add([
 			'name' => 'register',
@@ -278,6 +291,30 @@ class RegisterForm extends Form
 	}
 
 	/**
+	 * Returns whether the postal code is valid
+	 *
+	 * Sets the error message appropriately as well. Note that this does not
+	 * ensure that the postal code exists, but that it is a postal code.
+	 *
+	 * @return boolg
+	 */
+	public function isPostalCodeValid()
+	{
+		$postalCode = (new Alnum(/* Allow whitespace */ FALSE))
+		              ->filter($this->data[self::ELEMENT_NAME_POSTAL_CODE]);
+		$this->data[self::ELEMENT_NAME_POSTAL_CODE] = $postalCode;
+		if (!$postalCode) {
+			return TRUE;
+		}
+		$isValid = (new Regex(['pattern' => '/^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$/i']))
+		           ->isValid($postalCode);
+		if (!$isValid) {
+			$this->error = 'The entered postal code is not valid.';
+		}
+		return $isValid;
+	}
+
+	/**
 	 * Returns whether the Certificate of Conduct is properly set
 	 *
 	 * Checks three possible cases:
@@ -350,6 +387,7 @@ class RegisterForm extends Form
 		                 && $this->isEmailAddressValid()
 		                 && $this->isPasswordValid()
 		                 && $this->isPhoneNumberValid()
+		                 && $this->isPostalCodeValid()
 		                 && $this->isCertificateOfConductValid()
 		;
 		$this->hasValidated = TRUE;
@@ -384,6 +422,7 @@ class RegisterForm extends Form
 		$gender               = $this->data[self::ELEMENT_NAME_GENDER];
 		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
 		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
+		$postalCode           = $this->data[self::ELEMENT_NAME_POSTAL_CODE];
 		// Create and return a new user
 		$user = new User(
 			$displayName,
@@ -397,6 +436,10 @@ class RegisterForm extends Form
 		if ($phone) {
 			// The user entered a phone number
 			$user->setPhone((int) $phone);
+		}
+		if ($postalCode) {
+			// The user entered their postal code
+			$user->setPostalCode($postalCode);
 		}
 		return $user;
 	}
