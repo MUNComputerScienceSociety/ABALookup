@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="Bootstrap.php" colors="true">
+<phpunit
+	bootstrap="Bootstrap.php"
+	colors="true"
+	printerClass="NyanCat\PHPunit\ResultPrinter"
+	printerFile="../../../vendor/whatthejeff/nyancat-phpunit-resultprinter/src/NyanCat/PHPUnit/ResultPrinter.php">
 	<testsuites>
 		<testsuite name="ABA Lookup Tests">
 			<directory>AbaLookupTest</directory>
