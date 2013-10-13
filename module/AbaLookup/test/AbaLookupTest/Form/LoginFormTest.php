@@ -19,14 +19,20 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * Set the form data
+	 *
+	 * Sets the default values in the case that an empty array is passed, overwrites
+	 * the values in the event that the array contains values.
+	 *
+	 * @param array $data The specific data values that are to be overridden.
+	 * @return void
 	 */
-	protected function setFormData($emailAddress, $password)
-	{
-		$this->form->setData([
-			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
-			LoginForm::ELEMENT_NAME_PASSWORD => $password,
-			LoginForm::ELEMENT_NAME_REMEMBER_ME => ''
-		]);
+	protected function setFormData(array $data) {
+		$defaultValues = [
+			LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foo@bar.com',
+			LoginForm::ELEMENT_NAME_PASSWORD      => 'password',
+			LoginForm::ELEMENT_NAME_REMEMBER_ME   => '',
+		];
+		$this->form->setData($data + $defaultValues);
 	}
 
 	/**
@@ -47,55 +53,69 @@ class LoginFormTest extends PHPUnit_Framework_TestCase
 
 	public function testValidDataDoesValidate()
 	{
-		$this->setFormData('foo@bar.com', 'password');
+		$this->setFormData([]);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testInvalidEmailAddressDoesNotValidate()
 	{
-		$this->setFormData('foo', 'password');
+		$this->setFormData([LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foo']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
 	{
-		$this->setFormData('foö@bar.com', 'password');
+		$this->setFormData([LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foö@bar.com']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testShortPasswordDoesNotValidate()
 	{
-		$this->setFormData('foo@bar.com', 'bar');
+		$this->setFormData([LoginForm::ELEMENT_NAME_PASSWORD => 'bar']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testGetEmailAddressFromUnvalidatedForm()
 	{
 		$emailAddress = 'foo@bar.com';
-		$this->setFormData($emailAddress, 'password');
-		$this->assertEquals(NULL, $this->form->getEmailAddress());
+		$this->setFormData([LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress]);
+		$this->assertNull($this->form->getEmailAddress());
 	}
 
 	public function testGetEmailAddressFromValidatedForm()
 	{
 		$emailAddress = 'foo@bar.com';
-		$this->setFormData($emailAddress, 'password');
-		$this->form->isValid();
+		$this->setFormData([LoginForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress]);
+		$this->assertTrue($this->form->isValid());
 		$this->assertEquals($emailAddress, $this->form->getEmailAddress());
 	}
 
 	public function testGetPasswordFromUnvalidatedForm()
 	{
 		$password = 'password';
-		$this->setFormData('foo@bar.com', $password);
-		$this->assertEquals(NULL, $this->form->getPassword());
+		$this->setFormData([LoginForm::ELEMENT_NAME_PASSWORD => $password]);
+		$this->assertNull($this->form->getPassword());
 	}
 
 	public function testGetPasswordFromValidatedForm()
 	{
 		$password = 'password';
-		$this->setFormData('foo@bar.com', $password);
-		$this->form->isValid();
+		$this->setFormData([LoginForm::ELEMENT_NAME_PASSWORD => $password]);
+		$this->assertTrue($this->form->isValid());
 		$this->assertEquals($password, $this->form->getPassword());
+	}
+
+	public function testGetTrueRememberMeFromValidatedForm()
+	{
+		$this->setFormData([LoginForm::ELEMENT_NAME_REMEMBER_ME => TRUE]);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->rememberMe());
+	}
+
+	public function testGetFalseRememberMeFromValidatedForm()
+	{
+		$this->setFormData([]);
+		$this->assertTrue($this->form->isValid());
+		$this->assertFalse($this->form->rememberMe());
 	}
 }

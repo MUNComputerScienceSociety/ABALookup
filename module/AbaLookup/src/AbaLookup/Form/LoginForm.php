@@ -5,8 +5,6 @@ namespace AbaLookup\Form;
 use
 	AbaLookup\Entity\User,
 	Zend\Filter\StringTrim,
-	Zend\Form\Exception\DomainException,
-	Zend\Form\Form,
 	Zend\Validator\EmailAddress as EmailAddressValidator,
 	Zend\Validator\StringLength as StringLengthValidator
 ;
@@ -14,20 +12,11 @@ use
 /**
  * The login form for users
  */
-class LoginForm extends Form
+class LoginForm extends AbstractBaseForm
 {
 	/**
-	 * Constants for form element IDs and names
+	 * Constructor
 	 */
-	const ELEMENT_NAME_EMAIL_ADDRESS = 'email-address';
-	const ELEMENT_NAME_PASSWORD      = 'password';
-	const ELEMENT_NAME_REMEMBER_ME   = 'remember-me';
-
-	/**
-	 * Error message if form is invalid
-	 */
-	protected $message;
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -39,7 +28,7 @@ class LoginForm extends Form
 				'id' => self::ELEMENT_NAME_EMAIL_ADDRESS,
 			],
 			'options' => [
-				'label' => 'Your email address'
+				'label' => 'Your email address',
 			],
 		]);
 		// Password field
@@ -50,7 +39,7 @@ class LoginForm extends Form
 				'id' => self::ELEMENT_NAME_PASSWORD,
 			],
 			'options' => [
-				'label' => 'Your password'
+				'label' => 'Your password',
 			],
 		]);
 		// Remember me
@@ -61,7 +50,8 @@ class LoginForm extends Form
 				'id' => self::ELEMENT_NAME_REMEMBER_ME
 			],
 			'options' => [
-				'label' => 'Remember me'
+				'label' => 'Remember me',
+				'checked_value' => TRUE,
 			],
 		]);
 		// Submit
@@ -69,67 +59,32 @@ class LoginForm extends Form
 			'name' => 'login',
 			'type' => 'submit',
 			'attributes' => [
-				'value' => 'Login'
+				'value' => 'Login',
 			],
 		]);
 	}
 
 	/**
-	 * Validates the form
-	 *
-	 * Overrides Zend\Form\Form::isValid.
-	 *
-	 * @return bool
-	 * @throws DomainException
+	 * Sets the {@code $isValid} property
 	 */
-	public function isValid()
+	public function setIsValid()
 	{
-		if ($this->hasValidated) {
-			// Validation has already occurred
-			return $this->isValid;
-		}
-		// Default to invalid
-		$this->isValid = FALSE;
-		if (!is_array($this->data)) {
-			$data = $this->extract();
-			if (!is_array($data) || !isset($this->data)) {
-				// No data set
-				throw new DomainException(sprintf(
-					'%s is unable to validate as there is no data currently set', __METHOD__
-				));
-			}
-			$this->data = $data;
-		}
-		// Trim all the data
-		$strtrim = new StringTrim();
-		foreach ($this->data as $k => $v) {
-			$this->data[$k] = $strtrim->filter($v);
-		}
-		// Alias the data
+		// Data aliases
 		$email    = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
 		$password = $this->data[self::ELEMENT_NAME_PASSWORD];
 		// Validators
 		$emailAddress     = new EmailAddressValidator();
 		$minPasswordChars = new StringLengthValidator(['min' => User::MINIMUM_LENGTH_PASSWORD]);
-		// Is valid?
-		if (!$emailAddress->isValid($email) || !$minPasswordChars->isValid($password)) {
-			$this->message      = 'The entered credentials are not valid.';
-			$this->hasValidated = TRUE;
-			return $this->isValid; // FALSE
+		// Set is valid?
+		if (
+			   !$emailAddress->isValid($email)
+			|| !$minPasswordChars->isValid($password)
+		) {
+			$this->message = 'The entered credentials are not valid.';
+			$this->isValid = FALSE;
+		} else {
+			$this->isValid = TRUE;
 		}
-		$this->isValid      = TRUE;
-		$this->hasValidated = TRUE;
-		return $this->isValid;
-	}
-
-	/**
-	 * Returns the error message
-	 *
-	 * @return string
-	 */
-	public function getMessage()
-	{
-		return isset($this->message) ? $this->message : '';
 	}
 
 	/**

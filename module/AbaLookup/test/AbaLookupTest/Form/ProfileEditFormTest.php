@@ -26,16 +26,20 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * Set the form data
+	 *
+	 * Sets the default values in the case that an empty array is passed, overwrites
+	 * the values in the event that the array contains values.
+	 *
+	 * @param array $data The specific data values that are to be overridden.
+	 * @return void
 	 */
-	protected function setFormData($displayName,
-	                               $emailAddress,
-	                               $phoneNumber = NULL
-	) {
-		$this->form->setData([
-			ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName,
-			ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => $emailAddress,
-			ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber
-		]);
+	protected function setFormData(array $data) {
+		$defaultValues = [
+			ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME  => 'John Doe',
+			ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foo@bar.com',
+			ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER  => '',
+		];
+		$this->form->setData($data + $defaultValues);
 	}
 
 	/**
@@ -57,89 +61,95 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	public function testValidDataDoesVaildate()
 	{
-		$this->setFormData('John Doe', 'foo@bar.com');
+		$this->setFormData([]);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testDisplayNameContainingNonEnglishCharactersDoesValidate()
 	{
-		$this->setFormData('Johñ Döe', 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => 'Johñ Döe']);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testInvalidDisplayNameDoesNotValidate()
 	{
-		$this->setFormData('', 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => '']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testDisplayNameOnlySpacesDoesNotValidate()
 	{
-		$this->setFormData('      ', 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => '         ']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullDisplayNameDoesNotValidate()
 	{
-		$this->setFormData(NULL, 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => NULL]);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmptyEmailAddressDoesNotValidate()
 	{
-		$this->setFormData('John Doe', '');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => '']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
 	{
-		$this->setFormData('John Doe', 'foö@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foö@bar.com']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullEmailAddressDoesNotValidate()
 	{
-		$this->setFormData('John Doe', NULL);
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => NULL]);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testInvalidPhoneNumberDoesNotValidate()
 	{
-		$this->setFormData('John Doe', 'foo@bar.com', '1');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => '1']);
 		$this->assertFalse($this->form->isValid());
 	}
 
 	public function testNullPhoneNumberDoesValidate()
 	{
-		$this->setFormData('John Doe', 'foo@bar.com', NULL);
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => NULL]);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testEmptyPhoneNumberDoesValidate()
 	{
-		$this->setFormData('John Doe', 'foo@bar.com', '');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => '']);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testPhoneNumberWithHyphensDoesValidate()
 	{
-		$this->setFormData('John Doe', 'foo@bar.com', '709-555-1111');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => '709-555-1234']);
 		$this->assertTrue($this->form->isValid());
 	}
 
 	public function testCanUpdateDisplayName()
 	{
 		$displayName = 'John Doe';
-		$this->setFormData($displayName, 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertEquals($displayName, $this->user->getDisplayName());
+		// How about a string prefixed with whitespace?
+		$displayName = '      John Doe      ';
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName]);
+		$this->assertTrue($this->form->isValid());
+		$this->form->updateUser($this->user);
+		$this->assertEquals('John Doe', $this->user->getDisplayName());
 	}
 
 	public function testCanUpdateDisplayNameWithNonEnglishCharacters()
 	{
 		$displayName = 'ËèŒŁma Kæępø';
-		$this->setFormData($displayName, 'foo@bar.com');
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertEquals($displayName, $this->user->getDisplayName());
@@ -147,19 +157,19 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	public function testCanUpdatePhoneNumber()
 	{
-		$this->assertEquals(NULL, $this->user->getPhone());
-		$phoneNumber = '7095551234'; // String values are returned from forms
-		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->assertNull($this->user->getPhone());
+		$phoneNumber = '7095551234';
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
-		$this->assertTrue((int) $phoneNumber === $this->user->getPhone());
+		$this->assertTrue(7095551234 === $this->user->getPhone());
 	}
 
 	public function testCanUpdatePhoneNumberWithSpaces()
 	{
-		$this->assertEquals(NULL, $this->user->getPhone());
+		$this->assertNull($this->user->getPhone());
 		$phoneNumber = '709 555 1234';
-		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertTrue(7095551234 === $this->user->getPhone());
@@ -167,9 +177,9 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	public function testCanUpdatePhoneNumberWithPeriodsBetweensSets()
 	{
-		$this->assertEquals(NULL, $this->user->getPhone());
+		$this->assertNull($this->user->getPhone());
 		$phoneNumber = '709.555.1234';
-		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertTrue(7095551234 === $this->user->getPhone());
@@ -177,9 +187,9 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 
 	public function testCanUpdatePhoneNumberWithHyphens()
 	{
-		$this->assertEquals(NULL, $this->user->getPhone());
+		$this->assertNull($this->user->getPhone());
 		$phoneNumber = '709-555-1234';
-		$this->setFormData('John Doe', 'foo@bar.com', $phoneNumber);
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
 		$this->form->updateUser($this->user);
 		$this->assertTrue(7095551234 === $this->user->getPhone());

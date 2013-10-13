@@ -66,13 +66,13 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 		$gender               = 'F';
 		$abaCourse            = TRUE;
 		$this->setFormData([
-			RegisterForm::ELEMENT_NAME_DISPLAY_NAME           => $displayName,
-			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS          => $emailAddress,
-			RegisterForm::ELEMENT_NAME_PASSWORD               => $password,
-			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD       => $password,
-			RegisterForm::ELEMENT_NAME_PHONE_NUMBER           => $phoneNumber,
-			RegisterForm::ELEMENT_NAME_GENDER                 => $gender,
-			RegisterForm::ELEMENT_NAME_ABA_COURSE             => $abaCourse,
+			RegisterForm::ELEMENT_NAME_DISPLAY_NAME     => $displayName,
+			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS    => $emailAddress,
+			RegisterForm::ELEMENT_NAME_PASSWORD         => $password,
+			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD => $password,
+			RegisterForm::ELEMENT_NAME_PHONE_NUMBER     => $phoneNumber,
+			RegisterForm::ELEMENT_NAME_GENDER           => $gender,
+			RegisterForm::ELEMENT_NAME_ABA_COURSE       => $abaCourse,
 		]);
 		// This dataset should validate
 		$this->assertTrue($this->form->isValid());
