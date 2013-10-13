@@ -35,9 +35,13 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setFormData(array $data) {
 		$defaultValues = [
-			ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME  => 'John Doe',
-			ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foo@bar.com',
-			ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER  => '',
+			ProfileEditForm::ELEMENT_NAME_ABA_COURSE                  => '',
+			ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME                => 'John Doe',
+			ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS               => 'foo@bar.com',
+			ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER                => '',
+			ProfileEditForm::ELEMENT_NAME_POSTAL_CODE                 => '',
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => 0,
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => '',
 		];
 		$this->form->setData($data + $defaultValues);
 	}
@@ -47,7 +51,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$this->user = new User('Ramus', 'foo@bar.com', 'password', UserType::TYPE_PARENT);
+		$this->user = new User('Ramus', 'foo@bar.com', 'password', UserType::TYPE_ABA_THERAPIST);
 		$this->form = new ProfileEditForm($this->user);
 	}
 
@@ -75,42 +79,49 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => '']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testDisplayNameOnlySpacesDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => '         ']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullDisplayNameDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => NULL]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testEmptyEmailAddressDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => '']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foö@bar.com']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullEmailAddressDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_EMAIL_ADDRESS => NULL]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testInvalidPhoneNumberDoesNotValidate()
 	{
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => '1']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullPhoneNumberDoesValidate()
@@ -131,6 +142,13 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->form->isValid());
 	}
 
+	public function testInvalidPostalCodeDoesNotValidate()
+	{
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_POSTAL_CODE => 'this is not real']);
+		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
+	}
+
 	public function testCanUpdateDisplayName()
 	{
 		$displayName = 'John Doe';
@@ -142,7 +160,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$displayName = '      John Doe      ';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertEquals('John Doe', $this->user->getDisplayName());
 	}
 
@@ -151,7 +169,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$displayName = 'ËèŒŁma Kæępø';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_DISPLAY_NAME => $displayName]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertEquals($displayName, $this->user->getDisplayName());
 	}
 
@@ -161,7 +179,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$phoneNumber = '7095551234';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertTrue(7095551234 === $this->user->getPhone());
 	}
 
@@ -171,7 +189,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$phoneNumber = '709 555 1234';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertTrue(7095551234 === $this->user->getPhone());
 	}
 
@@ -181,7 +199,7 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$phoneNumber = '709.555.1234';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertTrue(7095551234 === $this->user->getPhone());
 	}
 
@@ -191,7 +209,54 @@ class ProfileEditFormTest extends PHPUnit_Framework_TestCase
 		$phoneNumber = '709-555-1234';
 		$this->setFormData([ProfileEditForm::ELEMENT_NAME_PHONE_NUMBER => $phoneNumber]);
 		$this->assertTrue($this->form->isValid());
-		$this->form->updateUser($this->user);
+		$this->assertTrue($this->form->updateUser($this->user));
 		$this->assertTrue(7095551234 === $this->user->getPhone());
+	}
+
+	public function testCanUpdatePostalCode()
+	{
+		$this->assertNull($this->user->getPostalCode());
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_POSTAL_CODE => 'A1B 3X9']);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertEquals('A1B3X9', $this->user->getPostalCode());
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_POSTAL_CODE => '']);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertNull($this->user->getPostalCode());
+	}
+
+	public function testCanUpdateAbaCourseStatus()
+	{
+		$this->assertNull($this->user->getAbaCourse());
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_ABA_COURSE => '1']);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertTrue($this->user->getAbaCourse());
+		$this->setFormData([ProfileEditForm::ELEMENT_NAME_ABA_COURSE => '0']);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertFalse($this->user->getAbaCourse());
+	}
+
+	public function testCanUpdateCertificateOfConduct()
+	{
+		$this->assertNull($this->user->getCertificateOfConduct());
+		$date = date('Y-m-d', strtotime('3 days ago'));
+		$time = strtotime($date);
+		$this->setFormData([
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => '1',
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => $date,
+		]);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertEquals($time, $this->user->getCertificateOfConduct());
+		$this->setFormData([
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => '0',
+			ProfileEditForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => $date,
+		]);
+		$this->assertTrue($this->form->isValid());
+		$this->assertTrue($this->form->updateUser($this->user));
+		$this->assertNull($this->user->getCertificateOfConduct());
 	}
 }

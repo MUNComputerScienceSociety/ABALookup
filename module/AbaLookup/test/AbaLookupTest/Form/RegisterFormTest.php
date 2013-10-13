@@ -1,6 +1,6 @@
 <?php
 
-namespace AbaLookupTest;
+namespace AbaLookupTest\Form;
 
 use
 	AbaLookup\Entity\UserType,
@@ -26,15 +26,15 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setFormData(array $data) {
 		$defaultValues = [
-			RegisterForm::ELEMENT_NAME_DISPLAY_NAME                => 'John Doe',
-			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS               => 'jdoe@email.com',
-			RegisterForm::ELEMENT_NAME_PASSWORD                    => 'password',
-			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD            => 'password',
-			RegisterForm::ELEMENT_NAME_PHONE_NUMBER                => '7095551234',
-			RegisterForm::ELEMENT_NAME_GENDER                      => NULL,
 			RegisterForm::ELEMENT_NAME_ABA_COURSE                  => FALSE,
 			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT      => 0,
 			RegisterForm::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE => date('Y-m-d'),
+			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD            => 'password',
+			RegisterForm::ELEMENT_NAME_DISPLAY_NAME                => 'John Doe',
+			RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS               => 'jdoe@email.com',
+			RegisterForm::ELEMENT_NAME_GENDER                      => NULL,
+			RegisterForm::ELEMENT_NAME_PASSWORD                    => 'password',
+			RegisterForm::ELEMENT_NAME_PHONE_NUMBER                => '7095551234',
 			RegisterForm::ELEMENT_NAME_POSTAL_CODE                 => '',
 		];
 		$this->form->setData($data + $defaultValues);
@@ -99,36 +99,42 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_DISPLAY_NAME => NULL]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testEmptyDisplayNameDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_DISPLAY_NAME => '']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testDisplayNameFilledWithWhitespaceDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_DISPLAY_NAME => '               ']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testEmailAddressContainingNonEnglishCharactersDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS => 'foö@bar.com']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testEmptyEmailAddressDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS => '']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullEmailAddressDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_EMAIL_ADDRESS => NULL]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testPasswordTooShortDoesNotValidate()
@@ -138,12 +144,14 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD => 'pass',
 		]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullPasswordDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_PASSWORD => NULL]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNotConfirmingPasswordDoesNotValidate()
@@ -153,12 +161,14 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 			RegisterForm::ELEMENT_NAME_CONFIRM_PASSWORD => 'not the same password',
 		]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testInvalidPhoneNumberDoesNotValidate()
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_PHONE_NUMBER => '000']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testPhoneNumberWithHyphensDoesValidate()
@@ -269,8 +279,10 @@ class RegisterFormTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => 3]);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 		$this->setFormData([RegisterForm::ELEMENT_NAME_POSTAL_CODE => 'not a postal code']);
 		$this->assertFalse($this->form->isValid());
+		$this->assertInternalType('string', $this->form->getMessage());
 	}
 
 	public function testNullPostalCodeDoesValidate()

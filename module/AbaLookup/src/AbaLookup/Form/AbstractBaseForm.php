@@ -159,7 +159,7 @@ abstract class AbstractBaseForm extends Form
 		$isValid = (new Regex(['pattern' => '/^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$/i']))
 		           ->isValid($postalCode);
 		if (!$isValid) {
-			$this->error = 'The entered postal code is not valid.';
+			$this->message = 'The entered postal code is not valid.';
 		}
 		return $isValid;
 	}
@@ -168,11 +168,17 @@ abstract class AbstractBaseForm extends Form
 	 * Returns whether the Certificate of Conduct is properly set
 	 *
 	 * Checks three possible cases:
+	 *
 	 * 1. The checkbox to indicate that the user has recieved their Certificate
 	 *    of Conduct is checked, and the date entered is valid.
 	 * 2. The checkbox is checked, but the entered date is not valid. This will
 	 *    set the error message appropriately.
 	 * 3. The checkbox was not selected, and in this case, the value should be NULL.
+	 *
+	 * Postcondition: {@code $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT]} will contain
+	 * the UNIX timestamp for the date the user entered IF the checkbox was checked, ELSE it will
+	 * contain NULL. You should never need to access the date field directly other than in this function.
+	 * "Date field" refers to: {@code $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE]}
 	 *
 	 * @return bool Whether the Certificate of Conduct is properly set.
 	 */

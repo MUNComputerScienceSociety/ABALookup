@@ -3,7 +3,8 @@
 namespace AbaLookup\Form;
 
 use
-	AbaLookup\Entity\User
+	AbaLookup\Entity\User,
+	AbaLookup\Entity\UserType
 ;
 
 /**
@@ -61,18 +62,65 @@ class ProfileEditForm extends AbstractBaseForm
 			'name' => self::ELEMENT_NAME_POSTAL_CODE,
 			'type' => 'text',
 			'attributes' => [
-				'id' => self::ELEMENT_NAME_POSTAL_CODE,
+				'id'    => self::ELEMENT_NAME_POSTAL_CODE,
+				'value' => $user->getPostalCode(),
 			],
 			'options' => [
 				'label' => 'Postal code (optional)',
 			],
 		]);
+		// Show therapist-only fields?
+		if ($user->getUserType() === UserType::TYPE_ABA_THERAPIST) {
+			// ABA training course
+			$this->add([
+				'name' => self::ELEMENT_NAME_ABA_COURSE,
+				'type' => 'checkbox',
+				'attributes' => [
+					'id'      => self::ELEMENT_NAME_ABA_COURSE,
+					'checked' => $user->getAbaCourse(),
+				],
+				'options' => [
+					'label'         => 'Completed ABA training course',
+					'checked_value' => TRUE,
+				],
+			]);
+			// Certificate of Conduct and its date
+			$date = $user->getCertificateOfConduct();
+			$this->add([
+				'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
+				'type' => 'checkbox',
+				'attributes' => [
+					'id'      => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
+					'checked' => (bool) $date,
+				],
+				'options' => [
+					'label'         => 'Certificate of Conduct',
+					'checked_value' => TRUE,
+				],
+			]);
+			$dateFormElement = [
+				'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
+				'type' => 'text',
+				'attributes' => [
+					'id'    => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
+					'type'  => 'date',
+					'max'   => date('Y-m-d'), // Today
+				],
+				'options' => [
+					'label' => 'Date on Certificate of Conduct',
+				],
+			];
+			if ($date) {
+				$dateFormElement['attributes']['value'] = date('Y-m-d', $date);
+			}
+			$this->add($dateFormElement);
+		}
 		// Submit btn
 		$this->add([
 			'type' => 'submit',
 			'name' => 'update',
 			'attributes' => [
-				'value' => 'Update your information'
+				'value' => 'Update your information',
 			],
 		]);
 	}
@@ -84,13 +132,15 @@ class ProfileEditForm extends AbstractBaseForm
 	{
 		$this->isValid =    $this->isDisplayNameValid()
 		                 && $this->isEmailAddressValid()
-		                 && $this->isPhoneNumberValid();
+		                 && $this->isPhoneNumberValid()
+		                 && $this->isPostalCodeValid()
+		                 && $this->isCertificateOfConductValid();
 	}
 
 	/**
 	 * Updates the user with their new information
 	 *
-	 * Takes the user to update and populates the fields with the updated data.
+	 * Populates the fields with the updated data.
 	 *
 	 * @param User $user The user to update.
 	 * @return bool Whether the update was successful.
@@ -101,16 +151,19 @@ class ProfileEditForm extends AbstractBaseForm
 			return FALSE;
 		}
 		// Aliases
-		$displayName = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email       = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$phone       = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
+		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
+		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
+		$displayName          = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
+		$email                = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
+		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
+		$postalCode           = $this->data[self::ELEMENT_NAME_POSTAL_CODE];
 		// Update the information
-		$user->setDisplayName($displayName);
-		$user->setEmail($email);
-		if ($phone) {
-			// The user entered a phone number
-			$user->setPhone((int) $phone);
-		}
+		$user->setAbaCourse($abaCourse !== NULL ? (bool) $abaCourse : $abaCourse)
+		     ->setCertificateOfConduct($certificateOfConduct)
+		     ->setDisplayName($displayName)
+		     ->setEmail($email)
+		     ->setPhone($phone ? (int) $phone : NULL)
+		     ->setPostalCode($postalCode ? $postalCode : NULL);
 		return TRUE;
 	}
 }
