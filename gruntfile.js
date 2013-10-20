@@ -80,6 +80,12 @@ module.exports = function (grunt) {
 				dirCss + '*.css',
 				dirJs + '*.js'
 			]
+		},
+		watch: {
+			scripts: {
+				files: dirSass + '**/*.scss',
+				tasks: ['sass']
+			}
 		}
 	};
 	// UglifyJS mappings
