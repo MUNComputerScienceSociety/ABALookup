@@ -1,22 +1,6 @@
 <?php
 
 return [
-	'doctrine' => [
-		'driver' => [
-			'aba_lookup_annotation_driver' => [
-				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-				'cache' => 'array',
-				'paths' => [
-					realpath(sprintf('%s/../src/AbaLookup/Entity/', __DIR__)),
-				],
-			],
-			'orm_default' => [
-				'drivers' => [
-					'AbaLookup\Entity' => 'aba_lookup_annotation_driver',
-				],
-			],
-		],
-	],
 	'controllers' => [
 		'invokables' => [
 			'Home'  => 'AbaLookup\HomeController',

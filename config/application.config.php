@@ -3,8 +3,6 @@
 return [
 	'modules' => [
 		'AbaLookup',
-		'DoctrineModule',
-		'DoctrineORMModule',
 	],
 	'module_listener_options' => [
 		'module_paths' => [
