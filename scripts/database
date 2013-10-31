@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 
-rm -rf database
+set -e
+
+dbfile="database/db.sqlite3"
+dsn="sqlite:$dbfile"
+sqlfile="scripts/schemata/schema.sqlite3.sql"
+
+[[ -d "database" ]] && rm -r database
 mkdir database
+scripts/schema-create $dsn $sqlfile
