@@ -3,7 +3,7 @@
 namespace AbaLookup;
 
 use
-	AbaLookup\Entity\UserType,
+	Lookup\Entity\UserType,
 	AbaLookup\Form\LoginForm,
 	AbaLookup\Form\ProfileEditForm,
 	AbaLookup\Form\RegisterForm,
@@ -39,11 +39,8 @@ class UsersController extends AbaLookupController
 		// Prepare the view layout
 		$this->prepareLayout($this->layout());
 		// Get the user type from the URL
-		$type = $this->params('type');
-		if (!UserType::contains($type)) {
-			$type = UserType::TYPE_PARENT; // Default
-		}
 		// Create a registration form
+		$type = $this->params('type');
 		$form = new RegisterForm($type);
 		// If the user has not submitted a POST request
 		if (!$this->request->isPost()) {
@@ -55,32 +52,29 @@ class UsersController extends AbaLookupController
 		}
 		// The user has submitted via POST
 		// Pass the data along to the form
-		$form->setData($this->request->getPost());
-		// If the form does not validate
-		if (!$form->isValid()) {
-			// Force the user back to the registration page
+		// Terms of Service
+		// Show previous data to user
+		$data = $this->params();
+		try {
+			$id = $this->getApi('UserAccount')->put(
+				$data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
+				$data->fromPost($form::ELEMENT_NAME_PASSWORD),
+				$data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
+				$data->fromPost($form::ELEMENT_NAME_USER_TYPE),
+				$data->fromPost($form::ELEMENT_NAME_POSTAL_CODE),
+				$data->fromPost()
+			);
+		} catch (Lookup\Api\Exception\InvalidDataException $s) {
 			return [
 				'error' => $form->getMessage(),
 				'form'  => $form,
 				'type'  => $type,
 			];
 		}
-		// The form has validated
-		$user = $form->getUser();
-		if ($this->getUserByEmail($user->getEmail())) {
-			// The given email address is already in use
-			// Force the user back to the registration page
-			return [
-				'error' => 'The provided email address is already in use.',
-				'form'  => $form,
-				'type'  => $type,
-			];
-		}
-		$this->save($user);
-		$this->setUserSession($user);
+		$this->setUserSession($id);
 		// Redirect the user to their profile page
 		$params = [
-			'id'     => $user->getId(),
+			'id'     => $id,
 			'action' => 'profile',
 		];
 		return $this->redirect()->toRoute('users', $params);

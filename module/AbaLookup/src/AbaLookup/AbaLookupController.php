@@ -24,95 +24,6 @@ abstract class AbaLookupController extends AbstractActionController
 	const SECONDS_3_MONTHS = 7884000;
 
 	/**
-	 * @var Doctrine\ORM\EntityManager
-	 *
-	 * The central access point to ORM functionality
-	 */
-	private $entityManager;
-
-	/**
-	 * Returns the EntityManager
-	 *
-	 * @return EntityManager
-	 */
-	protected function getEntityManager()
-	{
-		if (!isset($this->entityManager)) {
-			$this->entityManager = $this->getServiceLocator()
-			                            ->get('doctrine.entitymanager.orm_default');
-		}
-		return $this->entityManager;
-	}
-
-	/**
-	 * Returns the user associated with the given email address
-	 *
-	 * @param string $email The email address for the user.
-	 * @return User
-	 */
-	protected function getUserByEmail($email)
-	{
-		$criteria = [
-			'email' => $email,
-		];
-		return $this->getEntityManager()
-		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy($criteria);
-	}
-
-	/**
-	 * Returns the user associated with the given ID
-	 *
-	 * @param int $id The ID for the user.
-	 * @return User
-	 */
-	protected function getUserById($id)
-	{
-		$criteria = [
-			'id' => $id,
-		];
-		return $this->getEntityManager()
-		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy($criteria);
-	}
-
-	/**
-	 * Returns the given user's schedule
-	 *
-	 * @param User $user The user to whom the schedule belongs.
-	 * @return Schedule
-	 */
-	protected function getUserSchedule(User $user)
-	{
-		$criteria = [
-			'user' => $user->getId(),
-		];
-		$schedule = $this->getEntityManager()
-		                 ->getRepository('AbaLookup\Entity\Schedule')
-		                 ->findOneBy($criteria);
-		if (!$schedule) {
-			$schedule = new Schedule($user);
-			$this->save($schedule);
-		}
-		return $schedule;
-	}
-
-	/**
-	 * Tells the EntityManager to make an instance managed and persistent
-	 * and flushes all changes to the entity
-	 *
-	 * This effectively synchronizes the in-memory state of the entity with the database.
-	 *
-	 * @param object $entity The entity to save.
-	 */
-	protected function save($entity)
-	{
-		$entityManager = $this->getEntityManager();
-		$entityManager->persist($entity);
-		$entityManager->flush();
-	}
-
-	/**
 	 * Returns a redirect to the login page
 	 *
 	 * @return ViewModel
@@ -161,9 +72,9 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Returns the current user in session
+	 * Returns the id of the current user session
 	 *
-	 * @return User|NULL
+	 * @return Lookup\Entity\User|NULL
 	 */
 	protected function currentSessionUser()
 	{
@@ -171,12 +82,7 @@ abstract class AbaLookupController extends AbstractActionController
 			return NULL;
 		}
 		$session = new Container(self::SESSION_USER_NAMESPACE);
-		$criteria = [
-			'id' => $session->offsetGet(self::SESSION_USER_ID_KEY),
-		];
-		return $this->getEntityManager()
-		            ->getRepository('AbaLookup\Entity\User')
-		            ->findOneBy($criteria);
+		return $this->getApi('UserAccount')->get($session->offsetGet(self::SESSION_USER_ID_KEY));
 	}
 
 	/**
