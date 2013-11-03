@@ -3,11 +3,9 @@
 namespace AbaLookup;
 
 use
-	Lookup\Entity\UserType,
 	AbaLookup\Form\LoginForm,
 	AbaLookup\Form\ProfileEditForm,
 	AbaLookup\Form\RegisterForm,
-	InvalidArgumentException,
 	Zend\View\Model\ViewModel
 ;
 
@@ -51,9 +49,8 @@ class UsersController extends AbaLookupController
 			];
 		}
 		// The user has submitted via POST
-		// Pass the data along to the form
-		// Terms of Service
-		// Show previous data to user
+		// TODO - Validate Terms of Service
+		// TODO - Show previous data to user
 		$data = $this->params();
 		try {
 			$id = $this->getApi('UserAccount')->put(
@@ -64,9 +61,9 @@ class UsersController extends AbaLookupController
 				$data->fromPost($form::ELEMENT_NAME_POSTAL_CODE),
 				$data->fromPost()
 			);
-		} catch (Lookup\Api\Exception\InvalidDataException $s) {
+		} catch (Lookup\Api\Exception\InvalidDataException $e) {
 			return [
-				'error' => $form->getMessage(),
+				'error' => $e->getMessage(),
 				'form'  => $form,
 				'type'  => $type,
 			];
@@ -111,32 +108,24 @@ class UsersController extends AbaLookupController
 			];
 		}
 		// The user has submitted via POST
-		// Pass the data along to the form
-		$form->setData($this->request->getPost());
-		if (!$form->isValid()) {
-			// Show the user the error message
+		$data = $this->request->getPost();
+		try {
+			$user = $this->getApi('User')->get(
+				$data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
+				$data->fromPost($form::ELEMENT_NAME_PASSWORD),
+				$data->fromPost()
+			);
+		} catch (Lookup\Api\Exception\InvalidDataException $e) {
 			return [
-				'form' => $form,
-				'error' => $form->getMessage(),
-			];
-		}
-		// Retrieve the validated values
-		$emailAddress = $form->getEmailAddress();
-		$password     = $form->getPassword();
-		$user         = $this->getUserByEmail($emailAddress);
-		// If the given email address yields no user
-		// Or the user entered the wrong password
-		if (!$user || !$user->verifyPassword($password)) {
-			// Show the user a error message
-			return [
-				'form' => $form,
-				'error' => 'The entered credentials are not valid.',
+				'error' => $e->getMessage(),
+				'form'  => $form,
 			];
 		}
 		// Create a session for the user
-		$this->setUserSession($user, $form->rememberMe());
+		$id = $user->getId();
+		$this->setUserSession($id, $form->rememberMe());
 		$params = [
-			'id'     => $user->getId(),
+			'id'     => $id,
 			'action' => 'profile',
 		];
 		return $this->redirect()->toRoute('users', $params);
