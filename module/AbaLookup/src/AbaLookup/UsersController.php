@@ -59,7 +59,16 @@ class UsersController extends AbaLookupController
 				$data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
 				$data->fromPost($form::ELEMENT_NAME_USER_TYPE),
 				$data->fromPost($form::ELEMENT_NAME_POSTAL_CODE),
-				$data->fromPost()
+				array_intersect_key(
+					$data->fromPost(),
+					array_flip([
+						$form::ELEMENT_NAME_ABA_COURSE,
+						$form::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT,
+						$form::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
+						$form::ELEMENT_NAME_GENDER,
+						$form::ELEMENT_NAME_PHONE_NUMBER,
+					])
+				)
 			);
 		} catch (Lookup\Api\Exception\InvalidDataException $e) {
 			return [
@@ -108,13 +117,12 @@ class UsersController extends AbaLookupController
 			];
 		}
 		// The user has submitted via POST
-		$data = $this->request->getPost();
+		$data = $this->params();
 		try {
-			$user = $this->getApi('User')->get(
-				$data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
-				$data->fromPost($form::ELEMENT_NAME_PASSWORD),
-				$data->fromPost()
-			);
+			$user = $this->getApi('UserAccount')->get([
+				'email' => $data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
+				'password' => $data->fromPost($form::ELEMENT_NAME_PASSWORD),
+			]);
 		} catch (Lookup\Api\Exception\InvalidDataException $e) {
 			return [
 				'error' => $e->getMessage(),
@@ -186,17 +194,21 @@ class UsersController extends AbaLookupController
 			return $edit;
 		}
 		// The user has submitted via POST
-		// Pass the data along to the form
-		$form->setData($this->request->getPost());
-		// If the form is not valid
-		// Or an error occurred whilst updating the user
-		if (!$form->isValid() || !$form->updateUser($user)) {
-			// Show the error message
-			$edit->setVariable('error', $form->getMessage());
+		$data = $this->params();
+		try {
+			$this->getApi('UserAccount')->post($user->getId(), [
+				'email' => $data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
+				'display_name' => $data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
+				'postal_code' => $data->fromPost($form::ELEMENT_NAME_POSTAL_CODE),
+				'aba_course' => $data->fromPost($form::ELEMENT_NAME_ABA_COURSE),
+				'certificate_of_conduct' => $data->fromPost($form::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE),
+				'gender' => $data->fromPost($form::ELEMENT_NAME_GENDER),
+				'phone_number' => $data->fromPost($form::ELEMENT_NAME_PHONE_NUMBER),
+			]);
+		} catch (Lookup\Api\Exception\InvalidDataException $e) {
+			$edit->setVariable('error', $e->getMessage());
 			return $edit;
 		}
-		// Persist the changes
-		$this->save($user);
 		// Redirect to the profile page
 		return $this->redirect()->toRoute('users', [
 			'id' => $user->getId(),
