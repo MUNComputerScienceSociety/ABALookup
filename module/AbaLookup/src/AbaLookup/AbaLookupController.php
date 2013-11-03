@@ -3,8 +3,6 @@
 namespace AbaLookup;
 
 use
-	AbaLookup\Entity\Schedule,
-	AbaLookup\Entity\User,
 	Zend\Mvc\Controller\AbstractActionController,
 	Zend\Session\Container,
 	Zend\View\Model\ViewModel
@@ -24,21 +22,33 @@ abstract class AbaLookupController extends AbstractActionController
 	const SECONDS_3_MONTHS = 7884000;
 
 	/**
-	 * Returns a redirect to the login page
+	 * Returns the API object for the given name
+	 *
+	 * @param string $name The name of the API class.
+	 * @return mixed
+	 */
+	protected function getApi($name)
+	{
+		return $this->serviceLocator('Lookup\ApiFactory')->get($name);
+	}
+
+	/**
+	 * Returns a redirect to the login route
 	 *
 	 * @return ViewModel
 	 */
-	protected function redirectToLoginPage() {
+	protected function redirectToLoginPage()
+	{
 		return $this->redirect()->toRoute('auth/login');
 	}
 
 	/**
 	 * Sets the session for the given user
 	 *
-	 * @param User $user The user in session.
+	 * @param int $id The user id.
 	 * @param boolean $remember Whether to set an explicit TTL for the user session.
 	 */
-	protected function setUserSession(User $user, $remember = FALSE)
+	protected function setUserSession($id, $remember = FALSE)
 	{
 		$session = new Container(self::SESSION_USER_NAMESPACE);
 		$session->getManager()
@@ -48,7 +58,7 @@ abstract class AbaLookupController extends AbstractActionController
 			$session->getManager()
 			        ->rememberMe(self::SECONDS_3_MONTHS);
 		}
-		$session->offsetSet(self::SESSION_USER_ID_KEY, $user->getId());
+		$session->offsetSet(self::SESSION_USER_ID_KEY, $id);
 	}
 
 	/**
@@ -82,7 +92,8 @@ abstract class AbaLookupController extends AbstractActionController
 			return NULL;
 		}
 		$session = new Container(self::SESSION_USER_NAMESPACE);
-		return $this->getApi('UserAccount')->get($session->offsetGet(self::SESSION_USER_ID_KEY));
+		return $this->getApi('UserAccount')
+		            ->get($session->offsetGet(self::SESSION_USER_ID_KEY));
 	}
 
 	/**
@@ -92,9 +103,9 @@ abstract class AbaLookupController extends AbstractActionController
 	 * to the layout as a variable.
 	 *
 	 * @param ViewModel $layout The layout for the view.
-	 * @param User $user The user currently in session.
+	 * @param Lookup\Entity\User $user The user currently in session.
 	 */
-	protected function prepareLayout($layout, User $user = NULL)
+	protected function prepareLayout($layout, Lookup\Entity\User $user = NULL)
 	{
 		// Add the footer
 		$footer = new ViewModel();
