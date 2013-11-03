@@ -3,6 +3,7 @@
 return [
 	'modules' => [
 		'AbaLookup',
+		'Lookup',
 	],
 	'module_listener_options' => [
 		'module_paths' => [
