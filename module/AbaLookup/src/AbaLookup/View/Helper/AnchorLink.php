@@ -2,24 +2,16 @@
 
 namespace AbaLookup\View\Helper;
 
-use
-	InvalidArgumentException,
-	Zend\View\Helper\AbstractHelper
-;
+use Zend\View\Helper\AbstractHelper;
 
-/**
- * View helper that generates an <a> tag
- */
 class AnchorLink extends AbstractHelper
 {
 	/**
-	 * Returns a HTML anchor link tag
-	 *
 	 * @param string $text The link text.
 	 * @param string $href The link href.
 	 * @param array $class The class names for the link.
-	 * @return string
-	 * @throws InvalidArgumentException
+	 * @return string A HTML anchor link tag.
+	 * @throws Exception\InvalidArgumentException
 	 */
 	public function __invoke($text, $href, array $class = NULL)
 	{
@@ -30,7 +22,7 @@ class AnchorLink extends AbstractHelper
 			|| !$text // Empty string
 			|| !$href // Empty string
 		) {
-			throw new InvalidArgumentException(sprintf(
+			throw new Exception\InvalidArgumentException(sprintf(
 				'Both the link text and href must be non-empty strings.'
 			));
 		}

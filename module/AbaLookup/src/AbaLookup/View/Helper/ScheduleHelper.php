@@ -2,26 +2,22 @@
 
 namespace AbaLookup\View\Helper;
 
-use
-	AbaLookup\Entity\Schedule,
-	DateTime,
-	InvalidArgumentException,
-	Zend\View\Helper\AbstractHelper
-;
+use DateTime;
+use Zend\View\Helper\AbstractHelper;
 
 class ScheduleHelper extends AbstractHelper
 {
 	/**
-	 * @var Doctrine\Common\Collections\ArrayCollection
-	 *
 	 * The collection of days in a week
+	 *
+	 * @var Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $days;
 
 	/**
-	 * @var Schedule
-	 *
 	 * The schedule object to render
+	 *
+	 * @var Lookup\Entity\Schedule
 	 */
 	protected $schedule;
 
@@ -30,7 +26,7 @@ class ScheduleHelper extends AbstractHelper
 	 *
 	 * @return $this
 	 */
-	public function __invoke(Schedule $schedule)
+	public function __invoke(Lookup\Entity\Schedule $schedule)
 	{
 		$this->schedule = $schedule;
 		$this->days = $schedule->getDays();
@@ -45,12 +41,12 @@ class ScheduleHelper extends AbstractHelper
 	 * are represented by option tags (<option>).
 	 *
 	 * @return string
-	 * @throws InvalidArgumnentException
+	 * @throws Exception\InvalidArgumnentException
 	 */
 	public function getSelectOptionsForDays($index = 0)
 	{
 		if (!isset($index) || !is_int($index)) {
-			throw new InvalidArgumentException(sprintf(
+			throw new Exception\InvalidArgumentException(sprintf(
 				'Selected index must be an integer.'
 			));
 		}
@@ -76,12 +72,12 @@ class ScheduleHelper extends AbstractHelper
 	 *
 	 * @param int $index The selected option index.
 	 * @return string
-	 * @throws InvalidArgumnentException
+	 * @throws Exception\InvalidArgumnentException
 	 */
 	public function getSelectOptionsForTimes($index = 0)
 	{
 		if (!isset($index) || !is_int($index)) {
-			throw new InvalidArgumentException(sprintf(
+			throw new Exception\InvalidArgumentException(sprintf(
 				'Selected index must be an integer.'
 			));
 		}
@@ -161,12 +157,12 @@ class ScheduleHelper extends AbstractHelper
 	 *
 	 * @param int $military The time in military format.
 	 * @return string
-	 * @throws InvalidArgumentException
+	 * @throws Exception\InvalidArgumentException
 	 */
 	protected function formatMilitaryTime($military)
 	{
 		if (!isset($military) || !is_int($military)) {
-			throw new InvalidArgumentException(
+			throw new Exception\InvalidArgumentException(
 				'The given military time must be an integer.'
 			);
 		}

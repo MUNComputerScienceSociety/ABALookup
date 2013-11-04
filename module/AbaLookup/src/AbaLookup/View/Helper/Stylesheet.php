@@ -2,27 +2,19 @@
 
 namespace AbaLookup\View\Helper;
 
-use
-	InvalidArgumentException,
-	Zend\View\Helper\AbstractHelper
-;
+use Zend\View\Helper\AbstractHelper;
 
-/**
- * View helper that generates a stylesheet link
- */
 class Stylesheet extends AbstractHelper
 {
 	/**
-	 * Returns a HTML stylesheet link tag
-	 *
 	 * @param string $filename The filename of the CSS stylesheet.
-	 * @return string
-	 * @throws InvalidArgumentException
+	 * @return string A HTML stylesheet link tag.
+	 * @throws Exception\InvalidArgumentException
 	 */
 	public function __invoke($filename)
 	{
 		if (!isset($filename) || !is_string($filename) || !$filename) {
-			throw new InvalidArgumentException(sprintf(
+			throw new Exception\InvalidArgumentException(sprintf(
 				'The filename must be a non-empty string.'
 			));
 		}
