@@ -2,32 +2,14 @@
 
 namespace AbaLookup\Form;
 
-use
-	AbaLookup\Entity\User,
-	AbaLookup\Entity\UserType
-;
-
-/**
- * The form for registering users
- */
 class RegisterForm extends AbstractBaseForm
 {
 	/**
-	 * The user type for this form.
-	 *
-	 * @see UserType
+	 * @param string $utype The type of the user registering.
 	 */
-	protected $userType;
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $userType The type of the user registering.
-	 */
-	public function __construct($userType)
+	public function __construct($utype)
 	{
 		parent::__construct();
-		$this->userType = $userType;
 		// Display name
 		$this->add([
 			'name' => self::ELEMENT_NAME_DISPLAY_NAME,
@@ -84,8 +66,16 @@ class RegisterForm extends AbstractBaseForm
 				'label' => 'Your phone number (optional)',
 			],
 		]);
+		// Hidden user type field
+		$this->add([
+			'name' => self::ELEMENT_NAME_USER_TYPE,
+			'attributes' => [
+				'type'  => 'hidden',
+				'value' => $utype,
+			],
+		]);
 		// Show therapist-only fields?
-		if ($userType === UserType::TYPE_ABA_THERAPIST) {
+		if ($utype === self::USER_TYPE_ABA_THERAPIST) {
 			// Gender
 			$this->add([
 				'name' => self::ELEMENT_NAME_GENDER,
@@ -127,7 +117,7 @@ class RegisterForm extends AbstractBaseForm
 					'checked_value' => TRUE,
 				],
 			]);
-			// Certificate of Conduct Date
+			// Certificate of Conduct date
 			$this->add([
 				'name' => self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE,
 				'type' => 'text',
@@ -160,58 +150,5 @@ class RegisterForm extends AbstractBaseForm
 				'value' => 'Register',
 			],
 		]);
-	}
-
-	/**
-	 * Sets the {@code $isValid} property
-	 */
-	public function setIsValid()
-	{
-		$this->isValid =    $this->isDisplayNameValid()
-		                 && $this->isEmailAddressValid()
-		                 && $this->isPasswordValid()
-		                 && $this->isPhoneNumberValid()
-		                 && $this->isPostalCodeValid()
-		                 && $this->isCertificateOfConductValid();
-	}
-
-	/**
-	 * Returns the new {@code User} from the form fields
-	 *
-	 * @return User|NULL
-	 */
-	public function getUser()
-	{
-		if (!$this->hasValidated || !$this->isValid) {
-			return NULL;
-		}
-		// Data field aliases
-		$displayName          = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email                = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$password             = $this->data[self::ELEMENT_NAME_PASSWORD];
-		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-		$gender               = $this->data[self::ELEMENT_NAME_GENDER];
-		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
-		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
-		$postalCode           = $this->data[self::ELEMENT_NAME_POSTAL_CODE];
-		// Create and return a new user
-		$user = new User(
-			$displayName,
-			$email,
-			$password,
-			$this->userType,
-			$gender,
-			$abaCourse !== NULL ? (bool) $abaCourse : $abaCourse,
-			$certificateOfConduct
-		);
-		if ($phone) {
-			// The user entered a phone number
-			$user->setPhone((int) $phone);
-		}
-		if ($postalCode) {
-			// The user entered their postal code
-			$user->setPostalCode($postalCode);
-		}
-		return $user;
 	}
 }

@@ -5,9 +5,6 @@ namespace AbaLookup;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-/**
- * Base controller class
- */
 abstract class AbaLookupController extends AbstractActionController
 {
 	/**

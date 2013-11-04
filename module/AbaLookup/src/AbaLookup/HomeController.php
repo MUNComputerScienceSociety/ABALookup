@@ -3,33 +3,69 @@
 namespace AbaLookup;
 
 use AbaLookup\Session\Session;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Mvc\MvcEvent;
 
 class HomeController extends AbaLookupController
 {
-	public function setEventManager(EventManagerInterface $events)
-	{
-		parent::setEventManager($events);
-		$events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'beforeAction'], 100);
-	}
+	/**
+	 * @var Lookup\Entity\User
+	 */
+	protected $user;
 
-	public function beforeAction()
+	public function __construct()
 	{
 		// Set the home layout
 		$this->layout('layout/home');
 		$uid = Session::getUserId();
 		try {
-			$user = $this->getApi('UserAccount')
-			             ->get($uid);
+			$$this->user = $this->getApi('UserAccount')
+			                    ->get($uid);
 		} catch (Lookup\Api\Exception\InvalidDataException $e) {
 			// TODO - Handle this
-			$user = NULL;
+			$this->user = NULL;
 		}
 		// Prepare the layout
-		$this->prepareLayout($user);
+		$this->prepareLayout($this->user);
+	}
+
+	public function indexAction()
+	{
 		return [
-			'user' => $user,
+			'user' => $this->user,
+		];
+	}
+
+	public function privacyAction()
+	{
+		return [
+			'user' => $this->user,
+		];
+	}
+
+	public function aboutAction()
+	{
+		return [
+			'user' => $this->user,
+		];
+	}
+
+	public function termsAction()
+	{
+		return [
+			'user' => $this->user,
+		];
+	}
+
+	public function sponsorsAction()
+	{
+		return [
+			'user' => $this->user,
+		];
+	}
+
+	public function colophonAction()
+	{
+		return [
+			'user' => $this->user,
 		];
 	}
 }

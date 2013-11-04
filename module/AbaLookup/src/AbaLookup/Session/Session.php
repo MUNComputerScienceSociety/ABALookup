@@ -4,9 +4,6 @@ namespace AbaLookup\Session;
 
 use Zend\Session\Container;
 
-/**
- * Wrapper class around Zend\Session\Container
- */
 class Session
 {
 	/**
@@ -29,12 +26,12 @@ class Session
 	 */
 	public static function setUserId($id, $remember = FALSE)
 	{
-		$session = new Container(Session::SESSION_USER_NAMESPACE);
+		$session = new Container(Session::USER_NAMESPACE);
 		$session->getManager()
 		        ->getConfig()
 		        ->setCookieHttpOnly(TRUE) // As per issue #87
 		        ->rememberMe((is_bool($remember) && $remember) ? Session::SECONDS_3_MONTHS : 0);
-		$session->offsetSet(Session::SESSION_USER_KEY_ID, $id);
+		$session->offsetSet(Session::USER_KEY_ID, $id);
 	}
 
 	/**
@@ -42,7 +39,7 @@ class Session
 	 */
 	public static function getUserId()
 	{
-		return (new Container(Session::SESSION_USER_NAMESPACE))->offsetGet(Session::SESSION_USER_ID_KEY);
+		return (new Container(Session::USER_NAMESPACE))->offsetGet(Session::USER_KEY_ID);
 	}
 
 	/**
@@ -52,6 +49,6 @@ class Session
 	 */
 	public static function unsetUserId()
 	{
-		(new Container(Session::SESSION_USER_NAMESPACE))->offsetUnset(Session::SESSION_USER_ID_KEY);
+		(new Container(Session::USER_NAMESPACE))->offsetUnset(Session::USER_KEY_ID);
 	}
 }

@@ -2,10 +2,8 @@
 
 namespace AbaLookup\Form\View\Helper;
 
-use
-	Zend\Form\FormInterface,
-	Zend\Form\View\Helper\Form as ZendFormHelper
-;
+use Zend\Form\FormInterface;
+use Zend\Form\View\Helper\Form as ZendFormHelper;
 
 /**
  * View helper that generates a form
@@ -15,7 +13,7 @@ class Form extends ZendFormHelper
 	/**
 	 * Returns the HTML markup for the given form
 	 *
-	 * @param FormInterface $f The form.
+	 * @param Zend\Form\FormInterface $f The form.
 	 * @return string
 	 */
 	public function markup(FormInterface $f)

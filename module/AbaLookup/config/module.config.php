@@ -3,6 +3,7 @@
 return [
 	'controllers' => [
 		'invokables' => [
+			'Auth'  => 'AbaLookup\AuthController',
 			'Home'  => 'AbaLookup\HomeController',
 			'Users' => 'AbaLookup\UsersController',
 		],
@@ -89,7 +90,7 @@ return [
 				'options' => [
 					'route' => '/users',
 					'defaults' => [
-						'controller' => 'Users',
+						'controller' => 'Auth',
 					],
 				],
 				'may_terminate' => FALSE,
@@ -138,11 +139,10 @@ return [
 			realpath(sprintf('%s/../view', __DIR__)),
 		],
 		'template_map' => [
-			'layout/layout' => realpath(sprintf('%s/../view/layout/layout.phtml', __DIR__)),
-			'layout/home'   => realpath(sprintf('%s/../view/layout/home.phtml',   __DIR__)),
-			'error/index'   => realpath(sprintf('%s/../view/error/index.phtml',   __DIR__)),
 			'error/404'     => realpath(sprintf('%s/../view/error/404.phtml',     __DIR__)),
-			'profile/edit'  => realpath(sprintf('%s/../view/aba-lookup/users/profile-edit.phtml', __DIR__)),
+			'error/index'   => realpath(sprintf('%s/../view/error/index.phtml',   __DIR__)),
+			'layout/home'   => realpath(sprintf('%s/../view/layout/home.phtml',   __DIR__)),
+			'layout/layout' => realpath(sprintf('%s/../view/layout/layout.phtml', __DIR__)),
 			'widget/footer' => realpath(sprintf('%s/../view/aba-lookup/widget/footer.phtml', __DIR__)),
 		],
 	],

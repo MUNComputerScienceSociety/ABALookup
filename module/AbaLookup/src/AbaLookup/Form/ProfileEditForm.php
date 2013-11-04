@@ -2,22 +2,12 @@
 
 namespace AbaLookup\Form;
 
-use
-	AbaLookup\Entity\User,
-	AbaLookup\Entity\UserType
-;
-
-/**
- * The form for editing a user profile
- */
 class ProfileEditForm extends AbstractBaseForm
 {
 	/**
-	 * Constructor
-	 *
-	 * @param User $user The user whose profile is being edited
+	 * @param Lookup\Entity\User $user The user whose profile is being edited.
 	 */
-	public function __construct(User $user)
+	public function __construct(Lookup\Entity\User $user)
 	{
 		parent::__construct();
 		// Display name
@@ -69,8 +59,16 @@ class ProfileEditForm extends AbstractBaseForm
 				'label' => 'Postal code (optional)',
 			],
 		]);
+		// Hidden user type field
+		$this->add([
+			'name' => self::ELEMENT_NAME_USER_TYPE,
+			'attributes' => [
+				'type'  => 'hidden',
+				'value' => $user->getUserType(),
+			],
+		]);
 		// Show therapist-only fields?
-		if ($user->getUserType() === UserType::TYPE_ABA_THERAPIST) {
+		if ($user->getUserType() === self::USER_TYPE_ABA_THERAPIST) {
 			// ABA training course
 			$this->add([
 				'name' => self::ELEMENT_NAME_ABA_COURSE,
@@ -123,47 +121,5 @@ class ProfileEditForm extends AbstractBaseForm
 				'value' => 'Update your information',
 			],
 		]);
-	}
-
-	/**
-	 * Sets the {@code $isValid} property
-	 */
-	public function setIsValid()
-	{
-		$this->isValid =    $this->isDisplayNameValid()
-		                 && $this->isEmailAddressValid()
-		                 && $this->isPhoneNumberValid()
-		                 && $this->isPostalCodeValid()
-		                 && $this->isCertificateOfConductValid();
-	}
-
-	/**
-	 * Updates the user with their new information
-	 *
-	 * Populates the fields with the updated data.
-	 *
-	 * @param User $user The user to update.
-	 * @return bool Whether the update was successful.
-	 */
-	public function updateUser(User $user)
-	{
-		if (!$this->hasValidated || !$this->isValid) {
-			return FALSE;
-		}
-		// Aliases
-		$abaCourse            = $this->data[self::ELEMENT_NAME_ABA_COURSE];
-		$certificateOfConduct = $this->data[self::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT];
-		$displayName          = $this->data[self::ELEMENT_NAME_DISPLAY_NAME];
-		$email                = $this->data[self::ELEMENT_NAME_EMAIL_ADDRESS];
-		$phone                = $this->data[self::ELEMENT_NAME_PHONE_NUMBER];
-		$postalCode           = $this->data[self::ELEMENT_NAME_POSTAL_CODE];
-		// Update the information
-		$user->setAbaCourse($abaCourse !== NULL ? (bool) $abaCourse : $abaCourse)
-		     ->setCertificateOfConduct($certificateOfConduct)
-		     ->setDisplayName($displayName)
-		     ->setEmail($email)
-		     ->setPhone($phone ? (int) $phone : NULL)
-		     ->setPostalCode($postalCode ? $postalCode : NULL);
-		return TRUE;
 	}
 }
