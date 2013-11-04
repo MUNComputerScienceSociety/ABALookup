@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit
+	bootstrap="Bootstrap.php"
+	colors="true"
+	printerClass="NyanCat\PHPunit\ResultPrinter"
+	printerFile="../../../vendor/whatthejeff/nyancat-phpunit-resultprinter/src/NyanCat/PHPUnit/ResultPrinter.php">
+	<testsuites>
+		<testsuite name="Lookup Tests">
+			<directory>LookupTest</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
