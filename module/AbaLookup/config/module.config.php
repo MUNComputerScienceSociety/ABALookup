@@ -73,7 +73,7 @@ return [
 			'users' => [
 				'type'    => 'Segment',
 				'options' => [
-					'route'       => '/users/:id/:action[/:mode]',
+					'route'       => '/users/:id/:action',
 					'constraints' => [
 						'id'     => '[0-9]*',
 						'action' => '[a-zA-Z0-9_-]+',

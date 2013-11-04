@@ -2,40 +2,39 @@
 
 namespace AbaLookup;
 
-use
-	Zend\Mvc\Controller\AbstractActionController,
-	Zend\Session\Container,
-	Zend\View\Model\ViewModel
-;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
+/**
+ * Base controller class
+ */
 abstract class AbaLookupController extends AbstractActionController
 {
 	/**
-	 * The key used to store the user in session
-	 */
-	const SESSION_USER_NAMESPACE = 'user';
-	const SESSION_USER_ID_KEY    = 'id';
-
-	/**
-	 * 3 months in seconds
-	 */
-	const SECONDS_3_MONTHS = 7884000;
-
-	/**
 	 * Returns the API object for the given name
+	 *
+	 * Gets from the API factory the appropriate API and returns
+	 * an instance.
 	 *
 	 * @param string $name The name of the API class.
 	 * @return mixed
 	 */
 	protected function getApi($name)
 	{
+		// TODO - Does the API factory throw an exception?
 		return $this->serviceLocator('Lookup\ApiFactory')->get($name);
 	}
 
 	/**
-	 * Returns a redirect to the login route
-	 *
-	 * @return ViewModel
+	 * @return ViewModel Redirect to the home route.
+	 */
+	protected function redirectHome()
+	{
+		return $this->redirect()->toRoute('home');
+	}
+
+	/**
+	 * @return ViewModel Redirect to the login route.
 	 */
 	protected function redirectToLoginPage()
 	{
@@ -43,78 +42,38 @@ abstract class AbaLookupController extends AbstractActionController
 	}
 
 	/**
-	 * Sets the session for the given user
+	 * Redirects to the users route given a user ID and an action
 	 *
-	 * @param int $id The user id.
-	 * @param boolean $remember Whether to set an explicit TTL for the user session.
+	 * @param int $id The user ID.
+	 * @param string $action The route action.
+	 * @return ViewModel Redirect to the users route.
 	 */
-	protected function setUserSession($id, $remember = FALSE)
+	protected function redirectToUsersRoute($id, $action = 'profile')
 	{
-		$session = new Container(self::SESSION_USER_NAMESPACE);
-		$session->getManager()
-		        ->getConfig()
-		        ->setCookieHttpOnly(TRUE); // As per issue #87
-		if (isset($remember) && $remember) {
-			$session->getManager()
-			        ->rememberMe(self::SECONDS_3_MONTHS);
-		}
-		$session->offsetSet(self::SESSION_USER_ID_KEY, $id);
+		$params = ['id' => $id, 'action' => $action];
+		return $this->redirect()->toRoute('users', $params);
 	}
 
 	/**
-	 * Unsets the session
-	 */
-	protected function unsetUserSession()
-	{
-		$session = new Container(self::SESSION_USER_NAMESPACE);
-		$session->offsetUnset(self::SESSION_USER_ID_KEY);
-	}
-
-	/**
-	 * Returns whether a user is currently in session
-	 *
-	 * @return bool
-	 */
-	protected function isUserInSession()
-	{
-		$session = new Container(self::SESSION_USER_NAMESPACE);
-		return $session->offsetExists(self::SESSION_USER_ID_KEY);
-	}
-
-	/**
-	 * Returns the id of the current user session
-	 *
-	 * @return Lookup\Entity\User|NULL
-	 */
-	protected function currentSessionUser()
-	{
-		if (!$this->isUserInSession()) {
-			return NULL;
-		}
-		$session = new Container(self::SESSION_USER_NAMESPACE);
-		return $this->getApi('UserAccount')
-		            ->get($session->offsetGet(self::SESSION_USER_ID_KEY));
-	}
-
-	/**
-	 * Prepares the given layout to be displayed for the given user
+	 * Prepares the layout to be displayed for the given user
 	 *
 	 * Nests the footer widget into the layout, and attaches the current
-	 * to the layout as a variable.
+	 * user to the layout as a variable.
 	 *
-	 * @param ViewModel $layout The layout for the view.
-	 * @param Lookup\Entity\User $user The user currently in session.
+	 * @param Lookup\Entity\User $user The user in session.
+	 * @return void
 	 */
-	protected function prepareLayout($layout, Lookup\Entity\User $user = NULL)
+	protected function prepareLayout(Lookup\Entity\User $user = NULL)
 	{
-		// Add the footer
+		// Add the footer template
+		$layout = $this->layout();
 		$footer = new ViewModel();
 		$footer->setTemplate('widget/footer');
 		$layout->addChild($footer, 'footer');
-		// Add the user's URL
-		if (!isset($user)) {
+		if (is_null($user)) {
 			return;
 		}
+		// Attach the user to the view
 		$layout->setVariable('user', $user);
 	}
 }
