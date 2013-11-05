@@ -2,7 +2,7 @@
 
 namespace Lookup\Entity;
 
-class UserType extends Entity
+class UserDisplayName extends Entity
 {
 	// TODO
 }

@@ -1,135 +1,98 @@
 <?php
 
-namespace AbaLookup\Entity;
+namespace Lookup\Entity;
 
-use
-	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity,
-	Doctrine\ORM\Mapping\GeneratedValue,
-	Doctrine\ORM\Mapping\Id,
-	Doctrine\ORM\Mapping\Table,
-	InvalidArgumentException
-;
-
-/**
- * @Entity
- * @Table(name = "schedule_intervals")
- *
- * A interval in a schedule
- */
 class ScheduleInterval
 {
 	/**
-	 * @Id
-	 * @Column(type = "integer")
-	 * @GeneratedValue
+	 * The start time for this interval (24-hour clock)
 	 *
-	 * A unique identifier
-	 */
-	protected $id;
-
-	/**
-	 * @Column(type = "integer", name = "start_time")
-	 *
-	 * The start time for this interval (in military time)
+	 * @var int
 	 */
 	protected $startTime;
 
 	/**
-	 * @Column(type = "integer", name = "end_time")
+	 * The end time for this interval (24-hour clock)
 	 *
-	 * The end time for this interval (in military time)
+	 * @var int
 	 */
 	protected $endTime;
 
 	/**
-	 * @Column(type = "boolean")
+	 * The weekday of this interval
+	 *
+	 * @var int
 	 */
-	protected $available;
+	protected $weekday;
 
 	/**
-	 * Constructor
-	 *
-	 * Create a new ScheduleInterval that is unavailable by default.
+	 * @param int $id The ID for the entity.
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
-	 * @param bool $available Whether the intervals is available (default: FALSE).
-	 * @throws InvalidArgumentException
+	 * @param int $weekday The weekday of this interval.
+	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($startTime, $endTime, $available = FALSE)
+	public function __construct($id, $startTime, $endTime, $weekday)
 	{
-		if (!isset($startTime, $endTime, $available) || !is_int($startTime) || !is_int($endTime)) {
-			throw new InvalidArgumentException();
-		}
-		if (!is_bool($available)) {
-			throw new InvalidArgumentException(sprintf(
-				'The availability must be a boolean value.'
-			));
-		}
-		if ($endTime <= $startTime) {
-			throw new InvalidArgumentException(sprintf(
-				'The end time must be be greater than the start time.'
+		$this->setId($id)
+		     ->setStartTime($startTime)
+		     ->setEndTime($endTime)
+		     ->setWeekday($weekday);
+	}
+
+	/**
+	 * @param int $startTime The start time for the interval.
+	 * @throws Exception\InvalidArgumentException If the start time is not an integer.
+	 * @return self
+	 */
+	public final function setStartTime($startTime)
+	{
+		if (!is_int($startTime)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects an integer.',
+				__METHOD__
 			));
 		}
 		$this->startTime = $startTime;
-		$this->endTime   = $endTime;
-		$this->available = $available;
+		return $this;
 	}
 
 	/**
-	 * Sets the availability of the interval
-	 *
-	 * @param bool $available Whether or not the interval is available.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param int $endTime The end time for the interval.
+	 * @throws Exception\InvalidArgumentException If the end time is not an integer.
+	 * @return self
 	 */
-	public function setAvailability($available)
+	public final function setEndTime($endTime)
 	{
-		if (!isset($available) || !is_bool($available)) {
-			throw new InvalidArgumentException(sprintf(
-				'The availability must be a boolean value.'
+		if (!is_int($endTime)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects an integer.',
+				__METHOD__
 			));
 		}
-		$this->available = $available;
+		$this->endTime = $endTime;
 		return $this;
 	}
 
 	/**
-	 * Sets this interval as available
-	 *
-	 * @return $this
+	 * @param int $weekday The weekday for the interval.
+	 * @throws Exception\InvalidArgumentException If the weekday is not an integer.
+	 * @return self
 	 */
-	public function setAvailable()
+	public final function setWeekday($weekday)
 	{
-		$this->available = TRUE;
+		if (!is_int($weekday)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects an integer.',
+				__METHOD__
+			));
+		}
+		$this->weekday = $weekday;
 		return $this;
 	}
 
 	/**
-	 * Sets this interval as unavailable
-	 *
-	 * @return $this
-	 */
-	public function setUnavailable()
-	{
-		$this->available = FALSE;
-		return $this;
-	}
-
-	/**
-	 * Returns the ID for the interval
-	 *
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Returns the start time for the interval
-	 *
-	 * @return int
+	 * @return int The start time for the interval.
 	 */
 	public function getStartTime()
 	{
@@ -137,9 +100,7 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Returns the end time for the interval
-	 *
-	 * @return int
+	 * @return int The end time for the interval.
 	 */
 	public function getEndTime()
 	{
@@ -147,12 +108,10 @@ class ScheduleInterval
 	}
 
 	/**
-	 * Returns whether the interval is available
-	 *
-	 * @return bool
+	 * @return int The weekday of this interval.
 	 */
-	public function isAvailable()
+	public function getWeekday()
 	{
-		return $this->available;
+		return $this->weekday;
 	}
 }

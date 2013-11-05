@@ -1,426 +1,201 @@
 <?php
 
-namespace AbaLookup\Entity;
+namespace Lookup\Entity;
 
-use
-	Doctrine\ORM\Mapping\Column,
-	Doctrine\ORM\Mapping\Entity,
-	Doctrine\ORM\Mapping\GeneratedValue,
-	Doctrine\ORM\Mapping\Id,
-	Doctrine\ORM\Mapping\Table,
-	InvalidArgumentException,
-	Zend\Crypt\Password\Bcrypt
-;
-
-/**
- * @Entity
- * @Table(name = "users")
- *
- * A user
- */
-class User
+class User extends Entity
 {
 	/**
-	 * The minimum number of characters in a display name
-	 */
-	const MINIMUM_LENGTH_DISPLAY_NAME = 1;
-
-	/**
-	 * The minimum length for passwords
-	 */
-	const MINIMUM_LENGTH_PASSWORD = 8;
-
-	/**
-	 * The minimum length for a phone number
+	 * The display name for user
 	 *
-	 * As a minimum, 7 characters allows for phone numbers without area codes (e.g. 5551234).
-	 */
-	const MINIMUM_LENGTH_PHONE_NUMBER = 7;
-
-	/**
-	 * BCrypt for hashing and verifying password
-	 */
-	protected static $bcrypt;
-
-	/**
-	 * @Id
-	 * @Column(type = "integer")
-	 * @GeneratedValue
-	 */
-	protected $id;
-
-	/**
-	 * The user's display name
-	 *
-	 * @Column(type = "string", name = "display_name")
+	 * @var UserDisplayName
 	 */
 	protected $displayName;
 
 	/**
-	 * The user's email address
+	 * The user type
 	 *
-	 * @Column(type = "string", unique = TRUE)
-	 */
-	protected $email;
-
-	/**
-	 * The user's password
-	 *
-	 * @Column(type = "string")
-	 */
-	protected $password;
-
-	/**
-	 * The user's phone number
-	 *
-	 * The user can optionally provide their phone number, the
-	 * field is NULL by default.
-	 *
-	 * @Column(type = "integer", nullable = TRUE)
-	 */
-	protected $phone;
-
-	/**
-	 * The type of the user
-	 *
-	 * @see UserType The possible values for this property.
-	 * @Column(type = "string", name = "user_type")
+	 * @var UserType
 	 */
 	protected $userType;
 
 	/**
+	 * The user location
+	 *
+	 * @var Location
+	 */
+	protected $location;
+
+	/**
 	 * The gender of the user
 	 *
-	 * The user can choose to not dicslose their gender, thus
-	 * this field can be NULL. This field is either a 'M' for
-	 * male or an 'F' for female.
-	 *
-	 * @Column(type = "string", length = 1, nullable = TRUE)
+	 * @var string|NULL
 	 */
 	protected $gender;
 
 	/**
+	 * The user's phone number
+	 *
+	 * @var string|NULL
+	 */
+	protected $phoneNumber;
+
+	/**
 	 * Whether the user has completed their course
 	 *
-	 * This field can be NULL, which represents that the user has not
-	 * yet completed the ABA training course.
-	 *
-	 * @Column(type = "boolean", name = "aba_course", nullable = TRUE)
+	 * @var bool|NULL
 	 */
 	protected $abaCourse;
 
 	/**
 	 * The date on which the user last recieved their Certificate of Conduct
 	 *
-	 * This field can be NULL, which represents that the user has never recieved
-	 * their Certificate of Conduct or, in the case of a parent, the field is
-	 * not relevant. The field is stored as the number of seconds since the UNIX epoch.
-	 *
-	 * @Column(type = "integer", name = "certificate_of_conduct", nullable = TRUE)
+	 * @var int|NULL
 	 */
 	protected $certificateOfConduct;
 
 	/**
-	 * The user's postal code
+	 * The time at which this user was created
 	 *
-	 * The user can optionally provide their postal code to be provied the
-	 * option of viewing/generating coarse location-based matches. Is they
-	 * decide to not provide this field, it will be NULL.
-	 *
-	 * @Column(type = "string", name = "postal_code", nullable = TRUE)
+	 * @var int
 	 */
-	protected $postalCode;
+	protected $creationTime;
 
 	/**
-	 * Initialise static fields
-	 *
-	 * Called immediately after class definition.
-	 */
-	public static function init()
-	{
-		self::$bcrypt = new Bcrypt(['cost' => 5]);
-	}
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $displayName The display name for the user.
-	 * @param string $email The email address for the user.
-	 * @param string $password The user's password in plaintext.
-	 * @param string $userType The type of the user.
+	 * @param int $id The ID for the entity.
+	 * @param UserDisplayName $displayName The display name for the user.
+	 * @param UserType $userType The type of the user.
+	 * @param Location $location The location of the user.
 	 * @param string|NULL $gender The gender of the user.
+	 * @param string|NULL $phoneNumber The phone number for the user.
 	 * @param bool|NULL $abaCourse Whether the user has completed the ABA training course.
-	 * @param integer|NULL $certificateOfConduct The date on which the user last recieved their Certificate of Conduct.
-	 * @throws InvalidArgumentException
+	 * @param int|NULL $certificateOfConduct The date on which the user last recieved their Certificate of Conduct.
+	 * @param int $creationTime The time at which the user was created.
+	 * @throws Exception\InvalidArgumentException
 	 */
-	public function __construct($displayName,
-	                            $email,
-	                            $password,
-	                            $userType,
-	                            $gender               = NULL,
-	                            $abaCourse            = NULL,
-	                            $certificateOfConduct = NULL
-	) {
-		$this->setDisplayName($displayName);
-		$this->setEmail($email);
-		$this->setPassword($password);
-		$this->setPhone(NULL); // Default
-		$this->setUserType($userType);
-		$this->setGender($gender);
-		$this->setAbaCourse($abaCourse);
-		$this->setCertificateOfConduct($certificateOfConduct);
-		$this->setPostalCode(NULL); // Default
+	public function __construct($id, UserDisplayName $displayName, UserType $userType, Location $location, $gender, $phoneNumber, $abaCourse, $certificateOfConduct, $creationTime) {
+		$this->setId($id)
+		     ->setDisplayName($displayName)
+		     ->setUserType($userType)
+		     ->setLocation($location)
+		     ->setGender($gender)
+		     ->setPhoneNumber($phoneNumber)
+		     ->setAbaCourse($abaCourse)
+		     ->setCertificateOfConduct($certificateOfConduct)
+		     ->setCreationTime($creationTime);
 	}
 
 	/**
-	 * Sets the display name of the user
-	 *
-	 * @param string $displayName The display name of the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param UserDisplayName $displayName The display name for the user.
+	 * @return self
 	 */
-	public function setDisplayName($displayName)
+	public final function setDisplayName(UserDisplayName $displayName)
 	{
-		if (!isset($displayName) || !is_string($displayName) || !$displayName) {
-			throw new InvalidArgumentException();
-		}
 		$this->displayName = $displayName;
 		return $this;
 	}
 
 	/**
-	 * Sets the email address of the user
-	 *
-	 * @param string $email The email address for the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param UserType $userType The user type object.
+	 * @return self
 	 */
-	public function setEmail($email)
+	public final function setUserType(UserType $userType)
 	{
-		if (!isset($email) || !is_string($email) || !$email) {
-			throw new InvalidArgumentException();
-		}
-		$this->email = $email;
-		return $this;
-	}
-
-	/**
-	 * Sets the password for the user
-	 *
-	 * The password must be in plaintext when passed in, as it will
-	 * be hashed internally.
-	 *
-	 * @param string $password The plaintext password for the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
-	 */
-	public function setPassword($password)
-	{
-		if (!isset($password) || !is_string($password) || !$password) {
-			throw new InvalidArgumentException();
-		}
-		$this->password = self::$bcrypt->create($password);
-		return $this;
-	}
-
-	/**
-	 * Sets the phone number for the user
-	 *
-	 * @param int|NULL $phone The phone number for the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
-	 */
-	public function setPhone($phone)
-	{
-		if ($phone !== NULL && !is_int($phone)) {
-			throw new InvalidArgumentException();
-		}
-		$this->phone = $phone;
-		return $this;
-	}
-
-	/**
-	 * Sets the user type
-	 *
-	 * @param string $userType The type of the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
-	 */
-	public function setUserType($userType)
-	{
-		if (!isset($userType) || !is_string($userType) || !$userType) {
-			throw new InvalidArgumentException();
-		}
 		$this->userType = $userType;
 		return $this;
 	}
 
 	/**
-	 * Sets the gender of the user
-	 *
-	 * Given values of 'M', 'F', or NULL, this function will set the gender field
-	 * of the user appropriately. Given any other string value, the field will be
-	 * set to NULL as a convenience.
-	 *
-	 * @param string|NULL $gender The gender of the user (NULL, 'M', or 'F').
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param Location $location The user's location.
+	 * @return self
 	 */
-	public function setGender($gender)
+	public final function setLocation(Location $location)
 	{
-		if ($gender !== NULL && !is_string($gender)) {
-			throw new InvalidArgumentException();
-		}
-		$gender = strtoupper($gender);
-		if ($gender !== 'M' && $gender !== 'F') {
-			$this->gender = NULL; // As a convenience
-		} else {
-			$this->gender = $gender;
-		}
+		$this->location = $location;
 		return $this;
 	}
 
 	/**
-	 * Sets whether the user has completed the ABA training course
-	 *
-	 * @param bool|NULL $abaCourse Whether or not the user has completed their course.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param string|NULL $gender The user's gender.
+	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
+	 * @return self
 	 */
-	public function setAbaCourse($abaCourse)
+	public final function setGender($gender)
 	{
-		if ($abaCourse !== NULL && !is_bool($abaCourse)) {
-			throw new InvalidArgumentException();
+		if (!is_string($gender) && !is_null($gender)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects a string or NULL value.',
+				__METHOD__
+			));
+		}
+		$this->gender = $gender;
+		return $this;
+	}
+
+	/**
+	 * @param string|NULL $phoneNumber The user's phone number.
+	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
+	 * @return self
+	 */
+	public final function setPhoneNumber($phoneNumber)
+	{
+		if (!is_string($phoneNumber) && !is_null($phoneNumber)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects a string or NULL value.',
+				__METHOD__
+			));
+		}
+		$this->phoneNumber = $phoneNumber;
+		return $this;
+	}
+
+	/**
+	 * @param bool|NULL $abaCourse Whether the user has the course completed.
+	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
+	 * @return self
+	 */
+	public final function setAbaCourse($abaCourse)
+	{
+		if (!is_bool($abaCourse) && !is_null($abaCourse)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects a string or NULL value.',
+				__METHOD__
+			));
 		}
 		$this->abaCourse = $abaCourse;
 		return $this;
 	}
 
 	/**
-	 * Sets the date on which the user last recieved their certificate of conduct
-	 *
-	 * The {@code $certificateOfConduct} field is stored as the number of seconds
-	 * since the UNIX epoch. As such, the given value must be an integer.
-	 *
-	 * @param int|NULL $certificateOfConduct The date on which the user last recieved their certificate of conduct.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param int|NULL $certificateOfConduct Whether the user has their Certificate of Conduct.
+	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
+	 * @return self
 	 */
-	public function setCertificateOfConduct($certificateOfConduct)
+	public final function setCertificateOfConduct($certificateOfConduct)
 	{
-		if ($certificateOfConduct !== NULL && !is_int($certificateOfConduct)) {
-			throw new InvalidArgumentException();
+		if (!is_int($certificateOfConduct) && !is_null($certificateOfConduct)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects a string or NULL value.',
+				__METHOD__
+			));
 		}
 		$this->certificateOfConduct = $certificateOfConduct;
 		return $this;
 	}
 
 	/**
-	 * Sets the postal code for the user
-	 *
-	 * @param string|NULL $postalCode The postal code for the user.
-	 * @throws InvalidArgumentException
-	 * @return $this
+	 * @param int $creationTime The time at which the user was created.
+	 * @throws Exception\InvalidArgumentException If the argument type does not fit.
+	 * @return self
 	 */
-	public function setPostalCode($postalCode)
+	public final function setCreationTime($creationTime)
 	{
-		if ($postalCode !== NULL && !is_string($postalCode)) {
-			throw new InvalidArgumentException();
+		if (!is_int($creationTime)) {
+			throw new Exception\InvalidArgumentException(sprintf(
+				'%s expects a string or NULL value.',
+				__METHOD__
+			));
 		}
-		$this->postalCode = $postalCode;
+		$this->creationTime = $creationTime;
 		return $this;
 	}
-
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDisplayName()
-	{
-		return $this->displayName;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getEmail()
-	{
-		return $this->email;
-	}
-
-	/**
-	 * Verifies the given password against the password stored for the user
-	 *
-	 * The given {@code $password} must be in plaintext. Returns TRUE if the
-	 * given password is identical to the password for the user, FALSE
-	 * if that is not the case.
-	 *
-	 * @param string $password The plaintext password to be verified.
-	 * @throws InvalidArgumentException
-	 * @return bool
-	 */
-	public function verifyPassword($password)
-	{
-		if (!isset($password) || !is_string($password) || !$password) {
-			throw new InvalidArgumentException();
-		}
-		return self::$bcrypt->verify($password, $this->password);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getPhone()
-	{
-		return $this->phone;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUserType()
-	{
-		return $this->userType;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getGender()
-	{
-		return $this->gender;
-	}
-
-	/**
-	 * @return bool|NULL
-	 */
-	public function getAbaCourse()
-	{
-		return $this->abaCourse;
-	}
-
-	/**
-	 * @return int|NULL
-	 */
-	public function getCertificateOfConduct()
-	{
-		return $this->certificateOfConduct;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getPostalCode()
-	{
-		return $this->postalCode;
-	}
 }
-
-User::init();
