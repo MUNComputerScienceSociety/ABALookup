@@ -74,6 +74,7 @@ CREATE TABLE schedule(
 	name                   TEXT,
 	enabled                INTEGER             NOT NULL
 );
+
 CREATE TABLE schedule_interval(
 	id                     INTEGER PRIMARY KEY,
 	schedule_id            INTEGER             NOT NULL,
