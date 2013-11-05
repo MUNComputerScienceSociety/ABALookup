@@ -8,7 +8,13 @@ use AbaLookup\Session\Session;
 
 class AuthController extends AbaLookupController
 {
-	public function __construct()
+	/**
+	 * Contains logic common to all actions and is run on
+	 * each dispatch
+	 *
+	 * @return void
+	 */
+	public function action()
 	{
 		// Is a user logged in?
 		$uid = Session::getUserId();
@@ -68,7 +74,7 @@ class AuthController extends AbaLookupController
 					])
 				)
 			);
-		} catch (Lookup\Api\Exception\InvalidDataException $e) {
+		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			// Show the user the error message
 			return [
 				'error' => $e->getMessage(),
@@ -106,7 +112,7 @@ class AuthController extends AbaLookupController
 				'email'    => $data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
 				'password' => $data->fromPost($form::ELEMENT_NAME_PASSWORD),
 			]);
-		} catch (Lookup\Api\Exception\InvalidDataException $e) {
+		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			return [
 				'error' => $e->getMessage(),
 				'form'  => $form,

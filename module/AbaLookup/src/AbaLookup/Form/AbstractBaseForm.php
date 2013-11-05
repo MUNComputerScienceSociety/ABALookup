@@ -10,6 +10,7 @@ abstract class AbstractBaseForm extends Form
 	 * Constants for form element IDs and names
 	 */
 	const ELEMENT_NAME_ABA_COURSE                   = 'aba-course';
+	const ELEMENT_NAME_ADD_REMOVE_AVAILABILITY      = 'add-remove-availability';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT       = 'certificate-of-conduct';
 	const ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE  = 'certificate-of-conduct-date';
 	const ELEMENT_NAME_CONFIRM_PASSWORD             = 'confirm-password';
@@ -20,8 +21,8 @@ abstract class AbstractBaseForm extends Form
 	const ELEMENT_NAME_PHONE_NUMBER                 = 'phone-number';
 	const ELEMENT_NAME_POSTAL_CODE                  = 'postal-code';
 	const ELEMENT_NAME_REMEMBER_ME                  = 'remember-me';
+	const ELEMENT_NAME_USER_TYPE                    = 'user-type';
 	const ELEMENT_NAME_WEEKDAY                      = 'weekday';
-	const ELEMENT_NAME_ADD_REMOVE_AVAILABILITY      = 'add-remove-availability';
 
 	/**
 	 * Constants for user types

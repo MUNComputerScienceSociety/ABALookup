@@ -2,11 +2,32 @@
 
 namespace AbaLookup;
 
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 
 abstract class AbaLookupController extends AbstractActionController
 {
+	const EVENT_PRIORITY_BEFORE_ACTION = 100;
+
+	/**
+	 * Set the event manager instance used by this context
+	 *
+	 * @param EventManagerInterface $eventManager
+	 * @return AbstractController
+	 */
+	public function setEventManager(EventManagerInterface $eventManager)
+	{
+		parent::setEventManager($eventManager);
+		// Attach callable to run before each controller action
+		$eventManager->attach(
+			MvcEvent::EVENT_DISPATCH,
+			[$this, 'action'],
+			self::EVENT_PRIORITY_BEFORE_ACTION
+		);
+	}
+
 	/**
 	 * Returns the API object for the given name
 	 *
@@ -18,8 +39,9 @@ abstract class AbaLookupController extends AbstractActionController
 	 */
 	protected function getApi($name)
 	{
-		// TODO - Does the API factory throw an exception?
-		return $this->serviceLocator('Lookup\ApiFactory')->get($name);
+		// TODO - Does the API factory itself throw an exception?
+		$factory = $this->getServiceLocator()->get('Lookup\Api\Factory');
+		return $factory->get($name);
 	}
 
 	/**

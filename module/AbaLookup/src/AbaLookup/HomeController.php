@@ -7,19 +7,27 @@ use AbaLookup\Session\Session;
 class HomeController extends AbaLookupController
 {
 	/**
+	 * The user in session
+	 *
 	 * @var Lookup\Entity\User
 	 */
 	protected $user;
 
-	public function __construct()
+	/**
+	 * Contains logic common to all actions and is run on
+	 * each dispatch
+	 *
+	 * @return void
+	 */
+	public function action()
 	{
 		// Set the home layout
 		$this->layout('layout/home');
 		$uid = Session::getUserId();
 		try {
-			$$this->user = $this->getApi('UserAccount')
-			                    ->get($uid);
-		} catch (Lookup\Api\Exception\InvalidDataException $e) {
+			$this->user = $this->getApi('UserAccount')
+			                   ->get($uid);
+		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			// TODO - Handle this
 			$this->user = NULL;
 		}

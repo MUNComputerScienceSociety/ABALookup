@@ -20,13 +20,13 @@ class UsersController extends AbaLookupController
 	 */
 	protected $user;
 
-	public function __construct()
+	public function action()
 	{
 		try {
 			$this->uid  = Session::getUserId();
 			$this->user = $this->getApi('UserAccount')
 			                   ->get($uid);
-		} catch (Lookup\Api\Exception\InvalidDataException $e) {
+		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			// The user ID is NOT valid
 			$this->redirectToLoginPage();
 			return;
