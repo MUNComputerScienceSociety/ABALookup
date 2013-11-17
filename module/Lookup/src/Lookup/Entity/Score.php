@@ -2,21 +2,23 @@
 
 namespace Lookup\Entity;
 
-class Score extends Entity
+class Score
 {
+	use Trait\Id;
+
 	/**
 	 * User A of the pair
 	 *
 	 * @var User
 	 */
-	protected $a;
+	private $a;
 
 	/**
 	 * User B of the pair
 	 *
 	 * @var User
 	 */
-	protected $b;
+	private $b;
 
 	/**
 	 * The combined schedule of the two users
@@ -26,16 +28,18 @@ class Score extends Entity
 	 *
 	 * @var Schedule
 	 */
-	protected $schedule;
+	private $schedule;
 
 	/**
 	 * The score for this user pair
 	 *
 	 * @var int
 	 */
-	protected $score;
+	private $score;
 
 	/**
+	 * Constructor
+	 *
 	 * @param int $id The ID for this entity.
 	 * @param User $a The 1st user of the user pair.
 	 * @param User $a The 2nd user of the user pair.
@@ -45,23 +49,53 @@ class Score extends Entity
 	 */
 	public function __construct($id, User $a, User $b, Schedule $schedule, $score)
 	{
-		$this->setId($id);
+		$this->setId($id)
+		     ->setUserA($a)
+		     ->setUserB($b)
+		     ->setSchedule($schedule)
+		     ->setScore($score);
+	}
+
+	/**
+	 * @param User $a User A of the pair.
+	 * @return self
+	 */
+	public final function setUserA(User $a)
+	{
 		$this->a = $a;
+		return $this;
+	}
+
+	/**
+	 * @param User $b User B of the pair.
+	 * @return self
+	 */
+	public final function setUserB(User $b)
+	{
 		$this->b = $b;
+		return $this;
+	}
+
+	/**
+	 * @param Schedule $schedule The combined schedule of the two users.
+	 * @return self
+	 */
+	public final function setSchedule(Schedule $schedule)
+	{
 		$this->schedule = $schedule;
-		$this->setScore($score);
+		return $this;
 	}
 
 	/**
 	 * @param int $score The score for this user pair.
-	 * @throws Exception\InvalidArgumentException If the score is not an integer.
+	 * @throws Exception\InvalidArgumentException If the score is not an int.
 	 * @return self
 	 */
 	public final function setScore($score)
 	{
 		if (!is_int($score)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'The score must be an integer.'
+				'The score must be an int.'
 			));
 		}
 		$this->score = $score;

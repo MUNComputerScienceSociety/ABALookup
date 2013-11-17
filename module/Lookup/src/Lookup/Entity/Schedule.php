@@ -2,31 +2,36 @@
 
 namespace Lookup\Entity;
 
-class Schedule extends Entity
+class Schedule
 {
+	use Trait\Id;
+
 	/**
-	 * The name for the schedule
+	 * The name of the schedule
 	 *
 	 * @var string|NULL
 	 */
-	protected $name;
+	private $name;
 
 	/**
 	 * Whether the schedule is active
 	 *
 	 * @var bool
 	 */
-	protected $enabled;
+	private $enabled;
 
 	/**
+	 * Constructor
+	 *
+	 * @param int $id The ID for this entity.
 	 * @param string $name The name for the schedule.
 	 * @param bool $enabled Is the schedule active?
 	 * @throws Exception\InvalidArgumentException
 	 */
 	public function __construct($id, $name, $enabled)
 	{
-		$this->setId($id),
-		     ->setEnabled($enabled),
+		$this->setId($id)
+		     ->setEnabled($enabled)
 		     ->setName($name);
 	}
 
@@ -54,7 +59,7 @@ class Schedule extends Entity
 	 */
 	public final function setEnabled($enabled)
 	{
-		if (isset($enabled)) {
+		if (!is_bool($enabled)) {
 			throw new Exception\InvalidArgumentException(sprintf(
 				'%s expects a bool value.',
 				__METHOD__

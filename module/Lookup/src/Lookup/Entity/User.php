@@ -2,66 +2,68 @@
 
 namespace Lookup\Entity;
 
-class User extends Entity
+class User
 {
+	use Trait\Uuid;
+
 	/**
 	 * The display name for user
 	 *
 	 * @var UserDisplayName
 	 */
-	protected $displayName;
+	private $displayName;
 
 	/**
 	 * The user type
 	 *
 	 * @var UserType
 	 */
-	protected $userType;
+	private $userType;
 
 	/**
 	 * The user location
 	 *
 	 * @var Location
 	 */
-	protected $location;
+	private $location;
 
 	/**
 	 * The gender of the user
 	 *
 	 * @var string|NULL
 	 */
-	protected $gender;
+	private $gender;
 
 	/**
 	 * The user's phone number
 	 *
 	 * @var string|NULL
 	 */
-	protected $phoneNumber;
+	private $phoneNumber;
 
 	/**
 	 * Whether the user has completed their course
 	 *
 	 * @var bool|NULL
 	 */
-	protected $abaCourse;
+	private $abaCourse;
 
 	/**
 	 * The date on which the user last recieved their Certificate of Conduct
 	 *
 	 * @var int|NULL
 	 */
-	protected $certificateOfConduct;
+	private $certificateOfConduct;
 
 	/**
 	 * The time at which this user was created
 	 *
 	 * @var int
 	 */
-	protected $creationTime;
+	private $creationTime;
 
 	/**
-	 * @param int $id The ID for the entity.
+	 * @param int $id The UUID for the entity.
 	 * @param UserDisplayName $displayName The display name for the user.
 	 * @param UserType $userType The type of the user.
 	 * @param Location $location The location of the user.
@@ -140,7 +142,7 @@ class User extends Entity
 	{
 		if (!is_string($phoneNumber) && !is_null($phoneNumber)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects a string or NULL value.',
+				'%s expects a string or NULL.',
 				__METHOD__
 			));
 		}
@@ -157,7 +159,7 @@ class User extends Entity
 	{
 		if (!is_bool($abaCourse) && !is_null($abaCourse)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects a string or NULL value.',
+				'%s expects a bool or NULL value.',
 				__METHOD__
 			));
 		}
@@ -174,7 +176,7 @@ class User extends Entity
 	{
 		if (!is_int($certificateOfConduct) && !is_null($certificateOfConduct)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects a string or NULL value.',
+				'%s expects an int or NULL value.',
 				__METHOD__
 			));
 		}
@@ -191,11 +193,75 @@ class User extends Entity
 	{
 		if (!is_int($creationTime)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects a string or NULL value.',
+				'%s expects an int.',
 				__METHOD__
 			));
 		}
 		$this->creationTime = $creationTime;
 		return $this;
+	}
+
+	/**
+	 * @return UserDisplayName The display name object.
+	 */
+	public function getDisplayName()
+	{
+		return $this->displayName;
+	}
+
+	/**
+	 * @return UserType The user type object.
+	 */
+	public function getUserType()
+	{
+		return $this->userType;
+	}
+
+	/**
+	 * @return Location The user location.
+	 */
+	public function getLocation()
+	{
+		return $this->location;
+	}
+
+	/**
+	 * @return string|NULL The gender of the user.
+	 */
+	public function getGender()
+	{
+		return $this->gender;
+	}
+
+	/**
+	 * @return string|NULL The user's phone number.
+	 */
+	public function getPhoneNumber()
+	{
+		return $this->phoneNumber;
+	}
+
+	/**
+	 * @return bool|NULL Whether the user has their ABA course.
+	 */
+	public function isAbaCourse()
+	{
+		return $this->abaCourse;
+	}
+
+	/**
+	 * @return int|NULL The date on which the user last recieved their Certificate of Conduct.
+	 */
+	public function getCertificateOfConduct()
+	{
+		return $this->certificateOfConduct;
+	}
+
+	/**
+	 * @return int The creation time of the user.
+	 */
+	public function getCreationTime()
+	{
+		return $this->creationTime;
 	}
 }

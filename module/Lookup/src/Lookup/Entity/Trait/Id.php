@@ -1,26 +1,28 @@
 <?php
 
-namespace Lookup\Entity;
+namespace Lookup\Entity\Trait;
 
-abstract class Entity
+trait Id
 {
 	/**
 	 * The ID for the entity
 	 *
 	 * @var int
 	 */
-	protected $id;
+	private $id;
 
 	/**
+	 * Set the ID for the entity
+	 *
 	 * @param int $id The ID for the entity.
-	 * @throws Exception\InvalidArgumentException If the ID is not an integer.
+	 * @throws Exception\InvalidArgumentException If the ID is not an int.
 	 * @return self
 	 */
-	protected final function setId($id)
+	private final function setId($id)
 	{
 		if (!is_int($id)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects an integer.',
+				'%s expects an int.',
 				__METHOD__
 			));
 		}

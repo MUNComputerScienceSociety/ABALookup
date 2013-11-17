@@ -4,28 +4,32 @@ namespace Lookup\Entity;
 
 class ScheduleInterval
 {
-	/**
-	 * The start time for this interval (24-hour clock)
-	 *
-	 * @var int
-	 */
-	protected $startTime;
+	use Trait\Id;
 
 	/**
-	 * The end time for this interval (24-hour clock)
+	 * The start time for this interval
 	 *
 	 * @var int
 	 */
-	protected $endTime;
+	private $startTime;
+
+	/**
+	 * The end time for this interval
+	 *
+	 * @var int
+	 */
+	private $endTime;
 
 	/**
 	 * The weekday of this interval
 	 *
 	 * @var int
 	 */
-	protected $weekday;
+	private $weekday;
 
 	/**
+	 * Constructor
+	 *
 	 * @param int $id The ID for the entity.
 	 * @param int $startTime The start time for the interval.
 	 * @param int $endTime The end time for the interval.
@@ -42,14 +46,14 @@ class ScheduleInterval
 
 	/**
 	 * @param int $startTime The start time for the interval.
-	 * @throws Exception\InvalidArgumentException If the start time is not an integer.
+	 * @throws Exception\InvalidArgumentException If the start time is not an int.
 	 * @return self
 	 */
 	public final function setStartTime($startTime)
 	{
 		if (!is_int($startTime)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects an integer.',
+				'%s expects an int.',
 				__METHOD__
 			));
 		}
@@ -59,14 +63,14 @@ class ScheduleInterval
 
 	/**
 	 * @param int $endTime The end time for the interval.
-	 * @throws Exception\InvalidArgumentException If the end time is not an integer.
+	 * @throws Exception\InvalidArgumentException If the end time is not an int.
 	 * @return self
 	 */
 	public final function setEndTime($endTime)
 	{
 		if (!is_int($endTime)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects an integer.',
+				'%s expects an int.',
 				__METHOD__
 			));
 		}
@@ -76,14 +80,14 @@ class ScheduleInterval
 
 	/**
 	 * @param int $weekday The weekday for the interval.
-	 * @throws Exception\InvalidArgumentException If the weekday is not an integer.
+	 * @throws Exception\InvalidArgumentException If the weekday is not an int.
 	 * @return self
 	 */
 	public final function setWeekday($weekday)
 	{
 		if (!is_int($weekday)) {
 			throw new Exception\InvalidArgumentException(sprintf(
-				'%s expects an integer.',
+				'%s expects an int.',
 				__METHOD__
 			));
 		}
