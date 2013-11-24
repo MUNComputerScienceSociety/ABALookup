@@ -1,20 +1,15 @@
 <?php
 
-namespace AbaLookupTest;
+namespace LookupTest;
 
-use
-	RuntimeException,
-	Zend\Loader\AutoloaderFactory,
-	Zend\Mvc\Service\ServiceManagerConfig,
-	Zend\ServiceManager\ServiceManager
-;
+use RuntimeException;
+use Zend\Loader\AutoloaderFactory;
+use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\ServiceManager\ServiceManager;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
-/**
- * PHPUnit bootstrap file
- */
 class Bootstrap
 {
 	/**
