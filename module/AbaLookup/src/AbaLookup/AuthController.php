@@ -55,7 +55,7 @@ class AuthController extends AbaLookupController
 		// TODO - Show previous data to user
 		$data = $this->params(); // TODO - Is this correct?
 		try {
-			$id = $this->getApi('UserAccount')->put(
+			$id = $this->getService('Lookup\Api\User')->put(
 				$data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
 				$data->fromPost($form::ELEMENT_NAME_PASSWORD),
 				$data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
@@ -108,7 +108,7 @@ class AuthController extends AbaLookupController
 		// The user has submitted data via POST
 		$data = $this->params();
 		try {
-			$id = $this->getApi('UserAccount')->get([
+			$id = $this->getService('Lookup\Api\UserAccount')->get([
 				'email'    => $data->fromPost($form::ELEMENT_NAME_EMAIL_ADDRESS),
 				'password' => $data->fromPost($form::ELEMENT_NAME_PASSWORD),
 			]);

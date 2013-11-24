@@ -3,13 +3,23 @@
 namespace AbaLookup;
 
 use Zend\EventManager\EventManagerInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\ViewModel;
 
-abstract class AbaLookupController extends AbstractActionController
+abstract class AbaLookupController
+	extends AbstractActionController
+	implements ServiceLocatorAwareInterface
 {
 	const EVENT_PRIORITY_BEFORE_ACTION = 100;
+	
+	/**
+	 * The service manager
+	 * @var ServiceLocatorInterface
+	 */
+    protected $services;
 
 	/**
 	 * Set the event manager instance used by this context
@@ -27,23 +37,38 @@ abstract class AbaLookupController extends AbstractActionController
 			self::EVENT_PRIORITY_BEFORE_ACTION
 		);
 	}
-
 	/**
-	 * Returns the API object for the given name
+	 * Set service locator
 	 *
-	 * Gets from the API factory the appropriate API and returns
-	 * an instance.
-	 *
-	 * @param string $name The name of the API class.
-	 * @return mixed
+	 * @param ServiceLocatorInterface $serviceLocator
 	 */
-	protected function getApi($name)
+	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
 	{
-		// TODO - Does the API factory itself throw an exception?
-		$factory = $this->getServiceLocator()->get('Lookup\Api\Factory');
-		return $factory->get($name);
+		$this->services = $serviceLocator;
 	}
 
+	/**
+	 * Get service locator
+	 *
+	 * @return ServiceLocatorInterface
+	 */
+	public function getServiceLocator()
+	{
+		return $this->services;
+	}
+	
+	/**
+	 * Retrieve a registered service instance
+	 *
+	 * @param  string  $name
+	 * @throws Exception\ServiceNotFoundException
+	 * @return object|array
+	 */
+	public function getService($name)
+	{
+		return $this->getServiceLocator()->get($name);
+	}
+	
 	/**
 	 * @return ViewModel Redirect to the home route.
 	 */
