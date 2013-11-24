@@ -11,3 +11,8 @@ before_install:
     - make install dependencies
 
 script: make test
+
+# whitelist
+branches:
+  only:
+    - master
