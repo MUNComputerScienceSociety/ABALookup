@@ -6,6 +6,9 @@
 database
 vendor
 
+# npm issues
+npm-debug.log
+
 # Compiled JS files
 public/js/*.js
 
