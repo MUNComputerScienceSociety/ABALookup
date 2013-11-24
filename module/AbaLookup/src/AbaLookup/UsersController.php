@@ -24,7 +24,7 @@ class UsersController extends AbaLookupController
 	{
 		try {
 			$this->uid  = Session::getUserId();
-			$this->user = $this->getApi('UserAccount')
+			$this->user = $this->getService('Lookp\Api\UserAccount')
 			                   ->get($uid);
 		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			// The user ID is NOT valid
@@ -56,7 +56,7 @@ class UsersController extends AbaLookupController
 		// The user has submitted data via POST
 		$data = $this->params();
 		try {
-			$this->getApi('UserAccount')->post($this->uid, [
+			$this->getService('Lookup\Api\UserAccount')->post($this->uid, [
 				'aba_course'             => $data->fromPost($form::ELEMENT_NAME_ABA_COURSE),
 				'certificate_of_conduct' => $data->fromPost($form::ELEMENT_NAME_CERTIFICATE_OF_CONDUCT_DATE),
 				'display_name'           => $data->fromPost($form::ELEMENT_NAME_DISPLAY_NAME),
@@ -89,7 +89,7 @@ class UsersController extends AbaLookupController
 		// Create the schedule edit form
 		$form = new ScheduleForm();
 		// Get the user's schedules
-		$schedules = $this->getApi('Schedule')
+		$schedules = $this->getService('Lookup\Api\Schedule')
 		                  ->get(['user_id' => $this->uid]);
 		if ($this->request->isPost()) {
 			// Add the availability to the schedule

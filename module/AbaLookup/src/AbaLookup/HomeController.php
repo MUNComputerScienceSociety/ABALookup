@@ -25,7 +25,7 @@ class HomeController extends AbaLookupController
 		$this->layout('layout/home');
 		$uid = Session::getUserId();
 		try {
-			$this->user = $this->getApi('UserAccount')
+			$this->user = $this->getService('Lookup\Api\UserAccount')
 			                   ->get($uid);
 		} catch (\Lookup\Api\Exception\InvalidDataException $e) {
 			// TODO - Handle this
