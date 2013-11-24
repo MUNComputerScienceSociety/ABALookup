@@ -9,7 +9,7 @@ class Stylesheet extends AbstractHelper
 	/**
 	 * @param string $filename The filename of the CSS stylesheet.
 	 * @return string A HTML stylesheet link tag.
-	 * @throws Exception\InvalidArgumentException
+	 * @throws Exception\InvalidArgumentException If the filename is empty.
 	 */
 	public function __invoke($filename)
 	{

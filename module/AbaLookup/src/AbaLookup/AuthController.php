@@ -9,8 +9,7 @@ use AbaLookup\Session\Session;
 class AuthController extends AbaLookupController
 {
 	/**
-	 * Contains logic common to all actions and is run on
-	 * each dispatch
+	 * Contains logic common to all actions and is run on each dispatch
 	 *
 	 * @return void
 	 */

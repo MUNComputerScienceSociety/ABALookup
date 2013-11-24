@@ -9,7 +9,7 @@ class Script extends AbstractHelper
 	/**
 	 * @param string $filename The script filename.
 	 * @return string A HTML script tag.
-	 * @throws Exception\InvalidArgumentException
+	 * @throws Exception\InvalidArgumentException If the filename is invalid.
 	 */
 	public function __invoke($filename)
 	{
