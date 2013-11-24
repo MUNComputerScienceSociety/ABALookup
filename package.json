@@ -2,15 +2,15 @@
 	"name": "ABALookup",
 	"private": true,
 	"dependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-clean": "~0.5.0",
-		"grunt-contrib-watch": "~0.5.0",
-		"grunt-contrib-concat": "~0.3.0",
-		"grunt-contrib-jshint": "~0.6.2",
-		"grunt-contrib-sass": "~0.4.1",
-		"grunt-contrib-uglify": "~0.2.2",
-		"grunt-modernizr": "~0.3.0",
-		"matchdep": "~0.1.2",
-		"pa11y": "~1.2.0"
+		"grunt": "~0",
+		"grunt-contrib-clean": "~0",
+		"grunt-contrib-watch": "~0",
+		"grunt-contrib-concat": "~0",
+		"grunt-contrib-jshint": "~0",
+		"grunt-contrib-uglify": "~0",
+		"grunt-contrib-sass": "~0",
+		"grunt-modernizr": "~0",
+		"matchdep": "~0",
+		"pa11y": "~1"
 	}
 }

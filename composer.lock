@@ -3,21 +3,21 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bc1241f9cadab4b7de0c5d50624eccd2",
+    "hash": "a396feaf1fc80d333998cdb6ae7655a8",
     "packages": [
         {
             "name": "zendframework/zendframework",
-            "version": "2.2.4",
+            "version": "2.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "5b03d868755c181fc9b5dc56c1f8c26e73ca0bed"
+                "reference": "4a7cf6a4cf791244e14aa0ca49d1f06916b63202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-5b03d868755c181fc9b5dc56c1f8c26e73ca0bed-zip-8b1552.zip",
-                "reference": "2.2.4",
-                "shasum": "f12b12d23c937b8cbd246c6fa56c07fb1df34cb0"
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-4a7cf6a4cf791244e14aa0ca49d1f06916b63202-zip-2661de.zip",
+                "reference": "2.2.5",
+                "shasum": "3c699626517e16aa7b3d9a0c811fe41a2586179d"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -77,6 +77,7 @@
             },
             "require-dev": {
                 "doctrine/annotations": ">=1.0",
+                "fabpot/php-cs-fixer": "*@dev",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
                 "ocramius/proxy-manager": "0.4.*",
@@ -117,10 +118,10 @@
                 "zf2"
             ],
             "support": {
-                "source": "https://github.com/zendframework/zf2/tree/release-2.2.4",
+                "source": "https://github.com/zendframework/zf2/tree/release-2.2.5",
                 "issues": "https://github.com/zendframework/zf2/issues"
             },
-            "time": "2013-08-26 15:09:04"
+            "time": "2013-10-31 15:48:16"
         }
     ],
     "packages-dev": [
@@ -493,17 +494,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.3.6",
+            "version": "v2.3.7",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3"
+                "reference": "c1bda5b459d792cb253de12c65beba3040163b2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
-                "reference": "6bb881b948368482e1abf1a75c08bcf88a1c5fc3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/c1bda5b459d792cb253de12c65beba3040163b2b",
+                "reference": "c1bda5b459d792cb253de12c65beba3040163b2b",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +537,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-09-22 18:04:39"
+            "time": "2013-10-17 11:48:01"
         },
         {
             "name": "whatthejeff/fab",
@@ -591,16 +592,16 @@
         },
         {
             "name": "whatthejeff/nyancat-phpunit-resultprinter",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whatthejeff/nyancat-phpunit-resultprinter.git",
-                "reference": "4df250b44295f90382c2385640a2db61ef6c87fd"
+                "reference": "ccfa266c1991bcde1cf590b3de808b3465ca9b1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whatthejeff/nyancat-phpunit-resultprinter/zipball/4df250b44295f90382c2385640a2db61ef6c87fd",
-                "reference": "4df250b44295f90382c2385640a2db61ef6c87fd",
+                "url": "https://api.github.com/repos/whatthejeff/nyancat-phpunit-resultprinter/zipball/ccfa266c1991bcde1cf590b3de808b3465ca9b1d",
+                "reference": "ccfa266c1991bcde1cf590b3de808b3465ca9b1d",
                 "shasum": ""
             },
             "require": {
@@ -622,7 +623,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -649,7 +650,7 @@
                 "rainbow",
                 "tests"
             ],
-            "time": "2013-06-06 09:24:50"
+            "time": "2013-10-30 06:26:11"
         },
         {
             "name": "whatthejeff/nyancat-scoreboard",
