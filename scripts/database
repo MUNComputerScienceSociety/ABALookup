@@ -2,10 +2,26 @@
 
 set -e
 
+# run from the root directory
+cd "$(dirname "$0")/../"
+
 dbfile="database/db.sqlite3"
 dsn="sqlite:$dbfile"
 sqlfile="scripts/schemata/schema.sqlite3.sql"
 
-[[ -d "database" ]] && rm -r database
-mkdir database
+if [[ -e $dbfile ]]; then
+	read  -n 1 -r -p "Are you sure you wish to delete the existing database [y/N]? " response
+	echo
+	if [[ $response =~ ^[Yy]$ ]]
+	then
+		echo "rm $dbfile"
+		rm "$dbfile"
+	else
+		echo "Operation cancelled" 
+		exit
+	fi
+fi
+
+mkdir -p database/
+
 scripts/schema-create $dsn $sqlfile
