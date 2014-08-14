@@ -1,7 +1,7 @@
 ABA Lookup
 ==========
 
-A project for the [Autism Society of NL] to help with the matching of ABA therapists with parents of children with Autism.
+Finding a ABA therapist is a a very difficult task for parents of kids with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
 
 [![Build Status]][Travis]
 
