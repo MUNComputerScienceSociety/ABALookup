@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# run from the root directory
+cd "$(dirname "$0")/../"
+
 # servers
 jeeves="localhost:7211"
 alfred="localhost:7212"
@@ -42,7 +45,10 @@ curl --silent \
      > "$abyss"
 
 pa11y="node_modules/.bin/pa11y"
-[[ -x $pa11y ]] || npm install
+if [[ ! -x $pa11y ]] ; then
+	echo "Pally not installed. Please install Pally using npm."
+	exit
+fi
 
 routes=(
 	"/users/1/profile"
