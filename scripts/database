@@ -6,7 +6,6 @@ set -e
 cd "$(dirname "$0")/../"
 
 dbfile="database/db.sqlite3"
-dsn="sqlite:$dbfile"
 sqlfile="scripts/schemata/schema.sqlite3.sql"
 
 if [[ -e $dbfile ]]; then
@@ -14,8 +13,8 @@ if [[ -e $dbfile ]]; then
 	echo
 	if [[ $response =~ ^[Yy]$ ]]
 	then
-		echo "rm $dbfile"
 		rm "$dbfile"
+		echo "Old database deleted"
 	else
 		echo "Operation cancelled" 
 		exit
@@ -24,4 +23,7 @@ fi
 
 mkdir -p database/
 
-scripts/schema-create $dsn $sqlfile
+sqlite3 $dbfile < $sqlfile
+
+echo "Database created with the following tables:"
+sqlite3 database/db.sqlite3 ".tables"
