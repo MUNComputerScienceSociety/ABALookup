@@ -3,50 +3,85 @@ ABA Lookup
 
 Finding a ABA therapist is a a very difficult task for parents of kids with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
 
-[![Build Status]][Travis]
+Build status
+------------
+
+| Branch  | Build Status                        |
+| ------- | ----------------------------------- |
+| Master  | [![Build Status - Master]][Travis]  |
+| Develop | [![Build Status - Develop]][Travis] |
+
+  [Build Status - Master]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.svg?branch=master
+  [Build Status - Develop]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.svg?branch=develop
+  [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
 
 How to help
 -----------
 
-To contribute to the project, you will need to have the requirements listed below available, as well as Git installed (and a GitHub account). Once you have the requirements, fork the project on GitHub, download your fork, make some changes, and open a pull request. You can learn more about [forking] and [pull requests] from GitHub Help.
+First and foremost, you will need a GitHub account -- all of the development happens here. Please fork the project, make changes, and submit a pull request. To avoid doing work that won't get merged in here, open an issue and chat about it first. You can learn more about [forking] and [pull requests] from GitHub Help.
 
 Please also open [issues] for any possible enhancements or bugs you find.
 
-For more details on contributing, please see the [the guidelines for contributing to this repository.](CONTRIBUTING.md)
+For more details on contributing, please see the [the guidelines for contributing to this repository](CONTRIBUTING.md).
 
-Requirements
-------------
+  [forking]:https://help.github.com/articles/fork-a-repo
+  [pull requests]:https://help.github.com/articles/using-pull-requests
+  [issues]:https://help.github.com/articles/be-social#issues
+
+Diving in
+---------
+
+You will need your development environment configured appropritately for the project. If you want to set things up yourself, awesome, take a look at the [list of requirements] below. If you'd prefer to use a preconfigured development environment, [we have one for the project][ABALookupBox].
+
+  [list of requirements]:#development-requirements
+  [ABALookupBox]:https://github.com/MUNComputerScienceSociety/ABALookupBox
+
+Development requirements
+------------------------
+
+If you are setting up your development environment yourself, you will need:
 
 - Apache HTTP Server (or almost any HTTP Server)
 - PHP 5.4+ (with [PDO], [cURL], [SQLite], and [intl] at the least)
-- Composer
-- node.js/npm
-- Ruby and RubyGems (for Sass)
+- [Composer]
+- [PhantomJS]
+- [node.js]/npm (Grunt and Bower)
+- [Sass]
 - SQLite 3+
+
+**Remember**: we have [a development environment preconfigured for this project][ABALookupBox] that you can use to get up and running a lot quicker.
+
+  [PDO]:http://www.php.net/manual/en/book.pdo.php
+  [cURL]:http://php.net/manual/en/book.curl.php
+  [SQLite]:http://php.net/manual/en/book.sqlite.php
+  [intl]:http://php.net/manual/en/book.intl.php
+  [Composer]:https://getcomposer.org/
+  [PhantomJS]:http://phantomjs.org/
+  [node.js]:http://nodejs.org/
+  [Sass]:http://sass-lang.com/
 
 Downloading the project
 -----------------------
 
-If you already have a development environment ready to go with the above requirements available and are using *nix, you can issue the following commands:
+If you are using [the preconfigured development environment][ABALookupBox], it will automatically clone the repository for you.
 
-    cd <where you keep your projects>
-    git clone git@github.com:<your username>/<your fork name>.git
-    cd <your fork name>
-    make install dependencies database
+If you are doing your own thing:
 
-If not, see [Preparing a development environment] in the Wiki.
+    cd <wherever you keep your projects>
+    git clone https://github.com/<your username>/ABALookup.git
+    cd ABALookup
+    npm install -g grunt-cli
+    npm install
+    grunt install
 
 Running tasks (via Grunt)
 -------------------------
 
-After downloading the project, you'll need to generate both the CSS files from the Sass files, and the single JavaScript file from the (possibly many) JavaScript files in the `public/js/src/` folder.
+After downloading the project, you'll need to generate both the CSS files from the Sass files, and a single JavaScript file from the (possibly many) JavaScript files. To do so:
 
-To do so:
+    grunt compile
 
-    gem install sass # This may need to be run as root
-    grunt build
-
-For more information on the organization of the Sass files in this project, see the [README file](public/sass/README.md).
+See [the README file in the JS folder](public/js/README.md) and [the README file in the Sass folder](public/sass/README.md) for more information about how they're organised.
 
 Unit tests
 ----------
@@ -62,7 +97,7 @@ Accessibility tests for the site use the [pa11y](https://github.com/nature/pa11y
 
     scripts/test-pa11y
 
-Before running the accessibility tests, make sure you have the requirements installed for the pa11y module ([see the project's README](https://github.com/nature/pa11y#installing)). This test suite will check each of the routes against the W3C WCAG2.0 AAA standard.
+This test suite will check a set of routes against the W3C WCAG2.0 AAA standard. As always, pa11y can't catch all accessibility errors. It'll detect many of them, but please [open an issue](CONTRIBUTING.md) for things that can be improved.
 
 JavaScript linting
 ------------------
@@ -74,57 +109,36 @@ To run JSHint against the project's JavaScript files:
 All the tests
 -------------
 
-To run the complete test suite, which includes JSHint, the unit tests, and the accessibility tests, run the following:
+To run the complete test suite, which includes JSHint, PHPUnit, and the accessibility tests:
 
-    make test
+    grunt test
 
 Coding standards
 ----------------
 
-This project **tries** to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
+This project _tries_ to adhere to the [Zend Framework Coding Standard for PHP] with the following modifications:
 
-- Indentation should consist of **tab characters**, and spaces are to be used for formatting
+- Indentation should consist of **tab characters**, and spaces are to be used for formatting/alignment
 - All files should end with a trailing newline (LF)
 - PHP constants should be uppercased (including `TRUE`, `FALSE`, and `NULL`)
+
+Also, try to keep Git commit messages terse - if they are getting truncated by GitHub, that's not a good sign.
+
+  [Zend Framework Coding Standard for PHP]:http://framework.zend.com/wiki/display/ZFDEV2/Coding+Standards
 
 Browser support
 ---------------
 
-The site supports the following browsers:
+We are aiming to support the following browsers:
 
 - Internet Explorer 8+
-- The newest version of Google Chrome, Safari, and Firefox
+- The newest version of Google Chrome/Opera, Safari, and Firefox
 
-Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers. If the site does not work in a browser not listed above, feel free to open an issue, but do know that the possibility of it being fixed is slightly smaller.
+Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers.
 
-Contributing to the Wiki
-------------------------
-
-To help fill out the Wiki with information on setting up development environments, installing the application, usage, the matching algorithm, or anything else that you think will be useful to have documented:
-
-    cd <where you keep your projects>
-    git clone git@github.com:<your username>/<your fork name>.wiki.git
-    cd <your fork name>
-    # Edit Markdown files
-    git push
-    # File an issue in the issue tracker requesting the changes be pulled in
-
-See [this page](http://fusiongrokker.com/post/how-you-can-contribute-to-taffy-documentation) for more details on a similar workflow for forking gollum Wikis.
+If you run into issues with other browsers as well, feel free to open an issue, but do know that the possibility of it being fixed is slightly smaller.
 
 License
 -------
 
 [This software is licensed under the Simplified BSD License.](LICENSE.md)
-
-  [Autism Society of NL]:http://www.autism.nf.net/
-  [Build Status]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.png
-  [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
-  [forking]:https://help.github.com/articles/fork-a-repo
-  [pull requests]:https://help.github.com/articles/using-pull-requests
-  [issues]:https://help.github.com/articles/be-social#issues
-  [PDO]:http://www.php.net/manual/en/book.pdo.php
-  [cURL]:http://php.net/manual/en/book.curl.php
-  [SQLite]:http://php.net/manual/en/book.sqlite.php
-  [intl]:http://php.net/manual/en/book.intl.php
-  [Preparing a development environment]:http://git.io/jAivwA
-  [Zend Framework Coding Standard for PHP]:http://framework.zend.com/wiki/display/ZFDEV2/Coding+Standards
