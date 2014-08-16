@@ -1,7 +1,7 @@
 ABA Lookup
 ==========
 
-Finding a ABA therapist is a a very difficult task for parents of kids with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
+Finding a ABA therapist is a a very difficult task for parents of children with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
 
 Build status
 ------------
@@ -31,7 +31,7 @@ For more details on contributing, please see the [the guidelines for contributin
 Diving in
 ---------
 
-You will need your development environment configured appropritately for the project. If you want to set things up yourself, awesome, take a look at the [list of requirements] below. If you'd prefer to use a preconfigured development environment, [we have one for the project][ABALookupBox].
+You will need your development environment configured appropriately for the project. If you want to set things up yourself, awesome, take a look at the [list of requirements] below. If you'd prefer to use a preconfigured development environment, [we have one for the project][ABALookupBox].
 
   [list of requirements]:#development-requirements
   [ABALookupBox]:https://github.com/MUNComputerScienceSociety/ABALookupBox
@@ -81,7 +81,7 @@ After downloading the project, you'll need to generate both the CSS files from t
 
     grunt compile
 
-See [the README file in the JS folder](public/js/README.md) and [the README file in the Sass folder](public/sass/README.md) for more information about how they're organised.
+See [the README file in the JS folder](public/js/README.md) and [the README file in the Sass folder](public/sass/README.md) for more information about how they're organized.
 
 Unit tests
 ----------
