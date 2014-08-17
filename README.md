@@ -1,7 +1,7 @@
 ABA Lookup
 ==========
 
-Finding a ABA therapist is a a very difficult task for parents of children with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
+Finding an ABA therapist is a very difficult task for parents of children with autism. ABA Lookup aims to simplify the process by matching therapist based on an algorithm developed by the Memorial University of Newfoundland Computer Science Society that ranks therapist based on their compatibility.
 
 Build status
 ------------
