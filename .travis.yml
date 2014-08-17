@@ -5,14 +5,14 @@ php:
     - 5.5
 
 git:
-    depth: 25
+    depth: 1
 
-before_install:
-    - make install dependencies
+install:
+    - npm install -g grunt-cli
+    - npm install
+    - grunt install
 
-script: make test
+script: grunt test
 
-# whitelist
-branches:
-  only:
-    - master
+notifications:
+    email: false
