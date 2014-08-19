@@ -7,7 +7,7 @@ We are trying to streamline the process of matching ABA therapists with parents 
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
-Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing patches and features.
+Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, we will reciprocate that respect in addressing your issue or assessing patches and features.
 
 Accessibility
 -------------
@@ -23,16 +23,16 @@ Pedantry: please try to keep issue titles terse and use [sentence casing].
 
 [You can see the list of current issues here.](https://github.com/MUNComputerScienceSociety/ABALookup/issues) You can open a new issue by clicking "New Issue".
 
-Issues can really be anything - bugs, enhancements, questions, tweaks, etc, but please keep them localised to one thing. Open multiple issues for multiple things.
+Issues can really be anything - bugs, enhancements, questions, tweaks, etc, but please keep them localised to one thing: open multiple issues for multiple things.
 
-Before opening a new issue, check to see if the issue you going to open has already been filed: don't be put off by a closed issue, we can reopen them if need be.
+Before opening a new issue, check to see if the issue you going to open has already been filed: don't be put off by closed issues, we can reopen them if need be.
 
   [sentence casing]:http://ux.stackexchange.com/q/28297
 
 Coding standards
 ----------------
 
-The accepted style and conventions are dependent on the language"
+The accepted style and conventions are dependent on the language.
 
 **JS**:
 
