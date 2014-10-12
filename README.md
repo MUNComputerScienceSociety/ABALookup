@@ -26,6 +26,11 @@ For more details on contributing, please see the [the guidelines for contributin
   [pull requests]:https://help.github.com/articles/using-pull-requests
   [issues]:https://help.github.com/articles/be-social#issues
 
+If you're still a bit hesitant and would like to get a bit more insight into the what's and why's of this GitHub stuff, there are a number of [GitHub Guides] that talk about more of the general topics. Feel free to start with [Contributing to Open Source on GitHub].
+
+  [GitHub Guides]:https://guides.github.com/
+  [Contributing to Open Source on GitHub]:https://guides.github.com/activities/contributing-to-open-source/
+
 Diving in
 ---------
 
