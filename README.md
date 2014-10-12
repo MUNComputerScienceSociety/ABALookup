@@ -105,9 +105,11 @@ This test suite will check a set of routes against the W3C WCAG2.0 AAA standard.
 JavaScript linting
 ------------------
 
-To run JSHint against the project's JavaScript files:
+To run [JSHint] against the project's JavaScript files:
 
     grunt lint
+
+  [JSHint]:http://www.jshint.com/docs/
 
 All the tests
 -------------
