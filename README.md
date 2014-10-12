@@ -100,7 +100,7 @@ Accessibility tests for the site use the [pa11y](https://github.com/nature/pa11y
 
     scripts/test-pa11y
 
-This test suite will check a set of routes against the W3C WCAG2.0 AAA standard. As always, pa11y can't catch all accessibility errors. It'll detect many of them, but please [open an issue](CONTRIBUTING.md) for things that can be improved.
+This test suite will check a set of routes against the W3C WCAG2.0 AAA standard. As always, pa11y can't catch all accessibility errors. It'll detect many of them, but please [open an issue](CONTRIBUTING.md#reporting-issues) for things that can be improved.
 
 JavaScript linting
 ------------------
@@ -139,7 +139,7 @@ We are aiming to support the following browsers:
 - Internet Explorer 8+
 - The newest version of Google Chrome/Opera, Safari, and Firefox
 
-Please [open an issue](CONTRIBUTING.md) if there are any incompatibilities in any of these browsers.
+Please [open an issue](CONTRIBUTING.md#reporting-issues) if there are any incompatibilities in any of these browsers.
 
 If you run into issues with other browsers as well, feel free to open an issue, but do know that the possibility of it being fixed is slightly smaller.
 
