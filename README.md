@@ -114,9 +114,11 @@ To run [JSHint] against the project's JavaScript files:
 All the tests
 -------------
 
-To run the complete test suite, which includes JSHint, PHPUnit, and the accessibility tests:
+To run the complete test suite, which includes [JSHint], [PHPUnit], and the accessibility tests:
 
     grunt test
+
+  [PHPUnit]:https://phpunit.de/
 
 Coding standards
 ----------------
