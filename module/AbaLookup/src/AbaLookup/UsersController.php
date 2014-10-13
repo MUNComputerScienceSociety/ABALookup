@@ -20,6 +20,11 @@ class UsersController extends AbaLookupController
 	 */
 	protected $user;
 
+	/**
+	 * Contains logic common to all actions and is run on each dispatch
+	 *
+	 * @return void
+	 */
 	public function action()
 	{
 		try {
