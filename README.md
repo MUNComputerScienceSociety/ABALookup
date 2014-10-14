@@ -9,10 +9,8 @@ Build status
 | Branch  | Build Status                        |
 | ------- | ----------------------------------- |
 | Master  | [![Build Status - Master]][Travis]  |
-| Develop | [![Build Status - Develop]][Travis] |
 
   [Build Status - Master]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.svg?branch=master
-  [Build Status - Develop]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup.svg?branch=develop
   [Travis]:https://travis-ci.org/MUNComputerScienceSociety/ABALookup
 
 How to help
